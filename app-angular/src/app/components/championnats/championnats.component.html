@@ -1,0 +1,14 @@
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">Nom</th>
+            <th scope="col">Saison</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let champ of championnats">
+            <td>{{champ.nom}}</td>
+            <td>{{champ.saison}}</td>
+        </tr>
+    </tbody>
+</table>

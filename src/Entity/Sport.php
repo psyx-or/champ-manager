@@ -48,7 +48,7 @@ class Sport
     /**
      * @return Collection|Equipe[]
      */
-    public function getEquipes(): Collection
+    public function listeEquipes(): Collection
     {
         return $this->equipes;
     }
@@ -79,7 +79,7 @@ class Sport
     /**
      * @return Collection|Championnat[]
      */
-    public function getChampionnats(): Collection
+    public function listeChampionnats(): Collection
     {
         return $this->championnats;
     }

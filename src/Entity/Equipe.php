@@ -3,11 +3,12 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\EquipeRepository")
  */
-class Equipe
+class Equipe implements UserInterface, \Serializable
 {
     /**
      * @ORM\Id()
@@ -88,5 +89,48 @@ class Equipe
         $this->nom = $nom;
 
         return $this;
+    }
+
+	// ------------------------------------------------------
+	//    Authentification
+	// ------------------------------------------------------
+
+    public function getUsername()
+    {
+        return $this->login;
+    }
+
+    public function getSalt()
+    {
+        return null;
+    }
+
+    public function getRoles()
+    {
+        return array('ROLE_USER');
+    }
+
+    public function eraseCredentials()
+    {
+    }
+
+    /** @see \Serializable::serialize() */
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+            $this->login,
+            $this->password,
+        ));
+    }
+
+    /** @see \Serializable::unserialize() */
+    public function unserialize($serialized)
+    {
+        list (
+            $this->id,
+            $this->login,
+            $this->password,
+        ) = unserialize($serialized, ['allowed_classes' => false]);
     }
 }

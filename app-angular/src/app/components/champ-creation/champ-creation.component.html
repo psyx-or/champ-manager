@@ -1,0 +1,144 @@
+<h1>
+	Création de championnat
+</h1>
+{{championnat |json}}
+
+<!----------------------
+	Modèle
+  ------------------- -->
+
+<div class="form-group form-row">
+	<label for="modele" class="col-sm-2 col-form-label">Modèle</label>
+	<div class="col-sm-2">
+		<select class="form-control" id="modele" name="modele"
+				[(ngModel)]="modele">
+			<option [ngValue]="newSport">-- Ajouter --</option>
+		</select>
+	</div>
+	<div class="col-sm-2">
+		<a class="btn btn-outline-secondary" routerLink="/champ-creation"><i class="icon ion-md-settings"></i> Gérer les modèles</a>
+	</div>
+</div>
+
+<form ngNativeValidate>
+	<!----------------------
+		Caractéristiques
+	  ------------------- -->
+
+	<div class="card">
+		<div class="card-header">
+			Caractéristiques
+		</div>
+		<div class="card-body">
+			
+			<!-- Sport -->
+			<div class="form-group form-row">
+				<label for="sport" class="col-sm-2 col-form-label">Sport</label>
+				<div class="col-sm-2">
+					<select class="form-control" id="sport" name="sport" required
+							[(ngModel)]="championnat.sport">
+						<option *ngFor="let s of sports" [ngValue]="s">{{s.nom}}</option>
+						<option [ngValue]="newSport">-- Ajouter --</option>
+					</select>
+				</div>
+				<div class="col-sm-2">
+					<input type="text" class="form-control" name="newSport" required
+						[(ngModel)]="newSport.nom"
+						*ngIf="championnat.sport == newSport">
+				</div>
+			</div>
+
+			<!-- Saison -->
+			<div class="form-group form-row">
+				<label class="col-sm-2 col-form-label">Saison</label>
+				<div class="col-sm-10 col-form-label">
+					{{championnat.saison}}
+				</div>
+			</div>
+
+			<!-- Nom -->
+			<div class="form-group form-row">
+				<label for="nom" class="col-sm-2 col-form-label">Nom</label>
+				<div class="col-sm-4">
+					<input type="text" class="form-control" id="nom" name="nom" required
+						[(ngModel)]="championnat.nom">
+				</div>
+			</div>
+
+			<!-- Points de victoire -->
+			<div class="form-group form-row">
+				<label for="ptvict" class="col-sm-2 col-form-label">Victoire</label>
+				<div class="col-sm-1">
+					<input type="number" class="form-control" id="ptvict" name="ptvict" required
+						min="0"
+						[(ngModel)]="championnat.ptvict">
+				</div>
+				<span class="col-sm-1 col-form-label">points</span>
+			</div>
+
+			<!-- Points de nul -->
+			<div class="form-group form-row">
+				<label for="ptnul" class="col-sm-2 col-form-label">Match nul</label>
+				<div class="col-sm-1">
+					<input type="number" class="form-control" id="ptnul" name="ptnul"
+						min="0"
+						[(ngModel)]="championnat.ptnul" [disabled]="!championnat.avecNuls" [required]="championnat.avecNuls">
+				</div>
+				<span class="col-sm-1 col-form-label">points</span>
+				<div class="col-sm-6 form-check-inline">
+					<input class="form-check-input" type="checkbox" id="chknuls" name="chknuls"
+						[(ngModel)]="championnat.avecNuls">
+					<label class="form-check-label" for="chknuls">
+						Match nul possible
+					</label>
+				</div>
+			</div>
+
+			<!-- Points de défaite -->
+			<div class="form-group form-row">
+				<label for="ptdef" class="col-sm-2 col-form-label">Défaite</label>
+				<div class="col-sm-1">
+					<input type="number" class="form-control" id="ptdef" name="ptdef" required
+						min="0"
+						[(ngModel)]="championnat.ptdef">
+				</div>
+				<span class="col-sm-1 col-form-label">points</span>
+			</div>
+
+            <!-- Type -->
+            <div class="form-group form-row">
+                <label for="type" class="col-sm-2 col-form-label">Type</label>
+                <div class="col-sm-2">
+                    <select class="form-control" id="type" name="type" required
+                            [(ngModel)]="championnat.type">
+                        <option *ngFor="let t of types" [ngValue]="t">{{t}}</option>
+                    </select>
+                </div>
+            </div>
+
+		</div>
+	</div>
+
+	<br>
+
+	<!----------------------
+		 Equipes 
+	  ------------------- -->
+	<div class="card">
+		<div class="card-header">
+			Equipes <span class="badge badge-secondary">{{ getNbEquipes() }}</span>
+		</div>
+		<div class="card-body">
+			<div class="form-group form-row">
+				<div class="col-sm-3 mb-2" *ngFor="let e of equipes; let i = index;">
+					<input type="text" class="form-control" name="{{'equipe_' + i}}"
+						   [(ngModel)]="championnat.equipes[i]">
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<br>
+	
+	<button class="btn btn-primary" type="submit">Créer</button>
+</form>

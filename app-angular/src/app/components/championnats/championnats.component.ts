@@ -12,11 +12,10 @@ export class ChampionnatsComponent implements OnInit {
     championnats: Championnat[];
 
     constructor(
-        private championnat: ChampionnatService
+        private championnatService: ChampionnatService
     ) { }
 
     ngOnInit() {
-        this.championnat.getChampionnats().subscribe(championnats => this.championnats = championnats);
+        this.championnatService.getChampionnats().subscribe(championnats => this.championnats = championnats);
     }
-
 }

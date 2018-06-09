@@ -14,7 +14,7 @@ use App\Entity\Championnat;
 class ChampionnatController extends Controller
 {
     /**
-     * @Route("/championnat", name="championnat")
+     * @Route("/championnat")
      * @Method("GET")
      */
     public function list()

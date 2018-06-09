@@ -1,0 +1,45 @@
+<form (ngSubmit)="submit()" ngNativeValidate>
+
+	<!----------------------
+		Entête
+	------------------- -->
+	<div class="modal-header">
+		<h4 class="modal-title">Connexion</h4>
+	</div>
+
+	<!----------------------
+		Formulaire
+	------------------- -->
+	<div class="modal-body">
+
+		<!-- Avertissement -->
+		<ngb-alert [type]="'danger'" [dismissible]="false" *ngIf="error">
+			<i class="icon ion-md-alert"></i> Echec de l'authentification
+		</ngb-alert>
+
+		<!-- Login -->
+		<div class="form-group form-row">
+			<label for="login" class="col-sm-4 col-form-label">Utilisateur</label>
+			<div class="col-sm-8">
+				<input type="text" class="form-control" id="login" name="login" required [(ngModel)]="creds.login">
+			</div>
+		</div>
+
+		<!-- Mot de passe -->
+		<div class="form-group form-row">
+			<label for="password" class="col-sm-4 col-form-label">Mot de passe</label>
+			<div class="col-sm-8">
+				<input type="password" class="form-control" id="password" name="password" required [(ngModel)]="creds.password">
+			</div>
+		</div>
+
+	</div>
+
+	<!----------------------
+		Pied
+	------------------- -->
+	<div class="modal-footer">
+		<button type="submit" class="btn btn-primary">Connexion</button>
+	</div>
+
+</form>

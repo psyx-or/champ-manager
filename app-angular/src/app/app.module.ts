@@ -9,13 +9,15 @@ import { ChampionnatsComponent } from './components/championnats/championnats.co
 import { HttpClientModule } from '@angular/common/http';
 import { ChampCreationComponent } from './components/champ-creation/champ-creation.component';
 import { FormsModule } from '@angular/forms';
+import { LoginComponent } from './components/login/login.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MainMenuComponent,
     ChampionnatsComponent,
-    ChampCreationComponent
+    ChampCreationComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -25,6 +27,9 @@ import { FormsModule } from '@angular/forms';
     FormsModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [
+	  LoginComponent
+  ]
 })
 export class AppModule { }

@@ -34,10 +34,14 @@ security:
         main:
             anonymous: true
             provider: chain_provider
-            http_basic: true
 
-            # form_login: true
-            # https://symfony.com/doc/current/security/form_login_setup.html
+            guard:
+                authenticators:
+                    - App\Security\CMAuthenticator
+
+            #remember_me:
+            #    secret: '%kernel.secret%'
+            #    always_remember_me: true
 
             logout:
                 path: /api/logout

@@ -1,5 +1,5 @@
 <app-main-menu></app-main-menu>
 <br>
-<div class="container">
-<router-outlet></router-outlet>
+<div class="container" *ngIf="authentifie">
+	<router-outlet></router-outlet>
 </div>

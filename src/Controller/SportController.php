@@ -14,7 +14,7 @@ use App\Entity\Sport;
 class SportController extends Controller
 {
     /**
-     * @Route("/sport", name="sport")
+     * @Route("/sport")
      * @Method("GET")
      */
     public function index()

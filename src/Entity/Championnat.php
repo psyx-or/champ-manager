@@ -64,9 +64,15 @@ class Championnat
      */
     private $termine;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Journee", mappedBy="championnat", orphanRemoval=true)
+     */
+    private $journees;
+
     public function __construct()
     {
         $this->classements = new ArrayCollection();
+        $this->journees = new ArrayCollection();
     }
 
     public function getId()
@@ -161,7 +167,7 @@ class Championnat
     /**
      * @return Collection|Classement[]
      */
-    public function getClassements(): Collection
+    public function listeClassements(): Collection
     {
         return $this->classements;
     }
@@ -197,6 +203,37 @@ class Championnat
     public function setTermine(bool $termine): self
     {
         $this->termine = $termine;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Journee[]
+     */
+    public function listeJournees(): Collection
+    {
+        return $this->journees;
+    }
+
+    public function addJournee(Journee $journee): self
+    {
+        if (!$this->journees->contains($journee)) {
+            $this->journees[] = $journee;
+            $journee->setChampionnat($this);
+        }
+
+        return $this;
+    }
+
+    public function removeJournee(Journee $journee): self
+    {
+        if ($this->journees->contains($journee)) {
+            $this->journees->removeElement($journee);
+            // set the owning side to null (unless already changed)
+            if ($journee->getChampionnat() === $this) {
+                $journee->setChampionnat(null);
+            }
+        }
 
         return $this;
     }

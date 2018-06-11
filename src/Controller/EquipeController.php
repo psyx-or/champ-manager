@@ -23,7 +23,7 @@ class EquipeController extends Controller
         $repository = $this->getDoctrine()->getRepository(Equipe::class);
         return $this->json(array_map(
 			function(Equipe $equipe) { return array('id' => $equipe->getId(), 'nom' => $equipe->getNom()); },
-			$repository->findBySport($sport)
+			$repository->findBy(array('sport' => $sport), array('nom' => 'ASC'))
 		));
     }
 }

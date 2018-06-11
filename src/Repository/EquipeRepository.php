@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Equipe;
+use App\Entity\Sport;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -19,19 +20,30 @@ class EquipeRepository extends ServiceEntityRepository
         parent::__construct($registry, Equipe::class);
     }
 
-    /**
-     * @return Equipe[] Returns an array of Equipe objects
-     */
-    public function findBySport(string $sport)
-    {
-        return $this->createQueryBuilder('e')
-            ->andWhere('e.sport = :sport')
-            ->setParameter('sport', $sport)
-            ->orderBy('e.nom', 'ASC')
-            ->getQuery()
-            ->getResult()
-        ;
-    }
+	/**
+	 * Crée une équipe avec un login unique
+	 * @param $nom Nom de l'équipe
+	 * @param $sport Sport de l'équipe
+	 */
+	public function creeEquipe(string $nom, Sport $sport): Equipe {
+
+		// Attributs de base
+		$equipe = new Equipe();
+		$equipe->setNom($nom);
+		$equipe->setSport($sport);
+
+		$baselogin = preg_replace('/\s+/', '', $nom);
+		
+		// Creation du login
+		$login = $baselogin;
+		$i = 1;
+		while ($this->findOneBy(array('login' => $login)) != null)
+			$login = $baselogin.($i++);
+
+		$equipe->setLogin($login);
+
+		return $equipe;
+	}
 
     /*
     public function findOneBySomeField($value): ?Equipe

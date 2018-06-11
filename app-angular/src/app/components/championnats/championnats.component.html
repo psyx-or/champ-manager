@@ -1,7 +1,7 @@
 <h1><i class="icon ion-md-podium"></i> Championnats</h1>
 
 <div class="action-bar">
-    <a class="btn btn-outline-success" routerLink="/champ-creation"><i class="icon ion-md-add"></i> Créer un championnat</a>
+    <a class="btn btn-outline-primary" routerLink="/champ-creation"><i class="icon ion-md-add"></i> Créer un championnat</a>
 </div>
 
 <table class="table table-striped">
@@ -14,7 +14,8 @@
     <tbody>
         <tr *ngFor="let champ of championnats">
             <td>{{champ.nom}}</td>
-            <td>{{champ.saison}}</td>
+			<td>{{champ.saison}}</td>
+			<td>{{champ |json}}</td>
         </tr>
     </tbody>
 </table>

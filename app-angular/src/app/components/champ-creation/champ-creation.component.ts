@@ -83,7 +83,7 @@ export class ChampCreationComponent implements OnInit {
 	 * Lancement de la création du championnat
 	 */
 	creation(): void {
-		this.championnatService.create(this.championnat, this.equipes).subscribe(
+		this.championnatService.create(this.championnat, this.equipes.filter(e=>e)).subscribe(
 			champ => {
 				this.validation = false;
 			},

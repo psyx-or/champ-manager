@@ -19,22 +19,19 @@ class EquipeRepository extends ServiceEntityRepository
         parent::__construct($registry, Equipe::class);
     }
 
-//    /**
-//     * @return Equipe[] Returns an array of Equipe objects
-//     */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @return Equipe[] Returns an array of Equipe objects
+     */
+    public function findBySport(string $sport)
     {
         return $this->createQueryBuilder('e')
-            ->andWhere('e.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('e.id', 'ASC')
-            ->setMaxResults(10)
+            ->andWhere('e.sport = :sport')
+            ->setParameter('sport', $sport)
+            ->orderBy('e.nom', 'ASC')
             ->getQuery()
             ->getResult()
         ;
     }
-    */
 
     /*
     public function findOneBySomeField($value): ?Equipe

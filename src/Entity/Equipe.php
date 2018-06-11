@@ -9,6 +9,12 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\EquipeRepository")
+ * @ORM\Table(
+ * 		uniqueConstraints={
+ * 			@ORM\UniqueConstraint(name="login_unique",columns={"login"}),
+ * 			@ORM\UniqueConstraint(name="nom_unique",columns={"sport", "nom"})
+ * 		}
+ * )
  */
 class Equipe implements UserInterface, \Serializable
 {

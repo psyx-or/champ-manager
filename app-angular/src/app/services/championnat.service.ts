@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { Championnat } from '../model/Championnat';
+import { Equipe } from '../model/Equipe';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +25,7 @@ export class ChampionnatService {
 	 * Crée un nouveau championnat
 	 * @param championnat 
 	 */
-	public create(championnat: Championnat): Observable<Championnat> {
-		return this.http.post<Championnat>("/api/championnat", championnat);
+	public create(championnat: Championnat, equipes: Equipe[]): Observable<Championnat> {
+		return this.http.post<Championnat>("/api/championnat", {championnat: championnat, equipes: equipes});
 	}
 }

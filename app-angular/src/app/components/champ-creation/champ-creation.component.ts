@@ -2,8 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { Championnat, ChampType } from '../../model/Championnat';
 import { SportService } from '../../services/sport.service';
 import { Sport } from '../../model/Sport';
-import { sort } from '../../utils';
 import { ChampionnatService } from '../../services/championnat.service';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { EquipeService } from '../../services/equipe.service';
+import { Equipe } from '../../model/Equipe';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ChampCreationAlertComponent } from '../champ-creation-alert/champ-creation-alert.component';
 
 @Component({
   selector: 'app-champ-creation',
@@ -19,6 +24,8 @@ export class ChampCreationComponent implements OnInit {
 	equipes = Array(24);
 	itequipes = Array(this.equipes.length);
 	avecNuls: boolean = true;
+	equipesSport: Equipe[] = null;
+	validation: boolean = false;
 
 
 	/**
@@ -27,8 +34,10 @@ export class ChampCreationComponent implements OnInit {
 	 * @param championnatService 
 	 */
     constructor(
+		private modalService: NgbModal,
         private sportsService: SportService,
-        private championnatService: ChampionnatService
+        private championnatService: ChampionnatService,
+        private equipeService: EquipeService
     ) { }
 
 	/**
@@ -47,18 +56,87 @@ export class ChampCreationComponent implements OnInit {
 	}
 	
 	/**
-	 * Lance la création
+	 * Vérifie les paramètres de création
 	 */
 	submit(): void {
+		this.validation = true;
+
+		// Petit ajustement
 		if (!this.avecNuls) 
 			this.championnat.ptnul = null;
 
-		this.championnatService.create(this.championnat).subscribe(
+		// Est-ce que les équipes sont des équipes?
+		this.ajusteEquipes();
+		let news = this.equipes.filter((e: Equipe) => e && e.id == null);
+		if (news.length > 0) {
+			// Si non, affichage de la pop-up de connexion pour récupérer les identifiants et recommencer
+			const modal = this.modalService.open(ChampCreationAlertComponent, { centered: true, backdrop: 'static' });
+			modal.componentInstance.equipes = news;
+			modal.result.then(() => this.creation());
+		}
+		else {
+			this.creation();
+		}
+	}
+
+	/**
+	 * Lancement de la création du championnat
+	 */
+	creation(): void {
+		this.championnatService.create(this.championnat, this.equipes).subscribe(
 			champ => {
+				this.validation = false;
 			},
 			err => {
+				alert("Erreur lors de la création");
+				this.validation = false;
 			}
 		);
+	}
+
+	/**
+	 * Convertit les équipes qui n'ont pas été sélectionnées avec l'autocomplétion
+	 */
+	ajusteEquipes(): void {
+		for (let i = 0; i < this.equipes.length; i++) {
+			var nom = this.equipes[i];
+			if (nom && typeof(nom) == "string") {
+				// Est-ce que l'équipe existe déjà?
+				let eq = this.equipesSport.find(e => e.nom == nom.trim());
+				if (eq) this.equipes[i] = eq;
+				else this.equipes[i] = new Equipe({nom: nom.trim()});
+			}
+		}
+	}
+
+	/**
+	 * Autocomplétion sur les équipes
+	 */
+	searchEquipe = (texte$: Observable<string>) =>
+		texte$.pipe(
+			map(term => this.equipesSport.filter(
+				e => e.nom.trim().toLowerCase().indexOf(term.toLowerCase()) > -1
+			))
+		);
+
+	/**
+	 * Convertisseur d'affichage pour l'autocomplétion sur les équipes
+	 */
+	searchEquipeFormatter = (equipe: Equipe) => equipe.nom;
+
+	/**
+	 * Sélection d'un sport (rechargement des équipes existantes)
+	 */
+	selectionSport(): void {
+		if (this.championnat.sport == this.newSport) {
+			this.equipesSport = [];
+		}
+		else {
+			this.equipesSport = null;
+			this.equipeService.getEquipes(this.championnat.sport.nom).subscribe(
+				equipes => this.equipesSport = equipes
+			)
+		}
 	}
 
 	/**

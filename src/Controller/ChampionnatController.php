@@ -10,6 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Doctrine\ORM\EntityManagerInterface;
 
 use App\Entity\Championnat;
+use App\DTO\ChampCreationDTO;
 
 /**
  * @Route("/api")
@@ -30,10 +31,11 @@ class ChampionnatController extends Controller
      * @Route("/championnat")
      * @Method("POST")
 	 * @IsGranted("ROLE_ADMIN")
-	 * @ParamConverter("championnat", converter="cm_converter")
+	 * @ParamConverter("dto", converter="cm_converter")
      */
-	public function create(Championnat $championnat, EntityManagerInterface $entityManager) 
+	public function create(ChampCreationDTO $dto, EntityManagerInterface $entityManager) 
 	{
+		$championnat = $dto->getChampionnat();
 		$championnat->setSport($entityManager->merge($championnat->getSport()));
 		$championnat->setTermine(false);
 

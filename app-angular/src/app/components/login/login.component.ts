@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -12,7 +12,9 @@ export class LoginComponent {
 
 	creds = {};
 
-	constructor(private activeModal: NgbActiveModal) { }
+	constructor(
+		private activeModal: NgbActiveModal
+	) { }
 
 	submit(): void {
 		this.activeModal.close(this.creds);

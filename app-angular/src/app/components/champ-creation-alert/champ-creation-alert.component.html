@@ -1,0 +1,26 @@
+<!----------------------
+		Entête
+	------------------- -->
+<div class="modal-header">
+	<h4 class="modal-title">Nouvelles équipes détectées</h4>
+</div>
+
+<!----------------------
+		Formulaire
+	------------------- -->
+<div class="modal-body">
+
+	De nouvelles équipes vont être ajoutées. Confirmez-vous que ce sont bien de nouvelles équipes?
+	<ul>
+		<li *ngFor="let e of equipes">{{e.nom}}</li>
+	</ul>
+
+</div>
+
+<!----------------------
+		Pied
+	------------------- -->
+<div class="modal-footer">
+	<button type="button" class="btn btn-secondary" (click)="activeModal.dismiss()">Annuler</button>
+	<button type="button" class="btn btn-danger" (click)="activeModal.close()">Confirmer</button>
+</div>

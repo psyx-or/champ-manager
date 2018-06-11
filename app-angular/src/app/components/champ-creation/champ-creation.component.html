@@ -1,7 +1,6 @@
 <h1>
 	Création de championnat
 </h1>
-{{championnat |json}}
 
 <!----------------------
 	Modèle
@@ -36,7 +35,7 @@
 				<label for="sport" class="col-sm-2 col-form-label">Sport</label>
 				<div class="col-sm-2">
 					<select class="form-control" id="sport" name="sport" required
-							[(ngModel)]="championnat.sport">
+							[(ngModel)]="championnat.sport" (change)="selectionSport()">
 						<option *ngFor="let s of sports" [ngValue]="s">{{s.nom}}</option>
 						<option [ngValue]="newSport">-- Ajouter --</option>
 					</select>
@@ -132,7 +131,8 @@
 			<div class="form-group form-row">
 				<div class="col-sm-3 mb-2" *ngFor="let e of itequipes; let i = index;">
 					<input type="text" class="form-control" name="{{'equipe_' + i}}"
-						   [(ngModel)]="equipes[i]">
+						   [(ngModel)]="equipes[i]" [ngbTypeahead]="searchEquipe" [editable]="true" [disabled]="equipesSport == null"
+						   [inputFormatter]="searchEquipeFormatter" [resultFormatter]="searchEquipeFormatter">
 				</div>
 			</div>
 		</div>
@@ -140,5 +140,5 @@
 
 	<br>
 	
-	<button class="btn btn-primary" type="submit">Créer</button>
+	<button class="btn btn-primary" type="submit" [disabled]="validation">Créer</button>
 </form>

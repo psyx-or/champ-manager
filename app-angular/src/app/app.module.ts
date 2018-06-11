@@ -10,6 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ChampCreationComponent } from './components/champ-creation/champ-creation.component';
 import { FormsModule } from '@angular/forms';
 import { LoginComponent } from './components/login/login.component';
+import { ChampCreationAlertComponent } from './components/champ-creation-alert/champ-creation-alert.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { LoginComponent } from './components/login/login.component';
     MainMenuComponent,
     ChampionnatsComponent,
     ChampCreationComponent,
-    LoginComponent
+    LoginComponent,
+    ChampCreationAlertComponent
   ],
   imports: [
     BrowserModule,
@@ -29,7 +31,8 @@ import { LoginComponent } from './components/login/login.component';
   providers: [],
   bootstrap: [AppComponent],
   entryComponents: [
-	  LoginComponent
+	  LoginComponent,
+	  ChampCreationAlertComponent
   ]
 })
 export class AppModule { }

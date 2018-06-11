@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Security;
+namespace App\Outils;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;

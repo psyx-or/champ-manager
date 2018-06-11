@@ -6,6 +6,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Doctrine\ORM\EntityManagerInterface;
 
 use App\Entity\Championnat;
@@ -28,6 +29,7 @@ class ChampionnatController extends Controller
     /**
      * @Route("/championnat")
      * @Method("POST")
+	 * @IsGranted("ROLE_ADMIN")
 	 * @ParamConverter("championnat", converter="cm_converter")
      */
 	public function create(Championnat $championnat, EntityManagerInterface $entityManager) 

@@ -32,13 +32,13 @@ services:
         public: false
         tags: [serializer.normalizer]
 
-    App\EventSubscriber\TablePrefixSubscriber:
+    App\Outils\TablePrefixSubscriber:
         arguments:
             $prefix: '%db.table_prefix%'
         tags: [doctrine.event_subscriber]
 
     table_prefixer:
-        alias: App\EventSubscriber\TablePrefixSubscriber
+        alias: App\Outils\TablePrefixSubscriber
 
     cm_converter:
         class: App\Outils\CMParamConverter

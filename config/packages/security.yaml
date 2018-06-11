@@ -37,7 +37,7 @@ security:
 
             guard:
                 authenticators:
-                    - App\Security\CMAuthenticator
+                    - App\Outils\CMAuthenticator
 
             #remember_me:
             #    secret: '%kernel.secret%'

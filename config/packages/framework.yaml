@@ -30,5 +30,10 @@ framework:
         #app: cache.adapter.apcu
 
     serializer:
-      enabled: true
-      
+        enabled: true
+
+    property_info:
+        enabled: true
+
+sensio_framework_extra:
+    request: { converters: true }

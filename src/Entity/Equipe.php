@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -37,6 +39,16 @@ class Equipe implements UserInterface, \Serializable
      * @ORM\Column(type="string", length=255)
      */
     private $nom;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Classement", mappedBy="equipe")
+     */
+    private $classements;
+
+    public function __construct()
+    {
+        $this->classements = new ArrayCollection();
+    }
 
     public function getId()
     {
@@ -132,5 +144,36 @@ class Equipe implements UserInterface, \Serializable
             $this->login,
             $this->password,
         ) = unserialize($serialized, ['allowed_classes' => false]);
+    }
+
+    /**
+     * @return Collection|Classement[]
+     */
+    public function listeClassements(): Collection
+    {
+        return $this->classements;
+    }
+
+    public function addClassement(Classement $classement): self
+    {
+        if (!$this->classements->contains($classement)) {
+            $this->classements[] = $classement;
+            $classement->setEquipe($this);
+        }
+
+        return $this;
+    }
+
+    public function removeClassement(Classement $classement): self
+    {
+        if ($this->classements->contains($classement)) {
+            $this->classements->removeElement($classement);
+            // set the owning side to null (unless already changed)
+            if ($classement->getEquipe() === $this) {
+                $classement->setEquipe(null);
+            }
+        }
+
+        return $this;
     }
 }

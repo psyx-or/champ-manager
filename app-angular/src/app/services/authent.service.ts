@@ -19,7 +19,7 @@ export class AuthentService {
 	public authentifie(creds?): Observable<boolean> {
 		return new Observable<boolean>(observer => {
 			this.http.get<Object>("/api/me", { params: creds }).subscribe(
-				obj => {observer.next(true); observer.complete(); },
+				obj => { observer.next(true); observer.complete(); },
 				err => { observer.next(false); observer.complete(); })
 		});
 	}

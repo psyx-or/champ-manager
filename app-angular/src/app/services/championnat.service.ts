@@ -13,7 +13,18 @@ export class ChampionnatService {
         private http: HttpClient
     ) { }
 
+	/**
+	 * @returns La liste des championnats
+	 */
     public getChampionnats(): Observable<Championnat[]> {
         return this.http.get<Championnat[]>("/api/championnat");
-    }
+	}
+	
+	/**
+	 * Crée un nouveau championnat
+	 * @param championnat 
+	 */
+	public create(championnat: Championnat): Observable<Championnat> {
+		return this.http.post<Championnat>("/api/championnat", championnat);
+	}
 }

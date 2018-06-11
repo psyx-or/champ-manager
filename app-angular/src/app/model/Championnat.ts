@@ -4,9 +4,9 @@ import { Sport } from "./Sport";
  * Types de championnat
  */
 export enum ChampType {
-    Aller = "ALLER",
-    "Aller/Retour" = "ALLER_RETOUR",
-    Coupe = "COUPE"
+	ALLER = "Aller",
+	ALLER_RETOUR = "Aller/Retour",
+	COUPE = "Coupe"
 }
 
 /**
@@ -20,9 +20,8 @@ export class Championnat {
     public ptvict: number;
     public ptnul?: number;
     public ptdef: number;
-    public avecNuls: boolean;
-    public type: ChampType;
-    public equipes: Object[];
+	public type: ChampType;
+	public termine: boolean;
 
     public constructor(init?: Partial<Championnat>) {
         Object.assign(this, init);

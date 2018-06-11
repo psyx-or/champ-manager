@@ -39,3 +39,8 @@ services:
 
     table_prefixer:
         alias: App\EventSubscriber\TablePrefixSubscriber
+
+    cm_converter:
+        class: App\Outils\CMParamConverter
+        tags:
+            - { name: request.param_converter, priority: false, converter: cm_converter }

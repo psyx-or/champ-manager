@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Symfony\Component\Serializer\Annotation\Groups;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -72,6 +73,9 @@ class Match
      */
     private $forfait2;
 
+	/**
+	 * @Groups({"simple"})
+	 */
     public function getId()
     {
         return $this->id;
@@ -89,6 +93,9 @@ class Match
         return $this;
     }
 
+	/**
+	 * @Groups({"simple"})
+	 */
     public function getEquipe1(): ?Equipe
     {
         return $this->equipe1;
@@ -101,6 +108,9 @@ class Match
         return $this;
     }
 
+	/**
+	 * @Groups({"simple"})
+	 */
     public function getEquipe2(): ?Equipe
     {
         return $this->equipe2;
@@ -113,6 +123,9 @@ class Match
         return $this;
     }
 
+	/**
+	 * @Groups({"simple"})
+	 */
     public function getScore1(): ?int
     {
         return $this->score1;
@@ -125,6 +138,9 @@ class Match
         return $this;
     }
 
+	/**
+	 * @Groups({"simple"})
+	 */
     public function getScore2(): ?int
     {
         return $this->score2;
@@ -137,6 +153,9 @@ class Match
         return $this;
     }
 
+	/**
+	 * @Groups({"simple"})
+	 */
     public function getDateSaisie(): ?\DateTimeInterface
     {
         return $this->date_saisie;
@@ -149,6 +168,9 @@ class Match
         return $this;
     }
 
+	/**
+	 * @Groups({"simple"})
+	 */
     public function getFeuille(): ?string
     {
         return $this->feuille;
@@ -161,6 +183,9 @@ class Match
         return $this;
     }
 
+	/**
+	 * @Groups({"simple"})
+	 */
     public function getValide(): ?bool
     {
         return $this->valide;
@@ -173,6 +198,9 @@ class Match
         return $this;
     }
 
+	/**
+	 * @Groups({"simple"})
+	 */
     public function getForfait1(): ?bool
     {
         return $this->forfait1;
@@ -185,6 +213,9 @@ class Match
         return $this;
     }
 
+	/**
+	 * @Groups({"simple"})
+	 */
     public function getForfait2(): ?bool
     {
         return $this->forfait2;

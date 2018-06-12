@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Symfony\Component\Serializer\Annotation\Groups;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -56,6 +57,9 @@ class Journee
         return $this;
     }
 
+	/**
+	 * @Groups({"simple"})
+	 */
     public function getNumero(): ?int
     {
         return $this->numero;
@@ -68,6 +72,9 @@ class Journee
         return $this;
     }
 
+	/**
+	 * @Groups({"simple"})
+	 */
     public function getDebut(): ?\DateTimeInterface
     {
         return $this->debut;
@@ -80,6 +87,9 @@ class Journee
         return $this;
     }
 
+	/**
+	 * @Groups({"simple"})
+	 */
     public function getFin(): ?\DateTimeInterface
     {
         return $this->fin;
@@ -93,9 +103,10 @@ class Journee
     }
 
     /**
+	 * @Groups({"matches"})
      * @return Collection|Match[]
      */
-    public function listeMatches(): Collection
+    public function getMatches(): Collection
     {
         return $this->matches;
     }

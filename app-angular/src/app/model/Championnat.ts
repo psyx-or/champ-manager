@@ -1,4 +1,5 @@
 import { Sport } from "./Sport";
+import { Journee } from "./Journee";
 
 /**
  * Types de championnat
@@ -22,6 +23,7 @@ export class Championnat {
     public ptdef: number;
 	public type: ChampType;
 	public termine: boolean;
+	public journees: Journee[]
 
     public constructor(init?: Partial<Championnat>) {
         Object.assign(this, init);

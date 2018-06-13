@@ -1,3 +1,7 @@
+
+/**
+ * Une équipe
+ */
 export class Equipe {
 	id?: number;
 	nom: string;

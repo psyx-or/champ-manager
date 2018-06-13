@@ -1,0 +1,49 @@
+<h1>
+	Journées de {{ champ?.nom }} ({{ champ?.sport.nom }} {{ champ?.saison }})
+</h1>
+
+<div class="row">
+	<!-- Navigation -->
+	<div class="text-center col-lg-12">
+		<button class="btn" (click)="navigation(-1)">
+			<i class="icon ion-md-arrow-round-back"></i>
+		</button>
+		<button class="btn" (click)="navigation(+1)">
+			<i class="icon ion-md-arrow-round-forward"></i>
+		</button>
+	</div>
+
+	<!-- Journées -->
+	<div class="text-center col-lg-1">
+		<div *ngFor="let j of journees; let i = index;" [class.sel-journee]="iJournee == i">
+			<a [routerLink]="" class="badge" [ngClass]="'badge-' + couleurs[i % couleurs.length][0]" [class.badge-pill]="iJournee == i"
+			   (click)="iJournee = i">Journée {{j.numero}}</a>
+		</div>
+	</div>
+
+	<!-- Calendrier -->
+	<div class="text-center col-lg-11">
+		<ngb-datepicker [dayTemplate]="t" (select)="onDaySelection($event)"></ngb-datepicker>
+		<ngb-datepicker [dayTemplate]="t" (select)="onDaySelection($event)"></ngb-datepicker>
+		<ngb-datepicker [dayTemplate]="t" (select)="onDaySelection($event)"></ngb-datepicker>
+	</div>
+
+	<!-- Validation -->
+	<div class="text-center col-lg-12">
+		<button class="btn btn-primary" (click)="enregistrer()">
+			<i class="icon ion-md-save"></i> Enregistrer
+		</button>
+	</div>
+</div>
+
+<!--
+	Template pour les jours du calendrier
+-->
+<ng-template #t let-date="date" let-focused="focused">
+  <span class="custom-day"
+		[ngClass]="dayClass(date)"
+        (mouseenter)="daySel(date)"
+        (mouseleave)="daySel(null)">
+    {{ date.day }}
+  </span>
+</ng-template>

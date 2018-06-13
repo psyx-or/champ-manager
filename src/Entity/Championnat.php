@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Symfony\Component\Serializer\Annotation\Groups;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -75,11 +76,17 @@ class Championnat
         $this->journees = new ArrayCollection();
     }
 
+	/**
+	 * @Groups({"simple"})
+	 */
     public function getId()
     {
         return $this->id;
     }
 
+	/**
+	 * @Groups({"simple"})
+	 */
     public function getNom(): ?string
     {
         return $this->nom;
@@ -92,6 +99,9 @@ class Championnat
         return $this;
     }
 
+	/**
+	 * @Groups({"simple"})
+	 */
     public function getSport(): ?Sport
     {
         return $this->sport;
@@ -104,6 +114,9 @@ class Championnat
         return $this;
     }
 
+	/**
+	 * @Groups({"simple"})
+	 */
     public function getSaison(): ?string
     {
         return $this->saison;
@@ -208,9 +221,10 @@ class Championnat
     }
 
     /**
+	 * @Groups({"journees"})
      * @return Collection|Journee[]
      */
-    public function listeJournees(): Collection
+    public function getJournees(): Collection
     {
         return $this->journees;
     }

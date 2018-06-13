@@ -1,7 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './/app-routing.module';
 import { MainMenuComponent } from './components/main-menu/main-menu.component';
@@ -11,6 +10,7 @@ import { ChampCreationComponent } from './components/champ-creation/champ-creati
 import { FormsModule } from '@angular/forms';
 import { LoginComponent } from './components/login/login.component';
 import { ChampCreationAlertComponent } from './components/champ-creation-alert/champ-creation-alert.component';
+import { JourneesChampComponent } from './components/journees-champ/journees-champ.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +19,8 @@ import { ChampCreationAlertComponent } from './components/champ-creation-alert/c
     ChampionnatsComponent,
     ChampCreationComponent,
     LoginComponent,
-    ChampCreationAlertComponent
+    ChampCreationAlertComponent,
+    JourneesChampComponent
   ],
   imports: [
     BrowserModule,

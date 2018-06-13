@@ -19,7 +19,7 @@ class JourneeController extends Controller
      */
     public function list(Championnat $championnat)
     {
-        return $this->json($championnat->listeJournees(), 200, array(), array('groups' => array('simple')));
+        return $this->json($championnat, 200, array(), array('groups' => array('simple', 'journees')));
 	}
 	
     /**

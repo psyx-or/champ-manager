@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Symfony\Component\Serializer\Annotation\Groups;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -33,6 +34,9 @@ class Sport
         $this->championnats = new ArrayCollection();
     }
 
+	/**
+	 * @Groups({"simple"})
+	 */
     public function getNom(): ?string
     {
         return $this->nom;

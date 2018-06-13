@@ -2,10 +2,12 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ChampionnatsComponent } from './components/championnats/championnats.component';
 import { ChampCreationComponent } from './components/champ-creation/champ-creation.component';
+import { JourneesChampComponent } from './components/journees-champ/journees-champ.component';
 
 const routes: Routes = [
     { path: 'championnats', component: ChampionnatsComponent },
-    { path: 'champ-creation', component: ChampCreationComponent }
+	{ path: 'champ-creation', component: ChampCreationComponent },
+	{ path: 'journees/:champId', component: JourneesChampComponent }
 ];
 
 @NgModule({

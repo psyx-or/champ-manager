@@ -133,6 +133,6 @@ class ChampionnatController extends CMController
 
 		$entityManager->flush();
 
-		return $this->json($championnat);
+		return $this->groupJson($championnat, 'simple');
 	}
 }

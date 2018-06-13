@@ -9,6 +9,7 @@ import { EquipeService } from '../../services/equipe.service';
 import { Equipe } from '../../model/Equipe';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ChampCreationAlertComponent } from '../champ-creation-alert/champ-creation-alert.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-champ-creation',
@@ -37,7 +38,8 @@ export class ChampCreationComponent implements OnInit {
 		private modalService: NgbModal,
         private sportsService: SportService,
         private championnatService: ChampionnatService,
-        private equipeService: EquipeService
+		private equipeService: EquipeService,
+		private router: Router
     ) { }
 
 	/**
@@ -85,7 +87,7 @@ export class ChampCreationComponent implements OnInit {
 	creation(): void {
 		this.championnatService.create(this.championnat, this.equipes.filter(e=>e)).subscribe(
 			champ => {
-				this.validation = false;
+				this.router.navigate(['journees', champ.id])
 			},
 			err => {
 				alert("Erreur lors de la création");

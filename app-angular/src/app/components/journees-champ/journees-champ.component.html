@@ -30,7 +30,7 @@
 
 	<!-- Validation -->
 	<div class="text-center col-lg-12">
-		<button class="btn btn-primary" (click)="enregistrer()">
+		<button class="btn btn-primary" (click)="enregistrer()" [disabled]="validation">
 			<i class="icon ion-md-save"></i> Enregistrer
 		</button>
 	</div>

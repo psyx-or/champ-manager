@@ -1,5 +1,5 @@
 import { Component, OnInit, Injectable, ViewChildren, QueryList, AfterViewInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { JourneeService } from '../../services/journee.service';
 import { Journee } from '../../model/Journee';
 import { Championnat } from '../../model/Championnat';
@@ -84,6 +84,7 @@ export class JourneesChampComponent implements OnInit, AfterViewInit {
 	dateFin: moment.Moment;
 	dateDebutSel: moment.Moment;
 	dateFinSel: moment.Moment;
+	validation: boolean = false;
 
 
 	/**
@@ -95,7 +96,8 @@ export class JourneesChampComponent implements OnInit, AfterViewInit {
 	constructor(
 		private route: ActivatedRoute,
 		private journeeService: JourneeService,
-		config: NgbDatepickerConfig
+		config: NgbDatepickerConfig,
+		private router: Router
 	) { 
 		config.displayMonths = nbMois;
 		config.navigation = "none";
@@ -125,9 +127,15 @@ export class JourneesChampComponent implements OnInit, AfterViewInit {
 	 * Enregistre le calendrier
 	 */
 	enregistrer(): void {
+		this.validation = true;
 		this.journeeService.majJournees(this.champ, this.journees).subscribe(
-			res => alert('ok'),
-			err => alert("erreur!!!")
+			res => {
+				this.router.navigate(['championnats'])
+			},
+			err => {
+				alert("Erreur lors de l'enregistrement'")
+				this.validation = false;
+			}
 		);
 	}
 

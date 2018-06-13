@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { sort } from '../utils';
 import { Championnat } from '../model/Championnat';
+import { Journee } from '../model/Journee';
 
 @Injectable({
   providedIn: 'root'
@@ -20,5 +21,14 @@ export class JourneeService {
 	 */
 	public getJournees(champId: number): Observable<Championnat> {
 		return this.http.get<Championnat>("/api/journee/" + champId);
+	}
+
+	/**
+	 * Met à jour les journées d'un championnat
+	 * @param champ 
+	 * @param journees 
+	 */
+	public majJournees(champ: Championnat, journees: Journee[]): Observable<Object> {
+		return this.http.put("/api/journee/" + champ.id, journees);
 	}
 }

@@ -3,12 +3,10 @@
 namespace App\Controller;
 
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Serializer\SerializerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\Common\Collections\ArrayCollection;
 
 use App\Entity\Championnat;
 use App\Entity\Equipe;
@@ -38,7 +36,7 @@ class ChampionnatController extends CMController
 	 * @IsGranted("ROLE_ADMIN")
 	 * @ParamConverter("dto", converter="cm_converter")
      */
-	public function create(ChampCreationDTO $dto, EntityManagerInterface $entityManager, SerializerInterface $serializer) 
+	public function create(ChampCreationDTO $dto, EntityManagerInterface $entityManager) 
 	{
 		$championnat = $dto->getChampionnat();
 

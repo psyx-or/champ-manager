@@ -125,7 +125,10 @@ export class JourneesChampComponent implements OnInit, AfterViewInit {
 	 * Enregistre le calendrier
 	 */
 	enregistrer(): void {
-		alert("enregistrer");
+		this.journeeService.majJournees(this.champ, this.journees).subscribe(
+			res => alert('ok'),
+			err => alert("erreur!!!")
+		);
 	}
 
 	/**

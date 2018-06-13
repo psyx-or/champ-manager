@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Doctrine\ORM\EntityManagerInterface;
 
+use App\Entity\Sport;
 use App\Entity\Championnat;
 use App\Entity\Equipe;
 use App\Entity\Classement;
@@ -38,38 +39,63 @@ class ChampionnatController extends CMController
      */
 	public function create(ChampCreationDTO $dto, EntityManagerInterface $entityManager) 
 	{
-		$championnat = $dto->getChampionnat();
-
 		// Création du sport si besoin
-		$sport = $entityManager->merge($championnat->getSport());
+		$sport = $entityManager->merge($dto->getChampionnat()->getSport());
 
-		// Création du championnat
+		// Création des objets
+		$championnat = $this->creeChampionnat($dto->getChampionnat(), $sport, $entityManager);
+		$equipes = $this->getEquipes($dto->getEquipes(), $sport, $entityManager);
+		$this->creeClassements($championnat, $equipes, $entityManager);
+		$this->creeMatchesChampionnat($championnat, $equipes, $entityManager);
+
+		$entityManager->flush();
+
+		return $this->groupJson($championnat, 'simple');
+	}
+
+	/**
+	 * Création d'un championnat
+	 */
+	private function creeChampionnat(Championnat $championnat, Sport $sport, EntityManagerInterface $entityManager): Championnat
+	{
 		$championnat->setSport($sport);
 		$championnat->setTermine(false);
 
         $entityManager->persist($championnat);
-		$entityManager->flush();
 
-		// Création/récuération des équipes
-		$equipes = array();
+		return $championnat;
+	}
+
+	/**
+	 * Création/récupération des équipes
+	 */
+	private function getEquipes(array $equipes, Sport $sport, EntityManagerInterface $entityManager): array
+	{
+		$entities = array();
         $repEquipes = $this->getDoctrine()->getRepository(Equipe::class);
 
-		foreach($dto->getEquipes() as $equipe) 
+		foreach($equipes as $equipe) 
 		{
 			if (isset($equipe['id'])) 
 			{
-				array_push($equipes, $repEquipes->find($equipe['id']));
+				array_push($entities, $repEquipes->find($equipe['id']));
 			}
 			else 
 			{
 				$entity = $repEquipes->creeEquipe($equipe['nom'], $sport);
 				$entityManager->persist($entity);
-				$entityManager->flush();
-				array_push($equipes, $entity);
+				array_push($entities, $entity);
 			}
 		}
 
-		// Création des classements
+		return $entities;
+	}
+
+	/**
+	 * Création des classements
+	 */
+	private function creeClassements(Championnat $championnat, array $equipes, EntityManagerInterface $entityManager)
+	{
 		foreach ($equipes as $equipe)
 		{
 			$classement = new Classement();
@@ -86,9 +112,14 @@ class ChampionnatController extends CMController
 			$classement->setPour(0);
 			$classement->setContre(0);
 			$entityManager->persist($classement);
-		}
+		}		
+	}
 
-		// Création des journées
+	/**
+	 * Création des journées et des matches
+	 */
+	private function creeMatchesChampionnat(Championnat $championnat, array $equipes, EntityManagerInterface $entityManager)
+	{
 		if (count($equipes) % 2 == 1)
 			array_push($equipes, null);
 
@@ -129,10 +160,6 @@ class ChampionnatController extends CMController
 				}
 				$entityManager->persist($match);
 			}
-		}
-
-		$entityManager->flush();
-
-		return $this->groupJson($championnat, 'simple');
+		}		
 	}
 }

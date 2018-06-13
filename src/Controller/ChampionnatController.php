@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -21,7 +20,7 @@ use App\DTO\ChampCreationDTO;
 /**
  * @Route("/api")
  */
-class ChampionnatController extends Controller
+class ChampionnatController extends CMController
 {
     /**
      * @Route("/championnat")
@@ -30,7 +29,7 @@ class ChampionnatController extends Controller
     public function list()
     {
         $repository = $this->getDoctrine()->getRepository(Championnat::class);
-        return $this->json($repository->findAll());
+        return $this->groupJson($repository->findAll(), 'simple');
     }
 
     /**

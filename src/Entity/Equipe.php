@@ -57,6 +57,9 @@ class Equipe implements UserInterface, \Serializable
         $this->classements = new ArrayCollection();
     }
 
+	/**
+	 * @Groups({"simple"})
+	 */
     public function getId()
     {
         return $this->id;
@@ -159,7 +162,7 @@ class Equipe implements UserInterface, \Serializable
     /**
      * @return Collection|Classement[]
      */
-    public function listeClassements(): Collection
+    public function getClassements(): Collection
     {
         return $this->classements;
     }

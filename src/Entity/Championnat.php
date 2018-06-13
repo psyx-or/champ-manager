@@ -180,7 +180,7 @@ class Championnat
     /**
      * @return Collection|Classement[]
      */
-    public function listeClassements(): Collection
+    public function getClassements(): Collection
     {
         return $this->classements;
     }

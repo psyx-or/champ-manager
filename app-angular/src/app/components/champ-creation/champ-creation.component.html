@@ -64,13 +64,24 @@
 				</div>
 			</div>
 
+            <!-- Type -->
+            <div class="form-group form-row">
+                <label for="type" class="col-sm-2 col-form-label">Type</label>
+                <div class="col-sm-2">
+                    <select class="form-control" id="type" name="type" required
+                            [(ngModel)]="championnat.type">
+                        <option *ngFor="let t of types" [ngValue]="t[1]">{{t[0]}}</option>
+                    </select>
+                </div>
+            </div>
+
 			<!-- Points de victoire -->
 			<div class="form-group form-row">
 				<label for="ptvict" class="col-sm-2 col-form-label">Victoire</label>
 				<div class="col-sm-1">
 					<input type="number" class="form-control" id="ptvict" name="ptvict" required
 						min="0"
-						[(ngModel)]="championnat.ptvict">
+						[(ngModel)]="championnat.ptvict" [disabled]="championnat.type == 'COUPE'">
 				</div>
 				<span class="col-sm-1 col-form-label">points</span>
 			</div>
@@ -79,14 +90,14 @@
 			<div class="form-group form-row">
 				<label for="ptnul" class="col-sm-2 col-form-label">Match nul</label>
 				<div class="col-sm-1">
-					<input type="number" class="form-control" id="ptnul" name="ptnul"
+					<input type="number" class="form-control" id="ptnul" name="ptnul" required
 						min="0"
-						[(ngModel)]="championnat.ptnul" [disabled]="!avecNuls" [required]="avecNuls">
+						[(ngModel)]="championnat.ptnul" [disabled]="championnat.type == 'COUPE' || !avecNuls">
 				</div>
 				<span class="col-sm-1 col-form-label">points</span>
 				<div class="col-sm-6 form-check-inline">
 					<input class="form-check-input" type="checkbox" id="chknuls" name="chknuls"
-						[(ngModel)]="avecNuls">
+						[(ngModel)]="avecNuls" [disabled]="championnat.type == 'COUPE'">
 					<label class="form-check-label" for="chknuls">
 						Match nul possible
 					</label>
@@ -99,21 +110,10 @@
 				<div class="col-sm-1">
 					<input type="number" class="form-control" id="ptdef" name="ptdef" required
 						min="0"
-						[(ngModel)]="championnat.ptdef">
+						[(ngModel)]="championnat.ptdef" [disabled]="championnat.type == 'COUPE'">
 				</div>
 				<span class="col-sm-1 col-form-label">points</span>
 			</div>
-
-            <!-- Type -->
-            <div class="form-group form-row">
-                <label for="type" class="col-sm-2 col-form-label">Type</label>
-                <div class="col-sm-2">
-                    <select class="form-control" id="type" name="type" required
-                            [(ngModel)]="championnat.type">
-                        <option *ngFor="let t of types" [ngValue]="t[0]">{{t[1]}}</option>
-                    </select>
-                </div>
-            </div>
 
 		</div>
 	</div>
@@ -140,5 +140,5 @@
 
 	<br>
 	
-	<button class="btn btn-primary" type="submit" [disabled]="validation">Créer</button>
+	<button class="btn btn-primary" type="submit" [disabled]="validation || getNbEquipes()<2">Créer</button>
 </form>

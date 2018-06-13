@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { JourneeService } from '../../services/journee.service';
 import { Journee } from '../../model/Journee';
 import { Championnat } from '../../model/Championnat';
-import { sort } from '../../utils';
+import { sort, strJournee } from '../../utils';
 import { NgbDatepickerI18n, NgbDateStruct, NgbDatepickerConfig, NgbDatepicker } from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'moment';
 
@@ -85,6 +85,8 @@ export class JourneesChampComponent implements OnInit, AfterViewInit {
 	dateDebutSel: moment.Moment;
 	dateFinSel: moment.Moment;
 	validation: boolean = false;
+
+	strjournee = strJournee;
 
 
 	/**

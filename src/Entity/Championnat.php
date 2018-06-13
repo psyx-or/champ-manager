@@ -36,7 +36,7 @@ class Championnat
     private $saison;
 
     /**
-     * @ORM\Column(type="smallint")
+     * @ORM\Column(type="smallint", nullable=true)
      */
     private $ptvict;
 
@@ -46,7 +46,7 @@ class Championnat
     private $ptnul;
 
     /**
-     * @ORM\Column(type="smallint")
+     * @ORM\Column(type="smallint", nullable=true)
      */
     private $ptdef;
 
@@ -134,7 +134,7 @@ class Championnat
         return $this->ptvict;
     }
 
-    public function setPtvict(int $ptvict): self
+    public function setPtvict(?int $ptvict): self
     {
         $this->ptvict = $ptvict;
 
@@ -158,7 +158,7 @@ class Championnat
         return $this->ptdef;
     }
 
-    public function setPtdef(int $ptdef): self
+    public function setPtdef(?int $ptdef): self
     {
         $this->ptdef = $ptdef;
 

@@ -63,7 +63,12 @@ export class ChampCreationComponent implements OnInit {
 	submit(): void {
 		this.validation = true;
 
-		// Petit ajustement
+		// Petits ajustements
+		if (this.championnat.type == ChampType.Coupe) {
+			this.championnat.ptvict = null;
+			this.championnat.ptnul = null;
+			this.championnat.ptdef = null;
+		}
 		if (!this.avecNuls) 
 			this.championnat.ptnul = null;
 

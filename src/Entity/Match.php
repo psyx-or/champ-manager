@@ -73,6 +73,16 @@ class Match
      */
     private $forfait2;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Match")
+     */
+    private $match1;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Match")
+     */
+    private $match2;
+
 	/**
 	 * @Groups({"simple"})
 	 */
@@ -224,6 +234,30 @@ class Match
     public function setForfait2(bool $forfait2): self
     {
         $this->forfait2 = $forfait2;
+
+        return $this;
+    }
+
+    public function getMatch1(): ?self
+    {
+        return $this->match1;
+    }
+
+    public function setMatch1(?self $match1): self
+    {
+        $this->match1 = $match1;
+
+        return $this;
+    }
+
+    public function getMatch2(): ?self
+    {
+        return $this->match2;
+    }
+
+    public function setMatch2(?self $match2): self
+    {
+        $this->match2 = $match2;
 
         return $this;
     }

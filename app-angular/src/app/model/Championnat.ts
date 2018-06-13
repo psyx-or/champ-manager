@@ -5,9 +5,9 @@ import { Journee } from "./Journee";
  * Types de championnat
  */
 export enum ChampType {
-	ALLER = "Aller",
-	ALLER_RETOUR = "Aller/Retour",
-	COUPE = "Coupe"
+	"Aller" = "ALLER",
+	"Aller/Retour" = "ALLER_RETOUR",
+	"Coupe" = "COUPE"
 }
 
 /**

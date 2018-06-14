@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { ChampionnatService } from '../../services/championnat.service';
 import { Championnat } from '../../model/Championnat';
 import { Sport } from '../../model/Sport';
-import { sort } from '../../utils';
+import { sort, openModal } from '../../utils';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-championnats',
@@ -10,6 +11,8 @@ import { sort } from '../../utils';
   styleUrls: ['./championnats.component.css']
 })
 export class ChampionnatsComponent implements OnInit {
+
+	@ViewChild('supprChamp') supprChampTpl: TemplateRef<any>;
 
 	sports: Sport[];
 	championnats: Map<string, Championnat[]>;
@@ -20,6 +23,7 @@ export class ChampionnatsComponent implements OnInit {
 	 * @param championnatService 
 	 */
     constructor(
+		public modalService: NgbModal,
         private championnatService: ChampionnatService
     ) { }
 
@@ -46,10 +50,17 @@ export class ChampionnatsComponent implements OnInit {
 	 * @param champ
 	 */
 	supprimer(champ: Championnat): void {
-		// TODO: confirmation
-		this.championnatService.supprime(champ).subscribe(
-			res => { this.ngOnInit() },
-			err => alert("Erreur lors de la suppression")
+		openModal(
+			this,
+			"Nouvelles équipes détectées",
+			this.supprChampTpl,
+			champ,
+			() => {
+				this.championnatService.supprime(champ).subscribe(
+					res => { this.ngOnInit() },
+					err => alert("Erreur lors de la suppression")
+				);
+			}
 		);
 	}
 }

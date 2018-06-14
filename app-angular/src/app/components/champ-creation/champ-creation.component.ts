@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { Championnat, ChampType } from '../../model/Championnat';
 import { SportService } from '../../services/sport.service';
 import { Sport } from '../../model/Sport';
@@ -8,8 +8,9 @@ import { map } from 'rxjs/operators';
 import { EquipeService } from '../../services/equipe.service';
 import { Equipe } from '../../model/Equipe';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ChampCreationAlertComponent } from '../champ-creation-alert/champ-creation-alert.component';
 import { Router } from '@angular/router';
+import { ModalComponent } from '../modal/modal.component';
+import { openModal } from '../../utils';
 
 @Component({
   selector: 'app-champ-creation',
@@ -17,6 +18,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./champ-creation.component.css']
 })
 export class ChampCreationComponent implements OnInit {
+
+	@ViewChild('ajoutEquipes') ajoutEquipesTpl: TemplateRef<any>;
 
     sports: Sport[];
     types: [string,string][];
@@ -35,7 +38,7 @@ export class ChampCreationComponent implements OnInit {
 	 * @param championnatService 
 	 */
     constructor(
-		private modalService: NgbModal,
+		public modalService: NgbModal,
         private sportsService: SportService,
         private championnatService: ChampionnatService,
 		private equipeService: EquipeService,
@@ -61,7 +64,6 @@ export class ChampCreationComponent implements OnInit {
 	 * Vérifie les paramètres de création
 	 */
 	submit(): void {
-		this.validation = true;
 
 		// Petits ajustements
 		if (this.championnat.type == ChampType.Coupe) {
@@ -74,12 +76,16 @@ export class ChampCreationComponent implements OnInit {
 
 		// Est-ce que les équipes sont des équipes?
 		this.ajusteEquipes();
-		let news = this.equipes.filter((e: Equipe) => e && e.id == null);
-		if (news.length > 0) {
+		let newEquipes = this.equipes.filter((e: Equipe) => e && e.id == null);
+		if (newEquipes.length > 0) {
 			// Si non, affichage de la pop-up de connexion pour récupérer les identifiants et recommencer
-			const modal = this.modalService.open(ChampCreationAlertComponent, { centered: true, backdrop: 'static' });
-			modal.componentInstance.equipes = news;
-			modal.result.then(() => this.creation());
+			openModal(
+				this,
+				"Nouvelles équipes détectées",
+				this.ajoutEquipesTpl,
+				newEquipes,
+				this.creation
+			);
 		}
 		else {
 			this.creation();
@@ -90,6 +96,7 @@ export class ChampCreationComponent implements OnInit {
 	 * Lancement de la création du championnat
 	 */
 	creation(): void {
+		this.validation = true;
 		this.championnatService.create(this.championnat, this.equipes.filter(e=>e)).subscribe(
 			champ => {
 				this.router.navigate(['journees', champ.id])

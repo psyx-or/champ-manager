@@ -142,3 +142,15 @@
 	
 	<button class="btn btn-primary" type="submit" [disabled]="validation || getNbEquipes()<2">Créer</button>
 </form>
+
+
+<!----------------------
+	Fenêtre de confirmation d'ajout
+  ------------------- -->
+
+<ng-template #ajoutEquipes let-equipes>
+	De nouvelles équipes vont être ajoutées. Confirmez-vous que ce sont bien de nouvelles équipes?
+	<ul>
+		<li *ngFor="let e of equipes">{{e.nom}}</li>
+	</ul>
+</ng-template>

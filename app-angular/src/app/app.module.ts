@@ -9,8 +9,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { ChampCreationComponent } from './components/champ-creation/champ-creation.component';
 import { FormsModule } from '@angular/forms';
 import { LoginComponent } from './components/login/login.component';
-import { ChampCreationAlertComponent } from './components/champ-creation-alert/champ-creation-alert.component';
 import { JourneesChampComponent } from './components/journees-champ/journees-champ.component';
+import { ModalComponent } from './components/modal/modal.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +19,7 @@ import { JourneesChampComponent } from './components/journees-champ/journees-cha
     ChampionnatsComponent,
     ChampCreationComponent,
     LoginComponent,
-    ChampCreationAlertComponent,
+    ModalComponent,
     JourneesChampComponent
   ],
   imports: [
@@ -33,7 +33,7 @@ import { JourneesChampComponent } from './components/journees-champ/journees-cha
   bootstrap: [AppComponent],
   entryComponents: [
 	  LoginComponent,
-	  ChampCreationAlertComponent
+	  ModalComponent
   ]
 })
 export class AppModule { }

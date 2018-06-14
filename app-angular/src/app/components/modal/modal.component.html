@@ -2,19 +2,14 @@
 		Entête
 	------------------- -->
 <div class="modal-header">
-	<h4 class="modal-title">Nouvelles équipes détectées</h4>
+	<h4 class="modal-title">{{titre}}</h4>
 </div>
 
 <!----------------------
 		Formulaire
 	------------------- -->
 <div class="modal-body">
-
-	De nouvelles équipes vont être ajoutées. Confirmez-vous que ce sont bien de nouvelles équipes?
-	<ul>
-		<li *ngFor="let e of equipes">{{e.nom}}</li>
-	</ul>
-
+	<ng-container *ngTemplateOutlet="contenu; context: contexte"></ng-container>
 </div>
 
 <!----------------------

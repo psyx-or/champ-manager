@@ -4,18 +4,24 @@
     <a class="btn btn-outline-primary" routerLink="/champ-creation"><i class="icon ion-md-add"></i> Créer un championnat</a>
 </div>
 
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th scope="col">Nom</th>
-            <th scope="col">Saison</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let champ of championnats">
-            <td>{{champ.nom}}</td>
-			<td>{{champ.saison}}</td>
-			<td>{{champ |json}}</td>
-        </tr>
-    </tbody>
-</table>
+<div class="card" *ngFor="let sport of sports">
+	<div class="card-header">{{sport.nom}}</div>
+	<div class="card-body">
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th scope="col">Nom</th>
+					<th scope="col">Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr *ngFor="let champ of championnats.get(sport.nom)">
+					<td>{{champ.nom}}</td>
+					<td>
+						<button class="btn btn-sm btn-outline-danger" (click)="supprimer(champ)" ngbTooltip="Supprimer le championnat"><i class="icon ion-md-trash"></i></button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>

@@ -26,10 +26,22 @@ class ChampionnatController extends CMController
      * @Route("/championnat")
      * @Method("GET")
      */
-    public function list()
+    public function liste()
     {
         $repository = $this->getDoctrine()->getRepository(Championnat::class);
         return $this->groupJson($repository->findAll(), 'simple');
+    }
+
+    /**
+     * @Route("/championnat/{id}")
+     * @Method("DELETE")
+	 * @IsGranted("ROLE_ADMIN")
+     */
+    public function supprime(Championnat $championnat, EntityManagerInterface $entityManager)
+    {
+		$entityManager->remove($championnat);
+		$entityManager->flush();
+        return $this->json("ok");
     }
 
     /**
@@ -38,7 +50,7 @@ class ChampionnatController extends CMController
 	 * @IsGranted("ROLE_ADMIN")
 	 * @ParamConverter("dto", converter="cm_converter")
      */
-	public function create(ChampCreationDTO $dto, EntityManagerInterface $entityManager) 
+	public function cree(ChampCreationDTO $dto, EntityManagerInterface $entityManager) 
 	{
 		// Création du sport si besoin
 		$sport = $entityManager->merge($dto->getChampionnat()->getSport());

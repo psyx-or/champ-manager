@@ -75,11 +75,13 @@ class Match
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Match")
+	 * @ORM\JoinColumn(onDelete="SET NULL")
      */
     private $match1;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Match")
+	 * @ORM\JoinColumn(onDelete="SET NULL")
      */
     private $match2;
 

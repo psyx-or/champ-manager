@@ -28,4 +28,12 @@ export class ChampionnatService {
 	public create(championnat: Championnat, equipes: Equipe[]): Observable<Championnat> {
 		return this.http.post<Championnat>("/api/championnat", {championnat: championnat, equipes: equipes});
 	}
+
+	/**
+	 * Supprime un championnat
+	 * @param championnat 
+	 */
+	public supprime(championnat: Championnat): Observable<any> {
+		return this.http.delete("/api/championnat/" + championnat.id);
+	}
 }

@@ -141,6 +141,9 @@ class Championnat
         return $this;
     }
 
+	/**
+	 * @Groups({"classement"})
+	 */
     public function getPtnul(): ?int
     {
         return $this->ptnul;
@@ -165,6 +168,9 @@ class Championnat
         return $this;
     }
 
+	/**
+	 * @Groups({"simple"})
+	 */
     public function getType(): ?string
     {
         return $this->type;
@@ -178,6 +184,7 @@ class Championnat
     }
 
     /**
+	 * @Groups({"classement"})
      * @return Collection|Classement[]
      */
     public function getClassements(): Collection

@@ -58,17 +58,20 @@ class ChampionnatController extends CMController
 		// Création des objets
 		$championnat = $this->creeChampionnat($dto->getChampionnat(), $sport, $entityManager);
 		$equipes = $this->getEquipes($dto->getEquipes(), $sport, $entityManager);
-		$this->creeClassements($championnat, $equipes, $entityManager);
 
 		// Création des matches
 		switch ($championnat->getType())
 		{
 			case ChampionnatType::ALLER :
+				$this->creeClassements($championnat, $equipes, $entityManager);
 				$this->creeMatchesChampionnat($championnat, $equipes, 1, $entityManager);
 				break;
+
 			case ChampionnatType::ALLER_RETOUR :
+				$this->creeClassements($championnat, $equipes, $entityManager);
 				$this->creeMatchesChampionnat($championnat, $equipes, 2, $entityManager);
 				break;
+				
 			case ChampionnatType::COUPE :
 				$this->creeMatchesCoupe($championnat, $equipes, $entityManager);
 				break;

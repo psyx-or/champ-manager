@@ -1,0 +1,38 @@
+<h1>
+	Classement de {{ champ?.nom }} ({{ champ?.sport.nom }} {{ champ?.saison }})
+</h1>
+<br>
+<table class="table table-striped text-center table-bordered">
+	<thead>
+		<tr>
+			<th scope="col">#</th>
+			<th scope="col">Equipe</th>
+			<th scope="col">Pts</th>
+			<th scope="col" class="separation">J</th>
+			<th scope="col">G</th>
+			<th scope="col" *ngIf="champ.ptnul != null">N</th>
+			<th scope="col">P</th>
+			<th scope="col">FO</th>
+			<th scope="col" class="separation">Pour</th>
+			<th scope="col">Contre</th>
+			<th scope="col">Diff</th>
+			<th scope="col" class="separation">Pén</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr *ngFor="let class of classements">
+			<td>{{class.position}}</td>
+			<td>{{class.equipe.nom}}</td>
+			<td class="font-weight-bold">{{class.pts}}</td>
+			<td class="separation">{{class.mTotal}}</td>
+			<td>{{class.mVict}}</td>
+			<td *ngIf="champ.ptnul != null">{{class.mNul}}</td>
+			<td>{{class.mDef}}</td>
+			<td>{{class.mFo}}</td>
+			<td class="separation">{{class.pour}}</td>
+			<td>{{class.contre}}</td>
+			<td>{{class.pour - class.contre}}</td>
+			<td class="separation">{{class.penalite}}</td>
+		</tr>
+	</tbody>
+</table>

@@ -18,6 +18,8 @@
 				<tr *ngFor="let champ of championnats.get(sport.nom)">
 					<td>{{champ.nom}}</td>
 					<td>
+						<a class="btn btn-sm btn-outline-secondary" [routerLink]="['/classement', champ.id]" *ngIf="champ.type != 'COUPE'" ngbTooltip="Afficher le classement"><i class="icon ion-md-podium"></i></a>
+						&nbsp;
 						<a class="btn btn-sm btn-outline-secondary" [routerLink]="['/journees', champ.id]" ngbTooltip="Afficher le calendrier"><i class="icon ion-md-calendar"></i></a>
 						&nbsp;
 						<button class="btn btn-sm btn-outline-danger" (click)="supprimer(champ)" ngbTooltip="Supprimer le championnat"><i class="icon ion-md-trash"></i></button>

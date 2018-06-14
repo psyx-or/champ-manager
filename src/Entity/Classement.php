@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Symfony\Component\Serializer\Annotation\Groups;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -85,6 +86,9 @@ class Classement
         return $this;
     }
 
+	/**
+	 * @Groups({"simple"})
+	 */
     public function getEquipe(): ?Equipe
     {
         return $this->equipe;
@@ -97,6 +101,9 @@ class Classement
         return $this;
     }
 
+	/**
+	 * @Groups({"simple"})
+	 */
     public function getPosition(): ?int
     {
         return $this->position;
@@ -109,6 +116,9 @@ class Classement
         return $this;
     }
 
+	/**
+	 * @Groups({"simple"})
+	 */
     public function getPts(): ?int
     {
         return $this->pts;
@@ -121,6 +131,9 @@ class Classement
         return $this;
     }
 
+	/**
+	 * @Groups({"simple"})
+	 */
     public function getMTotal(): ?int
     {
         return $this->m_total;
@@ -133,6 +146,9 @@ class Classement
         return $this;
     }
 
+	/**
+	 * @Groups({"simple"})
+	 */
     public function getMVict(): ?int
     {
         return $this->m_vict;
@@ -145,6 +161,9 @@ class Classement
         return $this;
     }
 
+	/**
+	 * @Groups({"simple"})
+	 */
     public function getMNul(): ?int
     {
         return $this->m_nul;
@@ -157,6 +176,9 @@ class Classement
         return $this;
     }
 
+	/**
+	 * @Groups({"simple"})
+	 */
     public function getMDef(): ?int
     {
         return $this->m_def;
@@ -169,6 +191,9 @@ class Classement
         return $this;
     }
 
+	/**
+	 * @Groups({"simple"})
+	 */
     public function getMFo(): ?int
     {
         return $this->m_fo;
@@ -181,6 +206,9 @@ class Classement
         return $this;
     }
 
+	/**
+	 * @Groups({"simple"})
+	 */
     public function getPenalite(): ?int
     {
         return $this->penalite;
@@ -193,6 +221,9 @@ class Classement
         return $this;
     }
 
+	/**
+	 * @Groups({"simple"})
+	 */
     public function getPour(): ?int
     {
         return $this->pour;
@@ -205,6 +236,9 @@ class Classement
         return $this;
     }
 
+	/**
+	 * @Groups({"simple"})
+	 */
     public function getContre(): ?int
     {
         return $this->contre;

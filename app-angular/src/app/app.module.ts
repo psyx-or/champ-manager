@@ -11,6 +11,7 @@ import { FormsModule } from '@angular/forms';
 import { LoginComponent } from './components/login/login.component';
 import { JourneesChampComponent } from './components/journees-champ/journees-champ.component';
 import { ModalComponent } from './components/modal/modal.component';
+import { ClassementComponent } from './components/classement/classement.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { ModalComponent } from './components/modal/modal.component';
     ChampCreationComponent,
     LoginComponent,
     ModalComponent,
-    JourneesChampComponent
+    JourneesChampComponent,
+    ClassementComponent
   ],
   imports: [
     BrowserModule,

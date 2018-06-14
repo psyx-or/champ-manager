@@ -1,0 +1,16 @@
+<h1>
+	Plateau de {{ champ?.nom }} ({{ champ?.sport.nom }} {{ champ?.saison }})
+</h1>
+<br>
+
+<table class="table table-bordered">
+	<tbody>
+		<tr *ngFor="let ligne of plateau">
+			<td *ngFor="let cell of ligne" 
+				[attr.colspan]="cell.colspan" [attr.rowspan]="cell.rowspan"
+				class="align-middle" [ngClass]="{'table-danger': cell.perdant === true, 'table-success': cell.perdant === false}">
+				{{ cell.label }}
+			</td>
+		</tr>
+	</tbody>
+</table>

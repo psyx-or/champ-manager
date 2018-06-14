@@ -240,6 +240,9 @@ class Match
         return $this;
     }
 
+	/**
+	 * @Groups({"hierarchie"})
+	 */
     public function getMatch1(): ?self
     {
         return $this->match1;
@@ -252,6 +255,9 @@ class Match
         return $this;
     }
 
+	/**
+	 * @Groups({"hierarchie"})
+	 */
     public function getMatch2(): ?self
     {
         return $this->match2;

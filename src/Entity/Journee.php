@@ -45,6 +45,9 @@ class Journee
         $this->matches = new ArrayCollection();
     }
 
+	/**
+	 * @Groups({"hierarchie"})
+	 */
     public function getChampionnat(): ?Championnat
     {
         return $this->championnat;
@@ -103,7 +106,7 @@ class Journee
     }
 
     /**
-	 * @Groups({"matches"})
+	 * @Groups({"matches", "hierarchie"})
      * @return Collection|Match[]
      */
     public function getMatches(): Collection

@@ -4,12 +4,14 @@ import { ChampionnatsComponent } from './components/championnats/championnats.co
 import { ChampCreationComponent } from './components/champ-creation/champ-creation.component';
 import { JourneesChampComponent } from './components/journees-champ/journees-champ.component';
 import { ClassementComponent } from './components/classement/classement.component';
+import { CoupeComponent } from './components/coupe/coupe.component';
 
 const routes: Routes = [
     { path: 'championnats', component: ChampionnatsComponent },
 	{ path: 'champ-creation', component: ChampCreationComponent },
 	{ path: 'journees/:champId', component: JourneesChampComponent },
 	{ path: 'classement/:champId', component: ClassementComponent },
+	{ path: 'coupe/:champId', component: CoupeComponent },
 ];
 
 @NgModule({

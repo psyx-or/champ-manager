@@ -12,6 +12,7 @@ import { LoginComponent } from './components/login/login.component';
 import { JourneesChampComponent } from './components/journees-champ/journees-champ.component';
 import { ModalComponent } from './components/modal/modal.component';
 import { ClassementComponent } from './components/classement/classement.component';
+import { CoupeComponent } from './components/coupe/coupe.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { ClassementComponent } from './components/classement/classement.componen
     LoginComponent,
     ModalComponent,
     JourneesChampComponent,
-    ClassementComponent
+    ClassementComponent,
+    CoupeComponent
   ],
   imports: [
     BrowserModule,

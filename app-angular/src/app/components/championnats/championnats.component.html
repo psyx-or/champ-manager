@@ -4,9 +4,9 @@
     <a class="btn btn-outline-primary" routerLink="/champ-creation"><i class="icon ion-md-add"></i> Créer un championnat</a>
 </div>
 
-<div class="card" *ngFor="let sport of sports">
-	<div class="card-header">{{sport.nom}}</div>
-	<div class="card-body">
+<div class="card bg-primary" *ngFor="let sport of sports">
+	<div class="card-header text-white">{{sport.nom}}</div>
+	<div class="bg-white">
 		<table class="table table-striped">
 			<thead>
 				<tr>

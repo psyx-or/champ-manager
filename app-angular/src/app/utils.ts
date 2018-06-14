@@ -39,7 +39,7 @@ export function strJournee(j: Journee): string {
  * @param contexte Variable associée au contenu
  * @param cb Callback en cas de validation
  */
-export function openModal(composant: { modalService: NgbModal }, titre: string, contenu: TemplateRef<any>, contexte: any, cb: Function) {
+export function openModal(composant: { modalService: NgbModal }, titre: string, contenu: TemplateRef<any>, contexte: any, cb: ()=>void) {
 	const modal = composant.modalService.open(ModalComponent, { centered: true, backdrop: 'static' });
 	modal.componentInstance.titre = titre;
 	modal.componentInstance.contenu = contenu;

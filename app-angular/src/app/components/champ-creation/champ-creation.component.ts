@@ -11,6 +11,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
 import { ModalComponent } from '../modal/modal.component';
 import { openModal } from '../../utils';
+import { RequeteService } from '../../services/requete.service';
 
 @Component({
   selector: 'app-champ-creation',
@@ -29,7 +30,6 @@ export class ChampCreationComponent implements OnInit {
 	itequipes = Array(this.equipes.length);
 	avecNuls: boolean = true;
 	equipesSport: Equipe[] = null;
-	validation: boolean = false;
 
 
 	/**
@@ -39,6 +39,7 @@ export class ChampCreationComponent implements OnInit {
 	 */
     constructor(
 		public modalService: NgbModal,
+		public requeteService: RequeteService,
         private sportsService: SportService,
         private championnatService: ChampionnatService,
 		private equipeService: EquipeService,
@@ -51,7 +52,10 @@ export class ChampCreationComponent implements OnInit {
     ngOnInit() {
         // Récupération des données
         this.types = Object.entries(ChampType);
-        this.sportsService.getSports().subscribe(sports => this.sports = sports);
+		this.requeteService.requete(
+			this.sportsService.getSports(),
+			sports => this.sports = sports
+		);
 
         // Construction de l'objet
         let date = new Date();
@@ -96,14 +100,10 @@ export class ChampCreationComponent implements OnInit {
 	 * Lancement de la création du championnat
 	 */
 	creation(): void {
-		this.validation = true;
-		this.championnatService.create(this.championnat, this.equipes.filter(e=>e)).subscribe(
+		this.requeteService.requete(
+			this.championnatService.create(this.championnat, this.equipes.filter(e=>e)),
 			champ => {
 				this.router.navigate(['journees', champ.id])
-			},
-			err => {
-				alert("Erreur lors de la création");
-				this.validation = false;
 			}
 		);
 	}
@@ -147,9 +147,10 @@ export class ChampCreationComponent implements OnInit {
 		}
 		else {
 			this.equipesSport = null;
-			this.equipeService.getEquipes(this.championnat.sport.nom).subscribe(
+			this.requeteService.requete(
+				this.equipeService.getEquipes(this.championnat.sport.nom),
 				equipes => this.equipesSport = equipes
-			)
+			);
 		}
 	}
 

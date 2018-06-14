@@ -4,6 +4,7 @@ import { Championnat } from '../../model/Championnat';
 import { Sport } from '../../model/Sport';
 import { sort, openModal } from '../../utils';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { RequeteService } from '../../services/requete.service';
 
 @Component({
   selector: 'app-championnats',
@@ -24,6 +25,7 @@ export class ChampionnatsComponent implements OnInit {
 	 */
     constructor(
 		public modalService: NgbModal,
+		private requeteService: RequeteService,
         private championnatService: ChampionnatService
     ) { }
 
@@ -32,17 +34,20 @@ export class ChampionnatsComponent implements OnInit {
 	 */
     ngOnInit() {
 		// TODO: filtre par défaut sur la saison en cours
-        this.championnatService.getChampionnats().subscribe(championnats => {
-			this.sports = [];
-			sort(championnats, 'nom');
-			this.championnats = championnats.reduce((map, champ) => {
-				let sport = champ.sport.nom;
-				if (!map.has(sport)) {this.sports.push(champ.sport); map.set(sport, [])};
-				map.get(sport).push(champ);
-				return map;
-			}, new Map<string, Championnat[]>());
-			sort(this.sports, 'nom');
-		});
+		this.requeteService.requete(
+			this.championnatService.getChampionnats(),
+			championnats => {
+				this.sports = [];
+				sort(championnats, 'nom');
+				this.championnats = championnats.reduce((map, champ) => {
+					let sport = champ.sport.nom;
+					if (!map.has(sport)) {this.sports.push(champ.sport); map.set(sport, [])};
+					map.get(sport).push(champ);
+					return map;
+				}, new Map<string, Championnat[]>());
+				sort(this.sports, 'nom');
+			}
+		);
 	}
 	
 	/**
@@ -56,9 +61,9 @@ export class ChampionnatsComponent implements OnInit {
 			this.supprChampTpl,
 			champ,
 			() => {
-				this.championnatService.supprime(champ).subscribe(
-					res => { this.ngOnInit() },
-					err => alert("Erreur lors de la suppression")
+				this.requeteService.requete(
+					this.championnatService.supprime(champ),
+					res => { this.ngOnInit() }
 				);
 			}
 		);

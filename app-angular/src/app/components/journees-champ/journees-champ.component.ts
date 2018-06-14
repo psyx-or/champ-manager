@@ -6,6 +6,7 @@ import { Championnat } from '../../model/Championnat';
 import { sort, strJournee } from '../../utils';
 import { NgbDatepickerI18n, NgbDateStruct, NgbDatepickerConfig, NgbDatepicker } from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'moment';
+import { RequeteService } from '../../services/requete.service';
 
 
 const nbMois = 4;
@@ -84,7 +85,6 @@ export class JourneesChampComponent implements OnInit, AfterViewInit {
 	dateFin: moment.Moment;
 	dateDebutSel: moment.Moment;
 	dateFinSel: moment.Moment;
-	validation: boolean = false;
 
 	strjournee = strJournee;
 
@@ -96,10 +96,11 @@ export class JourneesChampComponent implements OnInit, AfterViewInit {
 	 * @param config 
 	 */
 	constructor(
+		private router: Router,
 		private route: ActivatedRoute,
 		private journeeService: JourneeService,
-		config: NgbDatepickerConfig,
-		private router: Router
+		private requeteService: RequeteService,
+		config: NgbDatepickerConfig
 	) { 
 		config.displayMonths = nbMois;
 		config.navigation = "none";
@@ -111,11 +112,15 @@ export class JourneesChampComponent implements OnInit, AfterViewInit {
 	 */
 	ngOnInit() {
 		const champId = +this.route.snapshot.paramMap.get('champId');
-		this.journeeService.getJournees(champId).subscribe(champ => {
-			this.champ = champ;
-			this.journees = sort(champ.journees, 'numero');
-			this.iJournee = 0;
-		});
+
+		this.requeteService.requete(
+			this.journeeService.getJournees(champId),
+			champ => {
+				this.champ = champ;
+				this.journees = sort(champ.journees, 'numero');
+				this.iJournee = 0;
+			}
+		);
 	}
 
 	/**
@@ -129,14 +134,10 @@ export class JourneesChampComponent implements OnInit, AfterViewInit {
 	 * Enregistre le calendrier
 	 */
 	enregistrer(): void {
-		this.validation = true;
-		this.journeeService.majJournees(this.champ, this.journees).subscribe(
+		this.requeteService.requete(
+			this.journeeService.majJournees(this.champ, this.journees),
 			res => {
 				this.router.navigate(['championnats'])
-			},
-			err => {
-				alert("Erreur lors de l'enregistrement'")
-				this.validation = false;
 			}
 		);
 	}

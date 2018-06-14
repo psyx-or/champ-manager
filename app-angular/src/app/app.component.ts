@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { LoginComponent } from './components/login/login.component';
 import { AuthentService } from './services/authent.service';
+import { RequeteService } from './services/requete.service';
 
 @Component({
   selector: 'app-root',
@@ -19,6 +20,7 @@ export class AppComponent implements OnInit {
 	 * @param authentService 
 	 */
 	constructor(
+		private requeteService: RequeteService,
 		private modalService: NgbModal,
 		private authentService: AuthentService
 	) { }
@@ -37,16 +39,18 @@ export class AppComponent implements OnInit {
 	 */
 	checkConnexion(first: boolean, creds?: Object): void {
 		// Appel au serveur
-		this.authentService.authentifie(creds).subscribe(connected => {
-			this.authentifie = connected;
+		this.requeteService.requete(
+			this.authentService.authentifie(creds),
+			connected => {
+				this.authentifie = connected;
 
-			// Si on est connecté, c'est bon
-			if (connected) return;
+				// Si on est connecté, c'est bon
+				if (connected) return;
 
-			// Sinon, affichage de la pop-up de connexion pour récupérer les identifiants et recommencer
-			const modal = this.modalService.open(LoginComponent, { centered: true, backdrop: 'static' });
-			modal.componentInstance.error = !first;
-			modal.result.then(creds => this.checkConnexion(false, creds));
-		});
+				// Sinon, affichage de la pop-up de connexion pour récupérer les identifiants et recommencer
+				const modal = this.modalService.open(LoginComponent, { centered: true, backdrop: 'static' });
+				modal.componentInstance.error = !first;
+				modal.result.then(creds => this.checkConnexion(false, creds));
+			});
 	}
 }

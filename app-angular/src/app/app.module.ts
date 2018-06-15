@@ -13,6 +13,8 @@ import { JourneesChampComponent } from './components/journees-champ/journees-cha
 import { ModalComponent } from './components/modal/modal.component';
 import { ClassementComponent } from './components/classement/classement.component';
 import { CoupeComponent } from './components/coupe/coupe.component';
+import { MatchesComponent } from './components/matches/matches.component';
+import { ChampMenuComponent } from './components/champ-menu/champ-menu.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,9 @@ import { CoupeComponent } from './components/coupe/coupe.component';
     ModalComponent,
     JourneesChampComponent,
     ClassementComponent,
-    CoupeComponent
+    CoupeComponent,
+    MatchesComponent,
+    ChampMenuComponent
   ],
   imports: [
     BrowserModule,

@@ -228,7 +228,7 @@ class Championnat
     }
 
     /**
-	 * @Groups({"journees"})
+	 * @Groups({"journees","matches"})
      * @return Collection|Journee[]
      */
     public function getJournees(): Collection

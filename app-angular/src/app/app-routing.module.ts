@@ -5,6 +5,7 @@ import { ChampCreationComponent } from './components/champ-creation/champ-creati
 import { JourneesChampComponent } from './components/journees-champ/journees-champ.component';
 import { ClassementComponent } from './components/classement/classement.component';
 import { CoupeComponent } from './components/coupe/coupe.component';
+import { MatchesComponent } from './components/matches/matches.component';
 
 const routes: Routes = [
     { path: 'championnats', component: ChampionnatsComponent },
@@ -12,6 +13,7 @@ const routes: Routes = [
 	{ path: 'journees/:champId', component: JourneesChampComponent },
 	{ path: 'classement/:champId', component: ClassementComponent },
 	{ path: 'coupe/:champId', component: CoupeComponent },
+	{ path: 'matches/:champId', component: MatchesComponent },
 ];
 
 @NgModule({

@@ -17,6 +17,7 @@ export class AuthentService {
 	 * @param creds 
 	 */
 	public authentifie(creds?): Observable<boolean> {
+		// TODO: forcer les droits admin
 		return new Observable<boolean>(observer => {
 			this.http.get<Object>("/api/me", { params: creds }).subscribe(
 				obj => { observer.next(true); observer.complete(); },

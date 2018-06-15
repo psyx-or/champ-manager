@@ -1,0 +1,21 @@
+<app-champ-menu [champ]="champ"></app-champ-menu>
+
+<div class="card bg-primary" *ngFor="let journee of journees">
+	<div class="card-header text-white">{{strJournee(journee)}}</div>
+	<div class="bg-white">
+		<table class="table table-striped">
+			<tbody>
+				<tr *ngFor="let match of journee.matches">
+					<td>{{match.equipe1?.nom}}</td>
+					<td>{{match.score1}}</td>
+					<td>-</td>
+					<td>{{match.score2}}</td>
+					<td>{{match.equipe2?.nom}}</td>
+					<td><span *ngIf="match.valide">VALIDE</span></td>
+					<td><span *ngIf="match.feuille">Feuille de match</span></td>
+					<td><span *ngIf="!match.feuille">Feuille de fairplay</span></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>

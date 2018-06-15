@@ -1,7 +1,5 @@
-<h1>
-	Classement de {{ champ?.nom }} ({{ champ?.sport.nom }} {{ champ?.saison }})
-</h1>
-<br>
+<app-champ-menu [champ]="champ"></app-champ-menu>
+
 <table class="table table-striped text-center table-bordered">
 	<thead>
 		<tr>
@@ -10,7 +8,7 @@
 			<th scope="col">Pts</th>
 			<th scope="col" class="separation">J</th>
 			<th scope="col">G</th>
-			<th scope="col" *ngIf="champ.ptnul != null">N</th>
+			<th scope="col" *ngIf="champ?.ptnul != null">N</th>
 			<th scope="col">P</th>
 			<th scope="col">FO</th>
 			<th scope="col" class="separation">Pour</th>
@@ -26,7 +24,7 @@
 			<td class="font-weight-bold">{{class.pts}}</td>
 			<td class="separation">{{class.mTotal}}</td>
 			<td>{{class.mVict}}</td>
-			<td *ngIf="champ.ptnul != null">{{class.mNul}}</td>
+			<td *ngIf="champ?.ptnul != null">{{class.mNul}}</td>
 			<td>{{class.mDef}}</td>
 			<td>{{class.mFo}}</td>
 			<td class="separation">{{class.pour}}</td>

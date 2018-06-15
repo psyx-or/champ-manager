@@ -24,5 +24,14 @@ class MatchController extends CMController
 		$journee = $repository->findBy(array('championnat' => $championnat, 'numero' => "-1"));
 
         return $this->groupJson($journee[0], 'simple', 'hierarchie');
+	}
+	
+    /**
+     * @Route("/match/{id}")
+     * @Method("GET")
+     */
+    public function liste(Championnat $championnat)
+    {
+        return $this->groupJson($championnat, 'simple', 'matches');
     }
 }

@@ -14,10 +14,10 @@ export class ChampMenuComponent implements OnInit {
 
 	active: number;
 	menu = [
-		{ route: "matches", titre: "Matches" },
-		{ route: "classement", titre: "Classement", types: [ChampType.Aller, ChampType["Aller/Retour"]]},
-		{ route: "coupe", titre: "Plateau", types: [ChampType.Coupe] },
-		{ route: "journees", titre: "Calendrier"},
+		{ route: "matches", titre: "<i class='icon ion-md-clipboard'></i> Matches" },
+		{ route: "classement", titre: "<i class='icon ion-md-podium'></i> Classement", types: [ChampType.Aller, ChampType["Aller/Retour"]]},
+		{ route: "coupe", titre: "<i class='icon ion-md-git-network'></i> Plateau", types: [ChampType.Coupe] },
+		{ route: "journees", titre: "<i class='icon ion-md-calendar'></i> Calendrier"},
 	]
 
 	constructor(
@@ -28,7 +28,6 @@ export class ChampMenuComponent implements OnInit {
 	ngOnInit() {
 		const route = this.route.snapshot.url;
 		this.active = this.menu.findIndex(t => t.route == route[0].path);
-		console.log(route);
 	}
 	
 	public beforeChange($event: NgbTabChangeEvent) {

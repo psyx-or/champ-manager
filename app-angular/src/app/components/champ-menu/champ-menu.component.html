@@ -4,7 +4,9 @@
 <br>
 <ngb-tabset [activeId]="'cm' + active" (tabChange)="beforeChange($event)" *ngIf="champ">
 	<ng-container *ngFor="let t of menu; let i = index;">
-		<ngb-tab id="cm{{i}}" title="{{t.titre}}" *ngIf="!t.types || t.types.indexOf(champ.type)!=-1"></ngb-tab>
+		<ngb-tab id="cm{{i}}" *ngIf="!t.types || t.types.indexOf(champ.type)!=-1">
+			<ng-template ngbTabTitle><span [innerHTML]="t.titre"></span></ng-template>
+		</ngb-tab>
 	</ng-container>
 </ngb-tabset>
 <br>

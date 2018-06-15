@@ -6,6 +6,12 @@ import { Championnat } from '../../model/Championnat';
 import { Journee } from '../../model/Journee';
 import { sort } from '../../utils/utils';
 
+class JourneeExt {
+	public obj: Journee;
+	public classe: string;
+	public isCollapsed: boolean;
+}
+
 @Component({
   selector: 'app-matches',
   templateUrl: './matches.component.html',
@@ -14,7 +20,7 @@ import { sort } from '../../utils/utils';
 export class MatchesComponent implements OnInit {
 
 	champ: Championnat = null;
-	journees: Journee[];
+	journees: JourneeExt[];
 
 
 	constructor(
@@ -30,7 +36,13 @@ export class MatchesComponent implements OnInit {
 			this.matchService.liste(champId),
 			champ => {
 				this.champ = champ;
-				this.journees = sort(champ.journees, 'numero');
+				this.journees = sort(champ.journees, 'numero').map(j => {
+					return {
+						obj: j,
+						classe: 'primary',
+						isCollapsed: (j.numero%2)==0
+					}
+				});
 			}
 		);
 	}

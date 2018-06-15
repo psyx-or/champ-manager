@@ -1,3 +1,16 @@
 .card {
 	margin-bottom: 20px;
 }
+
+.card-header {
+	cursor: pointer;
+}
+
+.reducteur {
+	display: inline-block;
+	margin-right: 10px;
+}
+
+.reducteur.ouvert {
+	transform: rotate(90deg);
+}

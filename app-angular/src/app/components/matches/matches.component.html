@@ -1,11 +1,16 @@
 <app-champ-menu [champ]="champ"></app-champ-menu>
 
-<div class="card bg-primary" *ngFor="let journee of journees">
-	<div class="card-header text-white">{{ journee | strJournee }}</div>
-	<div class="bg-white">
+<div *ngFor="let journee of journees" class="card" [ngClass]="'bg-' + journee.classe">
+
+	<div class="card-header text-white" (click)="journee.isCollapsed = !journee.isCollapsed">
+		<span class="reducteur" [class.ouvert]="!journee.isCollapsed"><i class='icon ion-md-play'></i></span>
+		{{ journee.obj | strJournee }}
+	</div>
+
+	<div class="bg-white" [ngbCollapse]="journee.isCollapsed">
 		<table class="table table-striped">
 			<tbody>
-				<tr *ngFor="let match of journee.matches">
+				<tr *ngFor="let match of journee.obj.matches">
 					<td>{{match.equipe1?.nom}}</td>
 					<td>{{match.score1}}</td>
 					<td>-</td>

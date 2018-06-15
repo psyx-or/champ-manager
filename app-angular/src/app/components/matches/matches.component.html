@@ -1,7 +1,7 @@
 <app-champ-menu [champ]="champ"></app-champ-menu>
 
 <div class="card bg-primary" *ngFor="let journee of journees">
-	<div class="card-header text-white">{{strJournee(journee)}}</div>
+	<div class="card-header text-white">{{ journee | strJournee }}</div>
 	<div class="bg-white">
 		<table class="table table-striped">
 			<tbody>

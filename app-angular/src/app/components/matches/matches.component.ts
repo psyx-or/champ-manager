@@ -4,7 +4,7 @@ import { RequeteService } from '../../services/requete.service';
 import { MatchService } from '../../services/match.service';
 import { Championnat } from '../../model/Championnat';
 import { Journee } from '../../model/Journee';
-import { sort, strJournee } from '../../utils';
+import { sort } from '../../utils/utils';
 
 @Component({
   selector: 'app-matches',
@@ -15,7 +15,6 @@ export class MatchesComponent implements OnInit {
 
 	champ: Championnat = null;
 	journees: Journee[];
-	strJournee = strJournee;
 
 
 	constructor(

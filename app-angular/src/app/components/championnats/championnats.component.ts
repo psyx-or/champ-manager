@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { ChampionnatService } from '../../services/championnat.service';
 import { Championnat } from '../../model/Championnat';
 import { Sport } from '../../model/Sport';
-import { sort, openModal } from '../../utils';
+import { sort, openModal } from '../../utils/utils';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { RequeteService } from '../../services/requete.service';
 

@@ -10,7 +10,7 @@ import { Equipe } from '../../model/Equipe';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
 import { ModalComponent } from '../modal/modal.component';
-import { openModal } from '../../utils';
+import { openModal } from '../../utils/utils';
 import { RequeteService } from '../../services/requete.service';
 
 @Component({

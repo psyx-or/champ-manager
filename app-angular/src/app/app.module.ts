@@ -15,6 +15,7 @@ import { ClassementComponent } from './components/classement/classement.componen
 import { CoupeComponent } from './components/coupe/coupe.component';
 import { MatchesComponent } from './components/matches/matches.component';
 import { ChampMenuComponent } from './components/champ-menu/champ-menu.component';
+import { StrJourneePipe } from './utils/str-journee.pipe';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { ChampMenuComponent } from './components/champ-menu/champ-menu.component
     ClassementComponent,
     CoupeComponent,
     MatchesComponent,
-    ChampMenuComponent
+    ChampMenuComponent,
+    StrJourneePipe
   ],
   imports: [
     BrowserModule,

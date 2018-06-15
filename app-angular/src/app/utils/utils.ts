@@ -1,5 +1,4 @@
-import { Journee } from "./model/Journee";
-import { ModalComponent } from "./components/modal/modal.component";
+import { ModalComponent } from "../components/modal/modal.component";
 import { TemplateRef } from "@angular/core";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 
@@ -19,16 +18,6 @@ export function sort<T>(tab: T[], attr: string): T[] {
 
 		return (attrA < attrB ? -1 : (attrA > attrB ? 1 : 0))
 	});
-}
-
-/**
- * Calcule le libellé associé à une journée
- * @param j 
- */
-export function strJournee(j: Journee): string {
-	if (j.numero > 0) return "Journée " + j.numero;
-	if (j.numero == -1) return "Finale";
-	return "1/" + 2 ** (-j.numero - 1) + " Finale"
 }
 
 /**

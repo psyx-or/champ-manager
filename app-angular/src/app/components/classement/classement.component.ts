@@ -4,7 +4,7 @@ import { ClassementService } from '../../services/classement.service';
 import { ActivatedRoute } from '@angular/router';
 import { Championnat } from '../../model/Championnat';
 import { Classement } from '../../model/Classement';
-import { sort } from '../../utils';
+import { sort } from '../../utils/utils';
 
 @Component({
   selector: 'app-classement',

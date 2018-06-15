@@ -5,7 +5,10 @@ import { MatchService } from '../../services/match.service';
 import { Championnat } from '../../model/Championnat';
 import { Match } from '../../model/Match';
 import { Equipe } from '../../model/Equipe';
-import { strJournee } from '../../utils';
+import { StrJourneePipe } from '../../utils/str-journee.pipe';
+
+
+let strJournee = new StrJourneePipe();
 
 /**
  * Une cellule du plateau
@@ -28,7 +31,7 @@ class Cellule {
 			label = match.score1 > match.score2 ? match.equipe1.nom : match.equipe2.nom;
 		}
 		else {
-			label = strJournee({ numero: -1 - col });
+			label = strJournee.transform({ numero: -1 - col });
 		}
 
 		return {

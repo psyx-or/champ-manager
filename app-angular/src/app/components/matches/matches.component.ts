@@ -42,6 +42,8 @@ export class MatchesComponent implements OnInit {
 					let isCollapsed = true;
 					let classe = 'success';
 					j.matches.forEach(m => {
+						if (m.exempt) return;
+						
 						toDisp(m);
 						if (m.valide !== true) isCollapsed = false;
 						if (m.valide === false) classe = 'primary';

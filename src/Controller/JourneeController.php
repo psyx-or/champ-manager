@@ -44,7 +44,7 @@ class JourneeController extends CMController
 	 * @ParamConverter("championnat", converter="doctrine.orm")
 	 * @ParamConverter("journees", converter="cm_converter", options={"classe":"App\Entity\Journee[]"})
      */
-    public function maj(Championnat $championnat, array $journees, EntityManagerInterface $entityManager)
+    public function majCalendrier(Championnat $championnat, array $journees, EntityManagerInterface $entityManager)
     {
 		foreach ($journees as $journee) 
 		{

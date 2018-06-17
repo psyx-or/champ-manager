@@ -59,7 +59,7 @@ class Match
     private $feuille;
 
     /**
-     * @ORM\Column(type="boolean", nullable=false)
+     * @ORM\Column(type="boolean", nullable=true)
      */
     private $valide;
 
@@ -84,6 +84,14 @@ class Match
 	 * @ORM\JoinColumn(onDelete="SET NULL")
      */
     private $match2;
+
+
+	public function setId($id) : self
+	{
+		$this->id = $id;
+
+		return $this;
+	}
 
 	/**
 	 * @Groups({"simple"})
@@ -268,5 +276,21 @@ class Match
         $this->match2 = $match2;
 
         return $this;
-    }
+	}
+
+	/**
+	 * @Groups({"simple"})
+	 */
+ 	public function getExempt(): ?Equipe
+	{
+		if ($this->match1 != null || $this->match2 != null)
+			return null;
+		
+		if ($this->equipe1 == null)
+			return $this->equipe2;
+		if ($this->equipe2 == null)
+			return $this->equipe1;
+		
+		return null;
+	}
 }

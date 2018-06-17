@@ -1,6 +1,7 @@
 import { ModalComponent } from "../components/modal/modal.component";
 import { TemplateRef } from "@angular/core";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { Match } from "../model/Match";
 
 /**
  * Trie un tableau d'objets selon un attribut
@@ -34,4 +35,38 @@ export function openModal(composant: { modalService: NgbModal }, titre: string, 
 	modal.componentInstance.contenu = contenu;
 	modal.componentInstance.contexte = { $implicit: contexte };
 	modal.result.then((res) => cb.bind(composant)(res), () => {});
+}
+
+/**
+ * Calcule les propriétés d'un objet Match liées à l'affichage
+ * @param m 
+ */
+export function toDisp(m: Match) {
+	m.dispEquipe1 = m.equipe1 == null ? "A décider" : m.equipe1.nom;
+	m.dispEquipe2 = m.equipe2 == null ? "A décider" : m.equipe2.nom;
+	m.dispScore1 = m.forfait1 ? "FO" : m.score1;
+	m.dispScore2 = m.forfait2 ? "FO" : m.score2;
+}
+
+/**
+ * Traduit les scores renseignés par l'utilisateur
+ * @param m 
+ */
+export function fromDisp(m: Match) {
+	if (m.dispScore1 == "FO") {
+		m.forfait1 = true;
+		m.score1 = null;
+	}
+	else {
+		m.forfait1 = false;
+		m.score1 = +m.dispScore1;
+	}
+	if (m.dispScore2 == "FO") {
+		m.forfait2 = true;
+		m.score2 = null;
+	}
+	else {
+		m.forfait2 = false;
+		m.score2 = +m.dispScore2;
+	}
 }

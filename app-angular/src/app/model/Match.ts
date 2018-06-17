@@ -12,8 +12,14 @@ export class Match {
 	feuille?: string;
 	dateSaisie: Date;
 	valide: boolean;
-	forfait1: false;
-	forfait2: false;
+	forfait1: boolean;
+	forfait2: boolean;
 	match1?: Match;
 	match2?: Match;
+	exempt?: Equipe;
+
+	dispEquipe1?: string;
+	dispEquipe2?: string;
+	dispScore1?: string|number;
+	dispScore2?: string|number;
 }

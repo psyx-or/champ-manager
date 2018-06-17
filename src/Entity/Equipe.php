@@ -57,6 +57,13 @@ class Equipe implements UserInterface, \Serializable
         $this->classements = new ArrayCollection();
     }
 
+	public function setId($id) : self
+	{
+		$this->id = $id;
+
+		return $this;
+	}
+
 	/**
 	 * @Groups({"simple"})
 	 */

@@ -169,7 +169,6 @@ class ChampionnatController extends CMController
 				{
 					$match = new Match();
 					$match->setJournee($journee);
-					$match->setValide(false);
 					$match->setForfait1(false);
 					$match->setForfait2(false);
 
@@ -230,7 +229,6 @@ class ChampionnatController extends CMController
 		{
 			$match = new Match();
 			$match->setJournee($journee);
-			$match->setValide(false);
 			$match->setForfait1(false);
 			$match->setForfait2(false);
 			$match->setEquipe1($equipes[0]);
@@ -248,7 +246,6 @@ class ChampionnatController extends CMController
 
 			$match = new Match();
 			$match->setJournee($journee);
-			$match->setValide(false);
 			$match->setForfait1(false);
 			$match->setForfait2(false);
 			if ($res1 instanceof Equipe)

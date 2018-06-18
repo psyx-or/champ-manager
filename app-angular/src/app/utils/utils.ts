@@ -2,6 +2,7 @@ import { ModalComponent } from "../components/modal/modal.component";
 import { TemplateRef } from "@angular/core";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { Match } from "../model/Match";
+import { Equipe } from "../model/Equipe";
 
 /**
  * Trie un tableau d'objets selon un attribut
@@ -69,4 +70,24 @@ export function fromDisp(m: Match) {
 		m.forfait2 = false;
 		m.score2 = +m.dispScore2;
 	}
+}
+
+/**
+ * Renvoie l'équipe vainqueur d'un match (s'il y a eu un vainqueur)
+ * @param m 
+ */
+export function getVainqueur(m: Match): Equipe|null {
+	// Gestion des forfaits
+	if (m.forfait1 && m.forfait2)
+		return null;
+	if (m.forfait1)
+		return m.equipe2;
+	if (m.forfait2)
+		return m.equipe1;
+
+	// Gestion du score
+	if (m.score1 == m.score2)
+		return null;
+	else
+		return (m.score1 > m.score2) ? m.equipe1 : m.equipe2;
 }

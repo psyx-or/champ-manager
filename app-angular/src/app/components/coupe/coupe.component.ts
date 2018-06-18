@@ -6,6 +6,7 @@ import { Championnat } from '../../model/Championnat';
 import { Match } from '../../model/Match';
 import { Equipe } from '../../model/Equipe';
 import { StrJourneePipe } from '../../utils/str-journee.pipe';
+import { getVainqueur } from '../../utils/utils';
 
 
 let strJournee = new StrJourneePipe();
@@ -25,10 +26,10 @@ class Cellule {
 	 * @param rowspan 
 	 * @param col 
 	 */
-	public static fromMatch(match: Match, rowspan: number, col: number): Cellule {
+	public static fromMatch(match: Match, vainqueur: Equipe|null, rowspan: number, col: number): Cellule {
 		let label;
-		if (match.score1 != null && match.score2 != null) {
-			label = match.score1 > match.score2 ? match.equipe1.nom : match.equipe2.nom;
+		if (vainqueur != null) {
+			label = vainqueur.nom;
 		}
 		else {
 			label = strJournee.transform({ numero: -1 - col });
@@ -138,13 +139,18 @@ export class CoupeComponent implements OnInit {
 			cell2 = this.enregistre(Cellule.fromEquipe(match.equipe2), r + cell1.rowspan, c + 1);
 
 		// Si le match a été joué, qui a gagné?
-		if (match.score1 != null && match.score2 != null) {
-			cell1.perdant = match.score1 < match.score2;
+		let vainqueur = getVainqueur(match);
+		if (vainqueur != null) {
+			if (vainqueur == match.equipe1)
+				cell1.perdant = false;
+			else
+				cell1.perdant = true;
+			
 			cell2.perdant = !cell1.perdant;
 		}
 
 		// Construction de la cellule du match
-		return this.enregistre(Cellule.fromMatch(match, cell1.rowspan + cell2.rowspan, c), r, c);
+		return this.enregistre(Cellule.fromMatch(match, vainqueur, cell1.rowspan + cell2.rowspan, c), r, c);
 	}
 
 	/**

@@ -20,6 +20,6 @@ class EquipeController extends CMController
     public function liste(string $sport)
     {
         $repository = $this->getDoctrine()->getRepository(Equipe::class);
-        return $this->groupJson($repository->findBy(array('sport' => $sport), array('nom' => 'ASC')), 'simple');
+        return $this->groupJson($repository->findBy(['sport' => $sport], ['nom' => 'ASC']), 'simple');
     }
 }

@@ -16,6 +16,7 @@ use App\Entity\Classement;
 use App\Entity\Journee;
 use App\Entity\Match;
 use App\DTO\ChampCreationDTO;
+use App\Outils\MatchFunctions;
 
 /**
  * @Route("/api")
@@ -131,15 +132,8 @@ class ChampionnatController extends CMController
 			$classement->setChampionnat($championnat);
 			$classement->setEquipe($equipe);
 			$classement->setPosition(1);
-			$classement->setPts(0);
-			$classement->setMTotal(0);
-			$classement->setMVict(0);
-			if ($championnat->getPtnul() != null) $classement->setMNul(0);
-			$classement->setMDef(0);
-			$classement->setMFo(0);
 			$classement->setPenalite(0);
-			$classement->setPour(0);
-			$classement->setContre(0);
+			MatchFunctions::initClassements($championnat, $classement);
 			$entityManager->persist($classement);
 		}		
 	}

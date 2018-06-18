@@ -27,17 +27,6 @@ class JourneeController extends CMController
 	}
 	
     /**
-     * @Route("/journee/{id}/{numero}")
-     * @Method("GET")
-     */
-    public function detail(Championnat $championnat, $numero)
-    {
-        $repository = $this->getDoctrine()->getRepository(Journee::class);
-		$journee = $repository->findBy(array('championnat' => $championnat, 'numero' => $numero));
-        return $this->groupJson($journee, 'simple', 'matches');
-    }
-	
-    /**
      * @Route("/journee/{id}")
      * @Method("PUT")
 	 * @IsGranted("ROLE_ADMIN")

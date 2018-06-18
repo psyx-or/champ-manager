@@ -73,17 +73,27 @@ class Match
      */
     private $forfait2;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Match")
+	/**
+	 * @ORM\OneToOne(targetEntity="App\Entity\Match")
 	 * @ORM\JoinColumn(onDelete="SET NULL")
-     */
+	 */
     private $match1;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Match")
+	/**
+	 * @ORM\OneToOne(targetEntity="App\Entity\Match")
 	 * @ORM\JoinColumn(onDelete="SET NULL")
-     */
+	 */
     private $match2;
+
+	/**
+	 * @ORM\OneToOne(targetEntity="App\Entity\Match", mappedBy="match1")
+	 */
+	private $parent1;
+
+	/**
+	 * @ORM\OneToOne(targetEntity="App\Entity\Match", mappedBy="match2")
+	 */
+	private $parent2;
 
 
 	public function setId($id) : self
@@ -261,7 +271,7 @@ class Match
         $this->match1 = $match1;
 
         return $this;
-    }
+	}
 
 	/**
 	 * @Groups({"hierarchie"})
@@ -276,6 +286,16 @@ class Match
         $this->match2 = $match2;
 
         return $this;
+	}
+
+	public function getParent1() : ? self
+	{
+		return $this->parent1;
+	}
+
+	public function getParent2() : ? self
+	{
+		return $this->parent2;
 	}
 
 	/**

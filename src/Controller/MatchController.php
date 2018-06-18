@@ -11,6 +11,8 @@ use App\Entity\Championnat;
 use App\Entity\Journee;
 use App\Entity\Match;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Outils\MatchFunctions;
+use App\Entity\ChampionnatType;
 
 
 /**
@@ -25,7 +27,7 @@ class MatchController extends CMController
     public function hierarchie(Championnat $championnat)
     {
 		$repository = $this->getDoctrine()->getRepository(Journee::class);
-		$journee = $repository->findBy(array('championnat' => $championnat, 'numero' => "-1"));
+		$journee = $repository->findBy(['championnat' => $championnat, 'numero' => "-1"]);
 
         return $this->groupJson($journee[0], 'simple', 'hierarchie');
 	}
@@ -65,27 +67,49 @@ class MatchController extends CMController
 	{
 		$res = array();
 		$repository = $this->getDoctrine()->getRepository(Match::class);
+		$champ = null;
+
 		foreach ($matches as $match) 
 		{
 			$entity = $repository->find($match->getId());
 			array_push($res, $entity);
+			$champ = $entity->getJournee()->getChampionnat();
 
-			if ($entity->getScore1() == $match->getScore1() && $entity->getScore2() == $match->getScore2())
+			// Si pas de modif, on passe
+			if ($entity->getScore1() == $match->getScore1() && $entity->getScore2() == $match->getScore2() &&
+				$entity->getForfait1() == $match->getForfait1() && $entity->getForfait2() == $match->getForfait2())
 				continue;
 
+			// Mise à jour du résultat
 			$entity->setScore1($match->getScore1());
 			$entity->setForfait1($match->getForfait1());
 			$entity->setScore2($match->getScore2());
 			$entity->setForfait2($match->getForfait2());
 			$entity->setValide(true);
-			// TODO: date saisie && remplissage feuille de fair-play
-			// TODO: Gestion du vainqueur en cas de coupe
+
+			// TODO: date saisie && remplissage feuille de fair-play && feuille de match
+
+			// Si c'est un match de coupe, on met à jour le match suivant
+			// avec l'équipe vainqueur
+			if ($entity->getParent1() != null) 
+			{
+				$entity->getParent1()->setEquipe1(MatchFunctions::getVainqueur($entity));
+				$entityManager->merge($entity->getParent1());
+			}
+			if ($entity->getParent2() != null) 
+			{
+				$entity->getParent2()->setEquipe2(MatchFunctions::getVainqueur($entity));
+				$entityManager->merge($entity->getParent2());
+			}
 
 			$entityManager->merge($entity);
-			$entityManager->flush();
 		}
 
-		// TODO: maj classsement
+		// Recalcul du classement des championnats
+		if ($champ != null && $champ->getType() != ChampionnatType::COUPE)
+			MatchFunctions::calculeClassement($champ, $entityManager);
+
+		$entityManager->flush();
 
 		return $this->groupJson($res, 'simple');
 	}

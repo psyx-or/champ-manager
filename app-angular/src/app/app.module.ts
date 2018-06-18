@@ -16,6 +16,7 @@ import { CoupeComponent } from './components/coupe/coupe.component';
 import { MatchesComponent } from './components/matches/matches.component';
 import { ChampMenuComponent } from './components/champ-menu/champ-menu.component';
 import { StrJourneePipe } from './utils/str-journee.pipe';
+import { SignePipe } from './utils/signe.pipe';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { StrJourneePipe } from './utils/str-journee.pipe';
     CoupeComponent,
     MatchesComponent,
     ChampMenuComponent,
-    StrJourneePipe
+    StrJourneePipe,
+    SignePipe
   ],
   imports: [
     BrowserModule,

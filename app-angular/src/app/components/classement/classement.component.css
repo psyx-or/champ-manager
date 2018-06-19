@@ -1,3 +1,15 @@
+td {
+	vertical-align: middle;
+}
+
 .separation {
 	border-left-width: 4px;
+}
+
+.penalite {
+	width: 5em;
+}
+
+.penalite input {
+	width: 4em;
 }

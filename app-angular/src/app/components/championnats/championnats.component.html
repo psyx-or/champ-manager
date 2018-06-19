@@ -7,7 +7,7 @@
 <div class="card bg-primary" *ngFor="let sport of sports">
 	<div class="card-header text-white">{{sport.nom}}</div>
 	<div class="bg-white">
-		<table class="table table-striped">
+		<table class="table table-striped mb-0">
 			<thead>
 				<tr>
 					<th scope="col">Nom</th>
@@ -18,12 +18,12 @@
 				<tr *ngFor="let champ of championnats.get(sport.nom)">
 					<td>{{champ.nom}}</td>
 					<td>
-						<a class="btn btn-sm btn-outline-secondary" [routerLink]="['/matches', champ.id]" ngbTooltip="Afficher les matches"><i class="icon ion-md-clipboard"></i></a>
+						<a class="btn btn-sm btn-outline-secondary" [routerLink]="['/matches', champ.id]" [ngbTooltip]="infoMatches"><i class="icon ion-md-clipboard"></i></a>
 						&nbsp;
-						<a class="btn btn-sm btn-outline-secondary" [routerLink]="['/classement', champ.id]" *ngIf="champ.type != 'COUPE'" ngbTooltip="Afficher le classement"><i class="icon ion-md-podium"></i></a>
-						<a class="btn btn-sm btn-outline-secondary" [routerLink]="['/coupe', champ.id]" *ngIf="champ.type == 'COUPE'" ngbTooltip="Afficher le plateau"><i class="icon ion-md-git-network"></i></a>
+						<a class="btn btn-sm btn-outline-secondary" [routerLink]="['/classement', champ.id]" *ngIf="champ.type != 'COUPE'" [ngbTooltip]="infoClassement"><i class="icon ion-md-podium"></i></a>
+						<a class="btn btn-sm btn-outline-secondary" [routerLink]="['/coupe', champ.id]" *ngIf="champ.type == 'COUPE'" [ngbTooltip]="infoPlateau"><i class="icon ion-md-git-network"></i></a>
 						&nbsp;
-						<a class="btn btn-sm btn-outline-secondary" [routerLink]="['/journees', champ.id]" ngbTooltip="Afficher le calendrier"><i class="icon ion-md-calendar"></i></a>
+						<a class="btn btn-sm btn-outline-secondary" [routerLink]="['/journees', champ.id]" [ngbTooltip]="infoCalendrier"><i class="icon ion-md-calendar"></i></a>
 						&nbsp;
 						<button class="btn btn-sm btn-outline-danger" (click)="supprimer(champ)" ngbTooltip="Supprimer le championnat"><i class="icon ion-md-trash"></i></button>
 					</td>
@@ -40,4 +40,28 @@
 
 <ng-template #supprChamp let-champ>
 	Etes-vous sûr de vouloir supprimer le championnat {{ champ.nom }} ?
+</ng-template>
+
+
+<!----------------------
+	Infobulles
+  ------------------- -->
+
+<ng-template #infoMatches>
+	Afficher les matches<br>
+	Modifier/Valider les résultats
+</ng-template>
+
+<ng-template #infoClassement>
+	Afficher le classement<br>
+	Attribuer les points de pénalité<br>
+	Echanger une équipe
+</ng-template>
+
+<ng-template #infoPlateau>
+	Afficher le plateau
+</ng-template>
+
+<ng-template #infoCalendrier>
+	Afficher/Modifier le calendrier
 </ng-template>

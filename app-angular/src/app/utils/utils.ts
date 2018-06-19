@@ -60,7 +60,7 @@ export function fromDisp(m: Match) {
 	}
 	else {
 		m.forfait1 = false;
-		m.score1 = +m.dispScore1;
+		m.score1 = m.dispScore1 && m.dispScore1 != "" ? +m.dispScore1 : null;
 	}
 	if (m.dispScore2 == "FO") {
 		m.forfait2 = true;
@@ -68,7 +68,7 @@ export function fromDisp(m: Match) {
 	}
 	else {
 		m.forfait2 = false;
-		m.score2 = +m.dispScore2;
+		m.score2 = m.dispScore2 && m.dispScore2 != "" ? +m.dispScore2 : null;
 	}
 }
 

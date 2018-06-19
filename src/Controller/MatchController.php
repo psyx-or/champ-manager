@@ -85,7 +85,10 @@ class MatchController extends CMController
 			$entity->setForfait1($match->getForfait1());
 			$entity->setScore2($match->getScore2());
 			$entity->setForfait2($match->getForfait2());
-			$entity->setValide(true);
+			if ($match->getScore1() != null || $match->getScore2() != null || $match->getForfait1() || $match->getForfait2())
+				$entity->setValide(true);
+			else
+				$entity->setValide(null);
 
 			// TODO: date saisie && remplissage feuille de fair-play && feuille de match
 

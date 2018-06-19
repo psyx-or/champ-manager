@@ -22,7 +22,7 @@
 			<tr *ngFor="let class of classements; let i = index;">
 				<td>{{i > 0 && class.position == classements[i-1].position ? "-" : class.position}}</td>
 				<td>
-					<button type="button" class="btn btn-outline-secondary btn-sm" ngbTooltip="Changer l'équipe" (click)="change(class.equipe)">
+					<button type="button" class="btn btn-outline-secondary btn-sm" ngbTooltip="Remplacer l'équipe" (click)="change(class.equipe)">
 						<i class="icon ion-md-swap"></i>
 					</button>
 					{{class.equipe.nom}}
@@ -49,3 +49,20 @@
 	</div>
 </form>
 
+
+
+<!----------------------
+	Fenêtre de modification d'équipe
+  ------------------- -->
+
+<ng-template #changeEquipe let-equipe>
+	<form class="form">
+		<div class="form-group">
+			<label for="new_equipe">Remplacer l'équipe {{equipe.nom}} par l'équipe :</label>
+			<select class="form-control" id="new_equipe" name="new_equipe" required 
+			        [(ngModel)]="remplacement.newEquipe">
+				<option *ngFor="let e of remplacement.equipes" [ngValue]="e">{{e.nom}}</option>
+			</select>
+		</div>
+	</form>
+</ng-template>

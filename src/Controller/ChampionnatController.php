@@ -45,6 +45,48 @@ class ChampionnatController extends CMController
         return $this->json("ok");
     }
 
+	/**
+	 * @Route("/championnat/{id}/remplace/{old}/{new}")
+	 * @Method("PATCH")
+	 * @ParamConverter("championnat", options={"id" = "id"})
+	 * @ParamConverter("oldEquipe", options={"id" = "old"})
+	 * @ParamConverter("newEquipe", options={"id" = "new"})
+	 * @IsGranted("ROLE_ADMIN")
+	 */
+	public function remplace(Championnat $championnat, Equipe $oldEquipe, Equipe $newEquipe, EntityManagerInterface $entityManager)
+	{
+		// Mise à jour du classement
+		foreach ($championnat->getClassements() as $class)
+		{
+			if ($class->getEquipe() != $oldEquipe)
+				continue;
+				
+			$class->setEquipe($newEquipe);
+			$entityManager->merge($class);
+			break;
+		}
+
+		// Mise à jour des matches
+		$q = $entityManager->createQuery("SELECT m FROM App\Entity\Match m JOIN m.journee j WHERE j.championnat = :champ")->setParameter("champ", $championnat);
+		foreach ($q->getResult() as $match)
+		{
+			if ($match->getEquipe1() == $oldEquipe)
+			{
+				$match->setEquipe1($newEquipe);
+				$entityManager->merge($match);
+			}
+			if ($match->getEquipe2() == $oldEquipe)
+			{
+				$match->setEquipe2($newEquipe);
+				$entityManager->merge($match);
+			}
+		}
+
+		$entityManager->flush();
+
+		return $this->groupJson($championnat->getClassements(), 'simple');
+	}
+
     /**
      * @Route("/championnat")
      * @Method("POST")

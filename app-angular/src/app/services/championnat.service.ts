@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 
 import { Championnat } from '../model/Championnat';
 import { Equipe } from '../model/Equipe';
+import { Classement } from '../model/Classement';
 
 @Injectable({
   providedIn: 'root'
@@ -35,5 +36,12 @@ export class ChampionnatService {
 	 */
 	public supprime(championnat: Championnat): Observable<any> {
 		return this.http.delete("/api/championnat/" + championnat.id);
+	}
+
+	/**
+	 * Remplace une équipe dans un championnat
+	 */
+	public remplace(championnat: Championnat, oldEquipe: Equipe, newEquipe: Equipe): Observable<Classement[]> {
+		return this.http.patch<Classement[]>("/api/championnat/" + championnat.id + "/remplace/" + oldEquipe.id + "/" + newEquipe.id, null);
 	}
 }

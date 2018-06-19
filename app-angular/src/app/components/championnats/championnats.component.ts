@@ -5,6 +5,7 @@ import { Sport } from '../../model/Sport';
 import { sort, openModal } from '../../utils/utils';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { RequeteService } from '../../services/requete.service';
+import { ChampImportComponent } from '../champ-import/champ-import.component';
 
 @Component({
   selector: 'app-championnats',
@@ -34,6 +35,7 @@ export class ChampionnatsComponent implements OnInit {
 	 */
     ngOnInit() {
 		// TODO: filtre par défaut sur la saison en cours
+		// TODO: afficher les championnats sans calendrier
 		this.requeteService.requete(
 			this.championnatService.getChampionnats(),
 			championnats => {
@@ -48,6 +50,15 @@ export class ChampionnatsComponent implements OnInit {
 				sort(this.sports, 'nom');
 			}
 		);
+	}
+
+	/**
+	 * Lance l'import des résultats
+	 * @param champ 
+	 */
+	importer(champ: Championnat): void {
+		const modal = this.modalService.open(ChampImportComponent, { centered: true });
+		modal.componentInstance.championnat = champ;
 	}
 	
 	/**

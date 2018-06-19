@@ -18,12 +18,14 @@
 				<tr *ngFor="let champ of championnats.get(sport.nom)">
 					<td>{{champ.nom}}</td>
 					<td>
-						<a class="btn btn-sm btn-outline-secondary" [routerLink]="['/matches', champ.id]" [ngbTooltip]="infoMatches"><i class="icon ion-md-clipboard"></i></a>
+						<a class="btn btn-sm btn-outline-primary" [routerLink]="['/matches', champ.id]" [ngbTooltip]="infoMatches"><i class="icon ion-md-clipboard"></i></a>
 						&nbsp;
-						<a class="btn btn-sm btn-outline-secondary" [routerLink]="['/classement', champ.id]" *ngIf="champ.type != 'COUPE'" [ngbTooltip]="infoClassement"><i class="icon ion-md-podium"></i></a>
+						<a class="btn btn-sm btn-outline-primary" [routerLink]="['/classement', champ.id]" *ngIf="champ.type != 'COUPE'" [ngbTooltip]="infoClassement"><i class="icon ion-md-podium"></i></a>
 						<a class="btn btn-sm btn-outline-secondary" [routerLink]="['/coupe', champ.id]" *ngIf="champ.type == 'COUPE'" [ngbTooltip]="infoPlateau"><i class="icon ion-md-git-network"></i></a>
 						&nbsp;
 						<a class="btn btn-sm btn-outline-secondary" [routerLink]="['/journees', champ.id]" [ngbTooltip]="infoCalendrier"><i class="icon ion-md-calendar"></i></a>
+						&nbsp;
+						<button class="btn btn-sm btn-outline-secondary" (click)="importer(champ)" ngbTooltip="Importer les résultats d'autres poules"><i class="icon ion-md-arrow-round-up"></i></button>
 						&nbsp;
 						<button class="btn btn-sm btn-outline-danger" (click)="supprimer(champ)" ngbTooltip="Supprimer le championnat"><i class="icon ion-md-trash"></i></button>
 					</td>

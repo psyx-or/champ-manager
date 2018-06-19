@@ -1,0 +1,33 @@
+<form class="form" (ngSubmit)="submit()" ngNativeValidate>
+
+	<!----------------------
+		Entête
+	------------------- -->
+	<div class="modal-header">
+		<h4 class="modal-title">Import de résultats</h4>
+	</div>
+
+	<!----------------------
+		Formulaire
+	------------------- -->
+	<div class="modal-body">
+
+		<div class="form-group">
+			<label for="champs">Sélectionner les championnats dont les résultats doivent être importés :</label>
+			<select class="form-control" id="champs" name="champs" multiple
+			        [(ngModel)]="selChamps">
+				<option *ngFor="let champ of championnats" value="champ">{{champ.nom}}</option>
+			</select>
+		</div>
+
+	</div>
+
+	<!----------------------
+		Pied
+	------------------- -->
+	<div class="modal-footer">
+		<button type="button" class="btn btn-secondary" (click)="activeModal.dismiss()">Annuler</button>
+		<button type="submit" class="btn btn-primary">Confirmer</button>
+	</div>
+
+</form>

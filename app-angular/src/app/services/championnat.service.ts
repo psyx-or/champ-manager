@@ -21,6 +21,17 @@ export class ChampionnatService {
     public getChampionnats(): Observable<Championnat[]> {
         return this.http.get<Championnat[]>("/api/championnat");
 	}
+
+	/**
+	 * Liste les championnats similaires à un autre
+	 * @param championnat 
+	 */
+	public listeSimilaires(championnat: Championnat): Observable<Championnat[]> {
+		return this.http.get<Championnat[]>("/api/championnat", { params: {
+			"sport": championnat.sport.nom,
+			"saison": championnat.saison
+		}});
+	}
 	
 	/**
 	 * Crée un nouveau championnat

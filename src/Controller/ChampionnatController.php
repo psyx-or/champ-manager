@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -27,10 +28,22 @@ class ChampionnatController extends CMController
      * @Route("/championnat")
      * @Method("GET")
      */
-    public function liste()
+    public function liste(Request $request)
     {
+		$query = array();
+
+		if ($request->query->has('sport'))
+		{
+			$repSport = $this->getDoctrine()->getRepository(Sport::class);
+			$query['sport'] = $repSport->find($request->query->get('sport'));
+		}
+		if ($request->query->has('saison'))
+		{
+			$query['saison'] = $request->query->get('saison');
+		}
+
         $repository = $this->getDoctrine()->getRepository(Championnat::class);
-        return $this->groupJson($repository->findAll(), 'simple');
+        return $this->groupJson($repository->findBy($query), 'simple');
     }
 
     /**

@@ -6,6 +6,7 @@ import { sort, openModal } from '../../utils/utils';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { RequeteService } from '../../services/requete.service';
 import { ChampImportComponent } from '../champ-import/champ-import.component';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-championnats',
@@ -25,6 +26,7 @@ export class ChampionnatsComponent implements OnInit {
 	 * @param championnatService 
 	 */
     constructor(
+		private route: ActivatedRoute,
 		public modalService: NgbModal,
 		private requeteService: RequeteService,
         private championnatService: ChampionnatService
@@ -36,20 +38,19 @@ export class ChampionnatsComponent implements OnInit {
     ngOnInit() {
 		// TODO: filtre par défaut sur la saison en cours
 		// TODO: afficher les championnats sans calendrier
-		this.requeteService.requete(
-			this.championnatService.getChampionnats(),
-			championnats => {
+
+		this.route.data
+			.subscribe((data: { championnats: Championnat[] }) => {
 				this.sports = [];
-				sort(championnats, 'nom');
-				this.championnats = championnats.reduce((map, champ) => {
+				sort(data.championnats, 'nom');
+				this.championnats = data.championnats.reduce((map, champ) => {
 					let sport = champ.sport.nom;
-					if (!map.has(sport)) {this.sports.push(champ.sport); map.set(sport, [])};
+					if (!map.has(sport)) { this.sports.push(champ.sport); map.set(sport, []) };
 					map.get(sport).push(champ);
 					return map;
 				}, new Map<string, Championnat[]>());
 				sort(this.sports, 'nom');
-			}
-		);
+			});
 	}
 
 	/**

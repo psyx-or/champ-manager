@@ -6,8 +6,6 @@ import { Championnat } from '../../model/Championnat';
 import { Classement } from '../../model/Classement';
 import { sort, openModal } from '../../utils/utils';
 import { Equipe } from '../../model/Equipe';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { EquipeService } from '../../services/equipe.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ChampionnatService } from '../../services/championnat.service';
@@ -48,13 +46,10 @@ export class ClassementComponent implements OnInit {
 	 * Initialisation
 	 */
 	ngOnInit() {
-		const champId = +this.route.snapshot.paramMap.get('champId');
-
-		this.requeteService.requete(
-			this.classementService.get(champId),
-			champ => {
-				this.champ = champ;
-				this.classements = sort(champ.classements, 'position');
+		this.route.data
+			.subscribe((data: { champ: Championnat }) => {
+				this.champ = data.champ;
+				this.classements = sort(data.champ.classements, 'position');
 			}
 		);
 	}

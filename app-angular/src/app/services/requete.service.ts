@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { tap, catchError } from 'rxjs/operators';
 
 /**
  * Service permettant d'afficher la barre de chargement
@@ -28,6 +29,25 @@ export class RequeteService {
 		req.subscribe(
 			res => { this.chargement = false; cb(res) },
 			err => { this.chargement = false; alert("Erreur lors de l'opération"); }
+		);
+	}
+
+	/**
+	 * Fonction utilisée par les resolvers pour afficher la barre de progression
+	 * @param req 
+	 */
+	public recupere<T>(req: Observable<T>): Observable<T> {
+		setTimeout(() => {
+			this.chargement = true;
+		});
+
+		return req.pipe(
+			tap(_ => this.chargement = false),
+			catchError((err, caught) => { 
+				this.chargement = false;
+				alert("Erreur lors de l'opération");
+				return of(null);
+			})
 		);
 	}
 }

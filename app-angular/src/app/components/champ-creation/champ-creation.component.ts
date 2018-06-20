@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { Championnat, ChampType } from '../../model/Championnat';
-import { SportService } from '../../services/sport.service';
 import { Sport } from '../../model/Sport';
 import { ChampionnatService } from '../../services/championnat.service';
 import { Observable } from 'rxjs';
@@ -8,8 +7,7 @@ import { map } from 'rxjs/operators';
 import { EquipeService } from '../../services/equipe.service';
 import { Equipe } from '../../model/Equipe';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Router } from '@angular/router';
-import { ModalComponent } from '../modal/modal.component';
+import { Router, ActivatedRoute } from '@angular/router';
 import { openModal } from '../../utils/utils';
 import { RequeteService } from '../../services/requete.service';
 
@@ -38,9 +36,9 @@ export class ChampCreationComponent implements OnInit {
 	 * @param championnatService 
 	 */
     constructor(
+		private route: ActivatedRoute,
 		public modalService: NgbModal,
 		public requeteService: RequeteService,
-        private sportsService: SportService,
         private championnatService: ChampionnatService,
 		private equipeService: EquipeService,
 		private router: Router
@@ -52,10 +50,8 @@ export class ChampCreationComponent implements OnInit {
     ngOnInit() {
         // Récupération des données
         this.types = Object.entries(ChampType);
-		this.requeteService.requete(
-			this.sportsService.getSports(),
-			sports => this.sports = sports
-		);
+		this.route.data
+			.subscribe((data: { sports: Sport[] }) => this.sports = data.sports);
 
         // Construction de l'objet
         let date = new Date();

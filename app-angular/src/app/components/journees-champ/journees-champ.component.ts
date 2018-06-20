@@ -94,8 +94,8 @@ export class JourneesChampComponent implements OnInit, AfterViewInit {
 	 * @param config 
 	 */
 	constructor(
-		private router: Router,
 		private route: ActivatedRoute,
+		private router: Router,
 		private journeeService: JourneeService,
 		private requeteService: RequeteService,
 		config: NgbDatepickerConfig
@@ -109,13 +109,10 @@ export class JourneesChampComponent implements OnInit, AfterViewInit {
 	 * Initialisation du composant
 	 */
 	ngOnInit() {
-		const champId = +this.route.snapshot.paramMap.get('champId');
-
-		this.requeteService.requete(
-			this.journeeService.getJournees(champId),
-			champ => {
-				this.champ = champ;
-				this.journees = sort(champ.journees, 'numero');
+		this.route.data
+			.subscribe((data: { champ: Championnat }) => {
+				this.champ = data.champ;
+				this.journees = sort(data.champ.journees, 'numero'); // TODO: trier côté PHP
 				this.iJournee = 0;
 			}
 		);

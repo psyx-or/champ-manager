@@ -18,6 +18,10 @@ import { ChampMenuComponent } from './components/champ-menu/champ-menu.component
 import { StrJourneePipe } from './utils/str-journee.pipe';
 import { SignePipe } from './utils/signe.pipe';
 import { ChampImportComponent } from './components/champ-import/champ-import.component';
+import { ChampionnatResolver } from './components/championnats/championnats.resolver';
+import { ChampCreationResolver } from './components/champ-creation/champ-creation.resolver';
+import { JourneesChampResolver } from './components/journees-champ/journees-champ.resolver';
+import { ClassementResolver } from './components/classement/classement.resolver';
 
 @NgModule({
   declarations: [
@@ -43,7 +47,12 @@ import { ChampImportComponent } from './components/champ-import/champ-import.com
     HttpClientModule,
     FormsModule
   ],
-  providers: [],
+  providers: [
+	  ChampionnatResolver, 
+	  ChampCreationResolver, 
+	  JourneesChampResolver,
+	  ClassementResolver
+  ],
   bootstrap: [AppComponent],
   entryComponents: [
 	  LoginComponent,

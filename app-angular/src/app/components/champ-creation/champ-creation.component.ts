@@ -97,7 +97,7 @@ export class ChampCreationComponent implements OnInit {
 	 */
 	creation(): void {
 		this.requeteService.requete(
-			this.championnatService.create(this.championnat, this.equipes.filter(e=>e)),
+			this.championnatService.cree(this.championnat, this.equipes.filter(e=>e)),
 			champ => {
 				this.router.navigate(['journees', champ.id])
 			}

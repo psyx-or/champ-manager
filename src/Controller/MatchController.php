@@ -54,6 +54,8 @@ class MatchController extends CMController
 		$entityManager->merge($match);
 		$entityManager->flush();
 
+		// TODO: passer à terminé?
+
         return $this->groupJson($match, 'simple');
 	}
 
@@ -107,6 +109,8 @@ class MatchController extends CMController
 
 			$entityManager->merge($entity);
 		}
+
+		// TODO: passer le championnat à terminé
 
 		// Recalcul du classement des championnats
 		if ($champ != null && $champ->getType() != ChampionnatType::COUPE)

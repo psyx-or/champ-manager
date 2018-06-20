@@ -84,6 +84,13 @@ class Championnat
         return $this->id;
     }
 
+	public function setId($id) : self
+	{
+		$this->id = $id;
+
+		return $this;
+	}
+
 	/**
 	 * @Groups({"simple"})
 	 */

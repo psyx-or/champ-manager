@@ -100,6 +100,51 @@ class ChampionnatController extends CMController
 		return $this->groupJson($championnat->getClassements(), 'simple');
 	}
 
+	/**
+	 * @Route("/championnat/{id}/importe")
+	 * @Method("POST")
+	 * @IsGranted("ROLE_ADMIN")
+	 * @ParamConverter("champDest", converter="doctrine.orm")
+	 * @ParamConverter("championnats", converter="cm_converter", options={"classe":"App\Entity\Championnat[]"})
+	 */
+	public function importe(Championnat $champDest, array $championnats, EntityManagerInterface $entityManager)
+	{
+		$repMatches = $this->getDoctrine()->getRepository(Match::class);
+
+		$i = 0;
+		$matchesDest = $repMatches->findByChampionnat($champDest);
+
+		foreach ($championnats as $champSource)
+		{
+			foreach ($repMatches->findByChampionnat($champSource) as $matchSource)
+			{
+				foreach ($matchesDest as $matchDest)
+				{
+					if ($matchDest->getEquipe1() != null && $matchDest->getEquipe2() != null &&
+						$matchDest->getEquipe1() == $matchSource->getEquipe1() && $matchDest->getEquipe2() == $matchSource->getEquipe2() &&
+						($matchSource->getScore1() != null || $matchSource->getScore2() != null || $matchSource->getForfait1() || $matchSource->getForfait2()))
+					{
+						$i++;
+						$matchDest->setScore1($matchSource->getScore1());
+						$matchDest->setForfait1($matchSource->getForfait1());
+						$matchDest->setScore2($matchSource->getScore2());
+						$matchDest->setForfait2($matchSource->getForfait2());
+						$matchDest->setValide(true);
+						$entityManager->merge($matchDest);
+					}
+				}
+			}
+		}
+
+		// Recalcul du classement des championnats
+		if ($champDest->getType() != ChampionnatType::COUPE)
+			MatchFunctions::calculeClassement($champDest, $entityManager);
+
+		$entityManager->flush();
+
+		return $this->json($i);
+	}
+
     /**
      * @Route("/championnat")
      * @Method("POST")

@@ -14,9 +14,9 @@
 
 		<div class="form-group">
 			<label for="champs">Sélectionner les championnats dont les résultats doivent être importés :</label>
-			<select class="form-control" id="champs" name="champs" multiple
+			<select class="form-control" id="champs" name="champs" multiple required
 			        [(ngModel)]="selChamps">
-				<option *ngFor="let champ of championnats" value="champ">{{champ.nom}}</option>
+				<option *ngFor="let champ of championnats" [ngValue]="champ">{{champ.nom}}</option>
 			</select>
 		</div>
 
@@ -27,7 +27,7 @@
 	------------------- -->
 	<div class="modal-footer">
 		<button type="button" class="btn btn-secondary" (click)="activeModal.dismiss()">Annuler</button>
-		<button type="submit" class="btn btn-primary">Confirmer</button>
+		<button type="submit" class="btn btn-primary" [disabled]="requeteService.chargement">Confirmer</button>
 	</div>
 
 </form>

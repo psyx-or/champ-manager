@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Match;
+use App\Entity\Championnat;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -19,22 +20,20 @@ class MatchRepository extends ServiceEntityRepository
         parent::__construct($registry, Match::class);
     }
 
-//    /**
-//     * @return Match[] Returns an array of Match objects
-//     */
-    /*
-    public function findByExampleField($value)
+    /**
+	 * Récupère tous les matches d'un championnat
+     * @return Match[] Returns an array of Match objects
+     */
+    public function findByChampionnat(Championnat $champ)
     {
-        return $this->createQueryBuilder('m')
-            ->andWhere('m.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('m.id', 'ASC')
-            ->setMaxResults(10)
+		return $this->createQueryBuilder('m')
+			->join("m.journee", "j")
+            ->andWhere('j.championnat = :champ')
+            ->setParameter("champ", $champ)
             ->getQuery()
             ->getResult()
         ;
     }
-    */
 
     /*
     public function findOneBySomeField($value): ?Match

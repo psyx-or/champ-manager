@@ -12,6 +12,9 @@ export class RequeteService {
 
 	constructor() { }
 
+	/** Compte le nombre de requêtes en cours */
+	private nbChargements: number = 0;
+
 	/** Indique si un chargement est en cours */
 	public chargement: boolean = false;
 
@@ -23,12 +26,12 @@ export class RequeteService {
 	 */
 	public requete<T>(req: Observable<T>, cb: (val: T) => void) {
 		setTimeout(() => {
-			this.chargement = true;
+			this.updateChargement(1);
 		});
 		
 		req.subscribe(
-			res => { this.chargement = false; cb(res) },
-			err => { this.chargement = false; alert("Erreur lors de l'opération"); }
+			res => { this.updateChargement(-1); cb(res) },
+			err => { this.updateChargement(-1); alert("Erreur lors de l'opération"); }
 		);
 	}
 
@@ -38,16 +41,25 @@ export class RequeteService {
 	 */
 	public recupere<T>(req: Observable<T>): Observable<T> {
 		setTimeout(() => {
-			this.chargement = true;
+			this.updateChargement(1);
 		});
 
 		return req.pipe(
-			tap(_ => this.chargement = false),
+			tap(_ => this.updateChargement(-1)),
 			catchError((err, caught) => { 
-				this.chargement = false;
+				this.updateChargement(-1);
 				alert("Erreur lors de l'opération");
 				return of(null);
 			})
 		);
+	}
+
+	/**
+	 * Met à jour le nombre de requêtes en cours
+	 * @param n 
+	 */
+	private updateChargement(n: 1|-1) {
+		this.nbChargements += n;
+		this.chargement = this.nbChargements > 0;
 	}
 }

@@ -11,63 +11,6 @@
 
 	<!-- Liste des matches-->
 	<div class="bg-white" [ngbCollapse]="journee.isCollapsed">
-		<form class="form-inline" (ngSubmit)="submit(journee.obj)" ngNativeValidate>
-			<table class="table table-striped table-score mb-0">
-				<tbody>
-
-					<!-- Si vrai match-->
-					<tr *ngFor="let match of journee.obj.matches" [class.matchvalide]="match.valide === true">
-						<ng-container *ngIf="!match.exempt">
-							<!-- Equipe 1 + score 1 -->
-							<td class="text-right">
-								<label class="mr-2" for="score1_{{match.id}}">{{match.dispEquipe1}}</label>
-								<input type="text" class="text-center form-control" name="score1_{{match.id}}" id="score1_{{match.id}}"
-									maxlength="2" size="3" pattern="FO|[0-9]{1,2}"
-									[(ngModel)]="match.dispScore1">
-							</td>
-							<!-- Séparateur-->
-							<td class="separateur text-center">-</td>
-							<!-- Score 2 + équipe 2 -->
-							<td class="text-left">
-								<input type="text" class="text-center form-control" name="score2_{{match.id}}" id="score2_{{match.id}}"
-									maxlength="2" size="3" pattern="FO|[0-9]{1,2}"
-									[(ngModel)]="match.dispScore2">
-								<label class="ml-2" for="score2_{{match.id}}">{{match.dispEquipe2}}</label>
-							</td>
-							<!-- Feuille de match-->
-							<td class="text-center feuille pt-2">
-								<span *ngIf="match.feuille"
-									(click)="afficheFeuille(match)" ngbTooltip="Feuille de match"><i class='icon ion-md-clipboard'></i></span>
-							</td>
-							<!-- Bouton de validation -->
-							<td *ngIf="match.valide === false" class="text-center">
-								<button class="btn btn-success" type="button" (click)="valide(match)">Valider</button>
-							</td>
-							<td *ngIf="match.valide === true" class="text-center text-success valide pt-2">
-								<div ngbTooltip="Match validé"><i class='icon ion-md-checkbox-outline'></i></div>
-							</td>
-							<td *ngIf="match.valide === null">
-							</td>
-						</ng-container>
-
-						<!-- Si exempt -->
-						<ng-container *ngIf="match.exempt">
-							<td colspan="3" class="text-center">
-								Exempt: {{ match.exempt.nom }}
-							</td>
-							<td colspan="2"></td>
-						</ng-container>
-					</tr>
-
-					<!-- Validation globale-->
-					<tr class="text-center bg-white">
-						<td colspan="3" class="text-center">
-							<button class="btn btn-primary" type="submit" [disabled]="requeteService.chargement">Enregistrer</button>
-						</td>
-						<td colspan="2"></td>
-					</tr>
-				</tbody>
-			</table>
-		</form>
+		<app-match-journee [journee]="journee.obj"></app-match-journee>
 	</div>
 </div>

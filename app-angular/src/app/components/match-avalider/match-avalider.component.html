@@ -1,0 +1,39 @@
+<h1>
+	<i class="icon ion-md-checkbox-outline"></i> Matches à valider
+</h1>
+
+
+<!----------------------
+	Sport
+  ------------------- -->
+
+<div class="form-group form-row">
+	<label for="sport" class="col-sm-2 col-form-label">Sport</label>
+	<div class="col-sm-2">
+		<select class="form-control" id="sport" name="sport"
+				[(ngModel)]="selSport" (change)="selectionSport()">
+			<option *ngFor="let s of sports" [ngValue]="s">{{s.nom}}</option>
+		</select>
+	</div>
+</div>
+
+
+<!----------------------
+	Matches à valider
+  ------------------- -->
+
+<div *ngFor="let champ of championnats" class="card">
+
+	<!-- Description de la journée -->
+	<div class="card-header">
+		{{ champ.nom }}
+	</div>
+
+	<div class="card-body">
+		<div *ngFor="let j of champ.journees">
+			<h4>{{ j | strJournee}}</h4>
+			<hr>
+			<app-match-journee [journee]="j"></app-match-journee>
+		</div>
+	</div>
+</div>

@@ -4,6 +4,7 @@ import { Journee } from '../model/Journee';
 import { Observable } from 'rxjs';
 import { Championnat } from '../model/Championnat';
 import { Match } from '../model/Match';
+import { Sport } from '../model/Sport';
 
 @Injectable({
   providedIn: 'root'
@@ -44,5 +45,13 @@ export class MatchService {
 	 */
 	public maj(journee: Journee): Observable<Match[]> {
 		return this.http.put<Match[]>("/api/match/", journee.matches);
+	}
+
+	/**
+	 * Renvoie la liste des matches à valider
+	 * @param sport
+	 */
+	public avalider(sport: Sport): Observable<Championnat[]> {
+		return this.http.get<Championnat[]>("/api/match/avalider/" + sport.nom);
 	}
 }

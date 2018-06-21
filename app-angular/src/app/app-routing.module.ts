@@ -10,6 +10,7 @@ import { ChampionnatResolver } from './components/championnats/championnats.reso
 import { ChampCreationResolver } from './components/champ-creation/champ-creation.resolver';
 import { JourneesChampResolver } from './components/journees-champ/journees-champ.resolver';
 import { ClassementResolver } from './components/classement/classement.resolver';
+import { MatchAvaliderComponent } from './components/match-avalider/match-avalider.component';
 
 const routes: Routes = [
     { path: 'championnats', component: ChampionnatsComponent, resolve: { championnats: ChampionnatResolver } },
@@ -17,6 +18,7 @@ const routes: Routes = [
 	{ path: 'journees/:champId', component: JourneesChampComponent, resolve: { champ: JourneesChampResolver } },
 	{ path: 'classement/:champId', component: ClassementComponent, resolve: { champ: ClassementResolver } },
 	{ path: 'coupe/:champId', component: CoupeComponent },
+	{ path: 'matches/avalider', component: MatchAvaliderComponent, resolve: { sports: ChampCreationResolver } }, // TODO: renommer guard resolve
 	{ path: 'matches/:champId', component: MatchesComponent },
 ];
 

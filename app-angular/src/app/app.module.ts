@@ -22,6 +22,8 @@ import { ChampionnatResolver } from './components/championnats/championnats.reso
 import { ChampCreationResolver } from './components/champ-creation/champ-creation.resolver';
 import { JourneesChampResolver } from './components/journees-champ/journees-champ.resolver';
 import { ClassementResolver } from './components/classement/classement.resolver';
+import { MatchAvaliderComponent } from './components/match-avalider/match-avalider.component';
+import { MatchJourneeComponent } from './components/match-journee/match-journee.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +40,9 @@ import { ClassementResolver } from './components/classement/classement.resolver'
     ChampMenuComponent,
     StrJourneePipe,
     SignePipe,
-    ChampImportComponent
+    ChampImportComponent,
+    MatchAvaliderComponent,
+    MatchJourneeComponent
   ],
   imports: [
     BrowserModule,

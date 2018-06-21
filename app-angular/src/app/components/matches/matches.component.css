@@ -16,28 +16,3 @@
 .reducteur.ouvert {
 	transform: rotate(90deg);
 }
-
-
-/** Pour les matches */
-.separateur {
-	width: 1em;
-	vertical-align: middle;
-}
-
-.valide {
-	font-size: 1.75rem;
-}
-
-.table-score label {
-	display: inline-block;
-	vertical-align: middle;
-}
-
-.feuille {
-	font-size: 1.75rem;
-	cursor: pointer;
-}
-
-.matchvalide input[type="text"] {
-	background-color: #28a74560 !important;
-}

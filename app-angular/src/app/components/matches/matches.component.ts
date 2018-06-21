@@ -4,8 +4,7 @@ import { RequeteService } from '../../services/requete.service';
 import { MatchService } from '../../services/match.service';
 import { Championnat } from '../../model/Championnat';
 import { Journee } from '../../model/Journee';
-import { sort, fromDisp, toDisp } from '../../utils/utils';
-import { Match } from '../../model/Match';
+import { sort } from '../../utils/utils';
 
 class JourneeExt {
 	public obj: Journee;
@@ -44,7 +43,6 @@ export class MatchesComponent implements OnInit {
 					j.matches.forEach(m => {
 						if (m.exempt) return;
 						
-						toDisp(m);
 						if (m.valide !== true) isCollapsed = false;
 						if (m.valide === false) classe = 'primary';
 						if (m.valide === null && classe == 'success') classe = 'secondary';
@@ -58,40 +56,5 @@ export class MatchesComponent implements OnInit {
 				});
 			}
 		);
-	}
-
-	/**
-	 * Validation d'un match unitaire
-	 * @param match 
-	 */
-	valide(match: Match): void {
-		this.requeteService.requete(
-			this.matchService.valide(match),
-			match2 => match.valide = match2.valide
-		);
-	}
-
-	/**
-	 * Lance la mise à jour des scores
-	 * @param journee 
-	 */
-	submit(journee: Journee): void {
-		journee.matches.forEach(fromDisp);
-		this.requeteService.requete(
-			this.matchService.maj(journee),
-			matches => {
-				matches.forEach(toDisp);
-				journee.matches = matches;
-			}
-		);
-	}
-
-	/**
-	 * Affiche une feuille de match
-	 * @param match 
-	 */
-	afficheFeuille(match: Match): void {
-		//TODO
-		alert(match.feuille);
 	}
 }

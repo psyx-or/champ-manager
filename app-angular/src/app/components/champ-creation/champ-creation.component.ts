@@ -8,7 +8,7 @@ import { EquipeService } from '../../services/equipe.service';
 import { Equipe } from '../../model/Equipe';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Router, ActivatedRoute } from '@angular/router';
-import { openModal } from '../../utils/utils';
+import { openModal, getSaisonCourante } from '../../utils/utils';
 import { RequeteService } from '../../services/requete.service';
 
 @Component({
@@ -54,9 +54,8 @@ export class ChampCreationComponent implements OnInit {
 			.subscribe((data: { sports: Sport[] }) => this.sports = data.sports);
 
         // Construction de l'objet
-        let date = new Date();
         this.championnat = new Championnat({
-            saison: date.getMonth() < 8 ? (date.getFullYear() - 1) + " / " + date.getFullYear() : date.getFullYear() + " / " + (date.getFullYear() + 1 )
+			saison: getSaisonCourante()
         });
 	}
 	
@@ -144,7 +143,7 @@ export class ChampCreationComponent implements OnInit {
 		else {
 			this.equipesSport = null;
 			this.requeteService.requete(
-				this.equipeService.getEquipes(this.championnat.sport.nom),
+				this.equipeService.getEquipes(this.championnat.sport),
 				equipes => this.equipesSport = equipes
 			);
 		}

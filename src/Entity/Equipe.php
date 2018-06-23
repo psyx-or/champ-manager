@@ -52,9 +52,26 @@ class Equipe implements UserInterface, \Serializable
      */
     private $classements;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Responsable", mappedBy="equipe", orphanRemoval=true)
+     */
+    private $responsables;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $terrain;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Creneau", mappedBy="equipe", orphanRemoval=true)
+     */
+    private $creneaux;
+
     public function __construct()
     {
         $this->classements = new ArrayCollection();
+        $this->responsables = new ArrayCollection();
+        $this->creneaux = new ArrayCollection();
     }
 
 	public function setId($id) : self
@@ -123,49 +140,6 @@ class Equipe implements UserInterface, \Serializable
         return $this;
     }
 
-	// ------------------------------------------------------
-	//    Authentification
-	// ------------------------------------------------------
-
-    public function getUsername()
-    {
-        return $this->login;
-    }
-
-    public function getSalt()
-    {
-        return null;
-    }
-
-    public function getRoles()
-    {
-        return array('ROLE_USER');
-    }
-
-    public function eraseCredentials()
-    {
-    }
-
-    /** @see \Serializable::serialize() */
-    public function serialize()
-    {
-        return serialize(array(
-            $this->id,
-            $this->login,
-            $this->password,
-        ));
-    }
-
-    /** @see \Serializable::unserialize() */
-    public function unserialize($serialized)
-    {
-        list (
-            $this->id,
-            $this->login,
-            $this->password,
-        ) = unserialize($serialized, ['allowed_classes' => false]);
-    }
-
     /**
      * @return Collection|Classement[]
      */
@@ -196,4 +170,127 @@ class Equipe implements UserInterface, \Serializable
 
         return $this;
     }
+
+	/**
+	 * @Groups({"coordonnees"})
+	 * @return Collection|Responsable[]
+	 */
+    public function getResponsables(): Collection
+    {
+        return $this->responsables;
+    }
+
+    public function addResponsable(Responsable $responsable): self
+    {
+        if (!$this->responsables->contains($responsable)) {
+            $this->responsables[] = $responsable;
+            $responsable->setEquipe($this);
+        }
+
+        return $this;
+    }
+
+    public function removeResponsable(Responsable $responsable): self
+    {
+        if ($this->responsables->contains($responsable)) {
+            $this->responsables->removeElement($responsable);
+            // set the owning side to null (unless already changed)
+            if ($responsable->getEquipe() === $this) {
+                $responsable->setEquipe(null);
+            }
+        }
+
+        return $this;
+    }
+
+	/**
+	 * @Groups({"coordonnees"})
+	 */
+    public function getTerrain(): ?string
+    {
+        return $this->terrain;
+    }
+
+    public function setTerrain(?string $terrain): self
+    {
+        $this->terrain = $terrain;
+
+        return $this;
+    }
+
+	/**
+	 * @Groups({"coordonnees"})
+	 * @return Collection|Creneau[]
+	 */
+    public function getCreneaux(): Collection
+    {
+        return $this->creneaux;
+    }
+
+    public function addCreneaux(Creneau $creneaux): self
+    {
+        if (!$this->creneaux->contains($creneaux)) {
+            $this->creneaux[] = $creneaux;
+            $creneaux->setEquipe($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCreneaux(Creneau $creneaux): self
+    {
+        if ($this->creneaux->contains($creneaux)) {
+            $this->creneaux->removeElement($creneaux);
+            // set the owning side to null (unless already changed)
+            if ($creneaux->getEquipe() === $this) {
+                $creneaux->setEquipe(null);
+            }
+        }
+
+        return $this;
+    }
+
+	
+	// ------------------------------------------------------
+	//    Authentification
+	// ------------------------------------------------------
+
+	public function getUsername()
+	{
+		return $this->login;
+	}
+
+	public function getSalt()
+	{
+		return null;
+	}
+
+	public function getRoles()
+	{
+		return array('ROLE_USER');
+	}
+
+	public function eraseCredentials()
+	{
+	}
+
+	/** @see \Serializable::serialize() */
+	public function serialize()
+	{
+		return serialize(array(
+			$this->id,
+			$this->login,
+			$this->password,
+		));
+	}
+
+	/** @see \Serializable::unserialize() */
+	public function unserialize($serialized)
+	{
+		list(
+			$this->id,
+			$this->login,
+			$this->password,
+		) = unserialize($serialized, ['allowed_classes' => false]);
+	}
 }

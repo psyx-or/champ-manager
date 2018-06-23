@@ -50,7 +50,7 @@ class MatchController extends CMController
 		
 		$query->setParameter("sport", $sport);
 
-		return $this->groupJson($query->getArrayResult(), 'simple', 'matches');
+		return $this->groupJson($query->getResult(), 'simple', 'matches');
 	}
 	
     /**

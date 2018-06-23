@@ -32,7 +32,7 @@ class EquipeRepository extends ServiceEntityRepository
 		$equipe->setNom($nom);
 		$equipe->setSport($sport);
 
-		$baselogin = preg_replace('/\s+/', '', $nom);
+		$baselogin = strtolower(preg_replace('/\s+/', '', $nom));
 		
 		// Creation du login
 		$login = $baselogin;

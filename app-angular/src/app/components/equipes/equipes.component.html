@@ -1,0 +1,115 @@
+<h1>
+	<i class="icon ion-md-contacts"></i> Equipes
+</h1>
+
+
+<!----------------------
+	Sport
+  ------------------- -->
+
+<div class="form-group form-row">
+	<label for="sport" class="col-sm-2 col-form-label">Sport</label>
+	<div class="col-sm-2">
+		<select class="form-control" id="sport" name="sport"
+				[(ngModel)]="selSport" (change)="selectionSport()">
+			<option *ngFor="let s of sports" [ngValue]="s">{{s.nom}}</option>
+		</select>
+	</div>
+</div>
+
+
+
+<!----------------------
+	Equipes
+  ------------------- -->
+
+<div [hidden]="!equipes || equipes.length != 0">Pas d'équipe</div>
+<form class="form" (ngSubmit)="submit()" ngNativeValidate [hidden]="!equipes || equipes.length == 0">
+	<div *ngFor="let equipe of equipes" class="card">
+
+		<!-- Nom de l'équipe -->
+		<div class="card-header">
+			{{ equipe.nom }}
+		</div>
+
+		<!-- Description -->
+		<div class="card-body">
+
+			<!-- Responsable 1 -->
+			<div class="form-group form-row">
+				<label for="resp1_{{equipe.id}}" class="col-sm-2 col-form-label">Responsable 1</label>
+				<div class="col-sm-3">
+					<input type="text" class="form-control" name="resp1_{{equipe.id}}" id="resp1_{{equipe.id}}"
+					       [(ngModel)]="equipe.responsables[0].nom" placeholder="Nom" required>
+				</div>
+				<div class="col-sm-3">
+					<input type="tel" class="form-control" name="tel1_{{equipe.id}}"
+					       pattern="[0-9]{2} [0-9]{2} [0-9]{2} [0-9]{2} [0-9]{2}" ngbTooltip="Format 01 02 03 04 05"
+					       [(ngModel)]="equipe.responsables[0].tel1" [disabled]="!equipe.responsables[0].nom || equipe.responsables[0].nom == ''" placeholder="Téléphone">
+				</div>
+				<div class="col-sm-4">
+					<input type="email" class="form-control" name="mail1_{{equipe.id}}"
+					       [(ngModel)]="equipe.responsables[0].mail" [disabled]="!equipe.responsables[0].nom || equipe.responsables[0].nom == ''" placeholder="Mail">
+				</div>
+			</div>
+
+			<!-- Responsable 2 -->
+			<div class="form-group form-row">
+				<label for="resp2_{{equipe.id}}" class="col-sm-2 col-form-label">Responsable 2</label>
+				<div class="col-sm-3">
+					<input type="text" class="form-control" name="resp2_{{equipe.id}}" id="resp2_{{equipe.id}}"
+					       [(ngModel)]="equipe.responsables[1].nom" placeholder="Nom">
+				</div>
+				<div class="col-sm-3">
+					<input type="tel" class="form-control" name="tel2_{{equipe.id}}"
+					       pattern="[0-9]{2} [0-9]{2} [0-9]{2} [0-9]{2} [0-9]{2}" ngbTooltip="Format 01 02 03 04 05"
+					       [(ngModel)]="equipe.responsables[1].tel1" [disabled]="!equipe.responsables[1].nom || equipe.responsables[1].nom == ''" placeholder="Téléphone">
+				</div>
+				<div class="col-sm-4">
+					<input type="email" class="form-control" name="mail2_{{equipe.id}}"
+					       [(ngModel)]="equipe.responsables[1].mail" [disabled]="!equipe.responsables[1].nom || equipe.responsables[1].nom == ''" placeholder="Mail">
+				</div>
+			</div>
+
+			<!-- Terrain -->
+			<div class="form-group form-row">
+				<label for="terrain_{{equipe.id}}" class="col-sm-2 col-form-label">
+					Terrain
+					<div class="pasterrain" [hidden]="equipe.terrain && equipe.terrain != ''">(Pas de terrain)</div>
+				</label>
+				<div class="col-sm-10">
+					<textarea rows="4" class="form-control" name="terrain_{{equipe.id}}" id="terrain_{{equipe.id}}"
+					          [(ngModel)]="equipe.terrain" placeholder="Adresse et info"></textarea>
+				</div>
+			</div>
+
+			<!-- Créneaux -->
+			<div class="form-group form-row" *ngFor="let creneau of equipe.creneaux; let i = index;">
+				<label for="creneau{{i}}_{{equipe.id}}_jour" class="col-sm-2 col-form-label" [hidden]="i>0">Créneaux</label>
+				<div class="col-sm-2" [class.offset-md-2]="i>0">
+					<select class="form-control" name="creneau{{i}}_{{equipe.id}}_jour" id="creneau{{i}}_{{equipe.id}}_jour" required
+							[ngModel]="creneau.jour" [disabled]="!equipe.terrain || equipe.terrain == ''">
+						<option *ngFor="let j of jours; let i=index" [ngValue]="i">{{j}}</option>
+					</select>
+				</div>
+				<div class="col-sm-2">
+					<input class="form-control" type="time" name="creneau{{i}}_{{equipe.id}}_heure" required
+					       [ngModel]="creneau.heureDisp" [disabled]="!equipe.terrain || equipe.terrain == ''">
+				</div>
+				<div class="col-sm-1">
+					<button type="button" class="btn btn-outline-danger" (click)="supprimeCreneau(equipe, creneau)" ngbTooltip="Supprimer le créneau">
+						<i class="icon ion-md-trash"></i>
+					</button>
+				</div>
+			</div>
+			<div class="form-group form-row">
+				<div class="col-sm-2 offset-md-2">
+					<button type="button" class="btn btn-outline-secondary btn-sm"
+					        (click)="ajoutCreneau(equipe)" [disabled]="!equipe.terrain || equipe.terrain == ''">Ajouter un créneau</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<button type="submit" class="btn btn-primary" [disabled]="requeteService.chargement">Valider</button>
+</form>

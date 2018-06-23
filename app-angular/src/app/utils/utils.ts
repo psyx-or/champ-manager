@@ -4,6 +4,15 @@ import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { Match } from "../model/Match";
 import { Equipe } from "../model/Equipe";
 
+
+/**
+ * Renvoie la saison en cours
+ */
+export function getSaisonCourante(): string {
+	let date = new Date();
+	return date.getMonth() < 8 ? (date.getFullYear() - 1) + " / " + date.getFullYear() : date.getFullYear() + " / " + (date.getFullYear() + 1);
+}
+
 /**
  * Trie un tableau d'objets selon un attribut
  * @param tab Tableau

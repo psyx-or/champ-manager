@@ -11,6 +11,7 @@ import { ChampCreationResolver } from './components/champ-creation/champ-creatio
 import { JourneesChampResolver } from './components/journees-champ/journees-champ.resolver';
 import { ClassementResolver } from './components/classement/classement.resolver';
 import { MatchAvaliderComponent } from './components/match-avalider/match-avalider.component';
+import { EquipesComponent } from './components/equipes/equipes.component';
 
 const routes: Routes = [
     { path: 'championnats', component: ChampionnatsComponent, resolve: { championnats: ChampionnatResolver } },
@@ -20,6 +21,7 @@ const routes: Routes = [
 	{ path: 'coupe/:champId', component: CoupeComponent },
 	{ path: 'matches/avalider', component: MatchAvaliderComponent, resolve: { sports: ChampCreationResolver } }, // TODO: renommer guard resolve
 	{ path: 'matches/:champId', component: MatchesComponent },
+	{ path: 'equipes', component: EquipesComponent, resolve: { sports: ChampCreationResolver } }, // TODO: renommer guard resolve
 ];
 
 @NgModule({

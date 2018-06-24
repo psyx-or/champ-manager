@@ -8,6 +8,8 @@ import { Responsable } from '../../model/Responsable';
 import { Creneau } from '../../model/Creneau';
 import * as moment from 'moment';
 
+moment.locale('fr');
+
 @Component({
   selector: 'app-equipes',
   templateUrl: './equipes.component.html',
@@ -20,7 +22,7 @@ export class EquipesComponent implements OnInit {
 	equipes: Equipe[];
 	jours = moment.weekdays(true);
 	
-	constructor(
+	constructor( 
 		private route: ActivatedRoute,
 		private requeteService: RequeteService,
 		private equipeService: EquipeService
@@ -28,6 +30,7 @@ export class EquipesComponent implements OnInit {
 
 	// TODO: Position sur la carte
 	// TODO: Envoi de mot de passe manuel
+	// TODO: Gestion des heures et suppression de la locale moment
 
 	/**
 	 * Initialisation
@@ -45,8 +48,10 @@ export class EquipesComponent implements OnInit {
 			this.equipeService.getEquipesCourantes(this.selSport),
 			equipes => {
 				equipes.forEach(e => {
+					// On s'assure de pouvoir saisir 2 responsables
 					for (let i = e.responsables.length; i < 2; i++)
 						e.responsables.push(new Responsable());
+					// Et au moins un créneau
 					if (e.creneaux.length == 0)
 						e.creneaux.push(new Creneau());
 					else
@@ -78,9 +83,41 @@ export class EquipesComponent implements OnInit {
 	 * Pousse les modifications
 	 */
 	submit(): void {
+		// On filtre
 		this.equipes.forEach(e => {
-			e.responsables = e.responsables.filter(r => r.nom && r.nom.trim().length > 0);
-			e.creneaux = e.creneaux.filter(c => c.heure && c.jour);
+			e.creneaux.forEach(c => c.heure = moment(c.heureDisp, "HH:mm").toDate())
+			e.creneaux = e.creneaux.filter(c => c.heure != null && c.jour != null);
 		});
+
+		// On pousse
+		this.requeteService.requete(
+			this.equipeService.majEquipes(this.equipes),
+			n => { alert("Equipes mises à jour"); this.selectionSport(); } // TO: alerte
+		);
+	}
+
+	/**
+	 * Renvoie le lien vers l'annuaire
+	 */
+	lienAnnuaire(): string {
+		return this.equipeService.lienAnnuaire(this.selSport);
+	}
+
+	/**
+	 * Ajoute des espaces dans le numéro de téléphone et supprime les points
+	 * @param equipe 
+	 * @param i 
+	 */
+	completeTel(equipe: Equipe, i: number, newval: string): void {
+
+		newval = newval.replace(/\./g, " ").replace("  ", " ");
+
+		if (newval.startsWith(equipe.responsables[i].tel1)) {
+			var l = newval.length;
+			if (l < 14 && l % 3 == 2 && !newval.endsWith(" "))
+				newval += " ";
+		}
+
+		equipe.responsables[i].tel1 = newval;
 	}
 }

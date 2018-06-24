@@ -51,6 +51,13 @@ class Responsable
         return $this->id;
     }
 
+	public function setId($id) : self
+	{
+		$this->id = $id;
+
+		return $this;
+	}
+
 	public function getEquipe() : ? Equipe
 	{
 		return $this->equipe;

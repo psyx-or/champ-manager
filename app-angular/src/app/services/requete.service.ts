@@ -24,13 +24,13 @@ export class RequeteService {
 	 * @param req
 	 * @param cb 
 	 */
-	public requete<T>(req: Observable<T>, cb: (val: T) => void) {
+	public requete<T>(req: Observable<T>, cb?: (val: T) => void) {
 		setTimeout(() => {
 			this.updateChargement(1);
 		});
 		
 		req.subscribe(
-			res => { this.updateChargement(-1); cb(res) },
+			res => { this.updateChargement(-1); if (cb) cb(res) },
 			err => { this.updateChargement(-1); alert("Erreur lors de l'opération"); } // TODO: alerte ng-bootstrap
 		);
 	}

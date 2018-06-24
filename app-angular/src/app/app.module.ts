@@ -25,9 +25,7 @@ import { ClassementResolver } from './components/classement/classement.resolver'
 import { MatchAvaliderComponent } from './components/match-avalider/match-avalider.component';
 import { MatchJourneeComponent } from './components/match-journee/match-journee.component';
 import { EquipesComponent } from './components/equipes/equipes.component';
-import * as moment from 'moment';
 
-moment.locale('fr');
 
 @NgModule({
   declarations: [

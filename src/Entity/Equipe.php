@@ -52,9 +52,9 @@ class Equipe implements UserInterface, \Serializable
      */
     private $classements;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Responsable", mappedBy="equipe", orphanRemoval=true)
-     */
+	/**
+	 * @ORM\OneToMany(targetEntity="App\Entity\Responsable", mappedBy="equipe", orphanRemoval=true)
+	 */
     private $responsables;
 
     /**
@@ -62,9 +62,9 @@ class Equipe implements UserInterface, \Serializable
      */
     private $terrain;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Creneau", mappedBy="equipe", orphanRemoval=true)
-     */
+	/**
+	 * @ORM\OneToMany(targetEntity="App\Entity\Creneau", mappedBy="equipe", orphanRemoval=true)
+	 */
     private $creneaux;
 
     public function __construct()
@@ -227,7 +227,7 @@ class Equipe implements UserInterface, \Serializable
         return $this->creneaux;
     }
 
-    public function addCreneaux(Creneau $creneaux): self
+    public function addCreneau(Creneau $creneaux): self
     {
         if (!$this->creneaux->contains($creneaux)) {
             $this->creneaux[] = $creneaux;
@@ -237,7 +237,7 @@ class Equipe implements UserInterface, \Serializable
         return $this;
     }
 
-    public function removeCreneaux(Creneau $creneaux): self
+    public function removeCreneau(Creneau $creneaux): self
     {
         if ($this->creneaux->contains($creneaux)) {
             $this->creneaux->removeElement($creneaux);

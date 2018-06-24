@@ -28,4 +28,20 @@ export class EquipeService {
 	public getEquipesCourantes(sport: Sport): Observable<Equipe[]> {
 		return this.http.get<Equipe[]>("/api/equipe/" + sport.nom + "/detail", { params: { saison: getSaisonCourante() } });
 	}
+
+	/**
+	 * Met à jour des équipes
+	 * @param equipes 
+	 */
+	public majEquipes(equipes: Equipe[]): Observable<number> {
+		return this.http.post<number>("/api/equipe/", equipes);
+	}
+
+	/**
+	 * Renvoi le lien vers l'annuaire
+	 * @param sport
+	 */
+	public lienAnnuaire(sport: Sport): string {
+		return sport == null ? null : ("/api/equipe/" + sport.nom + "/annuaire");
+	}
 }

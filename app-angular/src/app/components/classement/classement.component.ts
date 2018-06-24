@@ -76,7 +76,7 @@ export class ClassementComponent implements OnInit {
 		let equipesActuelles = this.classements.map(c => c.equipe.nom);
 
 		this.requeteService.requete(
-			this.equipeService.getEquipes(this.champ.sport.nom),
+			this.equipeService.getEquipes(this.champ.sport),
 			equipes => {
 				this.remplacement.equipes = equipes.filter(e => equipesActuelles.indexOf(e.nom)==-1);
 				if (this.remplacement.equipes.length == 0) {

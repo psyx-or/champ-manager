@@ -8,8 +8,6 @@ import { Responsable } from '../../model/Responsable';
 import { Creneau } from '../../model/Creneau';
 import * as moment from 'moment';
 
-moment.locale('fr');
-
 @Component({
   selector: 'app-equipes',
   templateUrl: './equipes.component.html',
@@ -20,7 +18,7 @@ export class EquipesComponent implements OnInit {
 	sports: Sport[];
 	selSport: Sport;
 	equipes: Equipe[];
-	jours = moment.weekdays(true);
+	jours = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi'];
 	
 	constructor( 
 		private route: ActivatedRoute,
@@ -85,7 +83,7 @@ export class EquipesComponent implements OnInit {
 	submit(): void {
 		// On filtre
 		this.equipes.forEach(e => {
-			e.creneaux.forEach(c => c.heure = moment(c.heureDisp, "HH:mm").toDate())
+			e.creneaux.forEach(c => c.heure = moment("1970-01-01 " + c.heureDisp, "YYYY-MM-DD HH:mm").add(1, 'hour').toDate())
 			e.creneaux = e.creneaux.filter(c => c.heure != null && c.jour != null);
 		});
 

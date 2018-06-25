@@ -74,7 +74,7 @@ class Annuaire
 		}
 
 		$objWriter = IOFactory::createWriter($phpWord, 'Word2007');
-		$ftmp = tempnam(sys_get_temp_dir(), "Annuaire");
+		$ftmp = "../var/Annuaire.docx";
 		$objWriter->save($ftmp);
 		return $ftmp;
 	}

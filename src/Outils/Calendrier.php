@@ -6,6 +6,7 @@ use PhpOffice\PhpWord\PhpWord;
 use PhpOffice\PhpWord\IOFactory;
 use App\Entity\Sport;
 use App\Entity\ChampionnatType;
+use PhpOffice\PhpWord\Style\Font;
 
 
 class Calendrier
@@ -87,9 +88,9 @@ class Calendrier
 					{
 						$texte1 = $match->getEquipe1() != null ? $match->getEquipe1()->getNom() : "Vainqueur match " . $matches[$match->getMatch1()->getId()];
 						$texte2 = $match->getEquipe2() != null ? $match->getEquipe2()->getNom() : "Vainqueur match " . $matches[$match->getMatch2()->getId()];
-						$table->addCell()->addText($texte1, array("bold" => true), array('alignment' => 'right'));
+						$table->addCell()->addText($texte1, Calendrier::getStyleEquipe($match->getEquipe1()), array('alignment' => 'right'));
 						$table->addCell()->addText("-", array("bold" => true), array('alignment' => 'center'));
-						$table->addCell()->addText($texte2, array("bold" => true), array('alignment' => 'left'));
+						$table->addCell()->addText($texte2, Calendrier::getStyleEquipe($match->getEquipe2()), array('alignment' => 'left'));
 					}
 
 					if ($exempt != null)
@@ -112,5 +113,16 @@ class Calendrier
 		$ftmp = "../var/Calendrier.docx";
 		$objWriter->save($ftmp);
 		return $ftmp;
+	}
+
+	/**
+	 * Calcule le style d'affichage d'une équipe
+	 */
+	private static function getStyleEquipe($equipe): array
+	{
+		if ($equipe != null && $equipe->getTerrain() == null)
+			return array("bold" => true, 'fgColor' => Font::FGCOLOR_RED, 'color' => 'FFFFFF');
+		else
+			return array("bold" => true);
 	}
 }

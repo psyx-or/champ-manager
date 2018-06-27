@@ -77,6 +77,9 @@
     "phpoffice/common": {
         "version": "0.2.7"
     },
+    "phpoffice/phpspreadsheet": {
+        "version": "1.3.1"
+    },
     "phpoffice/phpword": {
         "version": "v0.14.0"
     },

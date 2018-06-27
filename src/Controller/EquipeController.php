@@ -39,7 +39,7 @@ class EquipeController extends CMController
 	{
 		$repository = $this->getDoctrine()->getRepository(Equipe::class);
 		$ftmp = Annuaire::genere($repository->findBy(['sport' => $sport], ['nom' => 'ASC']));
-		return $this->file($ftmp, "Annuaire ".$sport->getNom().".docx");
+		return $this->file($ftmp, "Annuaire ".$sport->getNom()." - ".date('Y-m-d').".xlsx");
 	}
 
 

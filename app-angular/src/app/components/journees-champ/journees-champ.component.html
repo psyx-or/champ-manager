@@ -15,7 +15,7 @@
 	<div class="col-lg-1">
 		<div *ngFor="let j of journees; let i = index;" [class.sel-journee]="iJournee == i">
 			<a [routerLink]="" class="badge" [ngClass]="'badge-' + couleurs[i % couleurs.length][0]" [class.badge-pill]="iJournee == i"
-			   (click)="iJournee = i">{{ j | strJournee }}</a>
+			   (click)="iJournee = i">{{ j.libelle }}</a>
 		</div>
 	</div>
 

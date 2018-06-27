@@ -5,11 +5,8 @@ import { MatchService } from '../../services/match.service';
 import { Championnat } from '../../model/Championnat';
 import { Match } from '../../model/Match';
 import { Equipe } from '../../model/Equipe';
-import { StrJourneePipe } from '../../utils/str-journee.pipe';
 import { getVainqueur } from '../../utils/utils';
 
-
-let strJournee = new StrJourneePipe();
 
 /**
  * Une cellule du plateau
@@ -32,7 +29,7 @@ class Cellule {
 			label = vainqueur.nom;
 		}
 		else {
-			label = strJournee.transform({ numero: -1 - col });
+			label = "?";
 		}
 
 		return {

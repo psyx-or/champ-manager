@@ -35,7 +35,7 @@
 
 	<div class="card-body">
 		<div *ngFor="let j of champ.journees">
-			<h4>{{ j | strJournee}}</h4>
+			<h4>{{ j.libelle }}</h4>
 			<hr>
 			<app-match-journee [journee]="j"></app-match-journee>
 		</div>

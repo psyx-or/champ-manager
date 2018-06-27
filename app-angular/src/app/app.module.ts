@@ -15,7 +15,6 @@ import { ClassementComponent } from './components/classement/classement.componen
 import { CoupeComponent } from './components/coupe/coupe.component';
 import { MatchesComponent } from './components/matches/matches.component';
 import { ChampMenuComponent } from './components/champ-menu/champ-menu.component';
-import { StrJourneePipe } from './utils/str-journee.pipe';
 import { SignePipe } from './utils/signe.pipe';
 import { ChampImportComponent } from './components/champ-import/champ-import.component';
 import { ChampionnatResolver } from './components/championnats/championnats.resolver';
@@ -41,7 +40,6 @@ import { CalendrierComponent } from './components/calendrier/calendrier.componen
     CoupeComponent,
     MatchesComponent,
     ChampMenuComponent,
-    StrJourneePipe,
     SignePipe,
     ChampImportComponent,
     MatchAvaliderComponent,

@@ -6,7 +6,7 @@
 	<!-- Description de la journée -->
 	<div class="card-header text-white" (click)="journee.isCollapsed = !journee.isCollapsed">
 		<span class="reducteur" [class.ouvert]="!journee.isCollapsed"><i class='icon ion-md-play'></i></span>
-		{{ journee.obj | strJournee }}
+		{{ journee.obj.libelle }}
 	</div>
 
 	<!-- Liste des matches-->

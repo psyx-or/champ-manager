@@ -22,6 +22,10 @@
 	Matches à valider
   ------------------- -->
 
+<ngb-alert *ngIf="championnats && championnats.length == 0" [dismissible]="false" type="info">
+	Pas de match à valider
+</ngb-alert>
+
 <div *ngFor="let champ of championnats" class="card">
 
 	<!-- Description de la journée -->

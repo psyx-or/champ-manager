@@ -73,7 +73,18 @@ class Journee
         $this->numero = $numero;
 
         return $this;
-    }
+	}
+
+	/**
+	 * Renvoie le libellé de la journée
+	 * @Groups({"simple"})
+	 */
+	public function getLibelle()
+	{
+		if ($this->numero > 0) return "Journée " . $this->numero;
+		if ($this->numero == -1) return "Finale";
+		return "1/" . (2 ** (-$this->numero - 1)) . " Finale";
+	}
 
 	/**
 	 * @Groups({"simple"})

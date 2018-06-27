@@ -8,7 +8,7 @@ use PhpOffice\PhpWord\IOFactory;
 
 class Annuaire
 {
-	public static function genereAnnuaire(array $equipes): string
+	public static function genere(array $equipes): string
 	{
 		$phpWord = new PhpWord();
 		$phpWord->setDefaultParagraphStyle(array("spaceAfter" => 0));

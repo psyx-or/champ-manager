@@ -6,6 +6,9 @@ import { Championnat } from '../model/Championnat';
 import { Equipe } from '../model/Equipe';
 import { Classement } from '../model/Classement';
 import { map } from 'rxjs/operators';
+import { Sport } from '../model/Sport';
+import { CalendrierDTO } from '../model/CalendrierDTO';
+import { getSaisonCourante } from '../utils/utils';
 
 @Injectable({
   providedIn: 'root'
@@ -66,5 +69,22 @@ export class ChampionnatService {
 	 */
 	public importe(champDest: Championnat, champSources: Championnat[]): Observable<number> {
 		return this.http.post<number>("/api/championnat/" + champDest.id + "/importe", champSources);
+	}
+
+	/**
+	 * Renvoie les infos de calendrier pour les championnats de la saison courante
+	 * @param sport 
+	 */
+	public getCalendrierCourant(sport: Sport): Observable<CalendrierDTO[]> {
+		return this.http.get<CalendrierDTO[]>("/api/championnat/" + sport.nom + "/calendrier", { params: { saison: getSaisonCourante() }});
+	}
+
+	/**
+	 * Génère le lien pour générer le fichier du calendrier
+	 * @param sport 
+	 * @param champs 
+	 */
+	public lienCalendrier(sport: Sport, champs: Championnat[]): string {
+		return "/api/championnat/" + sport.nom + "/calendrier/genere?champs=" + champs.map(c => c.id).join();
 	}
 }

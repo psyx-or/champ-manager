@@ -12,16 +12,18 @@ import { JourneesChampResolver } from './components/journees-champ/journees-cham
 import { ClassementResolver } from './components/classement/classement.resolver';
 import { MatchAvaliderComponent } from './components/match-avalider/match-avalider.component';
 import { EquipesComponent } from './components/equipes/equipes.component';
+import { CalendrierComponent } from './components/calendrier/calendrier.component';
 
 const routes: Routes = [
     { path: 'championnats', component: ChampionnatsComponent, resolve: { championnats: ChampionnatResolver } },
 	{ path: 'champ-creation', component: ChampCreationComponent, resolve: { sports: ChampCreationResolver } },
-	{ path: 'journees/:champId', component: JourneesChampComponent, resolve: { champ: JourneesChampResolver } },
+	{ path: 'journees/:champId', component: JourneesChampComponent, resolve: { champ: JourneesChampResolver } }, // TODO: guard quand on quitte
 	{ path: 'classement/:champId', component: ClassementComponent, resolve: { champ: ClassementResolver } },
 	{ path: 'coupe/:champId', component: CoupeComponent },
 	{ path: 'matches/avalider', component: MatchAvaliderComponent, resolve: { sports: ChampCreationResolver } }, // TODO: renommer guard resolve
 	{ path: 'matches/:champId', component: MatchesComponent },
 	{ path: 'equipes', component: EquipesComponent, resolve: { sports: ChampCreationResolver } }, // TODO: renommer guard resolve
+	{ path: 'calendrier', component: CalendrierComponent, resolve: { sports: ChampCreationResolver } }, // TODO: renommer guard resolve
 ];
 
 @NgModule({

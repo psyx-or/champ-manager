@@ -28,7 +28,6 @@ export class EquipesComponent implements OnInit {
 
 	// TODO: Position sur la carte
 	// TODO: Envoi de mot de passe manuel
-	// TODO: Gestion des heures et suppression de la locale moment
 
 	/**
 	 * Initialisation

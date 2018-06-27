@@ -1,0 +1,54 @@
+<h1>
+	<i class="icon ion-md-calendar"></i> Calendrier
+</h1>
+
+
+<!----------------------
+	Sport
+	TODO: Avoir un composant?
+  ------------------- -->
+
+<div class="form-group form-row">
+	<label for="sport" class="col-sm-2 col-form-label">Sport</label>
+	<div class="col-sm-2">
+		<select class="form-control" id="sport" name="sport"
+				[(ngModel)]="selSport" (change)="selectionSport()">
+			<option *ngFor="let s of sports" [ngValue]="s">{{s.nom}}</option>
+		</select>
+	</div>
+</div>
+
+
+<!----------------------
+	Championnats
+  ------------------- -->
+
+<ngb-alert *ngIf="calendriers && calendriers.length == 0" [dismissible]="false" type="info">
+	Pas de championnat
+</ngb-alert>
+<form *ngIf="calendriers && calendriers.length != 0">
+	<table class="table table-striped">
+		<tr>
+			<th><input type="checkbox" (click)="selectionneTous($event.target.checked)"></th>
+			<th>Championnat</th>
+			<th>Etat</th>
+			<th>Calendrier</th>
+		</tr>
+		<tr *ngFor="let cal of calendriers" [ngClass]="{'table-danger': cal.nbJourneesDefinies != cal.nbJournees}">
+			<!-- Sélection-->
+			<td><input type="checkbox" [disabled]="cal.nbJourneesDefinies != cal.nbJournees" name="sel_{{cal.championnat.id}}"
+					   [(ngModel)]="cal.selectionne"></td>
+					   
+			<!-- Championnat -->
+			<td>{{cal.championnat.nom}}</td>
+
+			<!-- Etat des journées -->
+			<td><a [routerLink]="['/journees', cal.championnat.id]" ngbTooltip="Saisir le calendrier">
+				{{cal.nbJourneesDefinies}} / {{cal.nbJournees}} journées définies</a></td>
+
+			<!-- Dates de début et de fin -->
+			<td><span *ngIf="cal.debut && cal.fin">Du {{cal.debut}} au {{cal.fin}}</span></td>
+		</tr>
+	</table>
+	<a class="btn btn-primary" [href]="lienCalendrier()" [class.disabled]="!hasSelection()">Générer le calendrier des championnats sélectionnés</a>
+</form>

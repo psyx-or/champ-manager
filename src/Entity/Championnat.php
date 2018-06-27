@@ -65,9 +65,10 @@ class Championnat
      */
     private $termine;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Journee", mappedBy="championnat", orphanRemoval=true)
-     */
+	/**
+	 * @ORM\OneToMany(targetEntity="App\Entity\Journee", mappedBy="championnat", orphanRemoval=true)
+	 * @ORM\OrderBy({"numero" = "ASC"})
+	 */
     private $journees;
 
     public function __construct()

@@ -18,6 +18,7 @@ use App\Entity\Journee;
 use App\Entity\Match;
 use App\DTO\ChampCreationDTO;
 use App\Outils\MatchFunctions;
+use App\Outils\Calendrier;
 
 /**
  * @Route("/api")
@@ -44,7 +45,46 @@ class ChampionnatController extends CMController
 
         $repository = $this->getDoctrine()->getRepository(Championnat::class);
         return $this->groupJson($repository->findBy($query), 'simple');
-    }
+	}
+
+	/**
+	 * @Route("/championnat/{nom}/calendrier")
+	 * @Method("GET")
+	 * @IsGranted("ROLE_ADMIN")
+	 */
+	public function calendrier(Sport $sport, Request $request, EntityManagerInterface $entityManager)
+	{
+		$saison= $request->query->get('saison');
+
+		$query = $entityManager->createQuery(
+			"SELECT c AS championnat, count(j.numero) AS nbJournees, count(j.debut) AS nbJourneesDefinies, min(j.debut) AS debut, max(j.fin) AS fin
+			 FROM App\Entity\Championnat c
+			 JOIN c.journees j
+			 WHERE c.sport = :sport
+			   AND c.saison = :saison
+			 GROUP BY c"
+		);
+
+		$query->setParameter("sport", $sport);
+		$query->setParameter("saison", $saison);
+
+		return $this->groupJson($query->getResult(), 'simple');
+	}
+
+	/**
+	 * @Route("/championnat/{nom}/calendrier/genere")
+	 * @Method("GET")
+	 * @IsGranted("ROLE_ADMIN")
+	 */
+	public function genereCalendrier(Sport $sport, Request $request, EntityManagerInterface $entityManager)
+	{
+		$champs = explode(",", $request->query->get('champs'));
+
+		$repository = $this->getDoctrine()->getRepository(Championnat::class);
+		$ftmp = Calendrier::genere($sport, $repository->findBy(['id' => $champs], ['nom' => 'ASC']));
+
+		return $this->file($ftmp, "Calendrier " . $sport->getNom() . ".docx");
+	}
 
     /**
      * @Route("/championnat/{id}")
@@ -299,6 +339,7 @@ class ChampionnatController extends CMController
 	 */
 	private function creeMatchesCoupe(Championnat $championnat, array $equipes, EntityManagerInterface $entityManager, int $i = -1, array &$journees = array())
 	{
+		// TODO: supprimer la finale et les demi (plateau final)?
 		// La journée
 		if (isset($journees[$i]))
 		{

@@ -38,8 +38,8 @@ class EquipeController extends CMController
 	public function annuaire(Sport $sport)
 	{
 		$repository = $this->getDoctrine()->getRepository(Equipe::class);
-		$ftmp = Annuaire::genereAnnuaire($repository->findBy(['sport' => $sport], ['nom' => 'ASC']));
-		return $this->file($ftmp, "Annuaire_".$sport->getNom().".docx");
+		$ftmp = Annuaire::genere($repository->findBy(['sport' => $sport], ['nom' => 'ASC']));
+		return $this->file($ftmp, "Annuaire ".$sport->getNom().".docx");
 	}
 
 
@@ -75,6 +75,7 @@ class EquipeController extends CMController
 	 */
 	public function majEquipe(array $equipes, EntityManagerInterface $entityManager)
 	{
+		// TODO: envoi des mots de passe
 		$repository = $this->getDoctrine()->getRepository(Equipe::class);
 
 		foreach ($equipes as $equipe)

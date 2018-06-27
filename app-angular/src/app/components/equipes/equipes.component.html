@@ -25,7 +25,10 @@
 	Equipes
   ------------------- -->
 
-<div [hidden]="!equipes || equipes.length != 0">Pas d'équipe</div>
+<ngb-alert *ngIf="equipes && equipes.length == 0" [dismissible]="false" type="info">
+	Pas d'équipe
+</ngb-alert>
+
 <form class="form" (ngSubmit)="submit()" ngNativeValidate [hidden]="!equipes || equipes.length == 0">
 	<div *ngFor="let equipe of equipes" class="card">
 

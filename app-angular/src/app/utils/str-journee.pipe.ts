@@ -10,6 +10,7 @@ import { Journee } from '../model/Journee';
 })
 export class StrJourneePipe implements PipeTransform {
 
+	//TODO: supprimer
 	transform(value: Journee): any {
 
 		if (value.numero > 0) return "Journée " + value.numero;

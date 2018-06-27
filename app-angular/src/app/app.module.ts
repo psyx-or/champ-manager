@@ -25,6 +25,7 @@ import { ClassementResolver } from './components/classement/classement.resolver'
 import { MatchAvaliderComponent } from './components/match-avalider/match-avalider.component';
 import { MatchJourneeComponent } from './components/match-journee/match-journee.component';
 import { EquipesComponent } from './components/equipes/equipes.component';
+import { CalendrierComponent } from './components/calendrier/calendrier.component';
 
 
 @NgModule({
@@ -45,7 +46,8 @@ import { EquipesComponent } from './components/equipes/equipes.component';
     ChampImportComponent,
     MatchAvaliderComponent,
     MatchJourneeComponent,
-    EquipesComponent
+    EquipesComponent,
+    CalendrierComponent
   ],
   imports: [
     BrowserModule,

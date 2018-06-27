@@ -6,6 +6,7 @@ import { Match } from "./Match";
  */
 export class Journee {
 	numero: number;
+	libelle: string;
 	debut?: Date;
 	fin?: Date;
 	championnat?: Championnat;

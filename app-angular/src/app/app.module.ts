@@ -14,7 +14,7 @@ import { ModalComponent } from './components/modal/modal.component';
 import { ClassementComponent } from './components/classement/classement.component';
 import { CoupeComponent } from './components/coupe/coupe.component';
 import { MatchesComponent } from './components/matches/matches.component';
-import { ChampMenuComponent } from './components/champ-menu/champ-menu.component';
+import { GenericMenuComponent } from './components/generic-menu/generic-menu.component';
 import { SignePipe } from './utils/signe.pipe';
 import { ChampImportComponent } from './components/champ-import/champ-import.component';
 import { ChampionnatResolver } from './components/championnats/championnats.resolver';
@@ -25,6 +25,7 @@ import { MatchAvaliderComponent } from './components/match-avalider/match-avalid
 import { MatchJourneeComponent } from './components/match-journee/match-journee.component';
 import { EquipesComponent } from './components/equipes/equipes.component';
 import { CalendrierComponent } from './components/calendrier/calendrier.component';
+import { IsTypePipe } from './utils/is-type.pipe';
 
 
 @NgModule({
@@ -39,13 +40,14 @@ import { CalendrierComponent } from './components/calendrier/calendrier.componen
     ClassementComponent,
     CoupeComponent,
     MatchesComponent,
-    ChampMenuComponent,
+    GenericMenuComponent,
     SignePipe,
     ChampImportComponent,
     MatchAvaliderComponent,
     MatchJourneeComponent,
     EquipesComponent,
-    CalendrierComponent
+    CalendrierComponent,
+    IsTypePipe
   ],
   imports: [
     BrowserModule,

@@ -1,4 +1,4 @@
-<app-champ-menu [champ]="champ"></app-champ-menu>
+<app-generic-menu [obj]="champ" nomMenu="championnat"></app-generic-menu>
 
 <!-- Liste des journées-->
 <div *ngFor="let journee of journees" class="card" [ngClass]="'bg-' + journee.classe">

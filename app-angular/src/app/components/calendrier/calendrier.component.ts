@@ -26,6 +26,7 @@ export class CalendrierComponent implements OnInit {
 	) { }
 
 	// TODO: revenir sur cet écran suite à validation du calendrier d'un championnat
+	// TODO: Recherche des matches sur le même terrain
 
 	/**
 	 * Initialisation

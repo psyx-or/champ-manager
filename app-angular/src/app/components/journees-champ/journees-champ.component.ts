@@ -13,7 +13,7 @@ const nbMois = 4;
 
 // Define custom service providing the months and weekdays translations
 @Injectable()
-class CustomDatepickerI18n extends NgbDatepickerI18n {
+export class CustomDatepickerI18n extends NgbDatepickerI18n {
 
 	getWeekdayShortName(weekday: number): string {
 		return ['Lu', 'Ma', 'Me', 'Je', 'Ve', 'Sa', 'Di'][weekday - 1];
@@ -97,7 +97,7 @@ export class JourneesChampComponent implements OnInit, AfterViewInit {
 		private route: ActivatedRoute,
 		private router: Router,
 		private journeeService: JourneeService,
-		private requeteService: RequeteService,
+		public requeteService: RequeteService,
 		config: NgbDatepickerConfig
 	) { 
 		config.displayMonths = nbMois;

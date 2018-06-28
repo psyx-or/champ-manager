@@ -72,10 +72,7 @@ class MatchController extends CMController
 		if ($match->getScore1() != null && $match->getScore2() != null)
 			$match->setValide(true);
 
-		$entityManager->merge($match);
 		$entityManager->flush();
-
-		// TODO: passer à terminé?
 
         return $this->groupJson($match, 'simple');
 	}
@@ -118,20 +115,11 @@ class MatchController extends CMController
 			// Si c'est un match de coupe, on met à jour le match suivant
 			// avec l'équipe vainqueur
 			if ($entity->getParent1() != null) 
-			{
 				$entity->getParent1()->setEquipe1(MatchFunctions::getVainqueur($entity));
-				$entityManager->merge($entity->getParent1());
-			}
+
 			if ($entity->getParent2() != null) 
-			{
 				$entity->getParent2()->setEquipe2(MatchFunctions::getVainqueur($entity));
-				$entityManager->merge($entity->getParent2());
-			}
-
-			$entityManager->merge($entity);
 		}
-
-		// TODO: passer le championnat à terminé
 
 		// Recalcul du classement des championnats
 		if ($champ != null && $champ->getType() != ChampionnatType::COUPE)

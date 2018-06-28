@@ -34,7 +34,7 @@ class ClassementController extends CMController
 	 * @ParamConverter("championnat", converter="doctrine.orm")
 	 * @ParamConverter("classements", converter="cm_converter", options={"classe":"App\Entity\Classement[]"})
 	 */
-	public function valide(Championnat $championnat, array $classements, EntityManagerInterface $entityManager)
+	public function majPenalites(Championnat $championnat, array $classements, EntityManagerInterface $entityManager)
 	{
 		$repository = $this->getDoctrine()->getRepository(Classement::class);
 
@@ -46,8 +46,6 @@ class ClassementController extends CMController
 				continue;
 
 			$entity->setPenalite($class->getPenalite());
-
-			$entityManager->merge($entity);
 		}
 
 		// Recalcul du classement des championnats

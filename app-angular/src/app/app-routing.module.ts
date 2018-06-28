@@ -15,6 +15,7 @@ import { EquipesComponent } from './components/equipes/equipes.component';
 import { CalendrierComponent } from './components/calendrier/calendrier.component';
 
 const routes: Routes = [
+	{ path: '', pathMatch: 'full', redirectTo: 'championnats' },
     { path: 'championnats', component: ChampionnatsComponent, resolve: { championnats: ChampionnatResolver } },
 	{ path: 'champ-creation', component: ChampCreationComponent, resolve: { sports: SportResolver } },
 	{ path: 'journees/:champId', component: JourneesChampComponent, resolve: { champ: JourneesChampResolver } }, // TODO: guard quand on quitte

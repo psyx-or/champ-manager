@@ -18,7 +18,7 @@ import { ChampMenuComponent } from './components/champ-menu/champ-menu.component
 import { SignePipe } from './utils/signe.pipe';
 import { ChampImportComponent } from './components/champ-import/champ-import.component';
 import { ChampionnatResolver } from './components/championnats/championnats.resolver';
-import { ChampCreationResolver } from './components/champ-creation/champ-creation.resolver';
+import { SportResolver } from './utils/sports.resolver';
 import { JourneesChampResolver } from './components/journees-champ/journees-champ.resolver';
 import { ClassementResolver } from './components/classement/classement.resolver';
 import { MatchAvaliderComponent } from './components/match-avalider/match-avalider.component';
@@ -56,7 +56,7 @@ import { CalendrierComponent } from './components/calendrier/calendrier.componen
   ],
   providers: [
 	  ChampionnatResolver, 
-	  ChampCreationResolver, 
+	  SportResolver, 
 	  JourneesChampResolver,
 	  ClassementResolver
   ],

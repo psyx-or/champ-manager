@@ -112,7 +112,7 @@ export class JourneesChampComponent implements OnInit, AfterViewInit {
 		this.route.data
 			.subscribe((data: { champ: Championnat }) => {
 				this.champ = data.champ;
-				this.journees = sort(data.champ.journees, 'numero'); // TODO: trier côté PHP
+				this.journees = data.champ.journees;
 				this.iJournee = 0;
 			}
 		);

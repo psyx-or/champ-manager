@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
-import { RequeteService } from '../../services/requete.service';
-import { Sport } from '../../model/Sport';
-import { SportService } from '../../services/sport.service';
+import { RequeteService } from '../services/requete.service';
+import { Sport } from '../model/Sport';
+import { SportService } from '../services/sport.service';
 
 @Injectable()
-export class ChampCreationResolver implements Resolve<Sport[]> {
+export class SportResolver implements Resolve<Sport[]> {
 
 	constructor(
 		private requeteService: RequeteService,

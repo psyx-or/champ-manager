@@ -37,7 +37,6 @@ export class ChampionnatsComponent implements OnInit {
 	 */
     ngOnInit() {
 		// TODO: filtre par défaut sur la saison en cours
-		// TODO: afficher les championnats sans calendrier
 
 		this.route.data
 			.subscribe((data: { championnats: Championnat[] }) => {

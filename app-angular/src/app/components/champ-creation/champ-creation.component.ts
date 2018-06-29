@@ -28,6 +28,7 @@ export class ChampCreationComponent implements OnInit {
 	itequipes = Array(this.equipes.length);
 	avecNuls: boolean = true;
 	equipesSport: Equipe[] = null;
+	modele = null; // TODO
 
 
 	/**

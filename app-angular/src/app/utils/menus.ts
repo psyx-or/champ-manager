@@ -14,7 +14,8 @@ export class MenuItem {
  * Un menu complet
  */
 export class Menu {
-	titre: string | ((c: any) => string);
+	titre: ((c: any) => string) | string;
+	icone?: string;
 	items: MenuItem[];
 }
 
@@ -30,6 +31,15 @@ export var menus: { [nom: string]: Menu } = {
 			{ route: "classement", icone: 'podium', titre: "Classement", cond: (c: Championnat) => c.type == ChampType.Aller || c.type == ChampType["Aller/Retour"] },
 			{ route: "coupe", icone: 'git-network', titre: "Plateau", cond: (c: Championnat) => c.type == ChampType.Coupe },
 			{ route: "journees", icone: 'calendar', titre: "Calendrier" },
+		]
+	},
+
+	/** Menu des paramètres */
+	parametres: {
+		titre: "Paramètres",
+		icone: "settings", // TODO
+		items: [
+			{ route: "fairplay-editor", icone: 'clipboard', titre: "Feuilles de fair-play" },
 		]
 	}
 }

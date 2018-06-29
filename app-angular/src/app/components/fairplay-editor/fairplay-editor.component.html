@@ -1,0 +1,135 @@
+<app-generic-menu nomMenu="parametres"></app-generic-menu>
+
+<!----------------------
+	Sélection du formulaire
+  ------------------- -->
+
+<div class="form-group form-row">
+	<label for="fpform" class="col-sm-2 col-form-label">Feuille de fair-play</label>
+	<div class="col-sm-2">
+		<select class="form-control" id="fpform" name="fpform"
+				[(ngModel)]="selfpform">
+			<option *ngFor="let f of fpforms" [ngValue]="f">{{f.libelle}}</option>
+			<option [ngValue]="newFpform">-- Ajouter --</option>
+		</select>
+	</div>
+
+	<div class="col-sm-1" *ngIf="selfpform?.id">
+		<button class="btn btn-outline-danger" (click)="supprimer(selfpform)"
+			ngbTooltip="Supprimer la feuille de fair-play" container="body">
+			<i class="icon ion-md-trash"></i>
+		</button>
+	</div>
+</div>
+
+<!----------------------
+	Définition du formulaire
+  ------------------- -->
+
+<form (ngSubmit)="submit()" class="form" ngNativeValidate *ngIf="selfpform">
+
+	<hr>
+
+	<!-- Libellé -->
+	<div class="form-group form-row">
+		<label for="libelle" class="col-sm-2 col-form-label">Libellé</label>
+		<div class="col-sm-10">
+			<input type="text" class="form-control" name="libelle" id="libelle" [(ngModel)]="selfpform.libelle" required>
+		</div>
+	</div>
+
+	<!-- Ajout de catégorie -->
+	<div class="mb-3">
+		<button class="btn btn-outline-success" type="button" (click)="selfpform.categories.push({questions: []})"><i class="icon ion-md-add"></i> Ajouter une catégorie</button>
+	</div>
+
+	<!-- Pas de catégorie -->
+	<ngb-alert *ngIf="selfpform.categories.length == 0" [dismissible]="false" type="info">
+		Pas de catégorie
+	</ngb-alert>
+
+	<div *ngFor="let cat of selfpform.categories; let i = index;" class="card categorie border-secondary">
+	
+		<!-- Nom de la catégorie -->
+		<div class="card-header">
+			<div class="row">
+				<div class="col-11 text-left">
+					<input type="text" class="form-control" name="lib_{{i}}" required
+						[(ngModel)]="cat.libelle" placeholder="Libellé de la carégorie">
+				</div>
+				<div class="col-1 text-right">
+					<button class="btn btn-sm btn-outline-danger" (click)="selfpform.categories.splice(selfpform.categories.indexOf(cat), 1)"
+							ngbTooltip="Supprimer la catégorie" container="body">
+						<i class="icon ion-md-trash"></i>
+					</button>
+				</div>
+			</div>
+		</div>
+	
+		<!-- Questions -->
+		<div class="card-body">
+
+			<!-- Ajout de question -->
+			<div class="mb-3">
+				<button class="btn btn-outline-success btn-sm" type="button" (click)="cat.questions.push({})"><i class="icon ion-md-add"></i> Ajouter une question</button>
+			</div>
+
+			<!-- Pas de question -->
+			<ngb-alert *ngIf="cat.questions.length == 0" [dismissible]="false" type="info">
+				Pas de question
+			</ngb-alert>
+
+			<div *ngFor="let q of cat.questions; let j = index;" class="card">
+
+				<!-- Titre de la question -->
+				<div class="card-header">
+					<div class="row">
+						<div class="col-11 text-left">
+							<input type="text" class="form-control" name="titre_{{i}}_{{j}}" required
+									[(ngModel)]="q.titre" placeholder="Titre de la question">
+						</div>
+						<div class="col-1 text-right">
+							<button class="btn btn-sm btn-outline-danger" (click)="cat.questions.splice(cat.questions.indexOf(q), 1)"
+									ngbTooltip="Supprimer la question" container="body">
+								<i class="icon ion-md-trash"></i>
+							</button>
+						</div>
+					</div>
+				</div>
+
+				<div class="card-body">
+					<!-- Libellé de la question -->
+					<div class="form-group form-row">
+						<label for="lib_{{i}}_{{j}}" class="col-sm-2 col-form-label">Description</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" name="lib_{{i}}_{{j}}" id="lib_{{i}}_{{j}}"
+								[(ngModel)]="q.libelle" required>
+						</div>
+					</div>
+
+					<!-- Type de question -->
+					<div class="form-group form-row">
+						<label for="type_{{i}}_{{j}}" class="col-sm-2 col-form-label">Type</label>
+						<div class="col-sm-3">
+							<select class="form-control" id="type_{{i}}_{{j}}" name="type_{{i}}_{{j}}"
+									[(ngModel)]="q.type" required>
+								<option *ngFor="let t of types" [ngValue]="t[1]">{{t[0]}}</option>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<button type="submit" class="btn btn-primary" [disabled]="requeteService.chargement">Valider</button>
+</form>
+
+
+<!----------------------
+	Fenêtre de confirmation de suppression
+  ------------------- -->
+
+<ng-template #supprFeuille let-form>
+	Etes-vous sûr de vouloir supprimer la feuille de fair-play {{ form.libelle }} ?
+</ng-template>

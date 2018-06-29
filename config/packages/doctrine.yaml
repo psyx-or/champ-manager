@@ -20,6 +20,7 @@ doctrine:
             enum: string
         types:
             championnatType: App\Entity\ChampionnatType
+            questionType: App\Entity\FPQuestionType
 
     orm:
         auto_generate_proxy_classes: '%kernel.debug%'

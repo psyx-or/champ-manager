@@ -1,13 +1,15 @@
 <h1>
-	<ng-container *ngIf="menu.titre | isType:'string'">{{menu.titre}}</ng-container>
+	<ng-container *ngIf="menu.titre | isType:'string'">
+		<i class='icon ion-md-{{menu.icone}}' *ngIf="menu.icone"></i> {{menu.titre}}
+	</ng-container>
 	<ng-container *ngIf="obj != null">{{menu.titre(obj)}}</ng-container>
 </h1>
 <br>
-<ngb-tabset [activeId]="'cm' + active" (tabChange)="beforeChange($event)" *ngIf="obj != null">
+<ngb-tabset [activeId]="'cm' + active" (tabChange)="beforeChange($event)">
 	<ng-container *ngFor="let m of menu.items; let i = index;">
-		<ngb-tab id="cm{{i}}" *ngIf="!m.cond || m.cond(obj)">
+		<ngb-tab id="cm{{i}}" *ngIf="!m.cond || obj != null && m.cond(obj)">
 			<ng-template ngbTabTitle>
-				<i class='icon ion-md-{{m.icone}}}'></i> {{m.titre}}
+				<i class='icon ion-md-{{m.icone}}}' *ngIf="m.icone"></i> {{m.titre}}
 			</ng-template>
 		</ngb-tab>
 	</ng-container>

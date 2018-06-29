@@ -13,6 +13,8 @@ import { ClassementResolver } from './components/classement/classement.resolver'
 import { MatchAvaliderComponent } from './components/match-avalider/match-avalider.component';
 import { EquipesComponent } from './components/equipes/equipes.component';
 import { CalendrierComponent } from './components/calendrier/calendrier.component';
+import { FairplayEditorComponent } from './components/fairplay-editor/fairplay-editor.component';
+import { FpformsResolver } from './components/fairplay-editor/fairplay-forms.resolver';
 
 const routes: Routes = [
 	{ path: '', pathMatch: 'full', redirectTo: 'championnats' },
@@ -25,6 +27,7 @@ const routes: Routes = [
 	{ path: 'matches/:champId', component: MatchesComponent },
 	{ path: 'equipes', component: EquipesComponent, resolve: { sports: SportResolver } }, // TODO: guard quand on quitte
 	{ path: 'calendrier', component: CalendrierComponent, resolve: { sports: SportResolver } }, // TODO: guard quand on quitte
+	{ path: 'fairplay-editor', component: FairplayEditorComponent, resolve: { fpforms: FpformsResolver } }, // TODO: guard quand on quitte
 ];
 
 @NgModule({

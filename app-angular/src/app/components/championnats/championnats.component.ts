@@ -37,6 +37,7 @@ export class ChampionnatsComponent implements OnInit {
 	 */
     ngOnInit() {
 		// TODO: filtre par défaut sur la saison en cours
+		// TODO: rafraîchir suite à suppression
 
 		this.route.data
 			.subscribe((data: { championnats: Championnat[] }) => {
@@ -68,7 +69,7 @@ export class ChampionnatsComponent implements OnInit {
 	supprimer(champ: Championnat): void {
 		openModal(
 			this,
-			"Nouvelles équipes détectées",
+			"Suppression de championnat",
 			this.supprChampTpl,
 			champ,
 			() => {

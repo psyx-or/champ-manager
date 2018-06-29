@@ -22,7 +22,7 @@ export class EquipesComponent implements OnInit {
 	
 	constructor( 
 		private route: ActivatedRoute,
-		private requeteService: RequeteService,
+		public requeteService: RequeteService,
 		private equipeService: EquipeService
 	) { }
 

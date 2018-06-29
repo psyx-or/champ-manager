@@ -26,6 +26,8 @@ import { MatchJourneeComponent } from './components/match-journee/match-journee.
 import { EquipesComponent } from './components/equipes/equipes.component';
 import { CalendrierComponent } from './components/calendrier/calendrier.component';
 import { IsTypePipe } from './utils/is-type.pipe';
+import { FairplayEditorComponent } from './components/fairplay-editor/fairplay-editor.component';
+import { FpformsResolver } from './components/fairplay-editor/fairplay-forms.resolver';
 
 
 @NgModule({
@@ -47,7 +49,8 @@ import { IsTypePipe } from './utils/is-type.pipe';
     MatchJourneeComponent,
     EquipesComponent,
     CalendrierComponent,
-    IsTypePipe
+    IsTypePipe,
+    FairplayEditorComponent
   ],
   imports: [
     BrowserModule,
@@ -60,7 +63,8 @@ import { IsTypePipe } from './utils/is-type.pipe';
 	  ChampionnatResolver, 
 	  SportResolver, 
 	  JourneesChampResolver,
-	  ClassementResolver
+	  ClassementResolver,
+	  FpformsResolver
   ],
   bootstrap: [AppComponent],
   entryComponents: [

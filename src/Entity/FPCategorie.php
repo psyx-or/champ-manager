@@ -54,6 +54,13 @@ class FPCategorie
         return $this->id;
     }
 
+	public function setId($id) : self
+	{
+		$this->id = $id;
+
+		return $this;
+	}
+
     public function getForm(): ? FPForm
     {
         return $this->form;

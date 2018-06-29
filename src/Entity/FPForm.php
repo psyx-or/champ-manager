@@ -48,6 +48,13 @@ class FPForm
         return $this->id;
     }
 
+	public function setId($id) : self
+	{
+		$this->id = $id;
+
+		return $this;
+	}
+
 	/**
 	 * @Groups({"simple"})
 	 */
@@ -76,7 +83,7 @@ class FPForm
     }
 
 	/**
-	 * @Groups({"simple"})
+	 * @Groups({"complet"})
 	 * @return Collection|FPCategorie[]
 	 */
     public function getCategories(): Collection

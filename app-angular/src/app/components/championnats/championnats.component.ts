@@ -6,7 +6,7 @@ import { sort, openModal } from '../../utils/utils';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { RequeteService } from '../../services/requete.service';
 import { ChampImportComponent } from '../champ-import/champ-import.component';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-championnats',
@@ -27,6 +27,7 @@ export class ChampionnatsComponent implements OnInit {
 	 */
     constructor(
 		private route: ActivatedRoute,
+		private router: Router,
 		public modalService: NgbModal,
 		private requeteService: RequeteService,
         private championnatService: ChampionnatService
@@ -37,7 +38,6 @@ export class ChampionnatsComponent implements OnInit {
 	 */
     ngOnInit() {
 		// TODO: filtre par défaut sur la saison en cours
-		// TODO: rafraîchir suite à suppression
 
 		this.route.data
 			.subscribe((data: { championnats: Championnat[] }) => {
@@ -75,7 +75,7 @@ export class ChampionnatsComponent implements OnInit {
 			() => {
 				this.requeteService.requete(
 					this.championnatService.supprime(champ),
-					res => { this.ngOnInit() }
+					res => { this.router.navigate(["/championnats"]) }
 				);
 			}
 		);

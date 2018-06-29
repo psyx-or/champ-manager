@@ -15,7 +15,7 @@ export class FpformsResolver implements Resolve<FPForm[]> {
 
 	resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<FPForm[]> {
 		return this.requeteService.recupere(
-			this.fairplayService.liste()
+			this.fairplayService.liste(true)
 		);
 	}
 }

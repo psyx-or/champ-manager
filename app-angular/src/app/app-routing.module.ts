@@ -18,7 +18,7 @@ import { FpformsResolver } from './components/fairplay-editor/fairplay-forms.res
 
 const routes: Routes = [
 	{ path: '', pathMatch: 'full', redirectTo: 'championnats' },
-    { path: 'championnats', component: ChampionnatsComponent, resolve: { championnats: ChampionnatResolver } },
+	{ path: 'championnats', component: ChampionnatsComponent, resolve: { championnats: ChampionnatResolver }, runGuardsAndResolvers: "always" },
 	{ path: 'champ-creation', component: ChampCreationComponent, resolve: { sports: SportResolver } },
 	{ path: 'journees/:champId', component: JourneesChampComponent, resolve: { champ: JourneesChampResolver } }, // TODO: guard quand on quitte
 	{ path: 'classement/:champId', component: ClassementComponent, resolve: { champ: ClassementResolver } },
@@ -27,11 +27,11 @@ const routes: Routes = [
 	{ path: 'matches/:champId', component: MatchesComponent },
 	{ path: 'equipes', component: EquipesComponent, resolve: { sports: SportResolver } }, // TODO: guard quand on quitte
 	{ path: 'calendrier', component: CalendrierComponent, resolve: { sports: SportResolver } }, // TODO: guard quand on quitte
-	{ path: 'fairplay-editor', component: FairplayEditorComponent, resolve: { fpforms: FpformsResolver } }, // TODO: guard quand on quitte
+	{ path: 'fairplay-editor', component: FairplayEditorComponent, resolve: { fpforms: FpformsResolver }, runGuardsAndResolvers: "always" }, // TODO: guard quand on quitte
 ];
 
 @NgModule({
-    imports: [RouterModule.forRoot(routes)],
+	imports: [RouterModule.forRoot(routes, { onSameUrlNavigation: "reload" })],
     exports: [RouterModule]
 })
 export class AppRoutingModule { }

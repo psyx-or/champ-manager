@@ -15,8 +15,8 @@ export class FairplayService {
 	/**
 	 * Liste les feuilles de fair-play
 	 */
-	public liste(): Observable<FPForm[]> {
-		return this.http.get<FPForm[]>("/api/fairplay");
+	public liste(complet: boolean): Observable<FPForm[]> {
+		return this.http.get<FPForm[]>("/api/fairplay", { params: { complet: complet + "" } });
 	}
 
 	/**

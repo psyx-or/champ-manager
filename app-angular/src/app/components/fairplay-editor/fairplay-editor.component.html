@@ -53,12 +53,20 @@
 		<!-- Nom de la catégorie -->
 		<div class="card-header">
 			<div class="row">
-				<div class="col-11 text-left">
+				<div class="col-10 text-left">
 					<input type="text" class="form-control" name="lib_{{i}}" required
 						[(ngModel)]="cat.libelle" placeholder="Libellé de la carégorie">
 				</div>
-				<div class="col-1 text-right">
-					<button class="btn btn-sm btn-outline-danger" (click)="selfpform.categories.splice(selfpform.categories.indexOf(cat), 1)"
+				<div class="col-2 text-right">
+					<button type="button" class="btn btn-outline-secondary" (click)="deplacer(selfpform.categories, i, -1)"
+							ngbTooltip="Déplacer vers le haut" container="body" *ngIf="i > 0">
+						<i class="icon ion-md-arrow-round-up"></i>
+					</button>
+					<button type="button" class="btn btn-outline-secondary" (click)="deplacer(selfpform.categories, i, +1)"
+							ngbTooltip="Déplacer vers le bas" container="body" *ngIf="i < selfpform.categories.length-1">
+						<i class="icon ion-md-arrow-round-down"></i>
+					</button>
+					<button type="button" class="btn btn-outline-danger" (click)="selfpform.categories.splice(selfpform.categories.indexOf(cat), 1)"
 							ngbTooltip="Supprimer la catégorie" container="body">
 						<i class="icon ion-md-trash"></i>
 					</button>
@@ -84,12 +92,20 @@
 				<!-- Titre de la question -->
 				<div class="card-header">
 					<div class="row">
-						<div class="col-11 text-left">
+						<div class="col-10 text-left">
 							<input type="text" class="form-control" name="titre_{{i}}_{{j}}" required
 									[(ngModel)]="q.titre" placeholder="Titre de la question">
 						</div>
-						<div class="col-1 text-right">
-							<button class="btn btn-sm btn-outline-danger" (click)="cat.questions.splice(cat.questions.indexOf(q), 1)"
+						<div class="col-2 text-right">
+							<button type="button" class="btn btn-outline-secondary" (click)="deplacer(cat.questions, j, -1)"
+									ngbTooltip="Déplacer vers le haut" container="body" *ngIf="j > 0">
+								<i class="icon ion-md-arrow-round-up"></i>
+							</button>
+							<button type="button" class="btn btn-outline-secondary" (click)="deplacer(cat.questions, j, +1)"
+									ngbTooltip="Déplacer vers le bas" container="body" *ngIf="j < cat.questions.length-1">
+								<i class="icon ion-md-arrow-round-down"></i>
+							</button>
+							<button type="button" class="btn btn-outline-danger" (click)="cat.questions.splice(cat.questions.indexOf(q), 1)"
 									ngbTooltip="Supprimer la question" container="body">
 								<i class="icon ion-md-trash"></i>
 							</button>
@@ -122,7 +138,8 @@
 		</div>
 	</div>
 
-	<button type="submit" class="btn btn-primary" [disabled]="requeteService.chargement">Valider</button>
+	<button type="submit" class="btn btn-primary" 
+	        [disabled]="requeteService.chargement || selfpform.categories.length == 0 || selfpform.categories[0].questions.length == 0">Valider</button>
 </form>
 
 
@@ -131,5 +148,5 @@
   ------------------- -->
 
 <ng-template #supprFeuille let-form>
-	Etes-vous sûr de vouloir supprimer la feuille de fair-play {{ form.libelle }} ?
+	Etes-vous sûr de vouloir supprimer la feuille de fair-play {{ form.libelle }}&nbsp;?
 </ng-template>

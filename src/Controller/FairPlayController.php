@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -19,10 +20,13 @@ class FairPlayController extends CMController
 	 * @Route("/fairplay")
 	 * @Method("GET")
 	 */
-    public function liste()
+    public function liste(Request $request)
     {
 		$repository = $this->getDoctrine()->getRepository(FPForm::class);
-        return $this->groupJson($repository->findBy(array("obsolete" => false)), "simple");
+        return $this->groupJson(
+			$repository->findBy(array("obsolete" => false), array("libelle" => "ASC")),
+			"simple",
+			$request->query->get('complet')=="true" ? "complet" : "simple");
 	}
 
 	/**

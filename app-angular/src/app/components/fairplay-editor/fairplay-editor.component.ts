@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FPForm, FPQuestionType } from '../../model/FPForm';
 import { RequeteService } from '../../services/requete.service';
 import { FairplayService } from '../../services/fairplay.service';
@@ -30,21 +30,21 @@ export class FairplayEditorComponent implements OnInit {
 	 */
 	constructor(
 		private route: ActivatedRoute,
+		private router: Router,
 		public modalService: NgbModal,
 		public requeteService: RequeteService,
 		private fairplayService: FairplayService
 	) {}
-
-	// TODO: rafraîchir suite à suppression
-	// TODO: up and down
 
 	/**
 	 * Initialisation du composant
 	 */
 	ngOnInit() {
 		this.types = Object.entries(FPQuestionType);
-		this.route.data
-			.subscribe((data: { fpforms: FPForm[] }) => this.fpforms = data.fpforms);
+		this.route.data.subscribe((data: { fpforms: FPForm[] }) => {
+			this.fpforms = data.fpforms;
+			this.selfpform = null;
+		});
 	}
 
 	/**
@@ -60,20 +60,32 @@ export class FairplayEditorComponent implements OnInit {
 			() => {
 				this.requeteService.requete(
 					this.fairplayService.supprime(form),
-					res => { this.ngOnInit() }
+					res => { this.router.navigate(["/fairplay-editor"]) }
 				);
 			}
 		);
+	}
+
+	/**
+	 * Déplace un objet dans une liste
+	 * @param tab
+	 * @param index 
+	 * @param sens 
+	 */
+	deplacer(tab: Array<any>, index: number, sens: number) {
+		let a = tab[index];
+		let b = tab[index + sens];
+		tab[index] = b;
+		tab[index + sens] = a;
 	}
 	
 	/**
 	 * Mise à jour / création de la feuille de fair-play
 	 */
 	submit(): void {
-		// TODO: rafraîchir suite à suppression
 		this.requeteService.requete(
 			this.fairplayService.maj(this.selfpform),
-			s => alert(s)
+			res => { this.router.navigate(["/fairplay-editor"]) }
 		);
 	}
 }

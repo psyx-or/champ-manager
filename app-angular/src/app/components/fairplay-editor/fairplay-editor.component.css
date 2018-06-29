@@ -1,3 +1,7 @@
 .card.categorie, .card.categorie .card:not(:last-of-type) {
 	margin-bottom: 20px;
 }
+
+.text-right button {
+	margin-left: 10px;
+}

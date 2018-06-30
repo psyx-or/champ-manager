@@ -1,12 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { FPForm } from '../model/FPForm';
+import { tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FairplayService {
+
+	private cache: FPForm[];
 
 	constructor(
 		private http: HttpClient
@@ -16,7 +19,12 @@ export class FairplayService {
 	 * Liste les feuilles de fair-play
 	 */
 	public liste(complet: boolean): Observable<FPForm[]> {
-		return this.http.get<FPForm[]>("/api/fairplay", { params: { complet: complet + "" } });
+		if (!complet && this.cache)
+			return of(this.cache);
+
+		return this.http.get<FPForm[]>("/api/fairplay", { params: { complet: complet + "" } }).pipe(
+			tap(forms => { if (!complet) this.cache = forms } )
+		);
 	}
 
 	/**
@@ -24,6 +32,7 @@ export class FairplayService {
 	 * @param form
 	 */
 	public maj(form: FPForm): Observable<string> {
+		this.cache = null;
 		return this.http.post<string>("/api/fairplay", form);
 	}
 
@@ -32,6 +41,7 @@ export class FairplayService {
 	 * @param form
 	 */
 	public supprime(form: FPForm): Observable<string> {
+		this.cache = null;
 		return this.http.delete<string>("/api/fairplay/" + form.id);
 	}
 }

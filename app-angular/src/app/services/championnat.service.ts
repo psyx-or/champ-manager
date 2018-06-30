@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 import { Championnat } from '../model/Championnat';
 import { Equipe } from '../model/Equipe';
 import { Classement } from '../model/Classement';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { Sport } from '../model/Sport';
 import { CalendrierDTO } from '../model/CalendrierDTO';
 import { getSaisonCourante } from '../utils/utils';
@@ -15,6 +15,8 @@ import { getSaisonCourante } from '../utils/utils';
 })
 export class ChampionnatService {
 
+	private cache: Championnat[];
+
     constructor(
         private http: HttpClient
     ) { }
@@ -23,7 +25,12 @@ export class ChampionnatService {
 	 * @returns La liste des championnats
 	 */
     public getChampionnats(): Observable<Championnat[]> {
-        return this.http.get<Championnat[]>("/api/championnat");
+		if (this.cache) 
+			return of(this.cache);
+
+        return this.http.get<Championnat[]>("/api/championnat").pipe(
+			tap(champs => this.cache = champs)
+		);
 	}
 
 	/**
@@ -44,6 +51,7 @@ export class ChampionnatService {
 	 * @param championnat 
 	 */
 	public cree(championnat: Championnat, equipes: Equipe[]): Observable<Championnat> {
+		this.cache = null;
 		return this.http.post<Championnat>("/api/championnat", {championnat: championnat, equipes: equipes});
 	}
 
@@ -52,6 +60,7 @@ export class ChampionnatService {
 	 * @param championnat 
 	 */
 	public supprime(championnat: Championnat): Observable<any> {
+		this.cache = null;
 		return this.http.delete("/api/championnat/" + championnat.id);
 	}
 

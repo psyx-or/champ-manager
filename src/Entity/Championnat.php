@@ -71,6 +71,11 @@ class Championnat
 	 */
     private $journees;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\FPForm", inversedBy="championnats")
+     */
+    private $fpForm;
+
     public function __construct()
     {
         $this->classements = new ArrayCollection();
@@ -263,6 +268,18 @@ class Championnat
                 $journee->setChampionnat(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getFpForm(): ?FPForm
+    {
+        return $this->fpForm;
+    }
+
+    public function setFpForm(?FPForm $fpForm): self
+    {
+        $this->fpForm = $fpForm;
 
         return $this;
     }

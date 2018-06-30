@@ -28,6 +28,7 @@ import { CalendrierComponent } from './components/calendrier/calendrier.componen
 import { IsTypePipe } from './utils/is-type.pipe';
 import { FairplayEditorComponent } from './components/fairplay-editor/fairplay-editor.component';
 import { FpformsResolver } from './components/fairplay-editor/fairplay-forms.resolver';
+import { FpformsResumeResolver } from './components/champ-creation/fairplay-forms-resume.resolver';
 
 
 @NgModule({
@@ -64,7 +65,8 @@ import { FpformsResolver } from './components/fairplay-editor/fairplay-forms.res
 	  SportResolver, 
 	  JourneesChampResolver,
 	  ClassementResolver,
-	  FpformsResolver
+	  FpformsResolver,
+	  FpformsResumeResolver
   ],
   bootstrap: [AppComponent],
   entryComponents: [

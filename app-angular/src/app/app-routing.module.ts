@@ -15,11 +15,12 @@ import { EquipesComponent } from './components/equipes/equipes.component';
 import { CalendrierComponent } from './components/calendrier/calendrier.component';
 import { FairplayEditorComponent } from './components/fairplay-editor/fairplay-editor.component';
 import { FpformsResolver } from './components/fairplay-editor/fairplay-forms.resolver';
+import { FpformsResumeResolver } from './components/champ-creation/fairplay-forms-resume.resolver';
 
 const routes: Routes = [
 	{ path: '', pathMatch: 'full', redirectTo: 'championnats' },
 	{ path: 'championnats', component: ChampionnatsComponent, resolve: { championnats: ChampionnatResolver }, runGuardsAndResolvers: "always" },
-	{ path: 'champ-creation', component: ChampCreationComponent, resolve: { sports: SportResolver } },
+	{ path: 'champ-creation', component: ChampCreationComponent, resolve: { sports: SportResolver, fpForms: FpformsResumeResolver } },
 	{ path: 'journees/:champId', component: JourneesChampComponent, resolve: { champ: JourneesChampResolver } }, // TODO: guard quand on quitte
 	{ path: 'classement/:champId', component: ClassementComponent, resolve: { champ: ClassementResolver } },
 	{ path: 'coupe/:champId', component: CoupeComponent },

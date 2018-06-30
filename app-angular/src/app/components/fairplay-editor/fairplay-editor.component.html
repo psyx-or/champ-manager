@@ -30,6 +30,12 @@
 
 	<hr>
 
+	<!-- Message d'alerte pour la modification -->
+	<ngb-alert *ngIf="selfpform.id" [dismissible]="false" type="warning">
+		Les modifications ne seront prises en compte que pour les futurs championnats,
+		pas pour les championnats en cours.
+	</ngb-alert>
+
 	<!-- Libellé -->
 	<div class="form-group form-row">
 		<label for="libelle" class="col-sm-2 col-form-label">Libellé</label>

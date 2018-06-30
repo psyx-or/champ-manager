@@ -114,6 +114,18 @@
 				</div>
 				<span class="col-sm-1 col-form-label">points</span>
 			</div>
+			
+			<!-- Feuille de fair-play -->
+			<div class="form-group form-row">
+				<label for="fairplay" class="col-sm-2 col-form-label">Feuille de fair-play</label>
+				<div class="col-sm-2">
+					<select class="form-control" id="fairplay" name="fairplay"
+							[(ngModel)]="championnat.fpForm">
+						<option [ngValue]="null">-- Aucune --</option>
+						<option *ngFor="let f of fpForms" [ngValue]="f">{{f.libelle}}</option>
+					</select>
+				</div>
+			</div>
 
 		</div>
 	</div>

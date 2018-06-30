@@ -10,6 +10,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Router, ActivatedRoute } from '@angular/router';
 import { openModal, getSaisonCourante } from '../../utils/utils';
 import { RequeteService } from '../../services/requete.service';
+import { FPForm } from '../../model/FPForm';
 
 @Component({
   selector: 'app-champ-creation',
@@ -20,7 +21,8 @@ export class ChampCreationComponent implements OnInit {
 
 	@ViewChild('ajoutEquipes') ajoutEquipesTpl: TemplateRef<any>;
 
-    sports: Sport[];
+	sports: Sport[];
+	fpForms: FPForm[];
     types: [string,string][];
     newSport: Sport = new Sport();
 	championnat: Championnat;
@@ -52,7 +54,10 @@ export class ChampCreationComponent implements OnInit {
         // Récupération des données
         this.types = Object.entries(ChampType);
 		this.route.data
-			.subscribe((data: { sports: Sport[] }) => this.sports = data.sports);
+			.subscribe((data: { sports: Sport[], fpForms: FPForm[] }) => {
+				this.sports = data.sports;
+				this.fpForms = data.fpForms;
+			});
 
         // Construction de l'objet
         this.championnat = new Championnat({
@@ -124,9 +129,10 @@ export class ChampCreationComponent implements OnInit {
 	 */
 	searchEquipe = (texte$: Observable<string>) =>
 		texte$.pipe(
-			map(term => this.equipesSport.filter(
-				e => e.nom.trim().toLowerCase().indexOf(term.toLowerCase()) > -1
-			))
+			map(term => this.equipesSport
+				.filter(e => e.nom.trim().toLowerCase().indexOf(term.toLowerCase()) > -1)
+				.filter(e => !this.equipes.includes(e))
+			)
 		);
 
 	/**

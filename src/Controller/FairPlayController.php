@@ -36,8 +36,11 @@ class FairPlayController extends CMController
 	 */
 	public function supprime(FPForm $form, EntityManagerInterface $entityManager)
 	{
-		// TODO: vérifier l'utilisation par des réponses
-		$entityManager->remove($form);
+		if ($form->getChampionnats()->count() == 0)
+			$entityManager->remove($form);
+		else
+			$form->setObsolete(true);
+
 		$entityManager->flush();
 		return $this->json("ok");
 	}
@@ -50,9 +53,19 @@ class FairPlayController extends CMController
 	 */
 	public function maj(FPForm $dto, EntityManagerInterface $entityManager)
 	{
-		// TODO: modification
-		// TODO: vérifier l'utilisation par des réponses
+		// En cas de modification, on supprime le formulaire actuel
+		if ($dto->getId() != null)
+		{
+			$repository = $this->getDoctrine()->getRepository(FPForm::class);
+			$entite = $repository->find($dto->getId());
 
+			if ($entite->getChampionnats()->count() == 0)
+				$entityManager->remove($entite);
+			else
+				$entite->setObsolete(true);
+		}
+
+		// On enregistre le nouveau formulaire
 		$dto->setObsolete(false);
 
 		$i = 0;
@@ -64,8 +77,9 @@ class FairPlayController extends CMController
 				$question->setOrdre($j++);
 		}
 
-		$entityManager->persist($dto);
+		$entityManager->persist($dto);		
 		$entityManager->flush();
+
 		return $this->json("ok");
 	}
 }

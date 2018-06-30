@@ -19,6 +19,7 @@ use App\Entity\Match;
 use App\DTO\ChampCreationDTO;
 use App\Outils\MatchFunctions;
 use App\Outils\Calendrier;
+use App\Entity\FPForm;
 
 /**
  * @Route("/api")
@@ -83,7 +84,7 @@ class ChampionnatController extends CMController
 		$repository = $this->getDoctrine()->getRepository(Championnat::class);
 		$ftmp = Calendrier::genere($sport, $repository->findBy(['id' => $champs], ['nom' => 'ASC']));
 
-		return $this->file($ftmp, "Calendrier " . $sport->getNom() . ".docx");
+		return $this->file($ftmp, "Calendrier " . $sport->getNom() . " - " . date('Y-m-d') . ".docx");
 	}
 
     /**
@@ -124,15 +125,9 @@ class ChampionnatController extends CMController
 		foreach ($q->getResult() as $match)
 		{
 			if ($match->getEquipe1() == $oldEquipe)
-			{
 				$match->setEquipe1($newEquipe);
-				$entityManager->merge($match);
-			}
 			if ($match->getEquipe2() == $oldEquipe)
-			{
 				$match->setEquipe2($newEquipe);
-				$entityManager->merge($match);
-			}
 		}
 
 		$entityManager->flush();
@@ -170,7 +165,6 @@ class ChampionnatController extends CMController
 						$matchDest->setScore2($matchSource->getScore2());
 						$matchDest->setForfait2($matchSource->getForfait2());
 						$matchDest->setValide(true);
-						$entityManager->merge($matchDest);
 					}
 				}
 			}
@@ -230,6 +224,12 @@ class ChampionnatController extends CMController
 	{
 		$championnat->setSport($sport);
 		$championnat->setTermine(false);
+
+		if ($championnat->getFpForm() != null)
+		{
+			$repository = $this->getDoctrine()->getRepository(FPForm::class);
+			$championnat->setFpForm($repository->find($championnat->getFpForm()->getId()));
+		}
 
         $entityManager->persist($championnat);
 

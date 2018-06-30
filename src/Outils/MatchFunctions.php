@@ -98,7 +98,6 @@ class MatchFunctions {
 			else
 				$class->setPosition($i);
 			
-			$entityManager->merge($class);
 			$i++;
 		}
 	}

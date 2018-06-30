@@ -37,7 +37,7 @@ export var menus: { [nom: string]: Menu } = {
 	/** Menu des paramètres */
 	parametres: {
 		titre: "Paramètres",
-		icone: "settings", // TODO
+		icone: "settings",
 		items: [
 			{ route: "fairplay-editor", icone: 'clipboard', titre: "Feuilles de fair-play" },
 		]

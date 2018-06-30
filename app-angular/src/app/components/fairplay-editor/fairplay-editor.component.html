@@ -44,11 +44,6 @@
 		</div>
 	</div>
 
-	<!-- Ajout de catégorie -->
-	<div class="mb-3">
-		<button class="btn btn-outline-success" type="button" (click)="selfpform.categories.push({questions: []})"><i class="icon ion-md-add"></i> Ajouter une catégorie</button>
-	</div>
-
 	<!-- Pas de catégorie -->
 	<ngb-alert *ngIf="selfpform.categories.length == 0" [dismissible]="false" type="info">
 		Pas de catégorie
@@ -82,11 +77,6 @@
 	
 		<!-- Questions -->
 		<div class="card-body">
-
-			<!-- Ajout de question -->
-			<div class="mb-3">
-				<button class="btn btn-outline-success btn-sm" type="button" (click)="cat.questions.push({})"><i class="icon ion-md-add"></i> Ajouter une question</button>
-			</div>
 
 			<!-- Pas de question -->
 			<ngb-alert *ngIf="cat.questions.length == 0" [dismissible]="false" type="info">
@@ -125,7 +115,7 @@
 						<label for="lib_{{i}}_{{j}}" class="col-sm-2 col-form-label">Description</label>
 						<div class="col-sm-10">
 							<input type="text" class="form-control" name="lib_{{i}}_{{j}}" id="lib_{{i}}_{{j}}"
-								[(ngModel)]="q.libelle" required>
+								[(ngModel)]="q.libelle">
 						</div>
 					</div>
 
@@ -141,7 +131,17 @@
 					</div>
 				</div>
 			</div>
+
+			<!-- Ajout de question -->
+			<div class="mb-3">
+				<button class="btn btn-outline-success btn-sm" type="button" (click)="cat.questions.push({})"><i class="icon ion-md-add"></i> Ajouter une question</button>
+			</div>
 		</div>
+	</div>
+
+	<!-- Ajout de catégorie -->
+	<div class="mb-3">
+		<button class="btn btn-outline-success" type="button" (click)="selfpform.categories.push({questions: []})"><i class="icon ion-md-add"></i> Ajouter une catégorie</button>
 	</div>
 
 	<button type="submit" class="btn btn-primary" 

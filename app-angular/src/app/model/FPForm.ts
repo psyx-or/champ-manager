@@ -31,6 +31,6 @@ export class FPCategorie {
 export class FPQuestion {
 	public id?: number;
 	public titre: string;
-	public libelle: string;
+	public libelle?: string;
 	public type: FPQuestionType;
 }

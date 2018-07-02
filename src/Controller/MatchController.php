@@ -50,7 +50,7 @@ class MatchController extends CMController
 		
 		$query->setParameter("sport", $sport);
 
-		return $this->groupJson($query->getResult(), 'simple', 'matches');
+		return $this->groupJson($query->getResult(), 'simple', 'matches', 'fp');
 	}
 	
     /**
@@ -59,7 +59,7 @@ class MatchController extends CMController
      */
     public function liste(Championnat $championnat)
     {
-        return $this->groupJson($championnat, 'simple', 'matches');
+        return $this->groupJson($championnat, 'simple', 'matches', 'fp');
 	}
 
 	/**

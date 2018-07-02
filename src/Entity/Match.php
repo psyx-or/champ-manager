@@ -95,6 +95,16 @@ class Match
 	 */
 	private $parent2;
 
+	/**
+	 * @ORM\OneToOne(targetEntity="App\Entity\FPFeuille", inversedBy="matchEquipe1", cascade={"persist", "remove"})
+	 */
+	private $fpFeuille1;
+
+	/**
+	 * @ORM\OneToOne(targetEntity="App\Entity\FPFeuille", inversedBy="matchEquipe2", cascade={"persist", "remove"})
+	 */
+	private $fpFeuille2;
+
 
 	public function setId($id) : self
 	{
@@ -312,5 +322,35 @@ class Match
 			return $this->equipe1;
 		
 		return null;
+	}
+
+	/**
+	 * @Groups({"simple"})
+	 */
+	public function getFpFeuille1(): ?FPFeuille
+	{
+		return $this->fpFeuille1;
+	}
+
+	public function setFpFeuille1(?FPFeuille $fpFeuille1): self
+	{
+		$this->fpFeuille1 = $fpFeuille1;
+		
+		return $this;
+	}
+
+	/**
+	 * @Groups({"simple"})
+	 */
+	public function getFpFeuille2(): ?FPFeuille
+	{
+		return $this->fpFeuille2;
+	}
+
+	public function setFpFeuille2(?FPFeuille $fpFeuille2): self
+	{
+		$this->fpFeuille2 = $fpFeuille2;
+
+		return $this;
 	}
 }

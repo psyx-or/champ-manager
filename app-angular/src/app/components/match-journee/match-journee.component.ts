@@ -4,6 +4,10 @@ import { Match } from '../../model/Match';
 import { RequeteService } from '../../services/requete.service';
 import { MatchService } from '../../services/match.service';
 import { fromDisp, toDisp } from '../../utils/utils';
+import { FPForm } from '../../model/FPForm';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { FairplayComponent } from '../fairplay/fairplay.component';
+import { FPFeuille } from '../../model/FPFeuille';
 
 @Component({
   selector: 'app-match-journee',
@@ -13,10 +17,12 @@ import { fromDisp, toDisp } from '../../utils/utils';
 export class MatchJourneeComponent implements OnInit {
 
 	@Input() journee: Journee;
+	@Input() fpForm: FPForm;
 
 	constructor(
-		private requeteService: RequeteService,
-		private matchService: MatchService
+		public requeteService: RequeteService,
+		private matchService: MatchService,
+		private modalService: NgbModal
 	) { }
 
 	ngOnInit() {
@@ -56,5 +62,17 @@ export class MatchJourneeComponent implements OnInit {
 	afficheFeuille(match: Match): void {
 		//TODO
 		alert(match.feuille);
+	}
+
+	/**
+	 * Affiche une feuille de fair-play et récupère l'éventuel nouveau ratio
+	 * @param match 
+	 * @param equipe 
+	 */
+	fairplay(match: Match, equipe: 1|2): void {
+		const modal = this.modalService.open(FairplayComponent, { centered: true, backdrop: 'static', size: 'lg' });
+		modal.componentInstance.match = match;
+		modal.componentInstance.equipe = equipe;
+		modal.result.then((res: FPFeuille) => match['fpFeuille'+equipe] = res);
 	}
 }

@@ -1,0 +1,58 @@
+<form class="form" (ngSubmit)="submit()" *ngIf="dto">
+	<!----------------------
+			Entête
+		------------------- -->
+	<div class="modal-header">
+		<h4 class="modal-title">Fair play: évaluation de {{ dto.fpFeuille.equipeEvaluee.nom }} par {{ dto.fpFeuille.equipeRedactrice.nom }} </h4>
+	</div>
+
+	<!----------------------
+			Formulaire
+		------------------- -->
+	<div class="modal-body">
+		<div class="card" *ngFor="let cat of dto.fpForm.categories">
+			<div class="card-header">{{cat.libelle}}</div>
+			<div class="card-body">
+				<div *ngFor="let q of cat.questions; let i = index;">
+					<hr *ngIf="i > 0">
+					<div>{{q.titre}}</div>
+					<div class="form-text text-muted">{{q.libelle}}</div>
+					<div *ngIf="q.type == 'EVAL'" class="btn-group btn-group-toggle" ngbRadioGroup name="rep_{{q.id}}" [(ngModel)]="dto.reponses[q.id]">
+						<label ngbButtonLabel class="btn-outline-danger">
+							<input ngbButton type="radio" [value]="-1"> Mauvais
+						</label>
+						<label ngbButtonLabel class="btn-outline-secondary">
+							<input ngbButton type="radio" [value]="0"> Normal
+						</label>
+						<label ngbButtonLabel class="btn-outline-success">
+							<input ngbButton type="radio" [value]=1> Bon
+						</label>
+					</div>
+					<div *ngIf="q.type == 'BOOLEEN'" class="btn-group btn-group-toggle" ngbRadioGroup name="rep_{{q.id}}" [(ngModel)]="dto.reponses[q.id]">
+						<label ngbButtonLabel class="btn-outline-danger">
+							<input ngbButton type="radio" [value]="-1"> Non
+						</label>
+						<label ngbButtonLabel class="btn-outline-success">
+							<input ngbButton type="radio" [value]=1> Oui
+						</label>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="card">
+			<div class="card-header">Commentaire</div>
+			<div class="card-body">
+				<textarea rows="4" class="form-control" name="commentaire"
+				          [(ngModel)]="dto.fpFeuille.commentaire"></textarea>
+			</div>
+		</div>
+	</div>
+
+	<!----------------------
+			Pied
+		------------------- -->
+	<div class="modal-footer">
+		<button type="button" class="btn btn-secondary" (click)="activeModal.dismiss()">Annuler</button>
+		<button type="submit" class="btn btn-primary" [disabled]="requeteService.chargement">Enregistrer</button>
+	</div>
+</form>

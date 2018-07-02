@@ -29,6 +29,7 @@ import { IsTypePipe } from './utils/is-type.pipe';
 import { FairplayEditorComponent } from './components/fairplay-editor/fairplay-editor.component';
 import { FpformsResolver } from './components/fairplay-editor/fairplay-forms.resolver';
 import { FpformsResumeResolver } from './components/champ-creation/fairplay-forms-resume.resolver';
+import { FairplayComponent } from './components/fairplay/fairplay.component';
 
 
 @NgModule({
@@ -51,7 +52,8 @@ import { FpformsResumeResolver } from './components/champ-creation/fairplay-form
     EquipesComponent,
     CalendrierComponent,
     IsTypePipe,
-    FairplayEditorComponent
+    FairplayEditorComponent,
+    FairplayComponent
   ],
   imports: [
     BrowserModule,
@@ -72,7 +74,8 @@ import { FpformsResumeResolver } from './components/champ-creation/fairplay-form
   entryComponents: [
 	  LoginComponent,
 	  ModalComponent,
-	  ChampImportComponent
+	  ChampImportComponent,
+	  FairplayComponent
   ]
 })
 export class AppModule { }

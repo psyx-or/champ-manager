@@ -1,4 +1,5 @@
 import { Equipe } from "./Equipe";
+import { FPFeuille } from "./FPFeuille";
 
 /**
  * Un match
@@ -17,6 +18,8 @@ export class Match {
 	match1?: Match;
 	match2?: Match;
 	exempt?: Equipe;
+	fpFeuille1?: FPFeuille;
+	fpFeuille2?: FPFeuille;
 
 	dispEquipe1?: string;
 	dispEquipe2?: string;

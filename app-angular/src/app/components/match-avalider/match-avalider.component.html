@@ -37,7 +37,7 @@
 		<div *ngFor="let j of champ.journees">
 			<h4>{{ j.libelle }}</h4>
 			<hr>
-			<app-match-journee [journee]="j"></app-match-journee>
+			<app-match-journee [journee]="j" [fpForm]="champ.fpForm"></app-match-journee>
 		</div>
 	</div>
 </div>

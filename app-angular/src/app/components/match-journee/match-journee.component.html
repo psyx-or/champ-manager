@@ -5,6 +5,12 @@
 			<!-- Si vrai match-->
 			<tr *ngFor="let match of journee.matches" [class.matchvalide]="match.valide === true">
 				<ng-container *ngIf="!match.exempt">
+
+					<!-- Fair-play 1 -->
+					<td *ngIf="fpForm">
+						<ng-container *ngTemplateOutlet="fairplaytpl;context:{match:match, equipe:1, feuille:match.fpFeuille1}"></ng-container>
+					</td>
+
 					<!-- Equipe 1 + score 1 -->
 					<td class="text-right">
 						<label class="mr-2" for="score1_{{match.id}}">{{match.dispEquipe1}}</label>
@@ -19,8 +25,14 @@
 						 pattern="FO|[0-9]{1,2}" [(ngModel)]="match.dispScore2">
 						<label class="ml-2" for="score2_{{match.id}}">{{match.dispEquipe2}}</label>
 					</td>
+
+					<!-- Fair-play 2 -->
+					<td *ngIf="fpForm">
+						<ng-container *ngTemplateOutlet="fairplaytpl;context:{match:match, equipe:2, feuille:match.fpFeuille2}"></ng-container>
+					</td>
+
 					<!-- Feuille de match-->
-					<td class="text-center feuille pt-2">
+					<td class="text-center lien pt-2">
 						<span *ngIf="match.feuille" (click)="afficheFeuille(match)" ngbTooltip="Feuille de match">
 							<i class='icon ion-md-clipboard'></i>
 						</span>
@@ -40,20 +52,34 @@
 
 				<!-- Si exempt -->
 				<ng-container *ngIf="match.exempt">
+					<td *ngIf="fpForm"></td>
 					<td colspan="3" class="text-center">
 						Exempt: {{ match.exempt.nom }}
 					</td>
+					<td *ngIf="fpForm"></td>
 					<td colspan="2"></td>
 				</ng-container>
 			</tr>
 
 			<!-- Validation globale-->
 			<tr class="text-center bg-white">
+				<td *ngIf="fpForm"></td>
 				<td colspan="3" class="text-center">
 					<button class="btn btn-primary" type="submit" [disabled]="requeteService.chargement">Enregistrer</button>
 				</td>
+				<td *ngIf="fpForm"></td>
 				<td colspan="2"></td>
 			</tr>
 		</tbody>
 	</table>
 </form>
+
+<!-- Template pour afficher le ratio d'une feuille de fair-play -->
+<ng-template #fairplaytpl let-match="match" let-equipe="equipe" let-feuille="feuille">
+	<div class="lien" (click)="fairplay(match, equipe)">
+		<i class='icon ion-md-happy text-success' *ngIf="feuille && feuille.ratio > 33"></i>
+		<i class='icon ion-md-contact' *ngIf="feuille && feuille.ratio <= 33 && feuille.ratio >= -33"></i>
+		<i class='icon ion-md-sad text-danger' *ngIf="feuille && feuille.ratio < -33"></i>
+		<i class='icon ion-md-help-circle-outline' *ngIf="feuille == null"></i>
+	</div>
+</ng-template>

@@ -272,6 +272,9 @@ class Championnat
         return $this;
     }
 
+	/**
+	 * @Groups({"simple"})
+	 */
     public function getFpForm(): ?FPForm
     {
         return $this->fpForm;

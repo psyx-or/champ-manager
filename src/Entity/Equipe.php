@@ -67,11 +67,23 @@ class Equipe implements UserInterface, \Serializable
 	 */
     private $creneaux;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\FPFeuille", mappedBy="equipeRedactrice")
+     */
+	private $fpRedigees;
+	
+	/**
+	 * @ORM\OneToMany(targetEntity="App\Entity\FPFeuille", mappedBy="equipeEvaluee")
+	 */
+	private $fpEvaluees;
+
     public function __construct()
     {
         $this->classements = new ArrayCollection();
         $this->responsables = new ArrayCollection();
         $this->creneaux = new ArrayCollection();
+        $this->fpRedigees = new ArrayCollection();
+        $this->fpEvaluees = new ArrayCollection();
     }
 
 	public function setId($id) : self
@@ -292,5 +304,67 @@ class Equipe implements UserInterface, \Serializable
 			$this->login,
 			$this->password,
 		) = unserialize($serialized, ['allowed_classes' => false]);
+	}
+ 
+	/**
+	 * @return Collection|FPFeuille[]
+	 */
+	public function getFpRedigees(): Collection
+	{
+		return $this->fpRedigees;
+	}
+
+	public function addFpRedigee(FPFeuille $fpRedigee): self
+	{
+		if (!$this->fpRedigees->contains($fpRedigee)) {
+			$this->fpRedigees[] = $fpRedigee;
+			$fpRedigee->setEquipeRedactrice($this);
+		}
+		
+		return $this;
+	}
+
+	public function removeFpRedigee(FPFeuille $fpRedigee): self
+	{
+		if ($this->fpRedigees->contains($fpRedigee)) {
+			$this->fpRedigees->removeElement($fpRedigee);
+			// set the owning side to null (unless already changed)
+			if ($fpRedigee->getEquipeRedactrice() === $this) {
+				$fpRedigee->setEquipeRedactrice(null);
+			}
+		}
+		
+		return $this;
+	}
+
+	/**
+	 * @return Collection|FPFeuille[]
+	 */
+	public function getFpEvaluees(): Collection
+	{
+		return $this->fpEvaluees;
+	}
+
+	public function addFpEvaluee(FPFeuille $fpEvaluee): self
+	{
+		if (!$this->fpEvaluees->contains($fpEvaluee)) {
+			$this->fpEvaluees[] = $fpEvaluee;
+			$fpEvaluee->setEquipeEvaluee($this);
+		}
+		
+		return $this;
+	}
+
+	public function removeFpEvaluee(FPFeuille $fpEvaluee): self
+	{
+		if ($this->fpEvaluees->contains($fpEvaluee)) {
+			$this->fpEvaluees->removeElement($fpEvaluee);
+			// set the owning side to null (unless already changed)
+			if ($fpEvaluee->getEquipeEvaluee() === $this) {
+				$fpEvaluee->setEquipeEvaluee(null);
+			}
+		}
+		
+		return $this;
 	}
 }

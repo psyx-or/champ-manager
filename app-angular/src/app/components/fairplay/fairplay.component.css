@@ -1,0 +1,7 @@
+.card:not(:last-of-type) {
+	margin-bottom: 20px;
+}
+
+.btn-group {
+    margin-top: 8px;
+}

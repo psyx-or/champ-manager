@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { FPForm } from '../model/FPForm';
 import { tap } from 'rxjs/operators';
+import { Match } from '../model/Match';
+import { FPFeuilleAfficheDTO, FPFeuille } from '../model/FPFeuille';
 
 @Injectable({
   providedIn: 'root'
@@ -43,5 +45,23 @@ export class FairplayService {
 	public supprime(form: FPForm): Observable<string> {
 		this.cache = null;
 		return this.http.delete<string>("/api/fairplay/" + form.id);
+	}
+
+	/**
+	 * Récupère une feuille de fair-play (éventuellement vide)
+	 * @param match 
+	 * @param equipe 
+	 */
+	public getFeuille(match: Match, equipe: 1 | 2): Observable<FPFeuilleAfficheDTO> {
+		return this.http.get<FPFeuilleAfficheDTO>("/api/fairplay/feuille/" + match.id + "/" + equipe);
+	}
+
+	/**
+	 * Met à jour une feuille de fair-play
+	 * @param match 
+	 * @param dto 
+	 */
+	public majFeuille(match: Match, dto: FPFeuilleAfficheDTO): Observable<FPFeuille> {
+		return this.http.post<FPFeuille>("/api/fairplay/feuille/" + match.id, { fpFeuille: dto.fpFeuille, reponses: dto.reponses });
 	}
 }

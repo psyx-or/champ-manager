@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 
-import { Championnat } from '../model/Championnat';
+import { Championnat, ChampModele } from '../model/Championnat';
 import { Equipe } from '../model/Equipe';
 import { Classement } from '../model/Classement';
 import { map, tap } from 'rxjs/operators';
@@ -16,6 +16,7 @@ import { getSaisonCourante } from '../utils/utils';
 export class ChampionnatService {
 
 	private cache: Championnat[];
+	private cacheModele: ChampModele[];
 
     constructor(
         private http: HttpClient
@@ -95,5 +96,32 @@ export class ChampionnatService {
 	 */
 	public lienCalendrier(sport: Sport, champs: Championnat[]): string {
 		return "/api/championnat/" + sport.nom + "/calendrier/genere?champs=" + champs.map(c => c.id).join();
+	}
+
+	/**
+	 * Récupère les modèles de championnat
+	 */
+	public getModeles(): Observable<ChampModele[]> {
+		return this.http.get<ChampModele[]>("/api/championnat/modele").pipe(
+			tap(modeles => this.cacheModele = modeles)
+		);
+	}
+
+	/**
+	 * Met à jour un modèle de championnat
+	 * @param modele 
+	 */
+	public majModele(modele: ChampModele): Observable<any> {
+		this.cacheModele = null;
+		return this.http.post("/api/championnat/modele", modele);
+	}
+
+	/**
+	 * Supprime un modèle de championnat
+	 * @param modele
+	 */
+	public supprimeModele(modele: ChampModele): Observable<any> {
+		this.cacheModele = null;
+		return this.http.delete("/api/championnat/modele/" + modele.id);
 	}
 }

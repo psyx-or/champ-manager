@@ -9,7 +9,7 @@
 	<ng-container *ngFor="let m of menu.items; let i = index;">
 		<ngb-tab id="cm{{i}}" *ngIf="!m.cond || obj != null && m.cond(obj)">
 			<ng-template ngbTabTitle>
-				<i class='icon ion-md-{{m.icone}}}' *ngIf="m.icone"></i> {{m.titre}}
+				<i class='icon ion-md-{{m.icone}}' *ngIf="m.icone"></i> {{m.titre}}
 			</ng-template>
 		</ngb-tab>
 	</ng-container>

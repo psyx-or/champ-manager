@@ -11,7 +11,7 @@
 	<div class="col-sm-2">
 		<select class="form-control" id="modele" name="modele"
 				[(ngModel)]="modele">
-			<option [ngValue]="newSport">-- Ajouter --</option>
+			<option>-- Ajouter --</option>
 		</select>
 	</div>
 	<div class="col-sm-2">
@@ -29,23 +29,6 @@
 			Caractéristiques
 		</div>
 		<div class="card-body">
-			
-			<!-- Sport -->
-			<div class="form-group form-row">
-				<label for="sport" class="col-sm-2 col-form-label">Sport</label>
-				<div class="col-sm-2">
-					<select class="form-control" id="sport" name="sport" required
-							[(ngModel)]="championnat.sport" (change)="selectionSport()">
-						<option *ngFor="let s of sports" [ngValue]="s">{{s.nom}}</option>
-						<option [ngValue]="newSport">-- Ajouter --</option>
-					</select>
-				</div>
-				<div class="col-sm-2">
-					<input type="text" class="form-control" name="newSport" required
-						[(ngModel)]="newSport.nom"
-						*ngIf="championnat.sport == newSport">
-				</div>
-			</div>
 
 			<!-- Saison -->
 			<div class="form-group form-row">
@@ -55,77 +38,8 @@
 				</div>
 			</div>
 
-			<!-- Nom -->
-			<div class="form-group form-row">
-				<label for="nom" class="col-sm-2 col-form-label">Nom</label>
-				<div class="col-sm-4">
-					<input type="text" class="form-control" id="nom" name="nom" required
-						[(ngModel)]="championnat.nom">
-				</div>
-			</div>
-
-            <!-- Type -->
-            <div class="form-group form-row">
-                <label for="type" class="col-sm-2 col-form-label">Type</label>
-                <div class="col-sm-2">
-                    <select class="form-control" id="type" name="type" required
-                            [(ngModel)]="championnat.type">
-                        <option *ngFor="let t of types" [ngValue]="t[1]">{{t[0]}}</option>
-                    </select>
-                </div>
-            </div>
-
-			<!-- Points de victoire -->
-			<div class="form-group form-row">
-				<label for="ptvict" class="col-sm-2 col-form-label">Victoire</label>
-				<div class="col-sm-1">
-					<input type="number" class="form-control" id="ptvict" name="ptvict" required
-						min="0"
-						[(ngModel)]="championnat.ptvict" [disabled]="championnat.type == 'COUPE'">
-				</div>
-				<span class="col-sm-1 col-form-label">points</span>
-			</div>
-
-			<!-- Points de nul -->
-			<div class="form-group form-row">
-				<label for="ptnul" class="col-sm-2 col-form-label">Match nul</label>
-				<div class="col-sm-1">
-					<input type="number" class="form-control" id="ptnul" name="ptnul" required
-						min="0"
-						[(ngModel)]="championnat.ptnul" [disabled]="championnat.type == 'COUPE' || !avecNuls">
-				</div>
-				<span class="col-sm-1 col-form-label">points</span>
-				<div class="col-sm-6 form-check-inline">
-					<input class="form-check-input" type="checkbox" id="chknuls" name="chknuls"
-						[(ngModel)]="avecNuls" [disabled]="championnat.type == 'COUPE'">
-					<label class="form-check-label" for="chknuls">
-						Match nul possible
-					</label>
-				</div>
-			</div>
-
-			<!-- Points de défaite -->
-			<div class="form-group form-row">
-				<label for="ptdef" class="col-sm-2 col-form-label">Défaite</label>
-				<div class="col-sm-1">
-					<input type="number" class="form-control" id="ptdef" name="ptdef" required
-						min="0"
-						[(ngModel)]="championnat.ptdef" [disabled]="championnat.type == 'COUPE'">
-				</div>
-				<span class="col-sm-1 col-form-label">points</span>
-			</div>
-			
-			<!-- Feuille de fair-play -->
-			<div class="form-group form-row">
-				<label for="fairplay" class="col-sm-2 col-form-label">Feuille de fair-play</label>
-				<div class="col-sm-2">
-					<select class="form-control" id="fairplay" name="fairplay"
-							[(ngModel)]="championnat.fpForm">
-						<option [ngValue]="null">-- Aucune --</option>
-						<option *ngFor="let f of fpForms" [ngValue]="f">{{f.libelle}}</option>
-					</select>
-				</div>
-			</div>
+			<!-- Caractéristiques -->
+			<app-champ-caracteristiques [championnat]="championnat" (sportChange)="selectionSport($event)"></app-champ-caracteristiques>
 
 		</div>
 	</div>

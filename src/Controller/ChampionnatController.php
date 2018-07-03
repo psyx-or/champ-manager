@@ -20,6 +20,7 @@ use App\DTO\ChampCreationDTO;
 use App\Outils\MatchFunctions;
 use App\Outils\Calendrier;
 use App\Entity\FPForm;
+use App\Entity\ChampModele;
 
 /**
  * @Route("/api")
@@ -46,6 +47,57 @@ class ChampionnatController extends CMController
 
         $repository = $this->getDoctrine()->getRepository(Championnat::class);
         return $this->groupJson($repository->findBy($query), 'simple');
+	}
+
+	/**
+	 * @Route("/championnat/modele")
+	 * @Method("GET")
+	 * @IsGranted("ROLE_ADMIN")
+	 */
+	public function listeModeles()
+	{
+		$repository = $this->getDoctrine()->getRepository(ChampModele::class);
+		return $this->groupJson($repository->findAll(), 'simple');
+	}
+
+	/**
+	 * @Route("/championnat/modele/{id}")
+	 * @Method("DELETE")
+	 * @IsGranted("ROLE_ADMIN")
+	 */
+	public function supprimeModele(ChampModele $modele, EntityManagerInterface $entityManager)
+	{
+		$entityManager->remove($modele);
+		$entityManager->flush();
+		return $this->json("ok");
+	}
+
+	/**
+	 * @Route("/championnat/modele")
+	 * @Method("POST")
+	 * @ParamConverter("modele", converter="cm_converter")
+	 * @IsGranted("ROLE_ADMIN")
+	 */
+	public function majModele(ChampModele $modele, EntityManagerInterface $entityManager)
+	{
+		// Récupération des entités pour les relations
+		$modele->setSport($entityManager->merge($modele->getSport()));
+
+		if ($modele->getFpForm() != null)
+		{
+			$repository = $this->getDoctrine()->getRepository(FPForm::class);
+			$modele->setFpForm($repository->find($modele->getFpForm()->getId()));
+		}
+
+		// Enregistrement
+		if ($modele->getId() == null)
+			$entityManager->persist($modele);
+		else
+			$entityManager->merge($modele);
+
+		$entityManager->flush();
+
+		return $this->json("ok");
 	}
 
 	/**

@@ -21,14 +21,9 @@ export class ChampCreationComponent implements OnInit {
 
 	@ViewChild('ajoutEquipes') ajoutEquipesTpl: TemplateRef<any>;
 
-	sports: Sport[];
-	fpForms: FPForm[];
-    types: [string,string][];
-    newSport: Sport = new Sport();
 	championnat: Championnat;
 	equipes = Array(24);
 	itequipes = Array(this.equipes.length);
-	avecNuls: boolean = true;
 	equipesSport: Equipe[] = null;
 	modele = null; // TODO
 
@@ -51,14 +46,6 @@ export class ChampCreationComponent implements OnInit {
 	 * Initialisation
 	 */
     ngOnInit() {
-        // Récupération des données
-        this.types = Object.entries(ChampType);
-		this.route.data
-			.subscribe((data: { sports: Sport[], fpForms: FPForm[] }) => {
-				this.sports = data.sports;
-				this.fpForms = data.fpForms;
-			});
-
         // Construction de l'objet
         this.championnat = new Championnat({
 			saison: getSaisonCourante()
@@ -69,15 +56,6 @@ export class ChampCreationComponent implements OnInit {
 	 * Vérifie les paramètres de création
 	 */
 	submit(): void {
-
-		// Petits ajustements
-		if (this.championnat.type == ChampType.Coupe) {
-			this.championnat.ptvict = null;
-			this.championnat.ptnul = null;
-			this.championnat.ptdef = null;
-		}
-		if (!this.avecNuls) 
-			this.championnat.ptnul = null;
 
 		// Est-ce que les équipes sont des équipes?
 		this.ajusteEquipes();
@@ -143,14 +121,14 @@ export class ChampCreationComponent implements OnInit {
 	/**
 	 * Sélection d'un sport (rechargement des équipes existantes)
 	 */
-	selectionSport(): void {
-		if (this.championnat.sport == this.newSport) {
+	selectionSport($sport): void {
+		if ($sport == null) {
 			this.equipesSport = [];
 		}
 		else {
 			this.equipesSport = null;
 			this.requeteService.requete(
-				this.equipeService.getEquipes(this.championnat.sport),
+				this.equipeService.getEquipes($sport),
 				equipes => this.equipesSport = equipes
 			);
 		}

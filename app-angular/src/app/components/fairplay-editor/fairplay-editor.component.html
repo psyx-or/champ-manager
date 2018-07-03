@@ -9,8 +9,8 @@
 	<div class="col-sm-2">
 		<select class="form-control" id="fpform" name="fpform"
 				[(ngModel)]="selfpform">
-			<option *ngFor="let f of fpforms" [ngValue]="f">{{f.libelle}}</option>
 			<option [ngValue]="newFpform">-- Ajouter --</option>
+			<option *ngFor="let f of fpforms" [ngValue]="f">{{f.libelle}}</option>
 		</select>
 	</div>
 

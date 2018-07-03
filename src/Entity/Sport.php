@@ -28,10 +28,16 @@ class Sport
      */
     private $championnats;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\ChampModele", mappedBy="sport")
+     */
+    private $champModeles;
+
     public function __construct()
     {
         $this->equipes = new ArrayCollection();
         $this->championnats = new ArrayCollection();
+        $this->champModeles = new ArrayCollection();
     }
 
 	/**
@@ -105,6 +111,37 @@ class Sport
             // set the owning side to null (unless already changed)
             if ($championnat->getSport() === $this) {
                 $championnat->setSport(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ChampModele[]
+     */
+    public function getChampModeles(): Collection
+    {
+        return $this->champModeles;
+    }
+
+    public function addChampModele(ChampModele $champModele): self
+    {
+        if (!$this->champModeles->contains($champModele)) {
+            $this->champModeles[] = $champModele;
+            $champModele->setSport($this);
+        }
+
+        return $this;
+    }
+
+    public function removeChampModele(ChampModele $champModele): self
+    {
+        if ($this->champModeles->contains($champModele)) {
+            $this->champModeles->removeElement($champModele);
+            // set the owning side to null (unless already changed)
+            if ($champModele->getSport() === $this) {
+                $champModele->setSport(null);
             }
         }
 

@@ -42,6 +42,7 @@ class FairPlayController extends CMController
 	 */
 	public function supprime(FPForm $form, EntityManagerInterface $entityManager)
 	{
+		// TODO: gestion des modèles
 		if ($form->getChampionnats()->count() == 0)
 			$entityManager->remove($form);
 		else
@@ -59,6 +60,7 @@ class FairPlayController extends CMController
 	 */
 	public function maj(FPForm $dto, EntityManagerInterface $entityManager)
 	{
+		// TODO: gestion des modèles
 		// En cas de modification, on supprime le formulaire actuel
 		if ($dto->getId() != null)
 		{

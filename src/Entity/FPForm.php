@@ -40,10 +40,16 @@ class FPForm
      */
     private $championnats;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\ChampModele", mappedBy="fpForm")
+     */
+    private $champModeles;
+
     public function __construct()
     {
         $this->categories = new ArrayCollection();
         $this->championnats = new ArrayCollection();
+        $this->champModeles = new ArrayCollection();
     }
 
 	/**
@@ -145,6 +151,37 @@ class FPForm
             // set the owning side to null (unless already changed)
             if ($championnat->getFpForm() === $this) {
                 $championnat->setFpForm(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ChampModele[]
+     */
+    public function getChampModeles(): Collection
+    {
+        return $this->champModeles;
+    }
+
+    public function addChampModele(ChampModele $champModele): self
+    {
+        if (!$this->champModeles->contains($champModele)) {
+            $this->champModeles[] = $champModele;
+            $champModele->setFpForm($this);
+        }
+
+        return $this;
+    }
+
+    public function removeChampModele(ChampModele $champModele): self
+    {
+        if ($this->champModeles->contains($champModele)) {
+            $this->champModeles->removeElement($champModele);
+            // set the owning side to null (unless already changed)
+            if ($champModele->getFpForm() === $this) {
+                $champModele->setFpForm(null);
             }
         }
 

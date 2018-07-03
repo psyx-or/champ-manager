@@ -16,6 +16,8 @@ import { CalendrierComponent } from './components/calendrier/calendrier.componen
 import { FairplayEditorComponent } from './components/fairplay-editor/fairplay-editor.component';
 import { FpformsResolver } from './components/fairplay-editor/fairplay-forms.resolver';
 import { FpformsResumeResolver } from './components/champ-creation/fairplay-forms-resume.resolver';
+import { ChampModeleComponent } from './components/champ-modele/champ-modele.component';
+import { ChampModeleResolver } from './utils/champ-modele.resolver';
 
 const routes: Routes = [
 	{ path: '', pathMatch: 'full', redirectTo: 'championnats' },
@@ -29,6 +31,7 @@ const routes: Routes = [
 	{ path: 'equipes', component: EquipesComponent, resolve: { sports: SportResolver } }, // TODO: guard quand on quitte
 	{ path: 'calendrier', component: CalendrierComponent, resolve: { sports: SportResolver } }, // TODO: guard quand on quitte
 	{ path: 'fairplay-editor', component: FairplayEditorComponent, resolve: { fpforms: FpformsResolver }, runGuardsAndResolvers: "always" }, // TODO: guard quand on quitte
+	{ path: 'champ-modele', component: ChampModeleComponent, resolve: { sports: SportResolver, fpForms: FpformsResumeResolver, modeles: ChampModeleResolver }, runGuardsAndResolvers: "always" },
 ];
 
 @NgModule({

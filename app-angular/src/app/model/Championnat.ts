@@ -33,3 +33,19 @@ export class Championnat {
         Object.assign(this, init);
     }
 }
+
+/**
+ * Un modèle de championnat
+ */
+export class ChampModele {
+	public id?: number;
+	public nomModele: string;
+	public sport: Sport;
+	public nom: string;
+	public saison: string;
+	public ptvict: number;
+	public ptnul?: number;
+	public ptdef: number;
+	public type: ChampType;
+	public fpForm?: FPForm;
+}

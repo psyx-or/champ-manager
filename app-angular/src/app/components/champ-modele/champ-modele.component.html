@@ -1,0 +1,55 @@
+<app-generic-menu nomMenu="parametres"></app-generic-menu>
+
+
+<!----------------------
+	Sélection du modèle
+  ------------------- -->
+
+<div class="form-group form-row">
+	<label for="modele" class="col-sm-2 col-form-label">Modèle</label>
+	<div class="col-sm-2">
+		<select class="form-control" id="modele" name="modele"
+				[(ngModel)]="selModele">
+			<option [ngValue]="newModele">-- Ajouter --</option>
+			<option *ngFor="let m of modeles" [ngValue]="m">{{m.nomModele}}</option>
+		</select>
+	</div>
+
+	<div class="col-sm-1" *ngIf="selModele?.id">
+		<button class="btn btn-outline-danger" (click)="supprimer(selModele)"
+			ngbTooltip="Supprimer le modèle" container="body">
+			<i class="icon ion-md-trash"></i>
+		</button>
+	</div>
+</div>
+
+
+<!----------------------
+	Caractéristiques
+	------------------- -->
+
+<form (ngSubmit)="submit()" ngNativeValidate *ngIf="selModele">
+	<hr>
+
+	<!-- Nom -->
+	<div class="form-group form-row">
+		<label for="nomModele" class="col-sm-2 col-form-label">Nom du modèle</label>
+		<div class="col-sm-5">
+			<input type="text" class="form-control" name="nomModele" id="nomModele" [(ngModel)]="selModele.nomModele" required>
+		</div>
+	</div>
+
+	<!-- Caractéristiques -->
+	<app-champ-caracteristiques [championnat]="selModele"></app-champ-caracteristiques>
+
+	<button class="btn btn-primary" type="submit" [disabled]="requeteService.chargement">Enregistrer</button>
+</form>
+
+
+<!----------------------
+	Fenêtre de confirmation de suppression
+  ------------------- -->
+
+<ng-template #supprModele let-modele>
+	Etes-vous sûr de vouloir supprimer le modèle {{ modele.nomModele }}&nbsp;?
+</ng-template>

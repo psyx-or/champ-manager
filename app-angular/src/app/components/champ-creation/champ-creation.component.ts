@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
-import { Championnat, ChampType } from '../../model/Championnat';
+import { Championnat, ChampType, ChampModele } from '../../model/Championnat';
 import { Sport } from '../../model/Sport';
 import { ChampionnatService } from '../../services/championnat.service';
 import { Observable } from 'rxjs';
@@ -11,6 +11,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { openModal, getSaisonCourante } from '../../utils/utils';
 import { RequeteService } from '../../services/requete.service';
 import { FPForm } from '../../model/FPForm';
+import { ChampCaracteristiquesComponent } from '../champ-caracteristiques/champ-caracteristiques.component';
 
 @Component({
   selector: 'app-champ-creation',
@@ -20,12 +21,14 @@ import { FPForm } from '../../model/FPForm';
 export class ChampCreationComponent implements OnInit {
 
 	@ViewChild('ajoutEquipes') ajoutEquipesTpl: TemplateRef<any>;
+	@ViewChild('caractComp') caractComp: ChampCaracteristiquesComponent;
 
 	championnat: Championnat;
 	equipes = Array(24);
 	itequipes = Array(this.equipes.length);
 	equipesSport: Equipe[] = null;
-	modele = null; // TODO
+	modeles: ChampModele[];
+	selModele: ChampModele = null;
 
 
 	/**
@@ -49,7 +52,12 @@ export class ChampCreationComponent implements OnInit {
         // Construction de l'objet
         this.championnat = new Championnat({
 			saison: getSaisonCourante()
-        });
+		});
+		
+		// Récupération des données
+		this.route.data.subscribe((data: { modeles: ChampModele[] }) => {
+			this.modeles = data.modeles;
+		});
 	}
 	
 	/**
@@ -139,5 +147,20 @@ export class ChampCreationComponent implements OnInit {
 	 */
 	getNbEquipes(): number {
 		return this.equipes.filter(e => e).length;
+	}
+
+	/**
+	 * Sélection d'un modèle
+	 * @param modele 
+	 */
+	selectionModele(modele: ChampModele): void {
+		this.caractComp.majNuls(modele.ptnul != null);
+		this.championnat.sport = modele.sport;
+		this.championnat.nom = modele.nom;
+		this.championnat.type = modele.type;
+		this.championnat.ptvict = modele.ptvict;
+		this.championnat.ptnul = modele.ptnul;
+		this.championnat.ptdef = modele.ptdef;
+		this.championnat.fpForm = modele.fpForm;
 	}
 }

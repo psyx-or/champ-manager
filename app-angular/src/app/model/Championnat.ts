@@ -42,7 +42,6 @@ export class ChampModele {
 	public nomModele: string;
 	public sport: Sport;
 	public nom: string;
-	public saison: string;
 	public ptvict: number;
 	public ptnul?: number;
 	public ptdef: number;

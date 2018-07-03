@@ -10,12 +10,12 @@
 	<label for="modele" class="col-sm-2 col-form-label">Modèle</label>
 	<div class="col-sm-2">
 		<select class="form-control" id="modele" name="modele"
-				[(ngModel)]="modele">
-			<option>-- Ajouter --</option>
+				[(ngModel)]="selModele" (ngModelChange)="selectionModele($event)">
+			<option *ngFor="let m of modeles" [ngValue]="m">{{m.nomModele}}</option>
 		</select>
 	</div>
 	<div class="col-sm-2">
-		<a class="btn btn-outline-secondary" routerLink="/champ-creation"><i class="icon ion-md-settings"></i> Gérer les modèles</a>
+		<a class="btn btn-outline-secondary" routerLink="/champ-modele"><i class="icon ion-md-settings"></i> Gérer les modèles</a>
 	</div>
 </div>
 
@@ -39,7 +39,7 @@
 			</div>
 
 			<!-- Caractéristiques -->
-			<app-champ-caracteristiques [championnat]="championnat" (sportChange)="selectionSport($event)"></app-champ-caracteristiques>
+			<app-champ-caracteristiques #caractComp [championnat]="championnat" (sportChange)="selectionSport($event)"></app-champ-caracteristiques>
 
 		</div>
 	</div>

@@ -51,6 +51,7 @@ export class ChampCaracteristiquesComponent implements OnInit {
 	public majNuls(avecNuls: boolean): void {
 		if (!avecNuls)
 			this.championnat.ptnul = null;
+		// TODO: Gestion de la valeur de la checkbox si appelé depuis l'extérieur
 	}
 
 	/**

@@ -22,7 +22,7 @@ import { ChampModeleResolver } from './utils/champ-modele.resolver';
 const routes: Routes = [
 	{ path: '', pathMatch: 'full', redirectTo: 'championnats' },
 	{ path: 'championnats', component: ChampionnatsComponent, resolve: { championnats: ChampionnatResolver }, runGuardsAndResolvers: "always" },
-	{ path: 'champ-creation', component: ChampCreationComponent, resolve: { sports: SportResolver, fpForms: FpformsResumeResolver } },
+	{ path: 'champ-creation', component: ChampCreationComponent, resolve: { sports: SportResolver, fpForms: FpformsResumeResolver, modeles: ChampModeleResolver } },
 	{ path: 'journees/:champId', component: JourneesChampComponent, resolve: { champ: JourneesChampResolver } }, // TODO: guard quand on quitte
 	{ path: 'classement/:champId', component: ClassementComponent, resolve: { champ: ClassementResolver } },
 	{ path: 'coupe/:champId', component: CoupeComponent },

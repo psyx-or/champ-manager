@@ -77,9 +77,9 @@
 <!-- Template pour afficher le ratio d'une feuille de fair-play -->
 <ng-template #fairplaytpl let-match="match" let-equipe="equipe" let-feuille="feuille">
 	<div class="lien" (click)="fairplay(match, equipe)">
-		<i class='icon ion-md-happy text-success' *ngIf="feuille && feuille.ratio > 33"></i>
-		<i class='icon ion-md-contact' *ngIf="feuille && feuille.ratio <= 33 && feuille.ratio >= -33"></i>
-		<i class='icon ion-md-sad text-danger' *ngIf="feuille && feuille.ratio < -33"></i>
-		<i class='icon ion-md-help-circle-outline' *ngIf="feuille == null"></i>
+		<i class='icon ion-md-happy text-success' *ngIf="feuille && feuille.ratio > 33" ngbTooltip="Evaluation fair-play positive"></i>
+		<i class='icon ion-md-contact' *ngIf="feuille && feuille.ratio <= 33 && feuille.ratio >= -33" ngbTooltip="Evaluation fair-play neutre"></i>
+		<i class='icon ion-md-sad text-danger' *ngIf="feuille && feuille.ratio < -33" ngbTooltip="Evaluation fair-play négative"></i>
+		<i class='icon ion-md-help-circle-outline' *ngIf="feuille == null" ngbTooltip="Pas d'évaluation fair-play"></i>
 	</div>
 </ng-template>

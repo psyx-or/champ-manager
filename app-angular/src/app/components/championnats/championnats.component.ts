@@ -37,8 +37,6 @@ export class ChampionnatsComponent implements OnInit {
 	 * Initialisation du composant
 	 */
     ngOnInit() {
-		// TODO: filtre par défaut sur la saison en cours
-
 		this.route.data
 			.subscribe((data: { championnats: Championnat[] }) => {
 				this.sports = [];

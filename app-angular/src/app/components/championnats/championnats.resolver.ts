@@ -15,7 +15,7 @@ export class ChampionnatResolver implements Resolve<Championnat[]> {
 	
 	resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Championnat[]> {
 		return this.requeteService.recupere(
-			this.championnatService.getChampionnats()
+			this.championnatService.getChampionnatsCourants()
 		);
 	}
 }

@@ -25,11 +25,11 @@ export class ChampionnatService {
 	/**
 	 * @returns La liste des championnats
 	 */
-    public getChampionnats(): Observable<Championnat[]> {
+    public getChampionnatsCourants(): Observable<Championnat[]> {
 		if (this.cache) 
 			return of(this.cache);
 
-        return this.http.get<Championnat[]>("/api/championnat").pipe(
+        return this.http.get<Championnat[]>("/api/championnat", {params: { saison: getSaisonCourante() }}).pipe(
 			tap(champs => this.cache = champs)
 		);
 	}

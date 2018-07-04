@@ -58,7 +58,7 @@
 	<span class="col-sm-1 col-form-label">points</span>
 	<div class="col-sm-6 form-check-inline">
 		<input class="form-check-input" type="checkbox" id="chknuls" name="chknuls" #chkNuls
-			  [disabled]="championnat.type == 'COUPE'" (change)="majNuls($event.target.checked)" checked>
+			  [disabled]="championnat.type == 'COUPE'" [(ngModel)]="avecNuls" (ngModelChange)="majNuls($event)">
 		<label class="form-check-label" for="chknuls">
 			Match nul possible
 		</label>

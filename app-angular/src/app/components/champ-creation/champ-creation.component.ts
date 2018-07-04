@@ -154,7 +154,7 @@ export class ChampCreationComponent implements OnInit {
 	 * @param modele 
 	 */
 	selectionModele(modele: ChampModele): void {
-		this.caractComp.majNuls(modele.ptnul != null);
+		this.caractComp.avecNuls = (modele.ptnul != null);
 		this.championnat.sport = modele.sport;
 		this.championnat.nom = modele.nom;
 		this.championnat.type = modele.type;

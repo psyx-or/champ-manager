@@ -18,6 +18,7 @@ export class ChampCaracteristiquesComponent implements OnInit {
 	fpForms: FPForm[];
 	types: [string, string][];
 	newSport: Sport = new Sport();
+	avecNuls: boolean = true;
 
 	constructor(
 		private route: ActivatedRoute,
@@ -51,7 +52,6 @@ export class ChampCaracteristiquesComponent implements OnInit {
 	public majNuls(avecNuls: boolean): void {
 		if (!avecNuls)
 			this.championnat.ptnul = null;
-		// TODO: Gestion de la valeur de la checkbox si appelé depuis l'extérieur
 	}
 
 	/**

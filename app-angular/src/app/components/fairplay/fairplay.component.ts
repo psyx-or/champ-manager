@@ -22,6 +22,9 @@ export class FairplayComponent implements OnInit {
 		private fairplayService: FairplayService
 	) { }
 
+	/**
+	 * Initialisation du composant
+	 */
 	ngOnInit() {
 		this.requeteService.requete(
 			this.fairplayService.getFeuille(this.match, this.equipe),
@@ -29,8 +32,17 @@ export class FairplayComponent implements OnInit {
 		)
 	}
 
+	/**
+	 * Indique si le formulaire a été rempli intégralement
+	 */
+	isIncomplet(): boolean {
+		return Object.values(this.dto.reponses).includes(null);
+	}
+
+	/**
+	 * Envoi du formulaire
+	 */
 	submit(): void {
-		// TODO: vérifier la complétude
 		this.requeteService.requete(
 			this.fairplayService.majFeuille(this.match, this.dto),
 			res => this.activeModal.close(res)

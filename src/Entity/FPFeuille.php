@@ -36,11 +36,6 @@ class FPFeuille
      */
     private $commentaire;
 
-    /**
-     * @ORM\Column(type="smallint")
-     */
-    private $score;
-
 	/**
 	 * @ORM\OneToMany(targetEntity="App\Entity\FPReponse", mappedBy="feuille", orphanRemoval=true, cascade={"all"})
 	 */
@@ -126,17 +121,20 @@ class FPFeuille
         return $this;
     }
 
-	public function getScore(): ?int
-    {
-        return $this->score;
-    }
+	/**
+	 * @Groups({"simple"})
+	 */
+	public function getRatio() : ? int
+	{
+		return $this->ratio;
+	}
 
-    public function setScore(?int $score): self
-    {
-        $this->score = $score;
+	public function setRatio(? int $ratio) : self
+	{
+		$this->ratio = $ratio;
 
-        return $this;
-    }
+		return $this;
+	}
 
     /**
      * @return Collection|FPReponse[]
@@ -201,21 +199,6 @@ class FPFeuille
         if ($newFpFeuille2 !== $matchEquipe2->getFpFeuille2()) {
             $matchEquipe2->setFpFeuille2($newFpFeuille2);
         }
-
-        return $this;
-    }
-
-	/**
-	 * @Groups({"simple"})
-	 */
-    public function getRatio(): ?int
-    {
-        return $this->ratio;
-    }
-
-    public function setRatio(?int $ratio): self
-    {
-        $this->ratio = $ratio;
 
         return $this;
     }

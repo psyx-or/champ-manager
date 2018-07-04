@@ -154,7 +154,6 @@ class FairPlayController extends CMController
 			$reponse->setReponse($val);
 			$score += $val;
 		}
-		$dto->getFpFeuille()->setScore($score);
 		$dto->getFpFeuille()->setRatio(100 * $score / count($dto->getReponses()));
 
 		// On enregistre

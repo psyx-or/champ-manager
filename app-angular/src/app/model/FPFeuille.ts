@@ -18,6 +18,5 @@ export class FPFeuille {
 	equipeRedactrice?: Equipe;
 	equipeEvaluee?: Equipe;
 	commentaire?: string;
-	score?: number;
 	ratio?: number;
 }

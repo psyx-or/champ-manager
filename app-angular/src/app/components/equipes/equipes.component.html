@@ -115,6 +115,20 @@
 					        (click)="ajoutCreneau(equipe)" [disabled]="!equipe.terrain || equipe.terrain == ''">Ajouter un créneau</button>
 				</div>
 			</div>
+
+			<!-- Position -->
+			<div class="form-group form-row">
+				<label class="col-sm-2 col-form-label">Position</label>
+				<div class="col-sm-3">
+					<button type="button" class="btn form-control" 
+					        [ngClass]="!equipe.terrain || equipe.terrain == '' ? 'btn-outline-secondary' : (equipe.position ? 'btn-outline-success' : 'btn-outline-danger')"
+					        (click)="positionne(equipe)" [disabled]="!equipe.terrain || equipe.terrain == ''">Positionner sur la carte</button>
+				</div>
+				<label class="col-sm-7 col-form-label position">
+					{{ equipe.position }}
+				</label>
+			</div>
+
 		</div>
 	</div>
 

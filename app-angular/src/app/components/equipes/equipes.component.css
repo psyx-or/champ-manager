@@ -9,3 +9,7 @@
 select, select option {
 	text-transform: capitalize;
 }
+
+.position {
+	font-style: italic;
+}

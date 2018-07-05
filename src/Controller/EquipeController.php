@@ -129,6 +129,11 @@ class EquipeController extends CMController
 					$entite->addCreneau($creneau);
 				}
 			}
+
+			if ($equipe->getTerrain() != null && $equipe->getTerrain() != " ")
+				$entite->setPosition($equipe->getPosition());
+			else
+				$entite->setPosition(null);
 		}
 
 		$entityManager->flush();

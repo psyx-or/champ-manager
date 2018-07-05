@@ -20,7 +20,7 @@ export class AppComponent implements OnInit {
 	 * @param authentService 
 	 */
 	constructor(
-		private requeteService: RequeteService,
+		public requeteService: RequeteService,
 		private modalService: NgbModal,
 		private authentService: AuthentService
 	) { }

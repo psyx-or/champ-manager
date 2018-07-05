@@ -77,6 +77,11 @@ class Equipe implements UserInterface, \Serializable
 	 */
 	private $fpEvaluees;
 
+	/**
+	 * @ORM\Column(type="string", length=255, nullable=true)
+	*/
+	private $position;
+
     public function __construct()
     {
         $this->classements = new ArrayCollection();
@@ -365,6 +370,21 @@ class Equipe implements UserInterface, \Serializable
 			}
 		}
 		
+		return $this;
+	}
+
+	/**
+	 * @Groups({"coordonnees"})
+	 */
+	public function getPosition(): ?string
+	{
+		return $this->position;
+	}
+
+	public function setPosition(?string $position): self
+	{
+		$this->position = $position;
+
 		return $this;
 	}
 }

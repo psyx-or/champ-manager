@@ -1,0 +1,35 @@
+<!----------------------
+		Entête
+	------------------- -->
+<div class="modal-header">
+	<h4 class="modal-title">Positionnement de {{ equipe.nom }}</h4>
+</div>
+
+<!----------------------
+		Formulaire
+	------------------- -->
+<div class="modal-body">
+
+	<!-- Géocodage -->
+	<div class="form-group form-row">
+		<label for="adresse" class="col-sm-1 col-form-label">Adresse</label>
+		<div class="col-sm-10">
+			<input type="text" class="form-control" id="adresse" name="adresse"
+				   [(ngModel)]="adresse">
+		</div>
+		<div class="col-md-1">
+			<button class="btn btn-primary form-control" type="button" (click)='geocode()'>Centrer</button>
+		</div>
+	</div>
+
+	<!-- Carte -->
+	<div #gmap class="carte"></div>
+</div>
+
+<!----------------------
+		Pied
+	------------------- -->
+<div class="modal-footer">
+	<button type="button" class="btn btn-secondary" (click)="activeModal.dismiss()">Annuler</button>
+	<button type="button" class="btn btn-primary" [disabled]="!position" (click)="activeModal.close(position)">Confirmer</button>
+</div>

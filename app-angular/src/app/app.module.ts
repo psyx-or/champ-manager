@@ -33,6 +33,7 @@ import { FairplayComponent } from './components/fairplay/fairplay.component';
 import { ChampCaracteristiquesComponent } from './components/champ-caracteristiques/champ-caracteristiques.component';
 import { ChampModeleComponent } from './components/champ-modele/champ-modele.component';
 import { ChampModeleResolver } from './utils/champ-modele.resolver';
+import { CartePositionnementComponent } from './components/carte-positionnement/carte-positionnement.component';
 
 
 @NgModule({
@@ -58,7 +59,8 @@ import { ChampModeleResolver } from './utils/champ-modele.resolver';
     FairplayEditorComponent,
     FairplayComponent,
     ChampCaracteristiquesComponent,
-    ChampModeleComponent
+    ChampModeleComponent,
+    CartePositionnementComponent
   ],
   imports: [
     BrowserModule,
@@ -81,7 +83,8 @@ import { ChampModeleResolver } from './utils/champ-modele.resolver';
 	  LoginComponent,
 	  ModalComponent,
 	  ChampImportComponent,
-	  FairplayComponent
+	  FairplayComponent,
+	  CartePositionnementComponent
   ]
 })
 export class AppModule { }

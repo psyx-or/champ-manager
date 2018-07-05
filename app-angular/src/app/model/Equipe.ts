@@ -10,6 +10,7 @@ export class Equipe {
 	responsables?: Array<Responsable>;
 	terrain?: string;
 	creneaux?: Array<Creneau>;
+	position?: string;
 
 	public constructor(init?: Partial<Equipe>) {
 		Object.assign(this, init);

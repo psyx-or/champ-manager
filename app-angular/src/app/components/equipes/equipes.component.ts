@@ -7,6 +7,8 @@ import { Equipe } from '../../model/Equipe';
 import { Responsable } from '../../model/Responsable';
 import { Creneau } from '../../model/Creneau';
 import * as moment from 'moment';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { CartePositionnementComponent } from '../carte-positionnement/carte-positionnement.component';
 
 @Component({
   selector: 'app-equipes',
@@ -23,10 +25,10 @@ export class EquipesComponent implements OnInit {
 	constructor( 
 		private route: ActivatedRoute,
 		public requeteService: RequeteService,
-		private equipeService: EquipeService
+		private equipeService: EquipeService,
+		private modalService: NgbModal
 	) { }
 
-	// TODO: Position sur la carte
 	// TODO: Envoi de mot de passe manuel
 
 	/**
@@ -116,5 +118,15 @@ export class EquipesComponent implements OnInit {
 		}
 
 		equipe.responsables[i].tel1 = newval;
+	}
+
+	/**
+	 * Ouvre la carte pour positionner l'équipe
+	 * @param equipe 
+	 */
+	positionne(equipe: Equipe): void {
+		const modal = this.modalService.open(CartePositionnementComponent, { backdrop: 'static', windowClass: 'modal-xl' });
+		modal.componentInstance.equipe = equipe;
+		modal.result.then((res: string) => equipe.position = res, err => {});
 	}
 }

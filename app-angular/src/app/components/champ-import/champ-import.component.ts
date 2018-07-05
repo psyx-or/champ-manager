@@ -33,7 +33,7 @@ export class ChampImportComponent implements OnInit {
 	submit() {
 		this.requeteService.requete(
 			this.championnatService.importe(this.championnat, this.selChamps),
-			rep => { alert(rep + " matches importés"); this.activeModal.close(); } // TODO: utiliser ngb-alert
+			rep => { alert(rep + " matches importés"); this.activeModal.close(); }
 		)
 	}
 }

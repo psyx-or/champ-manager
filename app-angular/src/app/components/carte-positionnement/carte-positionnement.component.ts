@@ -73,10 +73,10 @@ export class CartePositionnementComponent implements OnInit {
 					this.centre(position);
 				}
 				else if (status == google.maps.GeocoderStatus.ZERO_RESULTS) {
-					alert("Adresse non trouvée"); // TODO
+					alert("Adresse non trouvée");
 				}
 				else {
-					alert('Géocodage impossible pour cause de ' + status); // TODO
+					alert('Géocodage impossible pour cause de ' + status);
 				}
 			});
 	}

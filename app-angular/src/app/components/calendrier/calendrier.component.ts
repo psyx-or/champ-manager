@@ -15,7 +15,7 @@ class SelCalendrier extends CalendrierDTO {
   styleUrls: ['./calendrier.component.css']
 })
 export class CalendrierComponent implements OnInit {
-	sports: Sport[]; // TODO: composant de sélection de sport
+	sports: Sport[];
 	selSport: Sport;
 	calendriers: SelCalendrier[];
 

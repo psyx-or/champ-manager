@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -13,6 +14,7 @@ use App\Entity\Sport;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Collections\ArrayCollection;
 use App\Outils\Annuaire;
+use App\Entity\Parametre;
 
 
 /**
@@ -142,6 +144,32 @@ class EquipeController extends CMController
 	}
 
 	/**
+	 * @Route("/equipe/{id}")
+	 * @Method("PATCH")
+	 * @IsGranted("ROLE_ADMIN")
+	 */
+	public function changeMdp(Equipe $equipe, EntityManagerInterface $entityManager, UserPasswordEncoderInterface $encoder)
+	{
+		$plainPassword = $this->makePassword();
+		$encoded = $encoder->encodePassword($equipe, $plainPassword);
+
+		$equipe->setPassword($encoded);
+		$entityManager->flush();
+
+		$destinataires = array();
+		foreach ($equipe->getResponsables() as $resp)
+			if ($resp->getMail() != null)
+				array_push($destinataires, $resp->getMail());
+
+		$repository = $this->getDoctrine()->getRepository(Parametre::class);
+
+		return $this->json(array(
+			"destinataires" => implode(",", $destinataires),
+			"objet" => $repository->find(Parametre::OBJET_MAIL_MOTDEPASSE)->getValeur(),
+			"corps" => str_replace('$password', $plainPassword, str_replace('$equipe', $equipe->getLogin(), $repository->find(Parametre::CONTENU_MAIL_MOTDEPASSE)->getValeur()))));
+	}
+
+	/**
 	 * Récupère un élément dans une liste à partir de son identifiant
 	 */
 	private function getItem(ArrayCollection $items, $id)
@@ -159,5 +187,18 @@ class EquipeController extends CMController
 	private function estVide($str)
 	{
 		return $str == null || trim($str) == "";
+	}
+
+	/**
+	 * Création de mot de passe
+	 */
+	private function makePassword()
+	{
+		$caracteres = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+		$password = "";
+		for ($i = 0; $i < 8; $i++)
+			$password .= $caracteres[rand(0, strlen($caracteres) - 1)];
+
+		return $password;
 	}
 }

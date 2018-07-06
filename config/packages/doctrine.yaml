@@ -21,6 +21,7 @@ doctrine:
         types:
             championnatType: App\Entity\ChampionnatType
             questionType: App\Entity\FPQuestionType
+            parametreType: App\Entity\ParametreType
 
     orm:
         auto_generate_proxy_classes: '%kernel.debug%'

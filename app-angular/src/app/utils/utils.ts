@@ -1,6 +1,6 @@
 import { ModalComponent } from "../components/modal/modal.component";
 import { TemplateRef } from "@angular/core";
-import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { NgbModal, NgbModalOptions } from "@ng-bootstrap/ng-bootstrap";
 import { Match } from "../model/Match";
 import { Equipe } from "../model/Equipe";
 
@@ -39,12 +39,16 @@ export function sort<T>(tab: T[], attr: string): T[] {
  * @param contexte Variable associée au contenu
  * @param cb Callback en cas de validation
  */
-export function openModal(composant: { modalService: NgbModal }, titre: string, contenu: TemplateRef<any>, contexte: any, cb: ()=>void) {
-	const modal = composant.modalService.open(ModalComponent, { centered: true, backdrop: 'static' });
+export function openModal(composant: { modalService: NgbModal }, titre: string, contenu: TemplateRef<any>, contexte: any, cb?: () => void, taille?: "sm" | "lg") {
+	let options: NgbModalOptions = { centered: true, backdrop: 'static' };
+	if (taille) options.size = taille;
+
+	const modal = composant.modalService.open(ModalComponent, options);
 	modal.componentInstance.titre = titre;
 	modal.componentInstance.contenu = contenu;
 	modal.componentInstance.contexte = { $implicit: contexte };
-	modal.result.then((res) => cb.bind(composant)(res), () => {});
+	modal.componentInstance.valider = (cb != null);
+	modal.result.then((res) => { if (cb) cb.bind(composant)(res) }, () => {});
 }
 
 /**

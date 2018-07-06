@@ -13,3 +13,11 @@ select, select option {
 .position {
 	font-style: italic;
 }
+
+.mail .row:not(:last-child) {
+	margin-bottom: 20px;
+}
+
+.mail .contenu {
+	white-space: pre-wrap;
+}

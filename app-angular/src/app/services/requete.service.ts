@@ -31,7 +31,7 @@ export class RequeteService {
 		
 		req.subscribe(
 			res => { this.updateChargement(-1); if (cb) cb(res) },
-			err => { this.updateChargement(-1); alert("Erreur lors de l'opération"); } // TODO: alerte ng-bootstrap
+			err => { this.updateChargement(-1); alert("Erreur lors de l'opération"); }
 		);
 	}
 

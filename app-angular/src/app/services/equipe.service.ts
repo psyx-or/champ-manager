@@ -44,4 +44,12 @@ export class EquipeService {
 	public lienAnnuaire(sport: Sport): string {
 		return sport == null ? null : ("/api/equipe/" + sport.nom + "/annuaire");
 	}
+
+	/**
+	 * Change le mot de passe d'une équipe et fournit le mail associé
+	 * @param equipe 
+	 */
+	public changeMdp(equipe: Equipe): Observable<{ destinataires: string, objet: string, corps: string}> {
+		return this.http.patch<{ destinataires: string, objet: string, corps: string }>(`/api/equipe/${equipe.id}`, null);
+	}
 }

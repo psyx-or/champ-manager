@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { Sport } from '../../model/Sport';
 import { ActivatedRoute } from '@angular/router';
 import { RequeteService } from '../../services/requete.service';
@@ -9,6 +9,7 @@ import { Creneau } from '../../model/Creneau';
 import * as moment from 'moment';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CartePositionnementComponent } from '../carte-positionnement/carte-positionnement.component';
+import { openModal } from '../../utils/utils';
 
 @Component({
   selector: 'app-equipes',
@@ -16,6 +17,8 @@ import { CartePositionnementComponent } from '../carte-positionnement/carte-posi
   styleUrls: ['./equipes.component.css']
 })
 export class EquipesComponent implements OnInit {
+
+	@ViewChild('envoiMail') envoiMailTpl: TemplateRef<any>;
 
 	sports: Sport[];
 	selSport: Sport;
@@ -26,10 +29,8 @@ export class EquipesComponent implements OnInit {
 		private route: ActivatedRoute,
 		public requeteService: RequeteService,
 		private equipeService: EquipeService,
-		private modalService: NgbModal
+		public modalService: NgbModal
 	) { }
-
-	// TODO: Envoi de mot de passe manuel
 
 	/**
 	 * Initialisation
@@ -128,5 +129,23 @@ export class EquipesComponent implements OnInit {
 		const modal = this.modalService.open(CartePositionnementComponent, { backdrop: 'static', windowClass: 'modal-xl' });
 		modal.componentInstance.equipe = equipe;
 		modal.result.then((res: string) => equipe.position = res, err => {});
+	}
+
+	/**
+	 * Change le mail d'une équipe et affiche le mail à envoyer
+	 * @param equipe 
+	 */
+	changeMdp(equipe: Equipe): void {
+		this.requeteService.requete(
+			this.equipeService.changeMdp(equipe),
+			mail => openModal(
+				this,
+				"Envoi manuel de mail",
+				this.envoiMailTpl,
+				mail,
+				null,
+				"lg"
+			)
+		);
 	}
 }

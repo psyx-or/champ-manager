@@ -128,9 +128,39 @@
 					{{ equipe.position }}
 				</label>
 			</div>
-
+			
+			<!-- Envoi de mot de passe -->
+			<div class="form-group form-row">
+				<div class="col-sm-4">
+					<button type="button" class="btn form-control btn-secondary" 
+							(click)="changeMdp(equipe)">Envoyer un mot de passe manuellement</button>
+				</div>
+			</div>
 		</div>
 	</div>
 
 	<button type="submit" class="btn btn-primary" [disabled]="requeteService.chargement">Valider</button>
 </form>
+
+
+
+<!----------------------
+	Fenêtre d'envoi de mail
+  ------------------- -->
+
+<ng-template #envoiMail let-mail>
+	<div class="mail">
+		<div class="row">
+			<div class="col-md-2">Destinataires:</div>
+			<div class="col-md-10">{{mail.destinataires}}</div>
+		</div>
+		<div class="row">
+			<div class="col-md-2">Objet:</div>
+			<div class="col-md-10">{{mail.objet}}</div>
+		</div>
+		<div class="row">
+			<div class="col-md-2">Contenu:</div>
+			<div class="col-md-10 contenu">{{mail.corps}}</div>
+		</div>
+	</div>
+</ng-template>

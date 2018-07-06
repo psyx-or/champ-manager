@@ -12,6 +12,7 @@ export class ModalComponent {
 	@Input() titre: string;
 	@Input() contenu: TemplateRef<any>;
 	@Input() contexte: Object;
+	@Input() valider: boolean;
 
 	constructor(
 		public activeModal: NgbActiveModal

@@ -57,7 +57,7 @@ class ChampionnatController extends CMController
 	public function listeModeles()
 	{
 		$repository = $this->getDoctrine()->getRepository(ChampModele::class);
-		return $this->groupJson($repository->findAll(), 'simple');
+		return $this->groupJson($repository->findAll(), 'simple_modele');
 	}
 
 	/**

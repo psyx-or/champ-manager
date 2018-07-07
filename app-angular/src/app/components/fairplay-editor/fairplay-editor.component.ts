@@ -14,6 +14,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 export class FairplayEditorComponent implements OnInit {
 
 	@ViewChild('supprFeuille') supprFeuilleTpl: TemplateRef<any>;
+	@ViewChild('supprFeuilleUtilisee') supprFeuilleUtiliseeTpl: TemplateRef<any>;
 
 	fpforms: FPForm[];
 	types: [string, string][];
@@ -52,18 +53,28 @@ export class FairplayEditorComponent implements OnInit {
 	 * @param form
 	 */
 	supprimer(form: FPForm): void {
-		openModal(
-			this,
-			"Suppression de championnat",
-			this.supprFeuilleTpl,
-			form,
-			() => {
-				this.requeteService.requete(
-					this.fairplayService.supprime(form),
-					res => { this.router.navigate(["/fairplay-editor"]) }
-				);
-			}
-		);
+		if (form.champModeles.length == 0) {
+			openModal(
+				this,
+				"Suppression de feuille de fair-play",
+				this.supprFeuilleTpl,
+				form,
+				() => {
+					this.requeteService.requete(
+						this.fairplayService.supprime(form),
+						res => { this.router.navigate(["/fairplay-editor"]) }
+					);
+				}
+			);
+		}
+		else {
+			openModal(
+				this,
+				"Suppression de feuille de fair-play",
+				this.supprFeuilleUtiliseeTpl,
+				form.champModeles.map(m => m.nomModele).join(",")
+			);
+		}
 	}
 
 	/**

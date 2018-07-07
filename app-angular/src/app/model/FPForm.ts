@@ -1,3 +1,4 @@
+import { ChampModele } from "./Championnat";
 
 /**
  * Types de questions
@@ -14,6 +15,7 @@ export class FPForm {
 	public id?: number;
 	public libelle: string;
 	public categories: FPCategorie[] = [];
+	public champModeles: ChampModele[] = [];
 }
 
 /**

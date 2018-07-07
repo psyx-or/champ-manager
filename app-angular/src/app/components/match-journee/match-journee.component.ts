@@ -60,7 +60,7 @@ export class MatchJourneeComponent implements OnInit {
 	 * @param match 
 	 */
 	afficheFeuille(match: Match): void {
-		//TODO
+		//TODO affichage feuille de match
 		alert(match.feuille);
 	}
 

@@ -156,3 +156,12 @@
 <ng-template #supprFeuille let-form>
 	Etes-vous sûr de vouloir supprimer la feuille de fair-play {{ form.libelle }}&nbsp;?
 </ng-template>
+
+
+<!----------------------
+	Fenêtre pour les feuilles encore utilisées
+  ------------------- -->
+
+<ng-template #supprFeuilleUtilisee let-modeles>
+	Cette feuille de fair-play est utilisée par le(s) modèle(s) suivants&nbsp;: {{ modeles }}. Vous ne pouvez pas la supprimer.
+</ng-template>

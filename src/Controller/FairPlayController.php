@@ -31,8 +31,7 @@ class FairPlayController extends CMController
 		$repository = $this->getDoctrine()->getRepository(FPForm::class);
         return $this->groupJson(
 			$repository->findBy(array("obsolete" => false), array("libelle" => "ASC")),
-			"simple",
-			$request->query->get('complet')=="true" ? "complet" : "simple");
+			... ($request->query->get('complet')=="true" ? array("simple","complet","utilisation") : array("simple")));
 	}
 
 	/**
@@ -42,7 +41,6 @@ class FairPlayController extends CMController
 	 */
 	public function supprime(FPForm $form, EntityManagerInterface $entityManager)
 	{
-		// TODO: gestion des modèles
 		if ($form->getChampionnats()->count() == 0)
 			$entityManager->remove($form);
 		else
@@ -60,12 +58,13 @@ class FairPlayController extends CMController
 	 */
 	public function maj(FPForm $dto, EntityManagerInterface $entityManager)
 	{
-		// TODO: gestion des modèles
 		// En cas de modification, on supprime le formulaire actuel
+		$modeles = array();
 		if ($dto->getId() != null)
 		{
 			$repository = $this->getDoctrine()->getRepository(FPForm::class);
 			$entite = $repository->find($dto->getId());
+			$modeles = $entite->getChampModeles()->toArray();
 
 			if ($entite->getChampionnats()->count() == 0)
 				$entityManager->remove($entite);
@@ -85,7 +84,9 @@ class FairPlayController extends CMController
 				$question->setOrdre($j++);
 		}
 
-		$entityManager->persist($dto);		
+		$entityManager->persist($dto);
+		foreach ($modeles as $modeles)
+			$modeles->setFpForm($dto);
 		$entityManager->flush();
 
 		return $this->json("ok");

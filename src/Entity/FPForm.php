@@ -157,9 +157,10 @@ class FPForm
         return $this;
     }
 
-    /**
-     * @return Collection|ChampModele[]
-     */
+	/**
+	 * @Groups({"utilisation"})
+	 * @return Collection|ChampModele[]
+	 */
     public function getChampModeles(): Collection
     {
         return $this->champModeles;

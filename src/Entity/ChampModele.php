@@ -59,7 +59,7 @@ class ChampModele
     private $fpForm;
 
 	/**
-	 * @Groups({"simple"})
+	 * @Groups({"simple_modele"})
 	 */
     public function getId()
     {
@@ -74,7 +74,7 @@ class ChampModele
 	}
 
 	/**
-	 * @Groups({"simple"})
+	 * @Groups({"simple_modele", "simple"})
 	 */
     public function getNomModele(): ?string
     {
@@ -89,7 +89,7 @@ class ChampModele
     }
 
 	/**
-	 * @Groups({"simple"})
+	 * @Groups({"simple_modele"})
 	 */
     public function getNom(): ?string
     {
@@ -104,7 +104,7 @@ class ChampModele
     }
 
 	/**
-	 * @Groups({"simple"})
+	 * @Groups({"simple_modele"})
 	 */
     public function getPtvict(): ?int
     {
@@ -119,7 +119,7 @@ class ChampModele
     }
 
 	/**
-	 * @Groups({"simple"})
+	 * @Groups({"simple_modele"})
 	 */
     public function getPtnul(): ?int
     {
@@ -134,7 +134,7 @@ class ChampModele
     }
 
 	/**
-	 * @Groups({"simple"})
+	 * @Groups({"simple_modele"})
 	 */
     public function getPtdef(): ?int
     {
@@ -149,7 +149,7 @@ class ChampModele
     }
 
 	/**
-	 * @Groups({"simple"})
+	 * @Groups({"simple_modele"})
 	 */
     public function getType()
     {
@@ -164,7 +164,7 @@ class ChampModele
     }
 
 	/**
-	 * @Groups({"simple"})
+	 * @Groups({"simple_modele"})
 	 */
     public function getFpForm(): ?FPForm
     {
@@ -179,7 +179,7 @@ class ChampModele
     }
 
 	/**
-	 * @Groups({"simple"})
+	 * @Groups({"simple_modele"})
 	 */
     public function getSport(): ?Sport
     {

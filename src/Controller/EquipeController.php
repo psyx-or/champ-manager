@@ -165,8 +165,8 @@ class EquipeController extends CMController
 
 		return $this->json(array(
 			"destinataires" => implode(",", $destinataires),
-			"objet" => $repository->find(Parametre::OBJET_MAIL_MOTDEPASSE)->getValeur(),
-			"corps" => str_replace('$password', $plainPassword, str_replace('$equipe', $equipe->getLogin(), $repository->find(Parametre::CONTENU_MAIL_MOTDEPASSE)->getValeur()))));
+			"objet" => $repository->find(Parametre::MAIL_MDP_OBJET)->getValeur(),
+			"corps" => str_replace('$password', $plainPassword, str_replace('$equipe', $equipe->getLogin(), $repository->find(Parametre::MAIL_MDP_VALEUR)->getValeur()))));
 	}
 
 	/**

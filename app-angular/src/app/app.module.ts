@@ -34,6 +34,8 @@ import { ChampCaracteristiquesComponent } from './components/champ-caracteristiq
 import { ChampModeleComponent } from './components/champ-modele/champ-modele.component';
 import { ChampModeleResolver } from './utils/champ-modele.resolver';
 import { CartePositionnementComponent } from './components/carte-positionnement/carte-positionnement.component';
+import { ParametresComponent } from './components/parametres/parametres.component';
+import { ParametresResolver } from './components/parametres/parametres.resolver';
 
 
 @NgModule({
@@ -60,7 +62,8 @@ import { CartePositionnementComponent } from './components/carte-positionnement/
     FairplayComponent,
     ChampCaracteristiquesComponent,
     ChampModeleComponent,
-    CartePositionnementComponent
+    CartePositionnementComponent,
+    ParametresComponent
   ],
   imports: [
     BrowserModule,
@@ -76,7 +79,8 @@ import { CartePositionnementComponent } from './components/carte-positionnement/
 	  ClassementResolver,
 	  FpformsResolver,
 	  FpformsResumeResolver,
-	  ChampModeleResolver
+	  ChampModeleResolver,
+	  ParametresResolver
   ],
   bootstrap: [AppComponent],
   entryComponents: [

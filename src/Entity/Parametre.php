@@ -9,9 +9,9 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Parametre
 {
-	public const EMETTEUR_MAIL = 'EMETTEUR_MAIL';
-	public const OBJET_MAIL_MOTDEPASSE = 'OBJET_MAIL_MOTDEPASSE';
-	public const CONTENU_MAIL_MOTDEPASSE = 'CONTENU_MAIL_MOTDEPASSE';
+	public const MAIL_EMETTEUR = 'MAIL_EMETTEUR';
+	public const MAIL_MDP_OBJET = 'MAIL_MDP_OBJET';
+	public const MAIL_MDP_VALEUR = 'MAIL_MDP_VALEUR';
 
 	/**
 	 * @ORM\Id()

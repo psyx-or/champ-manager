@@ -39,6 +39,7 @@ export var menus: { [nom: string]: Menu } = {
 		titre: "Paramètres",
 		icone: "settings",
 		items: [
+			{ route: "parametres", titre: "Paramètres" },
 			{ route: "champ-modele", titre: "Modèles de championnat" },
 			{ route: "fairplay-editor", titre: "Feuilles de fair-play" },
 		]

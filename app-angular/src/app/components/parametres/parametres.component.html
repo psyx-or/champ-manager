@@ -1,0 +1,15 @@
+
+<form (ngSubmit)="submit()" ngNativeValidate>
+
+	<div class="form-group" *ngFor="let param of parametres">
+		<label for="param_{{param.nom}}">{{param.description}}</label>
+		<input *ngIf="param.type == 'STR'"
+				type="text" class="form-control" name="param_{{param.nom}}" id="param_{{param.nom}}"
+				[(ngModel)]="param.valeur">
+		<textarea *ngIf="param.type == 'TEXTE'"
+				type="text" class="form-control" name="param_{{param.nom}}" id="param_{{param.nom}}" rows="10"
+				[(ngModel)]="param.valeur"></textarea>
+	</div>
+	
+	<button class="btn btn-primary" type="submit" [disabled]="requeteService.chargement">Valider</button>
+</form>

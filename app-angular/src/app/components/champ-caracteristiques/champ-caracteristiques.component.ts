@@ -11,7 +11,13 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ChampCaracteristiquesComponent implements OnInit {
 
-	@Input() championnat: Championnat | ChampModele;
+	get championnat(): Championnat | ChampModele {
+		return this._championnat;
+	}
+	@Input() set championnat(championnat: Championnat | ChampModele) {
+		this._championnat = championnat;
+		this.avecNuls = (this.championnat.ptnul != null)
+	}
 	@Output() sportChange = new EventEmitter();
 
 	sports: Sport[];
@@ -19,6 +25,8 @@ export class ChampCaracteristiquesComponent implements OnInit {
 	types: [string, string][];
 	newSport: Sport = new Sport();
 	avecNuls: boolean = true;
+	private _championnat: Championnat | ChampModele;
+
 
 	constructor(
 		private route: ActivatedRoute,

@@ -86,6 +86,7 @@ export class JourneesChampComponent implements OnInit, AfterViewInit {
 	dateFin: moment.Moment;
 	dateDebutSel: moment.Moment;
 	dateFinSel: moment.Moment;
+	retour: string;
 
 
 	/**
@@ -118,6 +119,8 @@ export class JourneesChampComponent implements OnInit, AfterViewInit {
 				this.initJournees();
 			}
 		);
+		this.route.paramMap
+			.subscribe(params => this.retour = params.get("retour"))
 	}
 
 	/**
@@ -154,7 +157,10 @@ export class JourneesChampComponent implements OnInit, AfterViewInit {
 		this.requeteService.requete(
 			this.journeeService.majJournees(this.champ, this.journees),
 			res => {
-				this.router.navigate(['championnats'])
+				if (this.retour)
+					this.router.navigate(['calendrier', { sport: this.retour }]);
+				else
+					this.router.navigate(['championnats'])
 			}
 		);
 	}

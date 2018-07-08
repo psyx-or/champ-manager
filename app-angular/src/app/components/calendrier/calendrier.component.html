@@ -42,7 +42,7 @@
 			<td>{{cal.championnat.nom}}</td>
 
 			<!-- Etat des journées -->
-			<td><a [routerLink]="['/journees', cal.championnat.id]" ngbTooltip="Saisir le calendrier">
+			<td><a [routerLink]="['/journees', cal.championnat.id, {retour: selSport.nom}]" ngbTooltip="Saisir le calendrier">
 				{{cal.nbJourneesDefinies}} / {{cal.nbJournees}} journées définies</a></td>
 
 			<!-- Dates de début et de fin -->

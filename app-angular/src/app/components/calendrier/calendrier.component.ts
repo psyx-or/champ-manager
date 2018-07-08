@@ -26,7 +26,6 @@ export class CalendrierComponent implements OnInit {
 		private championnatService: ChampionnatService
 	) { }
 
-	// TODO: revenir sur cet écran suite à validation du calendrier d'un championnat
 	// TODO: Recherche des matches sur le même terrain
 
 	/**
@@ -34,7 +33,14 @@ export class CalendrierComponent implements OnInit {
 	 */
 	ngOnInit() {
 		this.route.data
-			.subscribe((data: { sports: Sport[] }) => this.sports = data.sports);
+			.subscribe((data: { sports: Sport[] }) => {
+				this.sports = data.sports;
+				this.route.paramMap
+					.subscribe(params => {
+						this.selSport = this.sports.find(s => s.nom == params.get("sport"));
+						this.selectionSport();
+					})
+			});
 	}
 
 	/**

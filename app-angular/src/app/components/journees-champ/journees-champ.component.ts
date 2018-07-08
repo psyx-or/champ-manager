@@ -66,7 +66,7 @@ class JourneeInfo {
 	providers: [NgbDatepickerConfig, { provide: NgbDatepickerI18n, useClass: CustomDatepickerI18n }]
 })
 export class JourneesChampComponent implements OnInit, AfterViewInit {
-// TODO: récupérer le dernier calendrier
+
 	couleurs = Array(
 		["primary", "white"], ["secondary", "white"], ["success", "white"], ["danger", "white"],
 		["warning", "dark"], ["info", "white"], ["dark", "white"]
@@ -75,6 +75,7 @@ export class JourneesChampComponent implements OnInit, AfterViewInit {
 	champ: Championnat = null;
 	journees: Journee[];
 	iJournee: number = null;
+	defautJournees: {debut?:string, fin?:string} = {};
 
 	private dateNavigation = moment();
 	@ViewChildren(NgbDatepicker)
@@ -114,6 +115,7 @@ export class JourneesChampComponent implements OnInit, AfterViewInit {
 				this.champ = data.champ;
 				this.journees = data.champ.journees;
 				this.iJournee = 0;
+				this.initJournees();
 			}
 		);
 	}
@@ -123,6 +125,26 @@ export class JourneesChampComponent implements OnInit, AfterViewInit {
 	 */
 	ngAfterViewInit(): void {
 		this.navigation(0);
+	}
+
+	/**
+	 * Recopie les dates des dernières journées enregistrées
+	 */
+	initJournees(): void {
+		let dates = this.journeeService.lastDates;
+		for (let i = 0; i < this.journees.length && i < dates.length; i++) {
+			if (this.journees[i].debut)
+				break;
+
+			if (!this.defautJournees.debut)
+				this.defautJournees.debut = this.journees[i].libelle;
+
+			this.journees[i].debut = dates[i][0];
+			this.journees[i].fin = dates[i][1];
+			this.iJournee = (i + 1) % this.journees.length;
+
+			this.defautJournees.fin = this.journees[i].libelle;
+		}
 	}
 
 	/**

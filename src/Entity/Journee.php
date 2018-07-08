@@ -26,13 +26,13 @@ class Journee
     private $numero;
 
     /**
-     * @ORM\Column(type="date", nullable=true)
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $debut;
 
-    /**
-     * @ORM\Column(type="date", nullable=true)
-     */
+	/**
+	 * @ORM\Column(type="datetime", nullable=true)
+	 */
     private $fin;
 
     /**

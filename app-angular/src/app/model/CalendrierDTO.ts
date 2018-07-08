@@ -9,4 +9,6 @@ export class CalendrierDTO {
 	nbJourneesDefinies: number;
 	debut?: Date;
 	fin?: Date;
+	debutStr?: string;
+	finStr?: string;
 }

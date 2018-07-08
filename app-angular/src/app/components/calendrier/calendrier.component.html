@@ -46,7 +46,7 @@
 				{{cal.nbJourneesDefinies}} / {{cal.nbJournees}} journées définies</a></td>
 
 			<!-- Dates de début et de fin -->
-			<td><span *ngIf="cal.debut && cal.fin">Du {{cal.debut}} au {{cal.fin}}</span></td>
+			<td><span *ngIf="cal.debutStr && cal.finStr">Du {{cal.debutStr}} au {{cal.finStr}}</span></td>
 		</tr>
 	</table>
 	<a class="btn btn-primary" [href]="lienCalendrier()" [class.disabled]="!hasSelection()">Générer le calendrier des championnats sélectionnés</a>

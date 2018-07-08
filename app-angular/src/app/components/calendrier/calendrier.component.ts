@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { RequeteService } from '../../services/requete.service';
 import { ChampionnatService } from '../../services/championnat.service';
 import { CalendrierDTO } from '../../model/CalendrierDTO';
+import * as moment from 'moment';
 
 class SelCalendrier extends CalendrierDTO {
 	selectionne?: boolean;
@@ -42,7 +43,13 @@ export class CalendrierComponent implements OnInit {
 	selectionSport(): void {
 		this.requeteService.requete(
 			this.championnatService.getCalendrierCourant(this.selSport),
-			calendriers => this.calendriers = calendriers
+			calendriers => {
+				calendriers.forEach(c => {
+					c.debutStr = c.debut && moment(c.debut).add('day', 1).format("DD/MM/YYYY")
+					c.finStr = c.fin && moment(c.fin).format("DD/MM/YYYY")
+				});
+				this.calendriers = calendriers
+			}
 		);
 	}
 

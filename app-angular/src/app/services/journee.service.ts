@@ -11,6 +11,8 @@ import { Journee } from '../model/Journee';
 })
 export class JourneeService {
 
+	private _lastDates: Date[][] = [];
+
 	constructor(
 		private http: HttpClient
 	) { }
@@ -29,6 +31,14 @@ export class JourneeService {
 	 * @param journees 
 	 */
 	public majJournees(champ: Championnat, journees: Journee[]): Observable<Object> {
+		this._lastDates = journees.map(j => [j.debut, j.fin]);
 		return this.http.put("/api/journee/" + champ.id, journees);
+	}
+
+	/**
+	 * Dernières dates enregistrées
+	 */
+	public get lastDates(): Date[][] {
+		return this._lastDates;
 	}
 }

@@ -20,6 +20,8 @@ import { ChampModeleComponent } from './components/champ-modele/champ-modele.com
 import { ChampModeleResolver } from './utils/champ-modele.resolver';
 import { ParametresComponent } from './components/parametres/parametres.component';
 import { ParametresResolver } from './components/parametres/parametres.resolver';
+import { EquipeComponent } from './components/equipe/equipe.component';
+import { EquipeResolver } from './components/equipe/equipe.resolver';
 
 const routes: Routes = [
 	{ path: '', pathMatch: 'full', redirectTo: 'championnats' },
@@ -35,6 +37,7 @@ const routes: Routes = [
 	{ path: 'fairplay-editor', component: FairplayEditorComponent, resolve: { fpforms: FpformsResolver }, runGuardsAndResolvers: "always" }, // TODO: guard quand on quitte
 	{ path: 'champ-modele', component: ChampModeleComponent, resolve: { sports: SportResolver, fpForms: FpformsResumeResolver, modeles: ChampModeleResolver }, runGuardsAndResolvers: "always" },
 	{ path: 'parametres', component: ParametresComponent, resolve: { parametres: ParametresResolver } },
+	{ path: 'equipe/:equipeId', component: EquipeComponent, resolve: { equipe: EquipeResolver }, runGuardsAndResolvers: "always" },
 ];
 
 @NgModule({

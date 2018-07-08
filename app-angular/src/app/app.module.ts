@@ -36,6 +36,9 @@ import { ChampModeleResolver } from './utils/champ-modele.resolver';
 import { CartePositionnementComponent } from './components/carte-positionnement/carte-positionnement.component';
 import { ParametresComponent } from './components/parametres/parametres.component';
 import { ParametresResolver } from './components/parametres/parametres.resolver';
+import { EquipeDetailComponent } from './components/equipe-detail/equipe-detail.component';
+import { EquipeComponent } from './components/equipe/equipe.component';
+import { EquipeResolver } from './components/equipe/equipe.resolver';
 
 
 @NgModule({
@@ -63,7 +66,9 @@ import { ParametresResolver } from './components/parametres/parametres.resolver'
     ChampCaracteristiquesComponent,
     ChampModeleComponent,
     CartePositionnementComponent,
-    ParametresComponent
+    ParametresComponent,
+    EquipeDetailComponent,
+    EquipeComponent
   ],
   imports: [
     BrowserModule,
@@ -80,7 +85,8 @@ import { ParametresResolver } from './components/parametres/parametres.resolver'
 	  FpformsResolver,
 	  FpformsResumeResolver,
 	  ChampModeleResolver,
-	  ParametresResolver
+	  ParametresResolver,
+	  EquipeResolver
   ],
   bootstrap: [AppComponent],
   entryComponents: [

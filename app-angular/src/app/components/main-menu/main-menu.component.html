@@ -32,11 +32,8 @@
         <!-- Zone de recherche -->
         <form class="form-inline">
             <div class="input-group">
-                <input class="form-control py-sm-2" type="search" placeholder="Equipe">
-                <span class="input-group-append">
-					<button class="btn btn-outline-secondary" type="button"><i class="icon ion-md-search"></i></button>
-					<!-- TODO recherche -->
-                </span>
+			<input class="form-control py-sm-2" type="search" placeholder="Chercher une équipe"
+			       [ngbTypeahead]="chercheEquipe" [resultFormatter]="equipeResultFormatter" (selectItem)="selectEquipe($event)">
             </div>
         </form>
     </div>

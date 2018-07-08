@@ -1,0 +1,7 @@
+.mail .row:not(:last-child) {
+	margin-bottom: 20px;
+}
+
+.mail .contenu {
+	white-space: pre-wrap;
+}

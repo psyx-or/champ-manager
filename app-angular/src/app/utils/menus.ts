@@ -1,4 +1,5 @@
 import { ChampType, Championnat } from "../model/Championnat";
+import { Equipe } from "../model/Equipe";
 
 /**
  * Un élément de menu
@@ -42,6 +43,15 @@ export var menus: { [nom: string]: Menu } = {
 			{ route: "parametres", titre: "Paramètres" },
 			{ route: "champ-modele", titre: "Modèles de championnat" },
 			{ route: "fairplay-editor", titre: "Feuilles de fair-play" },
+		]
+	},
+
+	/** Menu des équipes */
+	equipe: {
+		titre: (e: Equipe) => e.nom,
+		items: [
+			{ route: "equipe", icone: 'contact', titre: "Coordonnées" },
+			// TODO: menu équipe
 		]
 	}
 }

@@ -118,6 +118,9 @@ class Equipe implements UserInterface, \Serializable
         return $this;
     }
 
+	/**
+	 * @Groups({"sport"})
+	 */
     public function getSport(): ?Sport
     {
         return $this->sport;

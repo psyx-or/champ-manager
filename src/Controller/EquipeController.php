@@ -23,6 +23,36 @@ use App\Entity\Parametre;
 class EquipeController extends CMController
 {
     /**
+     * @Route("/equipe/recherche")
+     * @Method("GET")
+     */
+    public function recherche(Request $request, EntityManagerInterface $entityManager)
+    {
+		$q = $request->query->get('q');
+
+		$query = $entityManager->createQuery(
+			"SELECT e
+			 FROM App\Entity\Equipe e
+			 JOIN e.sport s
+			 WHERE e.nom LIKE :q
+			 ORDER BY e.nom, s.nom");
+
+		$query->setParameter("q", '%'.$q.'%');
+
+        return $this->groupJson($query->getResult(), 'simple', 'sport');
+	}
+
+	/**
+	 * @Route("/equipe/{id}", requirements={"id"="\d+"})
+	 * @Method("GET")
+	 * @IsGranted("ROLE_ADMIN")
+	 */
+    public function getEquipe(Equipe $equipe)
+    {
+        return $this->groupJson($equipe, 'simple', 'coordonnees');
+	}
+
+    /**
      * @Route("/equipe/{nom}")
      * @Method("GET")
      */

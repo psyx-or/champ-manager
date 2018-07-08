@@ -66,7 +66,7 @@ class JourneeInfo {
 	providers: [NgbDatepickerConfig, { provide: NgbDatepickerI18n, useClass: CustomDatepickerI18n }]
 })
 export class JourneesChampComponent implements OnInit, AfterViewInit {
-
+// TODO: récupérer le dernier calendrier
 	couleurs = Array(
 		["primary", "white"], ["secondary", "white"], ["success", "white"], ["danger", "white"],
 		["warning", "dark"], ["info", "white"], ["dark", "white"]

@@ -1,0 +1,7 @@
+<app-generic-menu [obj]="equipe" nomMenu="equipe"></app-generic-menu>
+
+<form class="form" (ngSubmit)="submit()" ngNativeValidate>
+	<app-equipe-detail [equipe]="equipe"></app-equipe-detail>
+
+	<button type="submit" class="btn btn-primary mt-3" [disabled]="requeteService.chargement">Valider</button>
+</form>

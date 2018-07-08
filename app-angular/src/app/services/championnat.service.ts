@@ -9,6 +9,7 @@ import { map, tap } from 'rxjs/operators';
 import { Sport } from '../model/Sport';
 import { CalendrierDTO } from '../model/CalendrierDTO';
 import { getSaisonCourante } from '../utils/utils';
+import { SportService } from './sport.service';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,8 @@ export class ChampionnatService {
 	private cacheModele: ChampModele[];
 
     constructor(
-        private http: HttpClient
+		private http: HttpClient,
+		private sportService: SportService
     ) { }
 
 	/**
@@ -53,6 +55,7 @@ export class ChampionnatService {
 	 */
 	public cree(championnat: Championnat, equipes: Equipe[]): Observable<Championnat> {
 		this.cache = null;
+		this.sportService.verifieCache(championnat.sport);
 		return this.http.post<Championnat>("/api/championnat", {championnat: championnat, equipes: equipes});
 	}
 
@@ -102,6 +105,9 @@ export class ChampionnatService {
 	 * Récupère les modèles de championnat
 	 */
 	public getModeles(): Observable<ChampModele[]> {
+		if (this.cacheModele)
+			return of(this.cacheModele);
+
 		return this.http.get<ChampModele[]>("/api/championnat/modele").pipe(
 			tap(modeles => this.cacheModele = modeles)
 		);
@@ -113,6 +119,7 @@ export class ChampionnatService {
 	 */
 	public majModele(modele: ChampModele): Observable<any> {
 		this.cacheModele = null;
+		this.sportService.verifieCache(modele.sport);
 		return this.http.post("/api/championnat/modele", modele);
 	}
 

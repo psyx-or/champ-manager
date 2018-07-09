@@ -22,12 +22,13 @@ import { ParametresComponent } from './components/parametres/parametres.componen
 import { ParametresResolver } from './components/parametres/parametres.resolver';
 import { EquipeComponent } from './components/equipe/equipe.component';
 import { EquipeResolver } from './components/equipe/equipe.resolver';
+import { CanDeactivateGuard } from './utils/can-deactivate.guard';
 
 const routes: Routes = [
 	{ path: '', pathMatch: 'full', redirectTo: 'championnats' },
 	{ path: 'championnats', component: ChampionnatsComponent, resolve: { championnats: ChampionnatResolver }, runGuardsAndResolvers: "always" },
 	{ path: 'champ-creation', component: ChampCreationComponent, resolve: { sports: SportResolver, fpForms: FpformsResumeResolver, modeles: ChampModeleResolver } },
-	{ path: 'journees/:champId', component: JourneesChampComponent, resolve: { champ: JourneesChampResolver } }, // TODO: guard quand on quitte
+	{ path: 'journees/:champId', component: JourneesChampComponent, resolve: { champ: JourneesChampResolver }, canDeactivate: [CanDeactivateGuard] },
 	{ path: 'classement/:champId', component: ClassementComponent, resolve: { champ: ClassementResolver } },
 	{ path: 'coupe/:champId', component: CoupeComponent },
 	{ path: 'matches/avalider', component: MatchAvaliderComponent, resolve: { sports: SportResolver } },

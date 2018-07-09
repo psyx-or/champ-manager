@@ -39,6 +39,8 @@ import { ParametresResolver } from './components/parametres/parametres.resolver'
 import { EquipeDetailComponent } from './components/equipe-detail/equipe-detail.component';
 import { EquipeComponent } from './components/equipe/equipe.component';
 import { EquipeResolver } from './components/equipe/equipe.resolver';
+import { CanDeactivateGuard } from './utils/can-deactivate.guard';
+import { ModalConfirmComponent } from './components/modal-confirm/modal-confirm.component';
 
 
 @NgModule({
@@ -68,7 +70,8 @@ import { EquipeResolver } from './components/equipe/equipe.resolver';
     CartePositionnementComponent,
     ParametresComponent,
     EquipeDetailComponent,
-    EquipeComponent
+    EquipeComponent,
+    ModalConfirmComponent
   ],
   imports: [
     BrowserModule,
@@ -86,7 +89,8 @@ import { EquipeResolver } from './components/equipe/equipe.resolver';
 	  FpformsResumeResolver,
 	  ChampModeleResolver,
 	  ParametresResolver,
-	  EquipeResolver
+	  EquipeResolver,
+	  CanDeactivateGuard
   ],
   bootstrap: [AppComponent],
   entryComponents: [
@@ -94,7 +98,8 @@ import { EquipeResolver } from './components/equipe/equipe.resolver';
 	  ModalComponent,
 	  ChampImportComponent,
 	  FairplayComponent,
-	  CartePositionnementComponent
+	  CartePositionnementComponent,
+	  ModalConfirmComponent
   ]
 })
 export class AppModule { }

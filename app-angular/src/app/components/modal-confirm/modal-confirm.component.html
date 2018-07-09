@@ -1,0 +1,21 @@
+<!----------------------
+		Entête
+	------------------- -->
+<div class="modal-header">
+	<h4 class="modal-title">Modifications non enregistrées</h4>
+</div>
+
+<!----------------------
+		Formulaire
+	------------------- -->
+<div class="modal-body">
+	Des modifications n'ont pas été enregistrées. Etes-vous sûr de vouloir quitter l'écran?
+</div>
+
+<!----------------------
+		Pied
+	------------------- -->
+<div class="modal-footer">
+	<button type="button" class="btn btn-secondary" (click)="activeModal.dismiss()">Annuler</button>
+	<button type="button" class="btn btn-danger" (click)="activeModal.close()">Confirmer</button>
+</div>

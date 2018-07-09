@@ -1,6 +1,5 @@
 import { Component, Input, TemplateRef } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { Equipe } from '../../model/Equipe';
 
 @Component({
   selector: 'app-modal',

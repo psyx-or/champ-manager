@@ -7,6 +7,7 @@ import { sort } from '../../utils/utils';
 import { NgbDatepickerI18n, NgbDateStruct, NgbDatepickerConfig, NgbDatepicker } from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'moment';
 import { RequeteService } from '../../services/requete.service';
+import { CanComponentDeactivate } from '../../utils/can-deactivate.guard';
 
 
 const nbMois = 4;
@@ -65,7 +66,7 @@ class JourneeInfo {
 	styleUrls: ['./journees-champ.component.css'],
 	providers: [NgbDatepickerConfig, { provide: NgbDatepickerI18n, useClass: CustomDatepickerI18n }]
 })
-export class JourneesChampComponent implements OnInit, AfterViewInit {
+export class JourneesChampComponent implements OnInit, AfterViewInit, CanComponentDeactivate {
 
 	couleurs = Array(
 		["primary", "white"], ["secondary", "white"], ["success", "white"], ["danger", "white"],
@@ -76,6 +77,8 @@ export class JourneesChampComponent implements OnInit, AfterViewInit {
 	journees: Journee[];
 	iJournee: number = null;
 	defautJournees: {debut?:string, fin?:string} = {};
+	retour: string;
+	initial: string;
 
 	private dateNavigation = moment();
 	@ViewChildren(NgbDatepicker)
@@ -86,7 +89,6 @@ export class JourneesChampComponent implements OnInit, AfterViewInit {
 	dateFin: moment.Moment;
 	dateDebutSel: moment.Moment;
 	dateFinSel: moment.Moment;
-	retour: string;
 
 
 	/**
@@ -115,6 +117,7 @@ export class JourneesChampComponent implements OnInit, AfterViewInit {
 			.subscribe((data: { champ: Championnat }) => {
 				this.champ = data.champ;
 				this.journees = data.champ.journees;
+				this.initial = JSON.stringify(this.journees);
 				this.iJournee = 0;
 				this.initJournees();
 			}
@@ -129,6 +132,14 @@ export class JourneesChampComponent implements OnInit, AfterViewInit {
 	ngAfterViewInit(): void {
 		this.navigation(0);
 	}
+
+	/**
+	 * Vérification de la présence de modification
+	 */
+	canDeactivate(): boolean {
+		return JSON.stringify(this.journees) == this.initial;
+	}
+
 
 	/**
 	 * Recopie les dates des dernières journées enregistrées
@@ -157,6 +168,7 @@ export class JourneesChampComponent implements OnInit, AfterViewInit {
 		this.requeteService.requete(
 			this.journeeService.majJournees(this.champ, this.journees),
 			res => {
+				this.initial = JSON.stringify(this.journees);
 				if (this.retour)
 					this.router.navigate(['calendrier', { sport: this.retour }]);
 				else

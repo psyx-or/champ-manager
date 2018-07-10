@@ -5,13 +5,14 @@ import { RequeteService } from '../../services/requete.service';
 import { FairplayService } from '../../services/fairplay.service';
 import { openModal } from '../../utils/utils';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { CanComponentDeactivate } from '../../utils/can-deactivate.guard';
 
 @Component({
   selector: 'app-fairplay-editor',
   templateUrl: './fairplay-editor.component.html',
   styleUrls: ['./fairplay-editor.component.css']
 })
-export class FairplayEditorComponent implements OnInit {
+export class FairplayEditorComponent implements OnInit, CanComponentDeactivate {
 
 	@ViewChild('supprFeuille') supprFeuilleTpl: TemplateRef<any>;
 	@ViewChild('supprFeuilleUtilisee') supprFeuilleUtiliseeTpl: TemplateRef<any>;
@@ -20,6 +21,7 @@ export class FairplayEditorComponent implements OnInit {
 	types: [string, string][];
 	selfpform: FPForm;
 	newFpform = new FPForm();
+	initial: string;
 
 
 	/**
@@ -49,6 +51,22 @@ export class FairplayEditorComponent implements OnInit {
 	}
 
 	/**
+	 * Vérification de la présence de modification
+	 */
+	canDeactivate(): boolean {
+		return !this.selfpform || !this.initial || JSON.stringify(this.selfpform) == this.initial;
+	}
+
+	
+	/**
+	 * Sélection d'un formulaire
+	 * @param form 
+	 */
+	selectFpForm(form: FPForm) {
+		this.initial = JSON.stringify(form);
+	}
+
+	/**
 	 * Suppression d'une feuille de fair-play
 	 * @param form
 	 */
@@ -62,7 +80,7 @@ export class FairplayEditorComponent implements OnInit {
 				() => {
 					this.requeteService.requete(
 						this.fairplayService.supprime(form),
-						res => { this.router.navigate(["/fairplay-editor"]) }
+						res => { this.initial = null; this.router.navigate(["/fairplay-editor"]) }
 					);
 				}
 			);
@@ -96,7 +114,7 @@ export class FairplayEditorComponent implements OnInit {
 	submit(): void {
 		this.requeteService.requete(
 			this.fairplayService.maj(this.selfpform),
-			res => { this.router.navigate(["/fairplay-editor"]) }
+			res => { this.initial = null; this.router.navigate(["/fairplay-editor"]); }
 		);
 	}
 }

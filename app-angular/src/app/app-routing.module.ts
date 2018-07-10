@@ -33,12 +33,12 @@ const routes: Routes = [
 	{ path: 'coupe/:champId', component: CoupeComponent },
 	{ path: 'matches/avalider', component: MatchAvaliderComponent, resolve: { sports: SportResolver } },
 	{ path: 'matches/:champId', component: MatchesComponent },
-	{ path: 'equipes', component: EquipesComponent, resolve: { sports: SportResolver } }, // TODO: guard quand on quitte
-	{ path: 'calendrier', component: CalendrierComponent, resolve: { sports: SportResolver } }, // TODO: guard quand on quitte
-	{ path: 'fairplay-editor', component: FairplayEditorComponent, resolve: { fpforms: FpformsResolver }, runGuardsAndResolvers: "always" }, // TODO: guard quand on quitte
-	{ path: 'champ-modele', component: ChampModeleComponent, resolve: { sports: SportResolver, fpForms: FpformsResumeResolver, modeles: ChampModeleResolver }, runGuardsAndResolvers: "always" },
-	{ path: 'parametres', component: ParametresComponent, resolve: { parametres: ParametresResolver } },
-	{ path: 'equipe/:equipeId', component: EquipeComponent, resolve: { equipe: EquipeResolver }, runGuardsAndResolvers: "always" },
+	{ path: 'equipes', component: EquipesComponent, resolve: { sports: SportResolver }, canDeactivate: [CanDeactivateGuard] },
+	{ path: 'calendrier', component: CalendrierComponent, resolve: { sports: SportResolver } },
+	{ path: 'fairplay-editor', component: FairplayEditorComponent, resolve: { fpforms: FpformsResolver }, runGuardsAndResolvers: "always", canDeactivate: [CanDeactivateGuard] },
+	{ path: 'champ-modele', component: ChampModeleComponent, resolve: { sports: SportResolver, fpForms: FpformsResumeResolver, modeles: ChampModeleResolver }, runGuardsAndResolvers: "always", canDeactivate: [CanDeactivateGuard] },
+	{ path: 'parametres', component: ParametresComponent, resolve: { parametres: ParametresResolver }, canDeactivate: [CanDeactivateGuard] },
+	{ path: 'equipe/:equipeId', component: EquipeComponent, resolve: { equipe: EquipeResolver }, runGuardsAndResolvers: "always", canDeactivate: [CanDeactivateGuard] },
 ];
 
 @NgModule({

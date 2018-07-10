@@ -5,19 +5,21 @@ import { ChampionnatService } from '../../services/championnat.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { RequeteService } from '../../services/requete.service';
+import { CanComponentDeactivate } from '../../utils/can-deactivate.guard';
 
 @Component({
   selector: 'app-champ-modele',
   templateUrl: './champ-modele.component.html',
   styleUrls: ['./champ-modele.component.css']
 })
-export class ChampModeleComponent implements OnInit {
+export class ChampModeleComponent implements OnInit, CanComponentDeactivate {
 
 	@ViewChild('supprModele') supprModeleTpl: TemplateRef<any>;
 
 	selModele: ChampModele;
 	modeles: ChampModele[];
 	newModele: ChampModele = new ChampModele();
+	initial: string;
 
 	constructor(
 		private route: ActivatedRoute,
@@ -36,6 +38,22 @@ export class ChampModeleComponent implements OnInit {
 	}
 
 	/**
+	 * Vérification de la présence de modification
+	 */
+	canDeactivate(): boolean {
+		return !this.selModele || !this.initial || JSON.stringify(this.selModele) == this.initial;
+	}
+
+
+	/**
+	 * Sélection d'un formulaire
+	 * @param form 
+	 */
+	selectModele(modele: ChampModele) {
+		this.initial = JSON.stringify(modele);
+	}
+
+	/**
 	 * Suppression d'un modele
 	 * @param modele
 	 */
@@ -48,7 +66,7 @@ export class ChampModeleComponent implements OnInit {
 			() => {
 				this.requeteService.requete(
 					this.championnatService.supprimeModele(modele),
-					res => { this.router.navigate(["/champ-modele"]) }
+					res => { this.initial = null; this.router.navigate(["/champ-modele"]); }
 				);
 			}
 		);
@@ -60,7 +78,7 @@ export class ChampModeleComponent implements OnInit {
 	submit(): void {
 		this.requeteService.requete(
 			this.championnatService.majModele(this.selModele),
-			res => { this.router.navigate(["/champ-modele"]) }
+			res => { this.initial = null; this.router.navigate(["/champ-modele"]); }
 		);
 	}
 }

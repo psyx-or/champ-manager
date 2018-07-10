@@ -16,7 +16,7 @@ export class ChampCaracteristiquesComponent implements OnInit {
 	}
 	@Input() set championnat(championnat: Championnat | ChampModele) {
 		this._championnat = championnat;
-		this.avecNuls = (this.championnat.ptnul != null)
+		this.avecNuls = (championnat.id == null) || (championnat.ptnul != null)
 	}
 	@Output() sportChange = new EventEmitter();
 

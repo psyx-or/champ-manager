@@ -44,15 +44,15 @@ class Calendrier
 			$section->addText("");
 
 			// Liste des journees
+			$table = $section->addTable(array(
+				'unit' => \PhpOffice\PhpWord\Style\Table::WIDTH_PERCENT,
+				'width' => 100 * 50
+			));
+
 			$i = 0;
 			$matches = array();
 			foreach ($champ->getJournees() as $journee)
 			{
-				$table = $section->addTable(array(
-					'unit' => \PhpOffice\PhpWord\Style\Table::WIDTH_PERCENT,
-					'width' => 100 * 50
-				));
-
 				$first = true;
 				foreach ($journee->getMatches() as $match)
 				{
@@ -103,7 +103,9 @@ class Calendrier
 					$first = false;
 				}
 
-				$section->addText("");
+				$table->addRow();
+				$cell = $table->addCell();
+				$cell->getStyle()->setGridSpan(4);
 			}
 
 			$section->addPageBreak();

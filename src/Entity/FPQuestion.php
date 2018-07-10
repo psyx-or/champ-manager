@@ -105,7 +105,7 @@ class FPQuestion
         return $this->libelle;
     }
 
-    public function setLibelle(string $libelle): self
+    public function setLibelle(?string $libelle): self
     {
         $this->libelle = $libelle;
 

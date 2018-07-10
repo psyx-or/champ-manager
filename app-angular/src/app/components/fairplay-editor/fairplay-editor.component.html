@@ -8,7 +8,7 @@
 	<label for="fpform" class="col-sm-2 col-form-label">Feuille de fair-play</label>
 	<div class="col-sm-2">
 		<select class="form-control" id="fpform" name="fpform"
-				[(ngModel)]="selfpform">
+				[(ngModel)]="selfpform" (ngModelChange)="selectFpForm($event)">
 			<option [ngValue]="newFpform">-- Ajouter --</option>
 			<option *ngFor="let f of fpforms" [ngValue]="f">{{f.libelle}}</option>
 		</select>

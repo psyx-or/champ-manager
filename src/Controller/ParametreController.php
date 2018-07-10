@@ -13,7 +13,7 @@ use Doctrine\ORM\EntityManagerInterface;
 /**
  * @Route("/api")
  */
-class ParametresController extends Controller
+class ParametreController extends Controller
 {
 	/**
 	 * @Route("/parametre")

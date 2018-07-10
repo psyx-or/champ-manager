@@ -4,17 +4,20 @@ import { ActivatedRoute } from '@angular/router';
 import { RequeteService } from '../../services/requete.service';
 import { EquipeService } from '../../services/equipe.service';
 import { Equipe } from '../../model/Equipe';
+import { CanComponentDeactivate } from '../../utils/can-deactivate.guard';
 
 @Component({
   selector: 'app-equipes',
   templateUrl: './equipes.component.html',
   styleUrls: ['./equipes.component.css']
 })
-export class EquipesComponent implements OnInit {
+export class EquipesComponent implements OnInit, CanComponentDeactivate {
 
 	sports: Sport[];
 	selSport: Sport;
 	equipes: Equipe[];
+	initial: string;
+	
 	
 	constructor( 
 		private route: ActivatedRoute,
@@ -31,12 +34,23 @@ export class EquipesComponent implements OnInit {
 	}
 
 	/**
+	 * Vérification de la présence de modification
+	 */
+	canDeactivate(): boolean {
+		return JSON.stringify(this.equipes) == this.initial;
+	}
+
+
+	/**
 	 * Sélection d'un sport
 	 */
 	selectionSport(): void {
 		this.requeteService.requete(
 			this.equipeService.getEquipesCourantes(this.selSport),
-			equipes => this.equipes = equipes
+			equipes => {
+				this.equipes = equipes
+				this.initial = JSON.stringify(this.equipes);
+			}
 		);
 	}
 

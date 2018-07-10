@@ -9,7 +9,7 @@
 	<label for="modele" class="col-sm-2 col-form-label">Modèle</label>
 	<div class="col-sm-2">
 		<select class="form-control" id="modele" name="modele"
-				[(ngModel)]="selModele">
+				[(ngModel)]="selModele" (ngModelChange)="selectModele($event)">
 			<option [ngValue]="newModele">-- Ajouter --</option>
 			<option *ngFor="let m of modeles" [ngValue]="m">{{m.nomModele}}</option>
 		</select>

@@ -38,7 +38,7 @@ export class CalendrierComponent implements OnInit {
 				this.route.paramMap
 					.subscribe(params => {
 						this.selSport = this.sports.find(s => s.nom == params.get("sport"));
-						this.selectionSport();
+						if (this.selSport) this.selectionSport();
 					})
 			});
 	}

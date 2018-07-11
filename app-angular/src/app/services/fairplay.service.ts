@@ -5,6 +5,9 @@ import { FPForm } from '../model/FPForm';
 import { tap } from 'rxjs/operators';
 import { Match } from '../model/Match';
 import { FPFeuilleAfficheDTO, FPFeuille } from '../model/FPFeuille';
+import { Sport } from '../model/Sport';
+import { FPClassement } from '../model/FPClassement';
+import { getSaisonCourante } from '../utils/utils';
 
 @Injectable({
   providedIn: 'root'
@@ -63,5 +66,13 @@ export class FairplayService {
 	 */
 	public majFeuille(match: Match, dto: FPFeuilleAfficheDTO): Observable<FPFeuille> {
 		return this.http.post<FPFeuille>("/api/fairplay/feuille/" + match.id, { fpFeuille: dto.fpFeuille, reponses: dto.reponses });
+	}
+
+	/**
+	 * Récupère le classement du fair-play
+	 * @param sport 
+	 */
+	public getClassement(sport: Sport): Observable<FPClassement[]> {
+		return this.http.get<FPClassement[]>(`/api/fairplay/classement/${sport.nom}`, { params: { saison: getSaisonCourante() }})
 	}
 }

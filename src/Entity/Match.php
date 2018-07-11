@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -105,6 +107,16 @@ class Match
 	 */
 	private $fpFeuille2;
 
+	/**
+	 * @ORM\OneToMany(targetEntity="App\Entity\FPFeuille", mappedBy="fpMatch")
+	 */
+	private $fpFeuilles;
+
+	
+	public function __construct()
+	{
+		$this->fpFeuilles = new ArrayCollection();
+	}
 
 	public function setId($id) : self
 	{
@@ -350,6 +362,37 @@ class Match
 	public function setFpFeuille2(?FPFeuille $fpFeuille2): self
 	{
 		$this->fpFeuille2 = $fpFeuille2;
+
+		return $this;
+	}
+
+	/**
+	 * @return Collection|FPFeuille[]
+	 */
+	public function getFpFeuilles(): Collection
+	{
+		return $this->fpFeuilles;
+	}
+
+	public function addFpFeuille(FPFeuille $fpFeuille): self
+	{
+		if (!$this->fpFeuilles->contains($fpFeuille)) {
+			$this->fpFeuilles[] = $fpFeuille;
+			$fpFeuille->setFpMatch($this);
+		}
+
+		return $this;
+	}
+
+	public function removeFpFeuille(FPFeuille $fpFeuille): self
+	{
+		if ($this->fpFeuilles->contains($fpFeuille)) {
+			$this->fpFeuilles->removeElement($fpFeuille);
+			// set the owning side to null (unless already changed)
+			if ($fpFeuille->getFpMatch() === $this) {
+				$fpFeuille->setFpMatch(null);
+			}
+		}
 
 		return $this;
 	}

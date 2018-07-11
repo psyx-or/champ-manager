@@ -16,6 +16,7 @@ use App\Entity\FPFeuille;
 use App\Entity\FPQuestion;
 use App\Entity\FPReponse;
 use App\Entity\Equipe;
+use App\Entity\Sport;
 
 /**
  * @Route("/api")
@@ -26,7 +27,7 @@ class FairPlayController extends CMController
 	 * @Route("/fairplay")
 	 * @Method("GET")
 	 */
-    public function liste(Request $request)
+    public function listeForm(Request $request)
     {
 		$repository = $this->getDoctrine()->getRepository(FPForm::class);
         return $this->groupJson(
@@ -35,11 +36,39 @@ class FairPlayController extends CMController
 	}
 
 	/**
+	 * @Route("/fairplay/classement/{nom}")
+	 * @Method("GET")
+	 * @IsGranted("ROLE_ADMIN")
+	 */
+    public function classement(Sport $sport, Request $request, EntityManagerInterface $entityManager)
+    {
+		$saison = $request->query->get('saison');
+
+		$query = $entityManager->createQuery(
+			"SELECT e AS equipe, AVG(f.ratio) AS ratio, COUNT(f) AS nb
+			 FROM App\Entity\Equipe e
+			 JOIN e.fpEvaluees f
+			 JOIN f.fpMatch m
+			 JOIN m.journee j
+			 JOIN j.championnat c
+			 WHERE c.sport = :sport
+			   AND c.saison = :saison
+			 GROUP BY e
+			 ORDER BY AVG(f.ratio) DESC"
+		);
+
+		$query->setParameter("sport", $sport);
+		$query->setParameter("saison", $saison);
+
+        return $this->groupJson($query->getResult(), "simple");
+	}
+
+	/**
 	 * @Route("/fairplay/{id}")
 	 * @Method("DELETE")
 	 * @IsGranted("ROLE_ADMIN")
 	 */
-	public function supprime(FPForm $form, EntityManagerInterface $entityManager)
+	public function supprimeForm(FPForm $form, EntityManagerInterface $entityManager)
 	{
 		if ($form->getChampionnats()->count() == 0)
 			$entityManager->remove($form);
@@ -56,7 +85,7 @@ class FairPlayController extends CMController
 	 * @IsGranted("ROLE_ADMIN")
 	 * @ParamConverter("dto", converter="cm_converter")
 	 */
-	public function maj(FPForm $dto, EntityManagerInterface $entityManager)
+	public function majForm(FPForm $dto, EntityManagerInterface $entityManager)
 	{
 		// En cas de modification, on supprime le formulaire actuel
 		$modeles = array();
@@ -161,11 +190,13 @@ class FairPlayController extends CMController
 		$entity = null;
 		if ($dto->getFpFeuille()->getId() != null)
 		{
+			$dto->getFpFeuille()->setFpMatch($match);
 			$entity = $entityManager->merge($dto->getFpFeuille());
 		}
 		else
 		{
 			$entity = $dto->getFpFeuille();
+			$entity->setFpMatch($match);
 			$entityManager->persist($entity);
 			if ($entity->getEquipeRedactrice()->getId() == $match->getEquipe1()->getId())
 				$match->setFpFeuille1($entity);

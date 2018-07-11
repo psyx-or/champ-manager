@@ -1,0 +1,54 @@
+<h1>
+	<i class="icon ion-md-happy"></i> Classement de fair-play
+</h1>
+
+
+<!----------------------
+	Sport
+  ------------------- -->
+
+<div class="form-group form-row">
+	<label for="sport" class="col-sm-2 col-form-label">Sport</label>
+	<div class="col-sm-2">
+		<select class="form-control" id="sport" name="sport" [(ngModel)]="selSport" (ngModelChange)="selectionSport($event)">
+			<option *ngFor="let s of sports" [ngValue]="s">{{s.nom}}</option>
+		</select>
+	</div>
+</div>
+
+
+<!----------------------
+	Classement
+  ------------------- -->
+
+<ngb-alert *ngIf="classements && classements.length == 0" [dismissible]="false" type="info">
+	Pas d'évaluation de fair-play pour ce sport et la saison courante
+</ngb-alert>
+
+<div *ngIf="classements && classements.length > 0">
+	<ngb-alert [dismissible]="false" type="info">
+		Les points correspondent à une moyenne des notes.
+		Les notes vont de 100 (toutes les évaluations d'une feuille sont positives) à -100 (toutes les évaluations d'une feuille sont négatives).
+	</ngb-alert>
+<!-- TODO lien vers le fairplay d'une équipe -->
+	<table class="table table-striped text-center table-bordered">
+		<thead>
+			<tr>
+				<th scope="col">#</th>
+				<th scope="col">Equipe</th>
+				<th scope="col">Pts</th>
+				<th scope="col">Evaluations</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let class of classements; let i = index;">
+				<td>{{i > 0 && class.ratio == classements[i-1].ratio ? "-" : i+1}}</td>
+				<td>{{class.equipe.nom}}</td>
+				<td class="font-weight-bold" [ngClass]="{'text-success': class.ratio>33, 'text-danger': class.ratio<-33}">
+					{{class.ratio | number:'1.0-0'}}
+				</td>
+				<td>{{class.nb}}</td>
+			</tr>
+		</tbody>
+	</table>
+</div>

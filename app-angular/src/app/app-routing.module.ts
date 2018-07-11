@@ -23,6 +23,7 @@ import { ParametresResolver } from './components/parametres/parametres.resolver'
 import { EquipeComponent } from './components/equipe/equipe.component';
 import { EquipeResolver } from './components/equipe/equipe.resolver';
 import { CanDeactivateGuard } from './utils/can-deactivate.guard';
+import { FairplayClassementComponent } from './components/fairplay-classement/fairplay-classement.component';
 
 const routes: Routes = [
 	{ path: '', pathMatch: 'full', redirectTo: 'championnats' },
@@ -30,15 +31,16 @@ const routes: Routes = [
 	{ path: 'champ-creation', component: ChampCreationComponent, resolve: { sports: SportResolver, fpForms: FpformsResumeResolver, modeles: ChampModeleResolver } },
 	{ path: 'journees/:champId', component: JourneesChampComponent, resolve: { champ: JourneesChampResolver }, canDeactivate: [CanDeactivateGuard] },
 	{ path: 'classement/:champId', component: ClassementComponent, resolve: { champ: ClassementResolver } },
-	{ path: 'coupe/:champId', component: CoupeComponent },
+	{ path: 'coupe/:champId', component: CoupeComponent }, // TODO: resolver
 	{ path: 'matches/avalider', component: MatchAvaliderComponent, resolve: { sports: SportResolver } },
-	{ path: 'matches/:champId', component: MatchesComponent },
+	{ path: 'matches/:champId', component: MatchesComponent }, // TODO: resolver
 	{ path: 'equipes', component: EquipesComponent, resolve: { sports: SportResolver }, canDeactivate: [CanDeactivateGuard] },
 	{ path: 'calendrier', component: CalendrierComponent, resolve: { sports: SportResolver } },
 	{ path: 'fairplay-editor', component: FairplayEditorComponent, resolve: { fpforms: FpformsResolver }, runGuardsAndResolvers: "always", canDeactivate: [CanDeactivateGuard] },
 	{ path: 'champ-modele', component: ChampModeleComponent, resolve: { sports: SportResolver, fpForms: FpformsResumeResolver, modeles: ChampModeleResolver }, runGuardsAndResolvers: "always", canDeactivate: [CanDeactivateGuard] },
 	{ path: 'parametres', component: ParametresComponent, resolve: { parametres: ParametresResolver }, canDeactivate: [CanDeactivateGuard] },
 	{ path: 'equipe/:equipeId', component: EquipeComponent, resolve: { equipe: EquipeResolver }, runGuardsAndResolvers: "always", canDeactivate: [CanDeactivateGuard] },
+	{ path: 'fairplay-classement', component: FairplayClassementComponent, resolve: { sports: SportResolver } },
 ];
 
 @NgModule({

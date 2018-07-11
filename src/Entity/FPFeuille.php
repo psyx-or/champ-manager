@@ -56,6 +56,13 @@ class FPFeuille
      */
     private $ratio;
 
+	/**
+	 * @ORM\ManyToOne(targetEntity="App\Entity\Match", inversedBy="fpFeuilles")
+	 * @ORM\JoinColumn(nullable=false)
+	 */
+    private $fpMatch;
+
+	
     public function __construct()
     {
         $this->reponses = new ArrayCollection();
@@ -199,6 +206,18 @@ class FPFeuille
         if ($newFpFeuille2 !== $matchEquipe2->getFpFeuille2()) {
             $matchEquipe2->setFpFeuille2($newFpFeuille2);
         }
+
+        return $this;
+    }
+
+    public function getFpMatch(): ?Match
+    {
+        return $this->fpMatch;
+    }
+
+    public function setFpMatch(?Match $fpMatch): self
+    {
+        $this->fpMatch = $fpMatch;
 
         return $this;
     }

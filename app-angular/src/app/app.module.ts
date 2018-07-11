@@ -41,6 +41,7 @@ import { EquipeComponent } from './components/equipe/equipe.component';
 import { EquipeResolver } from './components/equipe/equipe.resolver';
 import { CanDeactivateGuard } from './utils/can-deactivate.guard';
 import { ModalConfirmComponent } from './components/modal-confirm/modal-confirm.component';
+import { FairplayClassementComponent } from './components/fairplay-classement/fairplay-classement.component';
 
 
 @NgModule({
@@ -71,7 +72,8 @@ import { ModalConfirmComponent } from './components/modal-confirm/modal-confirm.
     ParametresComponent,
     EquipeDetailComponent,
     EquipeComponent,
-    ModalConfirmComponent
+    ModalConfirmComponent,
+    FairplayClassementComponent
   ],
   imports: [
     BrowserModule,

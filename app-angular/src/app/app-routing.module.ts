@@ -24,6 +24,8 @@ import { EquipeComponent } from './components/equipe/equipe.component';
 import { EquipeResolver } from './components/equipe/equipe.resolver';
 import { CanDeactivateGuard } from './utils/can-deactivate.guard';
 import { FairplayClassementComponent } from './components/fairplay-classement/fairplay-classement.component';
+import { HierarchieResolver } from './components/coupe/hierarchie.resolver';
+import { MatchesResolver } from './components/matches/matches.resolver';
 
 const routes: Routes = [
 	{ path: '', pathMatch: 'full', redirectTo: 'championnats' },
@@ -31,9 +33,9 @@ const routes: Routes = [
 	{ path: 'champ-creation', component: ChampCreationComponent, resolve: { sports: SportResolver, fpForms: FpformsResumeResolver, modeles: ChampModeleResolver } },
 	{ path: 'journees/:champId', component: JourneesChampComponent, resolve: { champ: JourneesChampResolver }, canDeactivate: [CanDeactivateGuard] },
 	{ path: 'classement/:champId', component: ClassementComponent, resolve: { champ: ClassementResolver } },
-	{ path: 'coupe/:champId', component: CoupeComponent }, // TODO: resolver
+	{ path: 'coupe/:champId', component: CoupeComponent, resolve: { journee: HierarchieResolver } },
 	{ path: 'matches/avalider', component: MatchAvaliderComponent, resolve: { sports: SportResolver } },
-	{ path: 'matches/:champId', component: MatchesComponent }, // TODO: resolver
+	{ path: 'matches/:champId', component: MatchesComponent, resolve: { champ: MatchesResolver } },
 	{ path: 'equipes', component: EquipesComponent, resolve: { sports: SportResolver }, canDeactivate: [CanDeactivateGuard] },
 	{ path: 'calendrier', component: CalendrierComponent, resolve: { sports: SportResolver } },
 	{ path: 'fairplay-editor', component: FairplayEditorComponent, resolve: { fpforms: FpformsResolver }, runGuardsAndResolvers: "always", canDeactivate: [CanDeactivateGuard] },

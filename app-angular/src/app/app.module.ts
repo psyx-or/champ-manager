@@ -42,6 +42,8 @@ import { EquipeResolver } from './components/equipe/equipe.resolver';
 import { CanDeactivateGuard } from './utils/can-deactivate.guard';
 import { ModalConfirmComponent } from './components/modal-confirm/modal-confirm.component';
 import { FairplayClassementComponent } from './components/fairplay-classement/fairplay-classement.component';
+import { HierarchieResolver } from './components/coupe/hierarchie.resolver';
+import { MatchesResolver } from './components/matches/matches.resolver';
 
 
 @NgModule({
@@ -92,7 +94,9 @@ import { FairplayClassementComponent } from './components/fairplay-classement/fa
 	  ChampModeleResolver,
 	  ParametresResolver,
 	  EquipeResolver,
-	  CanDeactivateGuard
+	  CanDeactivateGuard,
+	  HierarchieResolver,
+	  MatchesResolver
   ],
   bootstrap: [AppComponent],
   entryComponents: [

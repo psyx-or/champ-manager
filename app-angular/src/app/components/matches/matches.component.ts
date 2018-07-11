@@ -30,13 +30,10 @@ export class MatchesComponent implements OnInit {
 	) { }
 
 	ngOnInit() {
-		const champId = +this.route.snapshot.paramMap.get('champId');
-
-		this.requeteService.requete(
-			this.matchService.liste(champId),
-			champ => {
-				this.champ = champ;
-				this.journees = sort(champ.journees, 'numero').map(j => {
+		this.route.data
+			.subscribe((data: { champ: Championnat }) => {
+				this.champ = data.champ;
+				this.journees = sort(data.champ.journees, 'numero').map(j => {
 
 					let isCollapsed = true;
 					let classe = 'success';

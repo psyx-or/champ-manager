@@ -6,6 +6,7 @@ import { Championnat } from '../../model/Championnat';
 import { Match } from '../../model/Match';
 import { Equipe } from '../../model/Equipe';
 import { getVainqueur } from '../../utils/utils';
+import { Journee } from '../../model/Journee';
 
 
 /**
@@ -84,14 +85,11 @@ export class CoupeComponent implements OnInit {
 	 * Initialisation
 	 */
 	ngOnInit() {
-		const champId = +this.route.snapshot.paramMap.get('champId');
-
-		this.requeteService.requete(
-			this.matchService.getHierarchie(champId),
-			journee => {
-				this.champ = journee.championnat;
+		this.route.data
+			.subscribe((data: { journee: Journee }) => {
+				this.champ = data.journee.championnat;
 				this.plateau = new Array<Cellule[]>();
-				this.buildPlateau(journee.matches[0], 0, 0);
+				this.buildPlateau(data.journee.matches[0], 0, 0);
 				this.retournePlateau();
 			}
 		);

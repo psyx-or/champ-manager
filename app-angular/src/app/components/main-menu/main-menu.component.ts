@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { Observable, merge } from 'rxjs';
+import { debounceTime, distinctUntilChanged, switchMap, tap } from 'rxjs/operators';
 import { RequeteService } from '../../services/requete.service';
 import { EquipeService } from '../../services/equipe.service';
 import { Equipe } from '../../model/Equipe';
@@ -13,6 +13,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./main-menu.component.css']
 })
 export class MainMenuComponent {
+
+	searching: boolean = false;
 
 	constructor(
 		private requeteService: RequeteService,
@@ -27,11 +29,11 @@ export class MainMenuComponent {
 		text$.pipe(
 			debounceTime(200),
 			distinctUntilChanged(),
+			tap(() => this.searching = true),
 			switchMap(term =>
-				this.requeteService.recupere(
 					this.equipeService.recherche(term)
-				)
-			)
+			),
+			tap(() => this.searching = false)
 		)
 
 	/**

@@ -46,7 +46,7 @@ class Journee
     }
 
 	/**
-	 * @Groups({"hierarchie"})
+	 * @Groups({"hierarchie", "doublon"})
 	 */
     public function getChampionnat(): ?Championnat
     {

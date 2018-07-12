@@ -26,8 +26,6 @@ export class CalendrierComponent implements OnInit {
 		private championnatService: ChampionnatService
 	) { }
 
-	// TODO: Recherche des matches sur le même terrain
-
 	/**
 	 * Initialisation
 	 */

@@ -133,6 +133,9 @@ class Match
         return $this->id;
     }
 
+	/**
+	 * @Groups({"doublon"})
+	 */
     public function getJournee(): ?Journee
     {
         return $this->journee;

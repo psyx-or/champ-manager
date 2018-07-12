@@ -1,0 +1,47 @@
+<app-generic-menu nomMenu="calendrier"></app-generic-menu>
+
+
+<!----------------------
+	Sport
+  ------------------- -->
+
+<div class="form-group form-row">
+	<label for="sport" class="col-sm-2 col-form-label">Sport</label>
+	<div class="col-sm-2">
+		<select class="form-control" id="sport" name="sport"
+				[(ngModel)]="selSport" (change)="selectionSport()">
+			<option *ngFor="let s of sports" [ngValue]="s">{{s.nom}}</option>
+		</select>
+	</div>
+</div>
+
+
+<!----------------------
+	Championnats
+  ------------------- -->
+
+<ngb-alert *ngIf="doublons && doublons.length == 0" [dismissible]="false" type="info">
+	Pas de terrains utilisés trop de fois pour la même journée.
+</ngb-alert>
+
+<table class="table" *ngIf="doublons && doublons.length > 0">
+	<tr>
+		<th>Semaine</th>
+		<th>Match</th>
+		<th class="text-center">Actions</th>
+	</tr>
+	<ng-container *ngFor="let doublon of doublons">
+		<tr *ngFor="let match of doublon.matches; first as first">
+			<!-- Semaine -->
+			<td *ngIf="first" [rowSpan]="doublon.matches.length" class="align-middle">{{doublon.debut | date:'dd/MM/yyyy'}}</td>
+
+			<!-- Match -->
+			<td>{{match.equipe1.nom}} - {{match.equipe2.nom}}</td>
+
+			<!--Actions -->
+			<td class="text-center">
+				<button class="btn btn-sm btn-primary" ngbTooltip="Inverser le match" (click)="inverse(match)"><i class="icon ion-md-git-compare"></i></button>
+			</td>
+		</tr>
+	</ng-container>
+</table>

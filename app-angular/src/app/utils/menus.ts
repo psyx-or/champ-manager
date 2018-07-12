@@ -35,6 +35,16 @@ export var menus: { [nom: string]: Menu } = {
 		]
 	},
 
+	/** Menu du calendrier */
+	calendrier: {
+		titre: "Calendrier",
+		icone: "calendar",
+		items: [
+			{ route: "calendrier", icone: 'paper', titre: "Export" },
+			{ route: "calendrier-doublons", icone: 'git-compare', titre: "Inversion de matches" },
+		]
+	},
+
 	/** Menu des paramètres */
 	parametres: {
 		titre: "Paramètres",

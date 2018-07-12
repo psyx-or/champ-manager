@@ -44,6 +44,7 @@ import { ModalConfirmComponent } from './components/modal-confirm/modal-confirm.
 import { FairplayClassementComponent } from './components/fairplay-classement/fairplay-classement.component';
 import { HierarchieResolver } from './components/coupe/hierarchie.resolver';
 import { MatchesResolver } from './components/matches/matches.resolver';
+import { CalendrierDoublonsComponent } from './components/calendrier-doublons/calendrier-doublons.component';
 
 
 @NgModule({
@@ -75,7 +76,8 @@ import { MatchesResolver } from './components/matches/matches.resolver';
     EquipeDetailComponent,
     EquipeComponent,
     ModalConfirmComponent,
-    FairplayClassementComponent
+    FairplayClassementComponent,
+    CalendrierDoublonsComponent
   ],
   imports: [
     BrowserModule,

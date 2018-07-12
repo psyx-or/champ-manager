@@ -5,6 +5,8 @@ import { Observable } from 'rxjs';
 import { Championnat } from '../model/Championnat';
 import { Match } from '../model/Match';
 import { Sport } from '../model/Sport';
+import { getSaisonCourante } from '../utils/utils';
+import { DoublonDTO } from '../model/DoublonDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -53,5 +55,21 @@ export class MatchService {
 	 */
 	public avalider(sport: Sport): Observable<Championnat[]> {
 		return this.http.get<Championnat[]>("/api/match/avalider/" + sport.nom);
+	}
+
+	/**
+	 * Récupère la liste des matches sur le même terrain
+	 * @param sport 
+	 */
+	public getDoublons(sport: Sport): Observable<DoublonDTO[]> {
+		return this.http.get<DoublonDTO[]>(`/api/match/${sport.nom}/doublons`, { params: { saison: getSaisonCourante() } })
+	}
+
+	/**
+	 * Inverse un match
+	 * @param match 
+	 */
+	public inverse(match: Match): Observable<any> {
+		return this.http.patch(`/api/match/${match.id}/inverse`, null);
 	}
 }

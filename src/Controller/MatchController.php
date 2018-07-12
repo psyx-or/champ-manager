@@ -14,6 +14,7 @@ use App\Entity\Sport;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Outils\MatchFunctions;
 use App\Entity\ChampionnatType;
+use Symfony\Component\HttpFoundation\Request;
 
 
 /**
@@ -128,5 +129,96 @@ class MatchController extends CMController
 		$entityManager->flush();
 
 		return $this->groupJson($res, 'simple');
+	}
+
+	/**
+	 * @Route("/match/{id}/inverse")
+	 * @Method("PATCH")
+	 * @IsGranted("ROLE_ADMIN")
+	 */
+	public function inverse(Match $match, EntityManagerInterface $entityManager)
+	{
+		$equipe1 = $match->getEquipe1();
+		$equipe2 = $match->getEquipe2();
+
+		// On inverse le match
+		$match->setEquipe1($equipe2);
+		$match->setEquipe2($equipe1);
+
+		// On recherche le match retour
+		$query = $entityManager->createQuery(
+			"SELECT m
+			 FROM App\Entity\Match m
+			 JOIN m.journee j
+			 WHERE j.championnat = :championnat
+			   AND m.equipe1 = :equipe1
+			   AND m.equipe2 = :equipe2"
+		);
+
+		$query->setParameter("championnat", $match->getJournee()->getChampionnat());
+		$query->setParameter("equipe1", $equipe2);
+		$query->setParameter("equipe2", $equipe1);
+
+		// On l'inverse aussi
+		foreach ($query->getResult() as $match2)
+		{
+			// En vrai, 0 ou 1 match
+			$match2->setEquipe1($equipe1);
+			$match2->setEquipe2($equipe2);
+		}
+
+		$entityManager->flush();
+
+		return $this->json("ok");
+	}
+
+	/**
+	 * @Route("/match/{nom}/doublons")
+	 * @Method("GET")
+	 * @IsGranted("ROLE_ADMIN")
+	 */
+	public function doublons(Sport $sport, Request $request, EntityManagerInterface $entityManager)
+	{
+		$saison = $request->query->get('saison');
+
+		$query = $entityManager->createQuery(
+			"SELECT e.terrain, j.debut
+			 FROM App\Entity\Match m
+			 JOIN m.journee j
+			 JOIN j.championnat c
+			 JOIN m.equipe1 e
+			 WHERE c.sport = :sport
+			   AND c.saison = :saison
+			   AND m.equipe2 IS NOT NULL
+			   AND e.terrain IS NOT NULL
+			   AND j.debut IS NOT NULL
+			 GROUP BY e.terrain, j.debut
+			 HAVING count(m)>2
+			 ORDER BY j.debut, e.terrain"
+		); // TODO: paramètre pour 2?
+
+		$query->setParameter("sport", $sport);
+		$query->setParameter("saison", $saison);
+
+		$resultat = array();
+		foreach ($query->getResult() as $doublon)
+		{
+			$query2 = $entityManager->createQuery(
+				"SELECT m
+				 FROM App\Entity\Match m
+				 JOIN m.journee j
+				 JOIN m.equipe1 e
+				 WHERE j.debut = :debut
+				   AND e.terrain = :terrain
+				   AND m.equipe2 IS NOT NULL"
+			);
+
+			$query2->setParameter("debut", $doublon["debut"]);
+			$query2->setParameter("terrain", $doublon["terrain"]);
+			
+			array_push($resultat, array("debut" => $doublon["debut"], "matches" => $query2->getResult()));
+		}
+
+		return $this->groupJson($resultat, "simple", "doublon");
 	}
 }

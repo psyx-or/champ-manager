@@ -7,12 +7,15 @@ use PhpOffice\PhpWord\IOFactory;
 use App\Entity\Sport;
 use App\Entity\ChampionnatType;
 use PhpOffice\PhpWord\Style\Font;
+use PhpOffice\PhpWord\Settings;
 
 
 class Calendrier
 {
 	public static function genere(Sport $sport, array $championnats) : string
 	{
+		Settings::setOutputEscapingEnabled(true);
+
 		$phpWord = new PhpWord();
 		$phpWord->setDefaultParagraphStyle(array("spaceAfter" => 0));
 
@@ -103,6 +106,9 @@ class Calendrier
 					$first = false;
 				}
 
+				$table->addRow();
+				$cell = $table->addCell();
+				$cell->getStyle()->setGridSpan(4);
 				$table->addRow();
 				$cell = $table->addCell();
 				$cell->getStyle()->setGridSpan(4);

@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Collections\ArrayCollection;
 use App\Outils\Annuaire;
 use App\Entity\Parametre;
+use App\Outils\Mail;
 
 
 /**
@@ -38,6 +39,7 @@ class EquipeController extends CMController
 			 ORDER BY e.nom, s.nom");
 
 		$query->setParameter("q", '%'.$q.'%');
+		$query->setMaxResults(10);
 
         return $this->groupJson($query->getResult(), 'simple', 'sport');
 	}
@@ -113,24 +115,27 @@ class EquipeController extends CMController
 	 * @IsGranted("ROLE_ADMIN")
 	 * @ParamConverter("equipes", converter="cm_converter", options={"classe":"App\Entity\Equipe[]"})
 	 */
-	public function majEquipe(array $equipes, EntityManagerInterface $entityManager)
+	public function majEquipe(array $equipes, EntityManagerInterface $entityManager, UserPasswordEncoderInterface $encoder)
 	{
-		// TODO: envoi des mots de passe
 		$repository = $this->getDoctrine()->getRepository(Equipe::class);
 
 		foreach ($equipes as $equipe)
 		{
 			$entite = $repository->find($equipe->getId());
 
+			$changeMdp = $entite->getPassword() == null;
+
 			foreach ($entite->getResponsables() as $entiteResp)
 			{
 				$resp = $this->getItem($equipe->getResponsables(), $entiteResp->getId());
 				if ($resp == null || $this->estVide($resp->getNom()))
 				{
+					$changeMdp = true;
 					$entite->removeResponsable($entiteResp);
 				}
 				else
 				{
+					$changeMdp = $changeMdp || ($entiteResp->getMail() != trim($resp->getMail()));
 					$entiteResp->setNom(trim($resp->getNom()));
 					$entiteResp->setTel1($resp->getTel1());
 					$entiteResp->setTel2($resp->getTel2());
@@ -141,6 +146,7 @@ class EquipeController extends CMController
 			{
 				if ($resp->getId() == null && !$this->estVide($resp->getNom()))
 				{
+					$changeMdp = true;
 					$entityManager->persist($resp);
 					$entite->addResponsable($resp);
 				}
@@ -174,6 +180,9 @@ class EquipeController extends CMController
 				$entite->setPosition($equipe->getPosition());
 			else
 				$entite->setPosition(null);
+
+			if ($changeMdp)
+				Mail::envoie($this->changeMdp($entite, $entityManager, $encoder));
 		}
 
 		$entityManager->flush();
@@ -186,7 +195,15 @@ class EquipeController extends CMController
 	 * @Method("PATCH")
 	 * @IsGranted("ROLE_ADMIN")
 	 */
-	public function changeMdp(Equipe $equipe, EntityManagerInterface $entityManager, UserPasswordEncoderInterface $encoder)
+	public function envoiMdpManuel(Equipe $equipe, EntityManagerInterface $entityManager, UserPasswordEncoderInterface $encoder)
+	{
+		return $this->json($this->changeMdp($equipe, $entityManager, $encoder));
+	}
+
+	/**
+	 * Change le mot de passe d'une équipe et renvoie les infos du mail
+	 */
+	private function changeMdp(Equipe $equipe, EntityManagerInterface $entityManager, UserPasswordEncoderInterface $encoder)
 	{
 		$plainPassword = $this->makePassword();
 		$encoded = $encoder->encodePassword($equipe, $plainPassword);
@@ -197,16 +214,17 @@ class EquipeController extends CMController
 		$destinataires = array();
 		foreach ($equipe->getResponsables() as $resp)
 			if ($resp->getMail() != null)
-				array_push($destinataires, $resp->getMail());
+				if (strpos($resp->getMail(),'psycholive') !== false || strpos($resp->getMail(), 'fsgt') !== false) // TODO: filtre mail
+					array_push($destinataires, $resp->getMail());
 
 		$repository = $this->getDoctrine()->getRepository(Parametre::class);
 
-		return $this->json(array(
+		return array(
 			"destinataires" => implode(",", $destinataires),
 			"objet" => $repository->find(Parametre::MAIL_MDP_OBJET)->getValeur(),
-			"corps" => str_replace('$password', $plainPassword, str_replace('$equipe', $equipe->getLogin(), $repository->find(Parametre::MAIL_MDP_VALEUR)->getValeur()))));
+			"corps" => str_replace('$password', $plainPassword, str_replace('$equipe', $equipe->getLogin(), $repository->find(Parametre::MAIL_MDP_VALEUR)->getValeur())));
 	}
-
+	
 	/**
 	 * Récupère un élément dans une liste à partir de son identifiant
 	 */

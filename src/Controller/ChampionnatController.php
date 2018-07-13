@@ -115,7 +115,8 @@ class ChampionnatController extends CMController
 			 JOIN c.journees j
 			 WHERE c.sport = :sport
 			   AND c.saison = :saison
-			 GROUP BY c"
+			 GROUP BY c
+			 ORDER BY c.nom"
 		);
 
 		$query->setParameter("sport", $sport);
@@ -275,7 +276,6 @@ class ChampionnatController extends CMController
 	private function creeChampionnat(Championnat $championnat, Sport $sport, EntityManagerInterface $entityManager): Championnat
 	{
 		$championnat->setSport($sport);
-		$championnat->setTermine(false);
 
 		if ($championnat->getFpForm() != null)
 		{

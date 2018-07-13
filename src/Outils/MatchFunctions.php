@@ -137,7 +137,7 @@ class MatchFunctions {
 	/**
 	 * Compare le classement de deux équipes
 	 */
-	private static function compare(Classement $class1, Classement $class2)
+	public static function compare(Classement $class1, Classement $class2)
 	{
 		if ($class1->getPts() != $class2->getPts())
 			return $class2->getPts() - $class1->getPts();

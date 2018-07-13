@@ -48,7 +48,7 @@ export class EquipeService {
 	 * Renvoie le détail des équipes d'un sport pour la saison courante
 	 */
 	public getEquipesCourantes(sport: Sport): Observable<Equipe[]> {
-		return this.http.get<Equipe[]>("/api/equipe/" + sport.nom + "/detail", { params: { saison: getSaisonCourante() } }).pipe(
+		return this.http.get<Equipe[]>(`/api/equipe/${sport.nom}/detail`, { params: { saison: getSaisonCourante() } }).pipe(
 			map(equipes => equipes.map(this.fromServer))
 		);
 	}
@@ -66,7 +66,7 @@ export class EquipeService {
 	 * @param sport
 	 */
 	public lienAnnuaire(sport: Sport): string {
-		return sport == null ? null : ("/api/equipe/" + sport.nom + "/annuaire");
+		return sport == null ? null : `/api/equipe/${sport.nom}/annuaire?saison=${getSaisonCourante()}`;
 	}
 
 	/**

@@ -58,11 +58,11 @@ class FPFeuille
 
 	/**
 	 * @ORM\ManyToOne(targetEntity="App\Entity\Match", inversedBy="fpFeuilles")
-	 * @ORM\JoinColumn(nullable=false)
+	 * @ORM\JoinColumn(nullable=false,onDelete="CASCADE")
 	 */
     private $fpMatch;
 
-	
+
     public function __construct()
     {
         $this->reponses = new ArrayCollection();

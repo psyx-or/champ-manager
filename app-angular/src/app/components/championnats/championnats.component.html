@@ -4,6 +4,10 @@
     <a class="btn btn-outline-primary" routerLink="/champ-creation"><i class="icon ion-md-add"></i> Créer un championnat</a>
 </div>
 
+<ngb-alert *ngIf="sports && sports.length == 0" [dismissible]="false" type="info">
+	Pas de championnat pour la saison en cours.
+</ngb-alert>
+
 <div class="card bg-primary" *ngFor="let sport of sports">
 	<div class="card-header text-white">{{sport.nom}}</div>
 	<div class="bg-white">

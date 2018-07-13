@@ -67,13 +67,12 @@ class EquipeController extends CMController
 	 * @Method("GET")
 	 * @IsGranted("ROLE_ADMIN")
 	 */
-	public function annuaire(Sport $sport)
+	public function annuaire(Sport $sport, Request $request, EntityManagerInterface $entityManager)
 	{
-		$repository = $this->getDoctrine()->getRepository(Equipe::class);
-		$ftmp = Annuaire::genere($repository->findBy(['sport' => $sport], ['nom' => 'ASC']));
+		$saison = $request->query->get('saison');
+		$ftmp = Annuaire::genere($this->getEquipes($sport, $saison, $entityManager));
 		return $this->file($ftmp, "Annuaire ".$sport->getNom()." - ".date('Y-m-d').".xlsx");
 	}
-
 
 	/**
 	 * @Route("/equipe/{nom}/detail")
@@ -84,6 +83,14 @@ class EquipeController extends CMController
     {
 		$saison = $request->query->get('saison');
 
+        return $this->groupJson($this->getEquipes($sport, $saison, $entityManager), 'simple', 'coordonnees');
+	}
+
+	/**
+	 * Renvoie toutes les équipes d'un sport pour une saison donnée
+	 */
+	private function getEquipes(Sport $sport, $saison, EntityManagerInterface $entityManager)
+	{
 		$query = $entityManager->createQuery(
 			"SELECT e
 			 FROM App\Entity\Equipe e
@@ -91,12 +98,13 @@ class EquipeController extends CMController
 			 JOIN classe.championnat champ
 			 WHERE champ.saison = :saison
 			   AND champ.sport = :sport
-			 ORDER BY e.nom");
+			 ORDER BY e.nom"
+		);
 
 		$query->setParameter("sport", $sport);
 		$query->setParameter("saison", $saison);
 
-        return $this->groupJson($query->getResult(), 'simple', 'coordonnees');
+		return $query->getResult();
 	}
 
 	/**

@@ -60,11 +60,6 @@ class Championnat
      */
     private $classements;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $termine;
-
 	/**
 	 * @ORM\OneToMany(targetEntity="App\Entity\Journee", mappedBy="championnat", orphanRemoval=true)
 	 * @ORM\OrderBy({"numero" = "ASC"})
@@ -224,18 +219,6 @@ class Championnat
                 $classement->setChampionnat(null);
             }
         }
-
-        return $this;
-    }
-
-    public function getTermine(): ?bool
-    {
-        return $this->termine;
-    }
-
-    public function setTermine(bool $termine): self
-    {
-        $this->termine = $termine;
 
         return $this;
     }

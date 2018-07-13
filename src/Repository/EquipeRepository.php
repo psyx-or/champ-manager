@@ -29,7 +29,7 @@ class EquipeRepository extends ServiceEntityRepository
 
 		// Attributs de base
 		$equipe = new Equipe();
-		$equipe->setNom($nom);
+		$equipe->setNom(trim($nom));
 		$equipe->setSport($sport);
 
 		$baselogin = strtolower(preg_replace('/\s+/', '', $nom));

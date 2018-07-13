@@ -2,10 +2,6 @@
 	margin-bottom: 20px;
 }
 
-.pasterrain {
-	font-style: italic;
-}
-
 select, select option {
 	text-transform: capitalize;
 }

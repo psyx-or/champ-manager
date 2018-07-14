@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { RequeteService } from '../../services/requete.service';
 import { FairplayService } from '../../services/fairplay.service';
 import { Sport } from '../../model/Sport';
@@ -18,6 +18,7 @@ export class FairplayClassementComponent implements OnInit {
 
 	constructor(
 		private route: ActivatedRoute,
+		public router: Router,
 		public requeteService: RequeteService,
 		private fairplayService: FairplayService,
 	) { }
@@ -27,7 +28,14 @@ export class FairplayClassementComponent implements OnInit {
 	 */
 	ngOnInit() {
 		this.route.data
-			.subscribe((data: { sports: Sport[] }) => this.sports = data.sports);
+			.subscribe((data: { sports: Sport[] }) => {
+				this.sports = data.sports;
+				let lastClass = this.fairplayService.getLastClassement();
+				if (lastClass) {
+					this.selSport = data.sports.find(s => s.nom == lastClass.sport.nom);
+					this.classements = lastClass.class;
+				}
+			});
 	}
 
 

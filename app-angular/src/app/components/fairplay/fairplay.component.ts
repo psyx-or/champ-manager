@@ -3,7 +3,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FairplayService } from '../../services/fairplay.service';
 import { Match } from '../../model/Match';
 import { RequeteService } from '../../services/requete.service';
-import { FPFeuilleAfficheDTO } from '../../model/FPFeuille';
+import { FPFeuilleAfficheDTO, FPFeuille } from '../../model/FPFeuille';
 
 @Component({
   selector: 'app-fairplay',
@@ -14,6 +14,7 @@ export class FairplayComponent implements OnInit {
 
 	@Input() match: Match;
 	@Input() equipe: 1 | 2;
+	@Input() feuille: FPFeuille;
 	dto: FPFeuilleAfficheDTO;
 
 	constructor(
@@ -27,7 +28,10 @@ export class FairplayComponent implements OnInit {
 	 */
 	ngOnInit() {
 		this.requeteService.requete(
-			this.fairplayService.getFeuille(this.match, this.equipe),
+			(this.feuille ?
+				this.fairplayService.getFeuilleById(this.feuille) :
+				this.fairplayService.getFeuille(this.match, this.equipe)
+			),
 			dto => this.dto = dto
 		)
 	}
@@ -44,7 +48,7 @@ export class FairplayComponent implements OnInit {
 	 */
 	submit(): void {
 		this.requeteService.requete(
-			this.fairplayService.majFeuille(this.match, this.dto),
+			this.fairplayService.majFeuille(this.dto),
 			res => this.activeModal.close(res)
 		);
 	}

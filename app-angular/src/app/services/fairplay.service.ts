@@ -15,6 +15,7 @@ import { getSaisonCourante } from '../utils/utils';
 export class FairplayService {
 
 	private cache: FPForm[];
+	private lastClassement: { sport: Sport, class: FPClassement[] };
 
 	constructor(
 		private http: HttpClient
@@ -60,12 +61,20 @@ export class FairplayService {
 	}
 
 	/**
+	 * Récupère une feuille de fair-play complète
+	 * @param feuille
+	 */
+	public getFeuilleById(feuille: FPFeuille): Observable<FPFeuilleAfficheDTO> {
+		return this.http.get<FPFeuilleAfficheDTO>(`/api/fairplay/feuille/${feuille.id}`);
+	}
+
+	/**
 	 * Met à jour une feuille de fair-play
 	 * @param match 
 	 * @param dto 
 	 */
-	public majFeuille(match: Match, dto: FPFeuilleAfficheDTO): Observable<FPFeuille> {
-		return this.http.post<FPFeuille>("/api/fairplay/feuille/" + match.id, { fpFeuille: dto.fpFeuille, reponses: dto.reponses });
+	public majFeuille(dto: FPFeuilleAfficheDTO): Observable<FPFeuille> {
+		return this.http.post<FPFeuille>("/api/fairplay/feuille/" + dto.matchId, { fpFeuille: dto.fpFeuille, reponses: dto.reponses });
 	}
 
 	/**
@@ -73,6 +82,24 @@ export class FairplayService {
 	 * @param sport 
 	 */
 	public getClassement(sport: Sport): Observable<FPClassement[]> {
-		return this.http.get<FPClassement[]>(`/api/fairplay/classement/${sport.nom}`, { params: { saison: getSaisonCourante() }})
+		return this.http.get<FPClassement[]>(`/api/fairplay/classement/${sport.nom}`, { params: { saison: getSaisonCourante() }}).pipe(
+			tap(classements => this.lastClassement = {sport: sport, class: classements})
+		)
+	}
+
+	/**
+	 * Récupère le dernier classement du fair-play récupéré
+	 */
+	public getLastClassement(): null | {sport: Sport, class: FPClassement[] } {
+		return this.lastClassement;
+	}
+
+	/**
+	 * Récupère les feuilles de fair-play concernant une équipe pour la saison courante
+	 * @param equipeId 
+	 * @param type "evaluation" | "redaction"
+	 */
+	public getFeuilles(equipeId: number, type: string): Observable<FPFeuille[]> {
+		return this.http.get<FPFeuille[]>(`/api/fairplay/${equipeId}/${type}`, { params: { saison: getSaisonCourante() }});
 	}
 }

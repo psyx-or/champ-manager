@@ -24,8 +24,10 @@ export class GenericMenuComponent implements OnInit {
 
 	ngOnInit() {
 		this.menu = menus[this.nomMenu];
-		const route = this.route.snapshot.url;
-		this.active = this.menu.items.findIndex(t => t.route == route[0].path);
+		this.route.url.subscribe(segments => {
+			const route = segments.slice(0, segments.length - 1).map(s => s.path).join("/");
+			this.active = this.menu.items.findIndex(t => t.route == route);
+		})
 	}
 	
 	public beforeChange($event: NgbTabChangeEvent) {

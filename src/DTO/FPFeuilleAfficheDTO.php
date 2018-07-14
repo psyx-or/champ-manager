@@ -18,6 +18,8 @@ class FPFeuilleAfficheDTO
 	private $fpFeuille;
 	/** Les réponses aux questions sous forme de tableau id question => réponse */
 	private $reponses;
+	/** Identifiant du match */
+	private $matchId;
 
 	/**
 	 * @Groups({"simple"})
@@ -58,6 +60,20 @@ class FPFeuilleAfficheDTO
 	public function setReponses(array $reponses) : self
 	{
 		$this->reponses = $reponses;
+		return $this;
+	}
+
+	/**
+	 * @Groups({"simple"})
+	 */
+	public function getMatchId(): int
+	{
+		return $this->matchId;
+	}
+
+	public function setMatchId(int $matchId) : self
+	{
+		$this->matchId = $matchId;
 		return $this;
 	}
 }

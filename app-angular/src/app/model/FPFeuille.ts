@@ -8,6 +8,7 @@ export class FPFeuilleAfficheDTO {
 	public fpForm: FPForm;
 	public fpFeuille: FPFeuille;
 	public reponses: {[question: string]: number};
+	public matchId: number;
 }
 
 /**

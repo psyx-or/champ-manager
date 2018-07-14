@@ -45,6 +45,8 @@ import { FairplayClassementComponent } from './components/fairplay-classement/fa
 import { HierarchieResolver } from './components/coupe/hierarchie.resolver';
 import { MatchesResolver } from './components/matches/matches.resolver';
 import { CalendrierDoublonsComponent } from './components/calendrier-doublons/calendrier-doublons.component';
+import { FairplayEquipeComponent } from './components/fairplay-equipe/fairplay-equipe.component';
+import { FairplayEquipeResolver } from './components/fairplay-equipe/fairplay-equipe.resolver';
 
 
 @NgModule({
@@ -77,7 +79,8 @@ import { CalendrierDoublonsComponent } from './components/calendrier-doublons/ca
     EquipeComponent,
     ModalConfirmComponent,
     FairplayClassementComponent,
-    CalendrierDoublonsComponent
+    CalendrierDoublonsComponent,
+    FairplayEquipeComponent
   ],
   imports: [
     BrowserModule,
@@ -98,7 +101,8 @@ import { CalendrierDoublonsComponent } from './components/calendrier-doublons/ca
 	  EquipeResolver,
 	  CanDeactivateGuard,
 	  HierarchieResolver,
-	  MatchesResolver
+	  MatchesResolver,
+	  FairplayEquipeResolver
   ],
   bootstrap: [AppComponent],
   entryComponents: [

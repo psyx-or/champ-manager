@@ -28,7 +28,7 @@ export class EquipeComponent implements OnInit, CanComponentDeactivate {
 	ngOnInit() {
 		this.route.data
 			.subscribe((data: { equipe: Equipe }) => {
-				this.equipe = data.equipe
+				this.equipe = data.equipe;
 				this.initial = JSON.stringify(this.equipe);
 			});
 	}

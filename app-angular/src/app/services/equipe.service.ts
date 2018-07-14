@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { Equipe } from '../model/Equipe';
 import { getSaisonCourante } from '../utils/utils';
 import { Sport } from '../model/Sport';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { Creneau } from '../model/Creneau';
 import { Responsable } from '../model/Responsable';
 import * as moment from 'moment';
@@ -13,6 +13,8 @@ import * as moment from 'moment';
   providedIn: 'root'
 })
 export class EquipeService {
+
+	private cache: Equipe;
 
 	constructor(
 		private http: HttpClient
@@ -31,9 +33,13 @@ export class EquipeService {
 	 * @param id 
 	 */
 	public get(id: number): Observable<Equipe> {
-		return this.http.get<Equipe>(`/api/equipe/${id}`).pipe(
-			map(this.fromServer)
-		);
+		if (this.cache && this.cache.id == id)
+			return of(this.cache);
+		else
+			return this.http.get<Equipe>(`/api/equipe/${id}`).pipe(
+				map(this.fromServer),
+				tap(equipe => this.cache = equipe)
+			);
 	}
 
 	/**

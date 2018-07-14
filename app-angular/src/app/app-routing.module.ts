@@ -27,6 +27,8 @@ import { FairplayClassementComponent } from './components/fairplay-classement/fa
 import { HierarchieResolver } from './components/coupe/hierarchie.resolver';
 import { MatchesResolver } from './components/matches/matches.resolver';
 import { CalendrierDoublonsComponent } from './components/calendrier-doublons/calendrier-doublons.component';
+import { FairplayEquipeComponent } from './components/fairplay-equipe/fairplay-equipe.component';
+import { FairplayEquipeResolver } from './components/fairplay-equipe/fairplay-equipe.resolver';
 
 const routes: Routes = [
 	{ path: '', pathMatch: 'full', redirectTo: 'championnats' },
@@ -45,6 +47,7 @@ const routes: Routes = [
 	{ path: 'parametres', component: ParametresComponent, resolve: { parametres: ParametresResolver }, canDeactivate: [CanDeactivateGuard] },
 	{ path: 'equipe/:equipeId', component: EquipeComponent, resolve: { equipe: EquipeResolver }, runGuardsAndResolvers: "always", canDeactivate: [CanDeactivateGuard] },
 	{ path: 'fairplay-classement', component: FairplayClassementComponent, resolve: { sports: SportResolver } },
+	{ path: 'fairplay-equipe/:type/:equipeId', component: FairplayEquipeComponent, resolve: { equipe: EquipeResolver, feuilles: FairplayEquipeResolver } },
 ];
 
 @NgModule({

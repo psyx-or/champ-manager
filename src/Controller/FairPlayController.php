@@ -122,16 +122,38 @@ class FairPlayController extends CMController
 	}
 
 	/**
+	 * @Route("/fairplay/feuille/{id}")
+	 * @Method("GET")
+	 * @IsGranted("ROLE_ADMIN")
+	 */
+	public function getFeuilleById(FPFeuille $feuille)
+	{
+		$fpForm = $feuille->getFpMatch()->getJournee()->getChampionnat()->getFpForm();
+		
+		$res = new FPFeuilleAfficheDTO();
+		$res->setMatchId($feuille->getFpMatch()->getId());
+		$res->setFpForm($fpForm);
+		$res->setFpFeuille($feuille);
+		$reponses = array();
+		foreach ($feuille->getReponses() as $reponse)
+			$reponses[$reponse->getQuestion()->getId()] = $reponse->getReponse();
+		$res->setReponses($reponses);
+
+		return $this->groupJson($res, 'simple', 'complet');
+	}
+
+	/**
 	 * @Route("/fairplay/feuille/{id}/{equipe}")
 	 * @Method("GET")
 	 * @IsGranted("ROLE_ADMIN")
 	 */
-	public function getFeuille(Match $match, $equipe, EntityManagerInterface $entityManager)
+	public function getFeuille(Match $match, $equipe)
 	{
 		$fpForm = $match->getJournee()->getChampionnat()->getFpForm();
 		$feuille = $equipe == 1 ? $match->getFpFeuille1() : $match->getFpFeuille2();
 		
 		$res = new FPFeuilleAfficheDTO();
+		$res->setMatchId($match->getId());
 		$res->setFpForm($fpForm);
 		if ($feuille == null)
 		{
@@ -207,5 +229,61 @@ class FairPlayController extends CMController
 		$entityManager->flush();
 
 		return $this->groupJson($entity, 'simple');
+	}
+
+	/**
+	 * @Route("/fairplay/{id}/evaluation")
+	 * @Method("GET")
+	 * @IsGranted("ROLE_ADMIN")
+	 */
+	public function getEvaluation(Equipe $equipe, Request $request, EntityManagerInterface $entityManager)
+	{
+		$saison = $request->query->get('saison');
+
+		$repository = $this->getDoctrine()->getRepository(FPQuestion::class);
+
+		$query = $entityManager->createQuery(
+			"SELECT f
+			 FROM App\Entity\FPFeuille f
+			 JOIN f.fpMatch m
+			 JOIN m.journee j
+			 JOIN j.championnat c
+			 WHERE f.equipeEvaluee = :equipe
+			   AND c.saison = :saison
+			 ORDER BY f.ratio DESC"
+		);
+
+		$query->setParameter("equipe", $equipe);
+		$query->setParameter("saison", $saison);
+
+		return $this->groupJson($query->getResult(), "complet", "simple");
+	}
+
+	/**
+	 * @Route("/fairplay/{id}/redaction")
+	 * @Method("GET")
+	 * @IsGranted("ROLE_ADMIN")
+	 */
+	public function getRedaction(Equipe $equipe, Request $request, EntityManagerInterface $entityManager)
+	{
+		$saison = $request->query->get('saison');
+
+		$repository = $this->getDoctrine()->getRepository(FPQuestion::class);
+
+		$query = $entityManager->createQuery(
+			"SELECT f
+			 FROM App\Entity\FPFeuille f
+			 JOIN f.fpMatch m
+			 JOIN m.journee j
+			 JOIN j.championnat c
+			 WHERE f.equipeRedactrice = :equipe
+			   AND c.saison = :saison
+			 ORDER BY f.ratio DESC"
+		);
+
+		$query->setParameter("equipe", $equipe);
+		$query->setParameter("saison", $saison);
+
+		return $this->groupJson($query->getResult(), "complet", "simple");
 	}
 }

@@ -15,7 +15,7 @@ class Parametre
 
 	/**
 	 * @ORM\Id()
-	 * @ORM\Column(type="string", length=255)
+	 * @ORM\Column(type="string", length=100)
 	 */
     private $nom;
 

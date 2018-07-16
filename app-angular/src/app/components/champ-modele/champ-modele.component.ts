@@ -20,7 +20,7 @@ export class ChampModeleComponent implements OnInit, CanComponentDeactivate {
 	modeles: ChampModele[];
 	newModele: ChampModele = new ChampModele();
 	initial: string;
-// TODO: les onglets ne fonctionnent pas
+
 	constructor(
 		private route: ActivatedRoute,
 		private router: Router,

@@ -25,7 +25,7 @@ export class GenericMenuComponent implements OnInit {
 	ngOnInit() {
 		this.menu = menus[this.nomMenu];
 		this.route.url.subscribe(segments => {
-			const route = segments.slice(0, segments.length - 1).map(s => s.path).join("/");
+			const route = segments.slice(0, Math.max(segments.length - 1, 1)).map(s => s.path).join("/");
 			this.active = this.menu.items.findIndex(t => t.route == route);
 		})
 	}

@@ -10,7 +10,7 @@ export class LoginComponent {
 	
 	@Input() error: boolean;
 
-	creds = {};
+	creds = { login: null, password: null };
 
 	constructor(
 		private activeModal: NgbActiveModal

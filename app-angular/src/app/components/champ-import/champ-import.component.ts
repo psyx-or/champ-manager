@@ -19,7 +19,7 @@ export class ChampImportComponent implements OnInit {
 
 	constructor(
 		public activeModal: NgbActiveModal,
-		private requeteService: RequeteService,
+		public requeteService: RequeteService,
 		private championnatService: ChampionnatService
 	) { }
 

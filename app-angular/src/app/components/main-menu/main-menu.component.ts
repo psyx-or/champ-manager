@@ -6,6 +6,7 @@ import { EquipeService } from '../../services/equipe.service';
 import { Equipe } from '../../model/Equipe';
 import { NgbTypeaheadSelectItemEvent } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-main-menu',
@@ -15,6 +16,7 @@ import { Router } from '@angular/router';
 export class MainMenuComponent {
 
 	searching: boolean = false;
+	DEPLOY_PATH = environment.DEPLOY_PATH;
 
 	constructor(
 		private requeteService: RequeteService,

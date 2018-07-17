@@ -13,7 +13,7 @@ export class AppComponent implements OnInit {
 
 	/** Indique si l'utilisateur est authentifié */
 	authentifie: boolean = false;
-// TODO: favori sur une URL ne fonctionne pas
+
 	/**
 	 * Constructor
 	 * @param modalService 

@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  DEPLOY_PATH: "/dist/"
+  DEPLOY_PATH: "/admin/"
 };

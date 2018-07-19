@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RequeteService } from 'projects/commun/src/app/services/requete.service';
-import { EquipeService } from '../../services/equipe.service';
+import { EquipeService } from 'projects/commun/src/app/services/equipe.service';
 import { Equipe } from 'projects/commun/src/app/model/Equipe';
 import { CanComponentDeactivate } from '../../utils/can-deactivate.guard';
 

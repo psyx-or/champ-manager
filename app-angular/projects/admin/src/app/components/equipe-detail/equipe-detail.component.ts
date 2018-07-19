@@ -5,7 +5,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CartePositionnementComponent } from '../carte-positionnement/carte-positionnement.component';
 import { RequeteService } from 'projects/commun/src/app/services/requete.service';
 import { openModal } from 'projects/commun/src/app/utils/utils';
-import { EquipeService } from '../../services/equipe.service';
+import { EquipeService } from 'projects/commun/src/app/services/equipe.service';
 
 @Component({
   selector: 'app-equipe-detail',

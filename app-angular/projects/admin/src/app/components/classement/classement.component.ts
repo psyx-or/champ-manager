@@ -6,7 +6,7 @@ import { Championnat } from 'projects/commun/src/app/model/Championnat';
 import { Classement } from 'projects/commun/src/app/model/Classement';
 import { sort, openModal } from 'projects/commun/src/app/utils/utils';
 import { Equipe } from 'projects/commun/src/app/model/Equipe';
-import { EquipeService } from '../../services/equipe.service';
+import { EquipeService } from 'projects/commun/src/app/services/equipe.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ChampionnatService } from '../../services/championnat.service';
 

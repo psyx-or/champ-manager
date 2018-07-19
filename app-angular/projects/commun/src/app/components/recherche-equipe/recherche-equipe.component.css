@@ -1,0 +1,14 @@
+.search-equipe {
+	position: absolute;
+	right: 0.75rem;
+	z-index: 10;
+}
+
+.search-equipe.bouge {
+	animation: bouge 2s infinite linear;
+}
+
+@keyframes bouge {
+    from { transform: rotate(0deg) translateX(3px) rotate(0deg); }
+    to   { transform: rotate(360deg) translateX(3px) rotate(-360deg); }
+}

@@ -3,7 +3,7 @@ import { Championnat, ChampModele } from 'projects/commun/src/app/model/Champion
 import { ChampionnatService } from '../../services/championnat.service';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { EquipeService } from '../../services/equipe.service';
+import { EquipeService } from 'projects/commun/src/app/services/equipe.service';
 import { Equipe } from 'projects/commun/src/app/model/Equipe';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Router, ActivatedRoute } from '@angular/router';

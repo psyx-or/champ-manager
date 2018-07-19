@@ -1,0 +1,7 @@
+<form class="form-inline">
+	<div class="input-group">
+		<input class="form-control py-sm-2" type="search" placeholder="Chercher une équipe"
+			[ngbTypeahead]="chercheEquipe" [resultFormatter]="equipeResultFormatter" (selectItem)="selectEquipe($event)">
+		<div class="search-equipe py-sm-2 text-muted" [class.bouge]="searching"><i class="icon ion-md-search"></i></div>
+	</div>
+</form>

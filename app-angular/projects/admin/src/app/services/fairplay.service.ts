@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { FPForm } from '../model/FPForm';
 import { tap } from 'rxjs/operators';
-import { Match } from '../model/Match';
-import { FPFeuilleAfficheDTO, FPFeuille } from '../model/FPFeuille';
-import { Sport } from '../model/Sport';
-import { FPClassement } from '../model/FPClassement';
-import { getSaisonCourante } from '../utils/utils';
+import { getSaisonCourante } from 'projects/commun/src/app/utils/utils';
+import { FPForm } from 'projects/commun/src/app/model/FPForm';
+import { Sport } from 'projects/commun/src/app/model/Sport';
+import { FPClassement } from 'projects/commun/src/app/model/FPClassement';
+import { Match } from 'projects/commun/src/app/model/Match';
+import { FPFeuilleAfficheDTO, FPFeuille } from 'projects/commun/src/app/model/FPFeuille';
 
 @Injectable({
   providedIn: 'root'

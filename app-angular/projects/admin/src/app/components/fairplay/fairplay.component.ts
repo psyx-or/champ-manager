@@ -1,9 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FairplayService } from '../../services/fairplay.service';
-import { Match } from '../../model/Match';
-import { RequeteService } from '../../services/requete.service';
-import { FPFeuilleAfficheDTO, FPFeuille } from '../../model/FPFeuille';
+import { Match } from 'projects/commun/src/app/model/Match';
+import { RequeteService } from 'projects/commun/src/app/services/requete.service';
+import { FPFeuilleAfficheDTO, FPFeuille } from 'projects/commun/src/app/model/FPFeuille';
 
 @Component({
   selector: 'app-fairplay',

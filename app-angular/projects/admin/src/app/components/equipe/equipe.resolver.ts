@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from "@angular/router";
-import { Equipe } from "../../model/Equipe";
-import { RequeteService } from "../../services/requete.service";
+import { Equipe } from "projects/commun/src/app/model/Equipe";
+import { RequeteService } from "projects/commun/src/app/services/requete.service";
 import { EquipeService } from "../../services/equipe.service";
 import { Observable } from "rxjs";
 

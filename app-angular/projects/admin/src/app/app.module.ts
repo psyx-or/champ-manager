@@ -10,7 +10,6 @@ import { ChampCreationComponent } from './components/champ-creation/champ-creati
 import { FormsModule } from '@angular/forms';
 import { LoginComponent } from './components/login/login.component';
 import { JourneesChampComponent } from './components/journees-champ/journees-champ.component';
-import { ModalComponent } from './components/modal/modal.component';
 import { ClassementComponent } from './components/classement/classement.component';
 import { CoupeComponent } from './components/coupe/coupe.component';
 import { MatchesComponent } from './components/matches/matches.component';
@@ -18,7 +17,6 @@ import { GenericMenuComponent } from './components/generic-menu/generic-menu.com
 import { SignePipe } from './utils/signe.pipe';
 import { ChampImportComponent } from './components/champ-import/champ-import.component';
 import { ChampionnatResolver } from './components/championnats/championnats.resolver';
-import { SportResolver } from './utils/sports.resolver';
 import { JourneesChampResolver } from './components/journees-champ/journees-champ.resolver';
 import { ClassementResolver } from './components/classement/classement.resolver';
 import { MatchAvaliderComponent } from './components/match-avalider/match-avalider.component';
@@ -47,6 +45,7 @@ import { MatchesResolver } from './components/matches/matches.resolver';
 import { CalendrierDoublonsComponent } from './components/calendrier-doublons/calendrier-doublons.component';
 import { FairplayEquipeComponent } from './components/fairplay-equipe/fairplay-equipe.component';
 import { FairplayEquipeResolver } from './components/fairplay-equipe/fairplay-equipe.resolver';
+import { CommunModule } from '../../../commun/src/app/commun.module';
 
 
 @NgModule({
@@ -56,7 +55,6 @@ import { FairplayEquipeResolver } from './components/fairplay-equipe/fairplay-eq
     ChampionnatsComponent,
     ChampCreationComponent,
     LoginComponent,
-    ModalComponent,
     JourneesChampComponent,
     ClassementComponent,
     CoupeComponent,
@@ -87,11 +85,11 @@ import { FairplayEquipeResolver } from './components/fairplay-equipe/fairplay-eq
     NgbModule.forRoot(),
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+	FormsModule,
+	CommunModule
   ],
   providers: [
 	  ChampionnatResolver, 
-	  SportResolver, 
 	  JourneesChampResolver,
 	  ClassementResolver,
 	  FpformsResolver,
@@ -107,11 +105,10 @@ import { FairplayEquipeResolver } from './components/fairplay-equipe/fairplay-eq
   bootstrap: [AppComponent],
   entryComponents: [
 	  LoginComponent,
-	  ModalComponent,
 	  ChampImportComponent,
 	  FairplayComponent,
 	  CartePositionnementComponent,
 	  ModalConfirmComponent
   ]
-})
+})																																																																																																																																																																																														
 export class AppModule { }

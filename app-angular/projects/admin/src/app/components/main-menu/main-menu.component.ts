@@ -1,12 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable, merge } from 'rxjs';
+import { Component } from '@angular/core';
+import { Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap, tap } from 'rxjs/operators';
-import { RequeteService } from '../../services/requete.service';
 import { EquipeService } from '../../services/equipe.service';
-import { Equipe } from '../../model/Equipe';
 import { NgbTypeaheadSelectItemEvent } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
+import { Equipe } from 'projects/commun/src/app/model/Equipe';
 
 @Component({
   selector: 'app-main-menu',
@@ -19,7 +18,6 @@ export class MainMenuComponent {
 	DEPLOY_PATH = environment.DEPLOY_PATH;
 
 	constructor(
-		private requeteService: RequeteService,
 		private equipeService: EquipeService,
 		private router: Router
 	) { }

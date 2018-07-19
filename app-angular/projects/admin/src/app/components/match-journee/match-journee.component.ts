@@ -1,13 +1,13 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Journee } from '../../model/Journee';
-import { Match } from '../../model/Match';
-import { RequeteService } from '../../services/requete.service';
+import { RequeteService } from 'projects/commun/src/app/services/requete.service';
 import { MatchService } from '../../services/match.service';
-import { fromDisp, toDisp } from '../../utils/utils';
-import { FPForm } from '../../model/FPForm';
+import { fromDisp, toDisp } from 'projects/commun/src/app/utils/utils';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FairplayComponent } from '../fairplay/fairplay.component';
-import { FPFeuille } from '../../model/FPFeuille';
+import { Journee } from 'projects/commun/src/app/model/Journee';
+import { FPForm } from 'projects/commun/src/app/model/FPForm';
+import { Match } from 'projects/commun/src/app/model/Match';
+import { FPFeuille } from 'projects/commun/src/app/model/FPFeuille';
 
 @Component({
   selector: 'app-match-journee',

@@ -1,13 +1,12 @@
 import { Component, OnInit, Injectable, ViewChildren, QueryList, AfterViewInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { JourneeService } from '../../services/journee.service';
-import { Journee } from '../../model/Journee';
-import { Championnat } from '../../model/Championnat';
-import { sort } from '../../utils/utils';
 import { NgbDatepickerI18n, NgbDateStruct, NgbDatepickerConfig, NgbDatepicker } from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'moment';
-import { RequeteService } from '../../services/requete.service';
+import { RequeteService } from 'projects/commun/src/app/services/requete.service';
 import { CanComponentDeactivate } from '../../utils/can-deactivate.guard';
+import { Championnat } from 'projects/commun/src/app/model/Championnat';
+import { Journee } from 'projects/commun/src/app/model/Journee';
 
 
 const nbMois = 4;
@@ -25,7 +24,6 @@ export class CustomDatepickerI18n extends NgbDatepickerI18n {
 	getMonthFullName(month: number): string {
 		return ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'][month - 1];
 	}
-
 	getDayAriaLabel(date: NgbDateStruct): string {
 		return `${date.day}-${date.month}-${date.year}`;
 	}
@@ -52,10 +50,7 @@ function toNgbDate(date: moment.Moment): NgbDateStruct {
 }
 
 enum EtatCalendrier { ChoixDebut, ChoixFin }
-class JourneeInfo {
-	couleur: string;
-	texte: string;
-}
+
 
 //--------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------

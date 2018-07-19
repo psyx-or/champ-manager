@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { RequeteService } from '../../services/requete.service';
+import { RequeteService } from 'projects/commun/src/app/services/requete.service';
 import { MatchService } from '../../services/match.service';
-import { Championnat } from '../../model/Championnat';
-import { Journee } from '../../model/Journee';
-import { sort } from '../../utils/utils';
+import { sort } from 'projects/commun/src/app/utils/utils';
+import { Journee } from 'projects/commun/src/app/model/Journee';
+import { Championnat } from 'projects/commun/src/app/model/Championnat';
 
 class JourneeExt {
 	public obj: Journee;

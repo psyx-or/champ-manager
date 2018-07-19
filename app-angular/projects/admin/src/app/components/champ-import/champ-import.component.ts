@@ -1,9 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Championnat } from '../../model/Championnat';
+import { Championnat } from 'projects/commun/src/app/model/Championnat';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { RequeteService } from '../../services/requete.service';
+import { RequeteService } from 'projects/commun/src/app/services/requete.service';
 import { ChampionnatService } from '../../services/championnat.service';
-import { sort } from '../../utils/utils';
+import { sort } from 'projects/commun/src/app/utils/utils';
 
 @Component({
   selector: 'app-champ-import',

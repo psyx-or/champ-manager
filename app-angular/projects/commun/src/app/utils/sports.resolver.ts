@@ -3,7 +3,7 @@ import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/r
 import { Observable } from 'rxjs';
 import { RequeteService } from '../services/requete.service';
 import { Sport } from '../model/Sport';
-import { SportService } from '../services/sport.service';
+import { SportService } from '../../../../commun/src/app/services/sport.service';
 
 @Injectable()
 export class SportResolver implements Resolve<Sport[]> {

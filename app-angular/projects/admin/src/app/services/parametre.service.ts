@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Parametre } from '../model/Parametre';
+import { Parametre } from 'projects/commun/src/app/model/Parametre';
 import { Observable } from 'rxjs';
 
 @Injectable({

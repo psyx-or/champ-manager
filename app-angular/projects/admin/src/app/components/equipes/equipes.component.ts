@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Sport } from '../../model/Sport';
+import { Sport } from 'projects/commun/src/app/model/Sport';
 import { ActivatedRoute } from '@angular/router';
-import { RequeteService } from '../../services/requete.service';
+import { RequeteService } from 'projects/commun/src/app/services/requete.service';
 import { EquipeService } from '../../services/equipe.service';
-import { Equipe } from '../../model/Equipe';
+import { Equipe } from 'projects/commun/src/app/model/Equipe';
 import { CanComponentDeactivate } from '../../utils/can-deactivate.guard';
 
 @Component({

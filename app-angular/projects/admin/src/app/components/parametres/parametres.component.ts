@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { RequeteService } from '../../services/requete.service';
+import { RequeteService } from 'projects/commun/src/app/services/requete.service';
 import { ParametreService } from '../../services/parametre.service';
-import { Parametre } from '../../model/Parametre';
-import { sort } from '../../utils/utils';
+import { sort } from 'projects/commun/src/app/utils/utils';
 import { CanComponentDeactivate } from '../../utils/can-deactivate.guard';
+import { Parametre } from 'projects/commun/src/app/model/Parametre';
 
 @Component({
   selector: 'app-parametres',

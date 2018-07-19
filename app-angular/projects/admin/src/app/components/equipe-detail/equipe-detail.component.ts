@@ -1,10 +1,10 @@
-import { Component, OnInit, Input, ViewChild, TemplateRef } from '@angular/core';
-import { Equipe } from '../../model/Equipe';
-import { Creneau } from '../../model/Creneau';
+import { Component, Input, ViewChild, TemplateRef } from '@angular/core';
+import { Equipe } from 'projects/commun/src/app/model/Equipe';
+import { Creneau } from 'projects/commun/src/app/model/Creneau';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CartePositionnementComponent } from '../carte-positionnement/carte-positionnement.component';
-import { RequeteService } from '../../services/requete.service';
-import { openModal } from '../../utils/utils';
+import { RequeteService } from 'projects/commun/src/app/services/requete.service';
+import { openModal } from 'projects/commun/src/app/utils/utils';
 import { EquipeService } from '../../services/equipe.service';
 
 @Component({
@@ -68,7 +68,7 @@ export class EquipeDetailComponent {
 	positionne(equipe: Equipe): void {
 		const modal = this.modalService.open(CartePositionnementComponent, { backdrop: 'static', windowClass: 'modal-xl' });
 		modal.componentInstance.equipe = equipe;
-		modal.result.then((res: string) => equipe.position = res, err => { });
+		modal.result.then((res: string) => equipe.position = res, () => { });
 	}
 
 	/**

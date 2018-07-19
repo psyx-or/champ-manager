@@ -1,9 +1,9 @@
 import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from "@angular/router";
-import { RequeteService } from "../../services/requete.service";
+import { RequeteService } from "projects/commun/src/app/services/requete.service";
 import { Observable } from "rxjs";
 import { Injectable } from "@angular/core";
-import { FPFeuille } from "../../model/FPFeuille";
 import { FairplayService } from "../../services/fairplay.service";
+import { FPFeuille } from "projects/commun/src/app/model/FPFeuille";
 
 @Injectable()
 export class FairplayEquipeResolver implements Resolve<FPFeuille[]> {

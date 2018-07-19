@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { Equipe } from '../../model/Equipe';
+import { Equipe } from 'projects/commun/src/app/model/Equipe';
 
 @Component({
   selector: 'app-carte-positionnement',

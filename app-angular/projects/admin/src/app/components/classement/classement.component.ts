@@ -1,11 +1,11 @@
 import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
-import { RequeteService } from '../../services/requete.service';
+import { RequeteService } from 'projects/commun/src/app/services/requete.service';
 import { ClassementService } from '../../services/classement.service';
 import { ActivatedRoute } from '@angular/router';
-import { Championnat } from '../../model/Championnat';
-import { Classement } from '../../model/Classement';
-import { sort, openModal } from '../../utils/utils';
-import { Equipe } from '../../model/Equipe';
+import { Championnat } from 'projects/commun/src/app/model/Championnat';
+import { Classement } from 'projects/commun/src/app/model/Classement';
+import { sort, openModal } from 'projects/commun/src/app/utils/utils';
+import { Equipe } from 'projects/commun/src/app/model/Equipe';
 import { EquipeService } from '../../services/equipe.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ChampionnatService } from '../../services/championnat.service';

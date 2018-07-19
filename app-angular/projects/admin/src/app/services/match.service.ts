@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Journee } from '../model/Journee';
 import { Observable } from 'rxjs';
-import { Championnat } from '../model/Championnat';
-import { Match } from '../model/Match';
-import { Sport } from '../model/Sport';
-import { getSaisonCourante } from '../utils/utils';
-import { DoublonDTO } from '../model/DoublonDTO';
+import { getSaisonCourante } from 'projects/commun/src/app/utils/utils';
+import { Championnat } from 'projects/commun/src/app/model/Championnat';
+import { Journee } from 'projects/commun/src/app/model/Journee';
+import { Match } from 'projects/commun/src/app/model/Match';
+import { Sport } from 'projects/commun/src/app/model/Sport';
+import { DoublonDTO } from 'projects/commun/src/app/model/DoublonDTO';
 
 @Injectable({
   providedIn: 'root'

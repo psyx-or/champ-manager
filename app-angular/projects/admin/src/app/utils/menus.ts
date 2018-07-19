@@ -1,5 +1,5 @@
-import { ChampType, Championnat } from "../model/Championnat";
-import { Equipe } from "../model/Equipe";
+import { ChampType, Championnat } from "projects/commun/src/app/model/Championnat";
+import { Equipe } from "projects/commun/src/app/model/Equipe";
 
 /**
  * Un élément de menu

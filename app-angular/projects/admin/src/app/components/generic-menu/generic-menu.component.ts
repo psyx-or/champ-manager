@@ -1,7 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { NgbTabChangeEvent } from '@ng-bootstrap/ng-bootstrap';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Championnat, ChampType } from '../../model/Championnat';
 import { Menu, menus } from '../../utils/menus';
 
 @Component({

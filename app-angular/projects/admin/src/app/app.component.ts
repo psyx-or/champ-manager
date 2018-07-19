@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { LoginComponent } from './components/login/login.component';
 import { AuthentService } from './services/authent.service';
-import { RequeteService } from './services/requete.service';
+import { RequeteService } from 'projects/commun/src/app/services/requete.service';
 
 @Component({
   selector: 'app-root',

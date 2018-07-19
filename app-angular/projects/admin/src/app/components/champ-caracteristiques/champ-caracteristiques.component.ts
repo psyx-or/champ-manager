@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Sport } from '../../model/Sport';
-import { FPForm } from '../../model/FPForm';
-import { Championnat, ChampType, ChampModele } from '../../model/Championnat';
+import { Sport } from 'projects/commun/src/app/model/Sport';
+import { FPForm } from 'projects/commun/src/app/model/FPForm';
+import { Championnat, ChampType, ChampModele } from 'projects/commun/src/app/model/Championnat';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({

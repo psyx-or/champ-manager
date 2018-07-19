@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { ChampionnatService } from '../../services/championnat.service';
-import { Championnat } from '../../model/Championnat';
-import { Sport } from '../../model/Sport';
-import { sort, openModal } from '../../utils/utils';
+import { Championnat } from 'projects/commun/src/app/model/Championnat';
+import { Sport } from 'projects/commun/src/app/model/Sport';
+import { sort, openModal } from 'projects/commun/src/app/utils/utils';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { RequeteService } from '../../services/requete.service';
+import { RequeteService } from 'projects/commun/src/app/services/requete.service';
 import { ChampImportComponent } from '../champ-import/champ-import.component';
 import { ActivatedRoute, Router } from '@angular/router';
 

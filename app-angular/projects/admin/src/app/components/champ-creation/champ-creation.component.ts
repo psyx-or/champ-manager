@@ -1,16 +1,14 @@
 import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
-import { Championnat, ChampType, ChampModele } from '../../model/Championnat';
-import { Sport } from '../../model/Sport';
+import { Championnat, ChampModele } from 'projects/commun/src/app/model/Championnat';
 import { ChampionnatService } from '../../services/championnat.service';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { EquipeService } from '../../services/equipe.service';
-import { Equipe } from '../../model/Equipe';
+import { Equipe } from 'projects/commun/src/app/model/Equipe';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Router, ActivatedRoute } from '@angular/router';
-import { openModal, getSaisonCourante } from '../../utils/utils';
-import { RequeteService } from '../../services/requete.service';
-import { FPForm } from '../../model/FPForm';
+import { openModal, getSaisonCourante } from 'projects/commun/src/app/utils/utils';
+import { RequeteService } from 'projects/commun/src/app/services/requete.service';
 import { ChampCaracteristiquesComponent } from '../champ-caracteristiques/champ-caracteristiques.component';
 
 @Component({

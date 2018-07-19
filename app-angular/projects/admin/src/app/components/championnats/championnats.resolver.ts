@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import { Championnat } from '../../model/Championnat';
+import { Championnat } from 'projects/commun/src/app/model/Championnat';
 import { ChampionnatService } from '../../services/championnat.service';
 import { Observable } from 'rxjs';
-import { RequeteService } from '../../services/requete.service';
+import { RequeteService } from 'projects/commun/src/app/services/requete.service';
 
 @Injectable()
 export class ChampionnatResolver implements Resolve<Championnat[]> {

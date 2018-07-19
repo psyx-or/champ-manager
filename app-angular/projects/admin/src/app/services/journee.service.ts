@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { sort } from '../utils/utils';
-import { Championnat } from '../model/Championnat';
-import { Journee } from '../model/Journee';
+import { Championnat } from 'projects/commun/src/app/model/Championnat';
+import { Journee } from 'projects/commun/src/app/model/Journee';
 
 @Injectable({
   providedIn: 'root'

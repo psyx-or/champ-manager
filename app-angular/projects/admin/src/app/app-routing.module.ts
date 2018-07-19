@@ -7,7 +7,7 @@ import { ClassementComponent } from './components/classement/classement.componen
 import { CoupeComponent } from './components/coupe/coupe.component';
 import { MatchesComponent } from './components/matches/matches.component';
 import { ChampionnatResolver } from './components/championnats/championnats.resolver';
-import { SportResolver } from './utils/sports.resolver';
+import { SportResolver } from 'projects/commun/src/app/utils/sports.resolver';
 import { JourneesChampResolver } from './components/journees-champ/journees-champ.resolver';
 import { ClassementResolver } from './components/classement/classement.resolver';
 import { MatchAvaliderComponent } from './components/match-avalider/match-avalider.component';

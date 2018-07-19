@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Sport } from '../../model/Sport';
+import { Sport } from 'projects/commun/src/app/model/Sport';
 import { ActivatedRoute } from '@angular/router';
-import { RequeteService } from '../../services/requete.service';
+import { RequeteService } from 'projects/commun/src/app/services/requete.service';
 import { ChampionnatService } from '../../services/championnat.service';
-import { CalendrierDTO } from '../../model/CalendrierDTO';
+import { CalendrierDTO } from 'projects/commun/src/app/model/CalendrierDTO';
 import * as moment from 'moment';
 
 class SelCalendrier extends CalendrierDTO {

@@ -1,11 +1,11 @@
 import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FPForm, FPQuestionType } from '../../model/FPForm';
-import { RequeteService } from '../../services/requete.service';
+import { RequeteService } from 'projects/commun/src/app/services/requete.service';
 import { FairplayService } from '../../services/fairplay.service';
-import { openModal } from '../../utils/utils';
+import { openModal } from 'projects/commun/src/app/utils/utils';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CanComponentDeactivate } from '../../utils/can-deactivate.guard';
+import { FPForm, FPQuestionType } from 'projects/commun/src/app/model/FPForm';
 
 @Component({
   selector: 'app-fairplay-editor',

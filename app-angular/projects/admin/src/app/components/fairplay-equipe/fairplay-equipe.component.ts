@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Equipe } from '../../model/Equipe';
+import { Equipe } from 'projects/commun/src/app/model/Equipe';
 import { ActivatedRoute } from '@angular/router';
-import { FPFeuille } from '../../model/FPFeuille';
+import { FPFeuille } from 'projects/commun/src/app/model/FPFeuille';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FairplayComponent } from '../fairplay/fairplay.component';
 

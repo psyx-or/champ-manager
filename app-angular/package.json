@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve admin --proxy-config proxy.conf.json",
+    "start-admin": "ng serve admin --proxy-config proxy.conf.json",
     "admin-local": "ng build admin --base-href /edsa-champ-manager/ --deploy-url /edsa-champ-manager/admin/",
     "admin-remote": "ng build admin --prod --base-href / --deploy-url /admin/",
     "build": "ng build",

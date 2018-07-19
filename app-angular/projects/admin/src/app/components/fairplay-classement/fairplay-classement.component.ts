@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { RequeteService } from '../../services/requete.service';
+import { RequeteService } from 'projects/commun/src/app/services/requete.service';
 import { FairplayService } from '../../services/fairplay.service';
-import { Sport } from '../../model/Sport';
-import { FPClassement } from '../../model/FPClassement';
+import { Sport } from 'projects/commun/src/app/model/Sport';
+import { FPClassement } from 'projects/commun/src/app/model/FPClassement';
 
 @Component({
   selector: 'app-fairplay-classement',

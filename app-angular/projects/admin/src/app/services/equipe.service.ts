@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { Equipe } from '../model/Equipe';
-import { getSaisonCourante } from '../utils/utils';
-import { Sport } from '../model/Sport';
+import { getSaisonCourante } from 'projects/commun/src/app/utils/utils';
 import { map, tap } from 'rxjs/operators';
-import { Creneau } from '../model/Creneau';
-import { Responsable } from '../model/Responsable';
 import * as moment from 'moment';
+import { Equipe } from 'projects/commun/src/app/model/Equipe';
+import { Sport } from 'projects/commun/src/app/model/Sport';
+import { Responsable } from 'projects/commun/src/app/model/Responsable';
+import { Creneau } from 'projects/commun/src/app/model/Creneau';
 
 @Injectable({
   providedIn: 'root'

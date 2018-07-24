@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
-import { ChampionnatService } from '../../services/championnat.service';
+import { ChampionnatService } from 'projects/commun/src/app/services/championnat.service';
 import { Championnat } from 'projects/commun/src/app/model/Championnat';
 import { Sport } from 'projects/commun/src/app/model/Sport';
 import { sort, openModal } from 'projects/commun/src/app/utils/utils';

@@ -1,0 +1,30 @@
+<h1><i class="icon ion-md-trophy"></i> Championnats</h1>
+
+<ngb-alert *ngIf="sports && sports.length == 0" [dismissible]="false" type="info">
+	Pas de championnat pour la saison en cours.
+</ngb-alert>
+
+<!-- Zone de recherche -->
+Rechercher une équipe :
+<app-recherche-equipe (select)="selectEquipe($event)"></app-recherche-equipe>
+
+<br>
+
+<!-- Choix de championnat -->
+... ou sélectionner un championnat :
+<div class="form-group form-row" *ngIf="sports && sports.length > 0">
+	<div class="col-md-3 col-xs-12">
+		<select class="form-control" id="sport" name="sport"
+				[(ngModel)]="selSport">
+			<option [ngValue]="null" hidden>-- Choisissez un sport --</option>
+			<option *ngFor="let s of sports" [ngValue]="s">{{s.nom}}</option>
+		</select>
+	</div>
+	<div class="col-md-3 col-xs-12">
+		<select class="form-control" *ngIf="selSport" id="championnat" name="championnat"
+				[(ngModel)]="selChampionnat" (ngModelChange)="selectChampionnat($event)">
+			<option [ngValue]="null" hidden>-- Choisissez un championnat --</option>
+			<option *ngFor="let c of championnats.get(selSport.nom)" [ngValue]="c">{{c.nom}}</option>
+		</select>
+	</div>
+</div>

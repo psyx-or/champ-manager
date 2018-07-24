@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { RequeteService } from 'projects/commun/src/app/services/requete.service';
-import { ClassementService } from '../../services/classement.service';
+import { ClassementService } from 'projects/commun/src/app/services/classement.service';
 import { ActivatedRoute } from '@angular/router';
 import { Championnat } from 'projects/commun/src/app/model/Championnat';
 import { Classement } from 'projects/commun/src/app/model/Classement';
@@ -8,7 +8,7 @@ import { sort, openModal } from 'projects/commun/src/app/utils/utils';
 import { Equipe } from 'projects/commun/src/app/model/Equipe';
 import { EquipeService } from 'projects/commun/src/app/services/equipe.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ChampionnatService } from '../../services/championnat.service';
+import { ChampionnatService } from 'projects/commun/src/app/services/championnat.service';
 
 @Component({
   selector: 'app-classement',

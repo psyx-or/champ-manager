@@ -3,13 +3,13 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 
 import { map, tap } from 'rxjs/operators';
-import { getSaisonCourante } from 'projects/commun/src/app/utils/utils';
-import { SportService } from 'projects/commun/src/app/services/sport.service';
-import { Championnat, ChampModele } from 'projects/commun/src/app/model/Championnat';
-import { Equipe } from 'projects/commun/src/app/model/Equipe';
-import { Classement } from 'projects/commun/src/app/model/Classement';
-import { CalendrierDTO } from 'projects/commun/src/app/model/CalendrierDTO';
-import { Sport } from 'projects/commun/src/app/model/Sport';
+import { getSaisonCourante } from '../utils/utils';
+import { SportService } from './sport.service';
+import { Championnat, ChampModele } from '../model/Championnat';
+import { Equipe } from '../model/Equipe';
+import { Classement } from '../model/Classement';
+import { CalendrierDTO } from '../model/CalendrierDTO';
+import { Sport } from '../model/Sport';
 
 @Injectable({
   providedIn: 'root'

@@ -14,11 +14,8 @@ import { ClassementComponent } from './components/classement/classement.componen
 import { CoupeComponent } from './components/coupe/coupe.component';
 import { MatchesComponent } from './components/matches/matches.component';
 import { GenericMenuComponent } from './components/generic-menu/generic-menu.component';
-import { SignePipe } from './utils/signe.pipe';
 import { ChampImportComponent } from './components/champ-import/champ-import.component';
-import { ChampionnatResolver } from './components/championnats/championnats.resolver';
 import { JourneesChampResolver } from './components/journees-champ/journees-champ.resolver';
-import { ClassementResolver } from './components/classement/classement.resolver';
 import { MatchAvaliderComponent } from './components/match-avalider/match-avalider.component';
 import { MatchJourneeComponent } from './components/match-journee/match-journee.component';
 import { EquipesComponent } from './components/equipes/equipes.component';
@@ -60,7 +57,6 @@ import { CommunModule } from '../../../commun/src/app/commun.module';
     CoupeComponent,
     MatchesComponent,
     GenericMenuComponent,
-    SignePipe,
     ChampImportComponent,
     MatchAvaliderComponent,
     MatchJourneeComponent,
@@ -89,9 +85,7 @@ import { CommunModule } from '../../../commun/src/app/commun.module';
 	CommunModule
   ],
   providers: [
-	  ChampionnatResolver, 
 	  JourneesChampResolver,
-	  ClassementResolver,
 	  FpformsResolver,
 	  FpformsResumeResolver,
 	  ChampModeleResolver,

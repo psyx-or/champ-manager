@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { ChampModele } from 'projects/commun/src/app/model/Championnat';
 import { openModal } from 'projects/commun/src/app/utils/utils';
-import { ChampionnatService } from '../../services/championnat.service';
+import { ChampionnatService } from 'projects/commun/src/app/services/championnat.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { RequeteService } from 'projects/commun/src/app/services/requete.service';

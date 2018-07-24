@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { Championnat, ChampModele } from 'projects/commun/src/app/model/Championnat';
-import { ChampionnatService } from '../../services/championnat.service';
+import { ChampionnatService } from 'projects/commun/src/app/services/championnat.service';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { EquipeService } from 'projects/commun/src/app/services/equipe.service';

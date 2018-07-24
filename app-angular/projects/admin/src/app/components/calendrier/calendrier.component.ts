@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Sport } from 'projects/commun/src/app/model/Sport';
 import { ActivatedRoute } from '@angular/router';
 import { RequeteService } from 'projects/commun/src/app/services/requete.service';
-import { ChampionnatService } from '../../services/championnat.service';
+import { ChampionnatService } from 'projects/commun/src/app/services/championnat.service';
 import { CalendrierDTO } from 'projects/commun/src/app/model/CalendrierDTO';
 import * as moment from 'moment';
 

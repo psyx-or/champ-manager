@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Championnat } from 'projects/commun/src/app/model/Championnat';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { RequeteService } from 'projects/commun/src/app/services/requete.service';
-import { ChampionnatService } from '../../services/championnat.service';
+import { ChampionnatService } from 'projects/commun/src/app/services/championnat.service';
 import { sort } from 'projects/commun/src/app/utils/utils';
 
 @Component({

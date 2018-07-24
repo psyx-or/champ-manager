@@ -6,10 +6,10 @@ import { JourneesChampComponent } from './components/journees-champ/journees-cha
 import { ClassementComponent } from './components/classement/classement.component';
 import { CoupeComponent } from './components/coupe/coupe.component';
 import { MatchesComponent } from './components/matches/matches.component';
-import { ChampionnatResolver } from './components/championnats/championnats.resolver';
+import { ChampionnatResolver } from 'projects/commun/src/app/utils/championnats.resolver';
 import { SportResolver } from 'projects/commun/src/app/utils/sports.resolver';
 import { JourneesChampResolver } from './components/journees-champ/journees-champ.resolver';
-import { ClassementResolver } from './components/classement/classement.resolver';
+import { ClassementResolver } from 'projects/commun/src/app/utils/classement.resolver';
 import { MatchAvaliderComponent } from './components/match-avalider/match-avalider.component';
 import { EquipesComponent } from './components/equipes/equipes.component';
 import { CalendrierComponent } from './components/calendrier/calendrier.component';

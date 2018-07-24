@@ -1,0 +1,14 @@
+<!-- Menu-->
+<app-main-menu></app-main-menu>
+
+<!-- Barre de chargement -->
+<div *ngIf="requeteService.chargement" class="fixed-top">
+	<ngb-progressbar type="info" [value]="100" [striped]="true" [animated]="true"></ngb-progressbar>
+</div>
+
+<!-- Contenu -->
+<br>
+<div class="container">
+	<router-outlet></router-outlet>
+</div>
+<br>

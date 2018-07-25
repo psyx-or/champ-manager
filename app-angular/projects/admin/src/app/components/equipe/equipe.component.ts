@@ -4,6 +4,7 @@ import { RequeteService } from 'projects/commun/src/app/services/requete.service
 import { EquipeService } from 'projects/commun/src/app/services/equipe.service';
 import { Equipe } from 'projects/commun/src/app/model/Equipe';
 import { CanComponentDeactivate } from '../../utils/can-deactivate.guard';
+import { menus } from '../../utils/menus';
 
 @Component({
   selector: 'app-equipe',
@@ -12,6 +13,7 @@ import { CanComponentDeactivate } from '../../utils/can-deactivate.guard';
 })
 export class EquipeComponent implements OnInit, CanComponentDeactivate {
 
+	menu = menus.equipe;
 	equipe: Equipe;
 	initial: string;
 

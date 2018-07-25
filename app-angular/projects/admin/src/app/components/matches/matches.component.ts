@@ -5,6 +5,7 @@ import { MatchService } from '../../services/match.service';
 import { sort } from 'projects/commun/src/app/utils/utils';
 import { Journee } from 'projects/commun/src/app/model/Journee';
 import { Championnat } from 'projects/commun/src/app/model/Championnat';
+import { menus } from '../../utils/menus';
 
 class JourneeExt {
 	public obj: Journee;
@@ -19,6 +20,7 @@ class JourneeExt {
 })
 export class MatchesComponent implements OnInit {
 
+	menu = menus.championnat;
 	champ: Championnat = null;
 	journees: JourneeExt[];
 

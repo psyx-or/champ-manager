@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { NgbTabChangeEvent } from '@ng-bootstrap/ng-bootstrap';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Menu, menus } from '../../utils/menus';
+import { Menu } from './generic-menu.model';
 
 @Component({
   selector: 'app-generic-menu',
@@ -11,9 +11,8 @@ import { Menu, menus } from '../../utils/menus';
 export class GenericMenuComponent implements OnInit {
 
 	@Input() obj?: any;
-	@Input() nomMenu: string;
+	@Input() menu: Menu;
 	
-	menu: Menu;
 	active: number;
 
 	constructor(
@@ -22,7 +21,6 @@ export class GenericMenuComponent implements OnInit {
 	) { }
 
 	ngOnInit() {
-		this.menu = menus[this.nomMenu];
 		this.route.url.subscribe(segments => {
 			const route = segments.slice(0, Math.max(segments.length - 1, 1)).map(s => s.path).join("/");
 			this.active = this.menu.items.findIndex(t => t.route == route);

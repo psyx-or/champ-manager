@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { RequeteService } from 'projects/commun/src/app/services/requete.service';
 import { CanComponentDeactivate } from '../../utils/can-deactivate.guard';
+import { menus } from '../../utils/menus';
 
 @Component({
   selector: 'app-champ-modele',
@@ -16,6 +17,7 @@ export class ChampModeleComponent implements OnInit, CanComponentDeactivate {
 
 	@ViewChild('supprModele') supprModeleTpl: TemplateRef<any>;
 
+	menu = menus.parametres;
 	selModele: ChampModele;
 	modeles: ChampModele[];
 	newModele: ChampModele = new ChampModele();

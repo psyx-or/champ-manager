@@ -9,6 +9,7 @@ import { Equipe } from 'projects/commun/src/app/model/Equipe';
 import { EquipeService } from 'projects/commun/src/app/services/equipe.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ChampionnatService } from 'projects/commun/src/app/services/championnat.service';
+import { menus } from '../../utils/menus';
 
 @Component({
   selector: 'app-classement',
@@ -19,6 +20,7 @@ export class ClassementComponent implements OnInit {
 
 	@ViewChild('changeEquipe') changeEquipeTpl: TemplateRef<any>;
 	
+	menu = menus.championnat;
 	champ: Championnat = null;
 	classements: Classement[];
 	remplacement: {

@@ -13,14 +13,12 @@ import { JourneesChampComponent } from './components/journees-champ/journees-cha
 import { ClassementComponent } from './components/classement/classement.component';
 import { CoupeComponent } from './components/coupe/coupe.component';
 import { MatchesComponent } from './components/matches/matches.component';
-import { GenericMenuComponent } from './components/generic-menu/generic-menu.component';
 import { ChampImportComponent } from './components/champ-import/champ-import.component';
 import { JourneesChampResolver } from './components/journees-champ/journees-champ.resolver';
 import { MatchAvaliderComponent } from './components/match-avalider/match-avalider.component';
 import { MatchJourneeComponent } from './components/match-journee/match-journee.component';
 import { EquipesComponent } from './components/equipes/equipes.component';
 import { CalendrierComponent } from './components/calendrier/calendrier.component';
-import { IsTypePipe } from './utils/is-type.pipe';
 import { FairplayEditorComponent } from './components/fairplay-editor/fairplay-editor.component';
 import { FpformsResolver } from './components/fairplay-editor/fairplay-forms.resolver';
 import { FpformsResumeResolver } from './components/champ-creation/fairplay-forms-resume.resolver';
@@ -42,7 +40,7 @@ import { MatchesResolver } from './components/matches/matches.resolver';
 import { CalendrierDoublonsComponent } from './components/calendrier-doublons/calendrier-doublons.component';
 import { FairplayEquipeComponent } from './components/fairplay-equipe/fairplay-equipe.component';
 import { FairplayEquipeResolver } from './components/fairplay-equipe/fairplay-equipe.resolver';
-import { CommunModule } from '../../../commun/src/app/commun.module';
+import { CommunModule } from 'projects/commun/src/app/commun.module';
 
 
 @NgModule({
@@ -56,13 +54,11 @@ import { CommunModule } from '../../../commun/src/app/commun.module';
     ClassementComponent,
     CoupeComponent,
     MatchesComponent,
-    GenericMenuComponent,
     ChampImportComponent,
     MatchAvaliderComponent,
     MatchJourneeComponent,
     EquipesComponent,
     CalendrierComponent,
-    IsTypePipe,
     FairplayEditorComponent,
     FairplayComponent,
     ChampCaracteristiquesComponent,

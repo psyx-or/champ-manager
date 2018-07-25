@@ -5,6 +5,7 @@ import { RequeteService } from 'projects/commun/src/app/services/requete.service
 import { ChampionnatService } from 'projects/commun/src/app/services/championnat.service';
 import { CalendrierDTO } from 'projects/commun/src/app/model/CalendrierDTO';
 import * as moment from 'moment';
+import { menus } from '../../utils/menus';
 
 class SelCalendrier extends CalendrierDTO {
 	selectionne?: boolean;
@@ -16,6 +17,8 @@ class SelCalendrier extends CalendrierDTO {
   styleUrls: ['./calendrier.component.css']
 })
 export class CalendrierComponent implements OnInit {
+	
+	menu = menus.calendrier;
 	sports: Sport[];
 	selSport: Sport;
 	calendriers: SelCalendrier[];

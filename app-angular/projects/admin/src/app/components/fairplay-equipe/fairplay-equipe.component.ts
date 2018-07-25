@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { FPFeuille } from 'projects/commun/src/app/model/FPFeuille';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FairplayComponent } from '../fairplay/fairplay.component';
+import { menus } from '../../utils/menus';
 
 @Component({
   selector: 'app-fairplay-equipe',
@@ -12,6 +13,7 @@ import { FairplayComponent } from '../fairplay/fairplay.component';
 })
 export class FairplayEquipeComponent implements OnInit {
 
+	menu = menus.equipe;
 	equipe: Equipe;
 	feuilles: FPFeuille[];
 	attrAffiche: string;

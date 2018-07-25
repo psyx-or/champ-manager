@@ -8,11 +8,15 @@ import { RechercheEquipeComponent } from "./components/recherche-equipe/recherch
 import { ChampionnatResolver } from "./utils/championnats.resolver";
 import { ClassementResolver } from "./utils/classement.resolver";
 import { SignePipe } from "./utils/signe.pipe";
+import { GenericMenuComponent } from "./components/generic-menu/generic-menu.component";
+import { IsTypePipe } from "./utils/is-type.pipe";
 
 @NgModule({
 	declarations: [
 		ModalComponent,
 		RechercheEquipeComponent,
+		GenericMenuComponent,
+		IsTypePipe,
 		SignePipe
 	],
 	imports: [
@@ -31,6 +35,8 @@ import { SignePipe } from "./utils/signe.pipe";
 	exports: [
 		ModalComponent,
 		RechercheEquipeComponent,
+		GenericMenuComponent,
+		IsTypePipe,
 		SignePipe,
 	]
 })

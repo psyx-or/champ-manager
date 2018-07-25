@@ -1,4 +1,4 @@
-<app-generic-menu [obj]="champ" nomMenu="championnat"></app-generic-menu>
+<app-generic-menu [menu]="menu" [obj]="champ"></app-generic-menu>
 
 <ngb-alert *ngIf="defautJournees.debut && defautJournees.fin" [dismissible]="false" type="info">
 	Les dates de {{defautJournees.debut}} à {{defautJournees.fin}} ont été préremplies avec les dates

@@ -7,6 +7,7 @@ import { Match } from 'projects/commun/src/app/model/Match';
 import { Equipe } from 'projects/commun/src/app/model/Equipe';
 import { getVainqueur } from 'projects/commun/src/app/utils/utils';
 import { Journee } from 'projects/commun/src/app/model/Journee';
+import { menus } from '../../utils/menus';
 
 
 /**
@@ -64,6 +65,7 @@ class Cellule {
 })
 export class CoupeComponent implements OnInit {
 
+	menu = menus.championnat;
 	champ: Championnat;
 	plateau: Cellule[][];
 	maxCol: number = 0;

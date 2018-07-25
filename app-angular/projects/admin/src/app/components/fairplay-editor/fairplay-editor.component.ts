@@ -6,6 +6,7 @@ import { openModal } from 'projects/commun/src/app/utils/utils';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CanComponentDeactivate } from '../../utils/can-deactivate.guard';
 import { FPForm, FPQuestionType } from 'projects/commun/src/app/model/FPForm';
+import { menus } from '../../utils/menus';
 
 @Component({
   selector: 'app-fairplay-editor',
@@ -17,6 +18,7 @@ export class FairplayEditorComponent implements OnInit, CanComponentDeactivate {
 	@ViewChild('supprFeuille') supprFeuilleTpl: TemplateRef<any>;
 	@ViewChild('supprFeuilleUtilisee') supprFeuilleUtiliseeTpl: TemplateRef<any>;
 
+	menu = menus.parametres;
 	fpforms: FPForm[];
 	types: [string, string][];
 	selfpform: FPForm;

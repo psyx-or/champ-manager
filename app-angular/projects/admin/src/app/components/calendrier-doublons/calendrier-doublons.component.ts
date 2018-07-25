@@ -5,6 +5,7 @@ import { RequeteService } from 'projects/commun/src/app/services/requete.service
 import { MatchService } from '../../services/match.service';
 import { DoublonDTO } from 'projects/commun/src/app/model/DoublonDTO';
 import { Match } from 'projects/commun/src/app/model/Match';
+import { menus } from '../../utils/menus';
 
 @Component({
   selector: 'app-calendrier-doublons',
@@ -13,6 +14,7 @@ import { Match } from 'projects/commun/src/app/model/Match';
 })
 export class CalendrierDoublonsComponent implements OnInit {
 
+	menu = menus.calendrier;
 	sports: Sport[];
 	selSport: Sport;
 	doublons: DoublonDTO[];

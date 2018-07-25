@@ -7,6 +7,7 @@ import { RequeteService } from 'projects/commun/src/app/services/requete.service
 import { CanComponentDeactivate } from '../../utils/can-deactivate.guard';
 import { Championnat } from 'projects/commun/src/app/model/Championnat';
 import { Journee } from 'projects/commun/src/app/model/Journee';
+import { menus } from '../../utils/menus';
 
 
 const nbMois = 4;
@@ -68,6 +69,7 @@ export class JourneesChampComponent implements OnInit, AfterViewInit, CanCompone
 		["warning", "dark"], ["info", "white"], ["dark", "white"]
 	);
 
+	menu = menus.championnat;
 	champ: Championnat = null;
 	journees: Journee[];
 	iJournee: number = null;

@@ -5,6 +5,7 @@ import { ParametreService } from '../../services/parametre.service';
 import { sort } from 'projects/commun/src/app/utils/utils';
 import { CanComponentDeactivate } from '../../utils/can-deactivate.guard';
 import { Parametre } from 'projects/commun/src/app/model/Parametre';
+import { menus } from '../../utils/menus';
 
 @Component({
   selector: 'app-parametres',
@@ -13,6 +14,7 @@ import { Parametre } from 'projects/commun/src/app/model/Parametre';
 })
 export class ParametresComponent implements OnInit, CanComponentDeactivate {
 
+	menu = menus.parametres;
 	parametres: Parametre[];
 	initial: string;
 

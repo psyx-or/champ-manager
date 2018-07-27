@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { RequeteService } from 'projects/commun/src/app/services/requete.service';
-import { MatchService } from '../../services/match.service';
 import { sort } from 'projects/commun/src/app/utils/utils';
 import { Journee } from 'projects/commun/src/app/model/Journee';
 import { Championnat } from 'projects/commun/src/app/model/Championnat';
@@ -27,8 +25,6 @@ export class MatchesComponent implements OnInit {
 
 	constructor(
 		private route: ActivatedRoute,
-		private requeteService: RequeteService,
-		private matchService: MatchService
 	) { }
 
 	ngOnInit() {

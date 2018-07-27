@@ -36,7 +36,6 @@ import { CanDeactivateGuard } from './utils/can-deactivate.guard';
 import { ModalConfirmComponent } from './components/modal-confirm/modal-confirm.component';
 import { FairplayClassementComponent } from './components/fairplay-classement/fairplay-classement.component';
 import { HierarchieResolver } from './components/coupe/hierarchie.resolver';
-import { MatchesResolver } from './components/matches/matches.resolver';
 import { CalendrierDoublonsComponent } from './components/calendrier-doublons/calendrier-doublons.component';
 import { FairplayEquipeComponent } from './components/fairplay-equipe/fairplay-equipe.component';
 import { FairplayEquipeResolver } from './components/fairplay-equipe/fairplay-equipe.resolver';
@@ -89,7 +88,6 @@ import { CommunModule } from 'projects/commun/src/app/commun.module';
 	  EquipeResolver,
 	  CanDeactivateGuard,
 	  HierarchieResolver,
-	  MatchesResolver,
 	  FairplayEquipeResolver
   ],
   bootstrap: [AppComponent],

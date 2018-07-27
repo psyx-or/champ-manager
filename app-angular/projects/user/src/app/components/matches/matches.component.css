@@ -1,0 +1,16 @@
+table {
+	table-layout: fixed;
+}
+
+.separateur {
+	width: 2em;
+}
+
+.score {
+	width: 3em;
+	font-weight: bold;
+}
+
+.forfait {
+	text-decoration: line-through;
+}

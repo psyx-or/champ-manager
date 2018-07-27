@@ -340,7 +340,7 @@ class Match
 	}
 
 	/**
-	 * @Groups({"simple"})
+	 * @Groups({"fp"})
 	 */
 	public function getFpFeuille1(): ?FPFeuille
 	{
@@ -355,7 +355,7 @@ class Match
 	}
 
 	/**
-	 * @Groups({"simple"})
+	 * @Groups({"fp"})
 	 */
 	public function getFpFeuille2(): ?FPFeuille
 	{

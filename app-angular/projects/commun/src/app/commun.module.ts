@@ -10,6 +10,7 @@ import { ClassementResolver } from "./utils/classement.resolver";
 import { SignePipe } from "./utils/signe.pipe";
 import { GenericMenuComponent } from "./components/generic-menu/generic-menu.component";
 import { IsTypePipe } from "./utils/is-type.pipe";
+import { MatchesResolver } from "./utils/matches.resolver";
 
 @NgModule({
 	declarations: [
@@ -27,7 +28,8 @@ import { IsTypePipe } from "./utils/is-type.pipe";
 	providers: [
 		SportResolver,
 		ChampionnatResolver,
-		ClassementResolver
+		ClassementResolver,
+		MatchesResolver
 	],
 	entryComponents: [
 		ModalComponent,

@@ -1,0 +1,26 @@
+<table class="table table-striped table-score mb-0">
+	<tbody>
+
+		<!-- Si vrai match-->
+		<tr *ngFor="let match of matchesStyles">
+			<ng-container *ngIf="!match.match.exempt">
+				<!-- Equipe 1 + score 1 -->
+				<td class="text-right equipe" [ngClass]="match.style1">{{match.match.dispEquipe1}}</td>
+				<td class="text-right score">{{match.match.dispScore1}}</td>
+				<!-- Séparateur-->
+				<td class="separateur text-center">-</td>
+				<!-- Score 2 + équipe 2 -->
+				<td class="text-left score">{{match.match.dispScore2}}</td>
+				<td class="text-left equipe" [ngClass]="match.style2">{{match.match.dispEquipe2}}</td>
+			</ng-container>
+
+			<!-- Si exempt -->
+			<ng-container *ngIf="match.match.exempt">
+				<td colspan="5" class="text-center">
+					Exempt: {{ match.match.exempt.nom }}
+				</td>
+			</ng-container>
+		</tr>
+
+	</tbody>
+</table>

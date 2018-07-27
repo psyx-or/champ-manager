@@ -15,6 +15,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use App\Outils\MatchFunctions;
 use App\Entity\ChampionnatType;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 
 /**
@@ -58,9 +59,14 @@ class MatchController extends CMController
      * @Route("/match/{id}")
      * @Method("GET")
      */
-    public function liste(Championnat $championnat)
+    public function liste(Championnat $championnat, AuthorizationCheckerInterface $authChecker)
     {
-        return $this->groupJson($championnat, 'simple', 'matches', 'fp');
+		$groupes = array('simple', 'matches');
+		if (true === $authChecker->isGranted('ROLE_ADMIN')) {
+			array_push($groupes, 'fp');
+		}
+
+        return $this->groupJson($championnat, ...$groupes);
 	}
 
 	/**

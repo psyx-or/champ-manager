@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Sport } from 'projects/commun/src/app/model/Sport';
 import { ActivatedRoute } from '@angular/router';
 import { RequeteService } from 'projects/commun/src/app/services/requete.service';
-import { MatchService } from '../../services/match.service';
+import { MatchService } from 'projects/commun/src/app/services/match.service';
 import { DoublonDTO } from 'projects/commun/src/app/model/DoublonDTO';
 import { Match } from 'projects/commun/src/app/model/Match';
 import { menus } from '../../utils/menus';

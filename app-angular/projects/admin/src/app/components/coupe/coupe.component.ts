@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { RequeteService } from 'projects/commun/src/app/services/requete.service';
-import { MatchService } from '../../services/match.service';
+import { MatchService } from 'projects/commun/src/app/services/match.service';
 import { Championnat } from 'projects/commun/src/app/model/Championnat';
 import { Match } from 'projects/commun/src/app/model/Match';
 import { Equipe } from 'projects/commun/src/app/model/Equipe';

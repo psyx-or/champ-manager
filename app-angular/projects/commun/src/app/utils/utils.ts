@@ -55,11 +55,12 @@ export function openModal(composant: { modalService: NgbModal }, titre: string, 
  * Calcule les propriétés d'un objet Match liées à l'affichage
  * @param m 
  */
-export function toDisp(m: Match) {
+export function toDisp(m: Match): Match {
 	m.dispEquipe1 = m.equipe1 == null ? "A décider" : m.equipe1.nom;
 	m.dispEquipe2 = m.equipe2 == null ? "A décider" : m.equipe2.nom;
 	m.dispScore1 = m.forfait1 ? "FO" : m.score1;
 	m.dispScore2 = m.forfait2 ? "FO" : m.score2;
+	return m;
 }
 
 /**

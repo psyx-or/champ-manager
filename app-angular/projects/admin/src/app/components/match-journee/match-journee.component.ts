@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { RequeteService } from 'projects/commun/src/app/services/requete.service';
-import { MatchService } from '../../services/match.service';
+import { MatchService } from 'projects/commun/src/app/services/match.service';
 import { fromDisp, toDisp } from 'projects/commun/src/app/utils/utils';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FairplayComponent } from '../fairplay/fairplay.component';

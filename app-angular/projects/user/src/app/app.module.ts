@@ -10,13 +10,17 @@ import { AppRoutingModule } from './app-routing.module';
 import { MainMenuComponent } from './components/main-menu/main-menu.component';
 import { ChampionnatsComponent } from './components/championnats/championnats.component';
 import { ClassementComponent } from './components/classement/classement.component';
+import { MatchesComponent } from './components/matches/matches.component';
+import { MatchesChampionnatComponent } from './components/matches-championnat/matches-championnat.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MainMenuComponent,
     ChampionnatsComponent,
-    ClassementComponent
+    ClassementComponent,
+    MatchesComponent,
+    MatchesChampionnatComponent
   ],
   imports: [
     BrowserModule,

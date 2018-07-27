@@ -1,0 +1,14 @@
+<app-generic-menu [menu]="menu" [obj]="champ"></app-generic-menu>
+
+<!-- Liste des journées-->
+<div *ngFor="let journee of journees">
+
+	<!-- Description de la journée -->
+	<h2>
+		{{ journee.libelle }}
+	</h2>
+
+	<!-- Liste des matches-->
+	<app-matches [matches]="journee.matches"></app-matches>
+
+</div>

@@ -1,33 +1,30 @@
 import { Component, OnInit } from '@angular/core';
-import { Championnat } from '@commun/src/app/model/Championnat';
-import { Classement } from '@commun/src/app/model/Classement';
 import { ActivatedRoute } from '@angular/router';
+import { Championnat } from '@commun/src/app/model/Championnat';
+import { Journee } from '@commun/src/app/model/Journee';
 import { sort } from '@commun/src/app/utils/utils';
 import { menus } from '../../utils/menus';
 
 @Component({
-  selector: 'app-classement',
-  templateUrl: './classement.component.html',
-  styleUrls: ['./classement.component.css']
+  selector: 'app-matches-championnat',
+  templateUrl: './matches-championnat.component.html',
+  styleUrls: ['./matches-championnat.component.css']
 })
-export class ClassementComponent implements OnInit {
+export class MatchesChampionnatComponent implements OnInit {
 
 	menu = menus.championnat;
 	champ: Championnat = null;
-	classements: Classement[];
+	journees: Journee[];
 
 	constructor(
 		private route: ActivatedRoute,
 	) { }
 
-	/**
-	 * Initialisation
-	 */
 	ngOnInit() {
 		this.route.data
 			.subscribe((data: { champ: Championnat }) => {
 				this.champ = data.champ;
-				this.classements = sort(data.champ.classements, 'position');
+				this.journees = sort(data.champ.journees, 'numero');
 			}
 		);
 	}

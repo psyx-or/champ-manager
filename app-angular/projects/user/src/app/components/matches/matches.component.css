@@ -14,3 +14,7 @@ table {
 .forfait {
 	text-decoration: line-through;
 }
+
+.ajouer {
+	width: calc(5em + 4 * 0.75rem)
+}

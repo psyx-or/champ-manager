@@ -11,7 +11,6 @@ import { FormsModule } from '@angular/forms';
 import { LoginComponent } from './components/login/login.component';
 import { JourneesChampComponent } from './components/journees-champ/journees-champ.component';
 import { ClassementComponent } from './components/classement/classement.component';
-import { CoupeComponent } from './components/coupe/coupe.component';
 import { MatchesComponent } from './components/matches/matches.component';
 import { ChampImportComponent } from './components/champ-import/champ-import.component';
 import { JourneesChampResolver } from './components/journees-champ/journees-champ.resolver';
@@ -35,7 +34,6 @@ import { EquipeResolver } from './components/equipe/equipe.resolver';
 import { CanDeactivateGuard } from './utils/can-deactivate.guard';
 import { ModalConfirmComponent } from './components/modal-confirm/modal-confirm.component';
 import { FairplayClassementComponent } from './components/fairplay-classement/fairplay-classement.component';
-import { HierarchieResolver } from './components/coupe/hierarchie.resolver';
 import { CalendrierDoublonsComponent } from './components/calendrier-doublons/calendrier-doublons.component';
 import { FairplayEquipeComponent } from './components/fairplay-equipe/fairplay-equipe.component';
 import { FairplayEquipeResolver } from './components/fairplay-equipe/fairplay-equipe.resolver';
@@ -51,7 +49,6 @@ import { CommunModule } from 'projects/commun/src/app/commun.module';
     LoginComponent,
     JourneesChampComponent,
     ClassementComponent,
-    CoupeComponent,
     MatchesComponent,
     ChampImportComponent,
     MatchAvaliderComponent,
@@ -87,7 +84,6 @@ import { CommunModule } from 'projects/commun/src/app/commun.module';
 	  ParametresResolver,
 	  EquipeResolver,
 	  CanDeactivateGuard,
-	  HierarchieResolver,
 	  FairplayEquipeResolver
   ],
   bootstrap: [AppComponent],

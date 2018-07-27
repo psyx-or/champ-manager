@@ -11,12 +11,15 @@ import { SignePipe } from "./utils/signe.pipe";
 import { GenericMenuComponent } from "./components/generic-menu/generic-menu.component";
 import { IsTypePipe } from "./utils/is-type.pipe";
 import { MatchesResolver } from "./utils/matches.resolver";
+import { HierarchieResolver } from "./components/coupe/hierarchie.resolver";
+import { CoupeComponent } from "./components/coupe/coupe.component";
 
 @NgModule({
 	declarations: [
 		ModalComponent,
 		RechercheEquipeComponent,
 		GenericMenuComponent,
+		CoupeComponent,
 		IsTypePipe,
 		SignePipe
 	],
@@ -29,6 +32,7 @@ import { MatchesResolver } from "./utils/matches.resolver";
 		SportResolver,
 		ChampionnatResolver,
 		ClassementResolver,
+		HierarchieResolver,
 		MatchesResolver
 	],
 	entryComponents: [
@@ -38,6 +42,7 @@ import { MatchesResolver } from "./utils/matches.resolver";
 		ModalComponent,
 		RechercheEquipeComponent,
 		GenericMenuComponent,
+		CoupeComponent,
 		IsTypePipe,
 		SignePipe,
 	]

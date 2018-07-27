@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { RequeteService } from 'projects/commun/src/app/services/requete.service';
-import { MatchService } from 'projects/commun/src/app/services/match.service';
-import { Championnat } from 'projects/commun/src/app/model/Championnat';
-import { Match } from 'projects/commun/src/app/model/Match';
-import { Equipe } from 'projects/commun/src/app/model/Equipe';
-import { getVainqueur } from 'projects/commun/src/app/utils/utils';
-import { Journee } from 'projects/commun/src/app/model/Journee';
-import { menus } from '../../utils/menus';
+import { RequeteService } from '../../services/requete.service';
+import { MatchService } from '../../services/match.service';
+import { Championnat } from '../../model/Championnat';
+import { Match } from '../../model/Match';
+import { Equipe } from '../../model/Equipe';
+import { getVainqueur } from '../../utils/utils';
+import { Journee } from '../../model/Journee';
+import { Menu } from '../generic-menu/generic-menu.model';
 
 
 /**
@@ -65,7 +65,7 @@ class Cellule {
 })
 export class CoupeComponent implements OnInit {
 
-	menu = menus.championnat;
+	menu: Menu;
 	champ: Championnat;
 	plateau: Cellule[][];
 	maxCol: number = 0;
@@ -88,7 +88,8 @@ export class CoupeComponent implements OnInit {
 	 */
 	ngOnInit() {
 		this.route.data
-			.subscribe((data: { journee: Journee }) => {
+			.subscribe((data: { journee: Journee, menu: Menu }) => {
+				this.menu = data.menu;
 				this.champ = data.journee.championnat;
 				this.plateau = new Array<Cellule[]>();
 				this.buildPlateau(data.journee.matches[0], 0, 0);

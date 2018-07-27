@@ -1,9 +1,9 @@
 import { Injectable } from "@angular/core";
 import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from "@angular/router";
-import { RequeteService } from "projects/commun/src/app/services/requete.service";
+import { RequeteService } from "../../services/requete.service";
 import { Observable } from "rxjs";
-import { Journee } from "projects/commun/src/app/model/Journee";
-import { MatchService } from "projects/commun/src/app/services/match.service";
+import { Journee } from "../../model/Journee";
+import { MatchService } from "../../services/match.service";
 
 @Injectable()
 export class HierarchieResolver implements Resolve<Journee> {

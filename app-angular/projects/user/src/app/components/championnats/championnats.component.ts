@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Sport } from 'projects/commun/src/app/model/Sport';
-import { Championnat } from 'projects/commun/src/app/model/Championnat';
+import { Championnat, ChampType } from 'projects/commun/src/app/model/Championnat';
 import { ActivatedRoute, Router } from '@angular/router';
 import { sort } from 'projects/commun/src/app/utils/utils';
 import { Equipe } from '@commun/src/app/model/Equipe';
@@ -59,6 +59,6 @@ export class ChampionnatsComponent implements OnInit {
 	 * @param champ 
 	 */
 	selectChampionnat(champ: Championnat): void {
-		this.router.navigate(['classement', champ.id])
+		this.router.navigate([champ.type == ChampType.Coupe ? 'coupe' : 'classement', champ.id])
 	}
 }

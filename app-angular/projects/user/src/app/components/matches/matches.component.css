@@ -16,5 +16,6 @@ table {
 }
 
 .ajouer {
-	width: calc(5em + 4 * 0.75rem)
+	width: calc(5em + 4 * 0.75rem);
+	font-style: italic;
 }

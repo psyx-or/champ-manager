@@ -6,13 +6,15 @@ import { ClassementComponent } from './components/classement/classement.componen
 import { ClassementResolver } from '@commun/src/app/utils/classement.resolver';
 import { MatchesChampionnatComponent } from './components/matches-championnat/matches-championnat.component';
 import { MatchesResolver } from '@commun/src/app/utils/matches.resolver';
+import { CoupeComponent } from '@commun/src/app/components/coupe/coupe.component';
+import { menus } from './utils/menus';
+import { HierarchieResolver } from '@commun/src/app/components/coupe/hierarchie.resolver';
 
 const routes: Routes = [
 	{ path: '', pathMatch: 'full', redirectTo: 'championnats' },
 	{ path: 'championnats', component: ChampionnatsComponent, resolve: { championnats: ChampionnatResolver }, runGuardsAndResolvers: "always" },
-	// { path: 'journees/:champId', component: JourneesChampComponent, resolve: { champ: JourneesChampResolver }, canDeactivate: [CanDeactivateGuard] },
 	{ path: 'classement/:champId', component: ClassementComponent, resolve: { champ: ClassementResolver } },
-	// { path: 'coupe/:champId', component: CoupeComponent, resolve: { journee: HierarchieResolver } },
+	{ path: 'coupe/:champId', component: CoupeComponent, data: { menu: menus.championnat }, resolve: { journee: HierarchieResolver } },
 	{ path: 'matches/:champId', component: MatchesChampionnatComponent, resolve: { champ: MatchesResolver } },
 	// { path: 'calendrier', component: CalendrierComponent, resolve: { sports: SportResolver } },
 	// { path: 'equipe/:equipeId', component: EquipeComponent, resolve: { equipe: EquipeResolver }, runGuardsAndResolvers: "always", canDeactivate: [CanDeactivateGuard] },

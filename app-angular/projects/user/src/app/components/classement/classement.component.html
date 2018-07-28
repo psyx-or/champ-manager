@@ -1,4 +1,3 @@
-<app-generic-menu [menu]="menu" [obj]="champ"></app-generic-menu>
 
 <table class="table table-striped text-center table-bordered">
 	<thead>
@@ -18,7 +17,7 @@
 		</tr>
 	</thead>
 	<tbody>
-		<tr *ngFor="let class of classements; let i = index;">
+		<tr *ngFor="let class of classements; let i = index;" [class.table-primary]="equipe && class.equipe.id == equipe.id">
 			<td>{{i > 0 && class.position == classements[i-1].position ? "-" : class.position}}</td>
 			<td>{{class.equipe.nom}}</td>
 			<td class="font-weight-bold">{{class.pts}}</td>

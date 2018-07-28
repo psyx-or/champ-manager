@@ -107,7 +107,7 @@ class ChampionnatController extends CMController
 	 */
 	public function calendrier(Sport $sport, Request $request, EntityManagerInterface $entityManager)
 	{
-		$saison= $request->query->get('saison');
+		$saison = $request->query->get('saison');
 
 		$query = $entityManager->createQuery(
 			"SELECT c AS championnat, count(j.numero) AS nbJournees, count(j.debut) AS nbJourneesDefinies, min(j.debut) AS debut, max(j.fin) AS fin

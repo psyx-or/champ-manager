@@ -4,7 +4,7 @@
 <div *ngFor="let journee of journees">
 
 	<!-- Description de la journée -->
-	<h2>
+	<h2 class="section">
 		{{ journee.libelle }} 
 		<span class="dates" *ngIf="journee.debut && journee.fin">(du {{journee.debut | date:'dd/MM/yyyy'}} au {{journee.fin | date:'dd/MM/yyyy'}})</span>
 	</h2>

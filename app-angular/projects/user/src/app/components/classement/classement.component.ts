@@ -1,9 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Championnat } from '@commun/src/app/model/Championnat';
 import { Classement } from '@commun/src/app/model/Classement';
-import { ActivatedRoute } from '@angular/router';
 import { sort } from '@commun/src/app/utils/utils';
-import { menus } from '../../utils/menus';
+import { Equipe } from '@commun/src/app/model/Equipe';
 
 @Component({
   selector: 'app-classement',
@@ -12,23 +11,18 @@ import { menus } from '../../utils/menus';
 })
 export class ClassementComponent implements OnInit {
 
-	menu = menus.championnat;
-	champ: Championnat = null;
+	@Input() champ: Championnat = null;
+	@Input() equipe: Equipe = null;
+
 	classements: Classement[];
 
 	constructor(
-		private route: ActivatedRoute,
 	) { }
 
 	/**
 	 * Initialisation
 	 */
 	ngOnInit() {
-		this.route.data
-			.subscribe((data: { champ: Championnat }) => {
-				this.champ = data.champ;
-				this.classements = sort(data.champ.classements, 'position');
-			}
-		);
+		this.classements = sort(this.champ.classements, 'position');
 	}
 }

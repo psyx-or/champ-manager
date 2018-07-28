@@ -50,8 +50,7 @@ export class ChampionnatsComponent implements OnInit {
 	 * @param equipe
 	 */
 	selectEquipe(equipe: Equipe): void {
-		//TODO
-		this.router.navigate(['equipe', equipe.id])
+		this.router.navigate(['equipe', equipe.id, 'classement']);
 	}
 
 	/**
@@ -59,6 +58,6 @@ export class ChampionnatsComponent implements OnInit {
 	 * @param champ 
 	 */
 	selectChampionnat(champ: Championnat): void {
-		this.router.navigate([champ.type == ChampType.Coupe ? 'coupe' : 'classement', champ.id])
+		this.router.navigate([champ.type == ChampType.Coupe ? 'coupe' : 'classement', champ.id]);
 	}
 }

@@ -12,6 +12,9 @@ use App\Entity\Championnat;
 use App\Entity\ChampionnatType;
 use App\Entity\Classement;
 use App\Outils\MatchFunctions;
+use App\Entity\Equipe;
+use Symfony\Component\HttpFoundation\Request;
+use App\DTO\ChampionnatEquipeDTO;
 
 /**
  * @Route("/api")
@@ -26,6 +29,33 @@ class ClassementController extends CMController
     {
         return $this->groupJson($championnat, 'simple', 'classement');
     }
+
+	/**
+	 * @Route("/classement/equipe/{id}")
+	 * @Method("GET")
+	 */
+	public function getClassementsEquipe(Equipe $equipe, Request $request, EntityManagerInterface $entityManager)
+	{
+		$saison = $request->query->get('saison');
+
+		$query = $entityManager->createQuery(
+			"SELECT c
+			 FROM App\Entity\Championnat c
+			 JOIN c.classements class
+			 WHERE class.equipe = :equipe
+			   AND c.saison = :saison
+			 ORDER BY c.id DESC"
+		);
+
+		$query->setParameter("equipe", $equipe);
+		$query->setParameter("saison", $saison);
+
+		$res = new ChampionnatEquipeDTO();
+		$res->setEquipe($equipe);
+		$res->setChampionnats($query->getResult());
+
+		return $this->groupJson($res, 'simple', 'classement');
+	}
 
 	/**
 	 * @Route("/classement/{id}")

@@ -12,6 +12,9 @@ import { ChampionnatsComponent } from './components/championnats/championnats.co
 import { ClassementComponent } from './components/classement/classement.component';
 import { MatchesComponent } from './components/matches/matches.component';
 import { MatchesChampionnatComponent } from './components/matches-championnat/matches-championnat.component';
+import { ClassementChampionnatComponent } from './components/classement-championnat/classement-championnat.component';
+import { ClassementEquipeComponent } from './components/classement-equipe/classement-equipe.component';
+import { ClassementEquipeResolver } from './components/classement-equipe/classement-equipe.resolver';
 
 @NgModule({
   declarations: [
@@ -20,7 +23,9 @@ import { MatchesChampionnatComponent } from './components/matches-championnat/ma
     ChampionnatsComponent,
     ClassementComponent,
     MatchesComponent,
-    MatchesChampionnatComponent
+    MatchesChampionnatComponent,
+    ClassementChampionnatComponent,
+    ClassementEquipeComponent
   ],
   imports: [
     BrowserModule,
@@ -30,7 +35,9 @@ import { MatchesChampionnatComponent } from './components/matches-championnat/ma
 	FormsModule,
 	CommunModule
   ],
-  providers: [],
+  providers: [
+	ClassementEquipeResolver
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -26,6 +26,14 @@ export class MatchService {
 	}
 
 	/**
+	 * Renvoie la liste des matches d'une équipe pour la saison courante
+	 * @param equipeId 
+	 */
+	public listeEquipe(equipeId: number): Observable<Championnat[]> {
+		return this.http.get<Championnat[]>("/api/match/equipe/" + equipeId, { params: { saison: getSaisonCourante() } });
+	}
+
+	/**
 	 * Renvoie une hiérarchie de matches
 	 * @param champId 
 	 */

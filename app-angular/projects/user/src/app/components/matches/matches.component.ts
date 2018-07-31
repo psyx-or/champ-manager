@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Match } from '@commun/src/app/model/Match';
 import { toDisp } from '@commun/src/app/utils/utils';
+import { Equipe } from '@commun/src/app/model/Equipe';
 
 class MatchStyle {
 	match: Match;
@@ -16,6 +17,7 @@ class MatchStyle {
 export class MatchesComponent implements OnInit {
 	
 	@Input() matches: Match[];
+	@Input() equipe: Equipe;
 
 	matchesStyles: MatchStyle[];
 
@@ -45,19 +47,27 @@ export class MatchesComponent implements OnInit {
 	 * @param j 
 	 */
 	calculeStyle(match, i, j): string {
+		let style = "";
+		if (this.equipe != null) {
+			if (match[`equipe${i}`].id != this.equipe.id)
+				return null;
+			else
+				style ="font-weight-bold ";
+		}
+
 		if (match[`forfait${i}`])
-			return "forfait";
+			return style + "forfait";
 		if (match[`forfait${j}`])
-			return "text-success";
+			return style + "text-success";
 
 		if (match[`score${i}`] === null || match[`score${j}`] === null)
-			return null;
+			return style;
 
 		if (match[`score${i}`] > match[`score${j}`])
-			return "text-success";
+			return style + "text-success";
 		if (match[`score${i}`] < match[`score${j}`])
-			return "text-danger";
+			return style + "text-danger";
 
-		return null;
+		return style;
 	}
 }

@@ -1,0 +1,14 @@
+<app-generic-menu [menu]="menu" [obj]="equipe"></app-generic-menu>
+
+<!-- Liste des journées-->
+<div *ngFor="let championnat of championnats">
+
+	<!-- Description de la journée -->
+	<h2 class="section">
+		{{ championnat.nom }} 
+	</h2>
+
+	<!-- Liste des matches-->
+	<app-matches [matches]="championnat.matches" [equipe]="equipe"></app-matches>
+
+</div>

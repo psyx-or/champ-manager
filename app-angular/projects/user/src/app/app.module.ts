@@ -16,6 +16,8 @@ import { ClassementChampionnatComponent } from './components/classement-champion
 import { ClassementEquipeComponent } from './components/classement-equipe/classement-equipe.component';
 import { ClassementEquipeResolver } from './components/classement-equipe/classement-equipe.resolver';
 import { EquipeComponent } from './components/equipe/equipe.component';
+import { MatchesEquipeComponent } from './components/matches-equipe/matches-equipe.component';
+import { MatchesEquipeResolver } from './components/matches-equipe/matches-equipe.resolver';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,8 @@ import { EquipeComponent } from './components/equipe/equipe.component';
     MatchesChampionnatComponent,
     ClassementChampionnatComponent,
     ClassementEquipeComponent,
-    EquipeComponent
+    EquipeComponent,
+    MatchesEquipeComponent
   ],
   imports: [
     BrowserModule,
@@ -38,7 +41,8 @@ import { EquipeComponent } from './components/equipe/equipe.component';
 	CommunModule
   ],
   providers: [
-	ClassementEquipeResolver
+	ClassementEquipeResolver,
+	MatchesEquipeResolver
   ],
   bootstrap: [AppComponent]
 })

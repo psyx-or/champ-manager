@@ -16,6 +16,7 @@ use App\Outils\MatchFunctions;
 use App\Entity\ChampionnatType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use App\Entity\Equipe;
 
 
 /**
@@ -53,6 +54,29 @@ class MatchController extends CMController
 		$query->setParameter("sport", $sport);
 
 		return $this->groupJson($query->getResult(), 'simple', 'matches', 'fp');
+	}
+
+	/**
+	 * @Route("/match/equipe/{id}")
+	 * @Method("GET")
+	 */
+	public function listeEquipe(Equipe $equipe, Request $request, EntityManagerInterface $entityManager)
+	{
+		$saison = $request->query->get('saison');
+
+		$query = $entityManager->createQuery(
+			"SELECT c, j, m
+			 FROM App\Entity\Championnat c
+			 JOIN c.journees j 
+			 JOIN j.matches m 
+			 WHERE c.saison = :saison
+			   AND (m.equipe1 = :equipe OR m.equipe2 = :equipe)
+			 ORDER BY c.id DESC, j.numero");
+		
+		$query->setParameter("saison", $saison);
+		$query->setParameter("equipe", $equipe);
+
+		return $this->groupJson($query->getResult(), 'simple', 'matches', 'coordonnees');
 	}
 	
     /**

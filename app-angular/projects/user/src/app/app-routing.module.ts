@@ -13,6 +13,8 @@ import { ClassementEquipeComponent } from './components/classement-equipe/classe
 import { ClassementEquipeResolver } from './components/classement-equipe/classement-equipe.resolver';
 import { EquipeComponent } from './components/equipe/equipe.component';
 import { EquipeResolver } from '@commun/src/app/utils/equipe.resolver';
+import { MatchesEquipeComponent } from './components/matches-equipe/matches-equipe.component';
+import { MatchesEquipeResolver } from './components/matches-equipe/matches-equipe.resolver';
 
 const routes: Routes = [
 	{ path: '', pathMatch: 'full', redirectTo: 'championnats' },
@@ -21,9 +23,8 @@ const routes: Routes = [
 	{ path: 'coupe/:champId', component: CoupeComponent, data: { menu: menus.championnat }, resolve: { journee: HierarchieResolver } },
 	{ path: 'matches/:champId', component: MatchesChampionnatComponent, resolve: { champ: MatchesResolver } },
 	{ path: 'equipe/classement/:equipeId', component: ClassementEquipeComponent, resolve: { dto: ClassementEquipeResolver } },
-	// { path: 'calendrier', component: CalendrierComponent, resolve: { sports: SportResolver } },
+	{ path: 'equipe/matches/:equipeId', component: MatchesEquipeComponent, resolve: { equipe: EquipeResolver, championnats: MatchesEquipeResolver } },
 	{ path: 'equipe/:equipeId', component: EquipeComponent, resolve: { equipe: EquipeResolver } },
-	// { path: 'fairplay-classement', component: FairplayClassementComponent, resolve: { sports: SportResolver } },
 ];
 
 @NgModule({

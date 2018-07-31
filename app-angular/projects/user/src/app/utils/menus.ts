@@ -21,8 +21,8 @@ export var menus: { [nom: string]: Menu } = {
 		titre: (e: Equipe) => e.nom,
 		items: [
 			{ route: "equipe/classement", icone: 'podium', titre: "Classement" },
+			{ route: "equipe/matches", icone: 'clipboard', titre: "Matches" },
 			{ route: "equipe", icone: 'contact', titre: "Coordonnées" },
-	// 		{ route: "fairplay-equipe/evaluation", icone: 'happy', titre: "Evaluations" },
 	// 		{ route: "fairplay-equipe/redaction", icone: 'create', titre: "Feuilles rédigées" },
 		]
 	}

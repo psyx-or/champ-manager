@@ -20,8 +20,8 @@ export var menus: { [nom: string]: Menu } = {
 	equipe: {
 		titre: (e: Equipe) => e.nom,
 		items: [
-			{ route: "classement", icone: 'podium', titre: "Classement" },
-	// 		{ route: "equipe", icone: 'contact', titre: "Coordonnées" },
+			{ route: "equipe/classement", icone: 'podium', titre: "Classement" },
+			{ route: "equipe", icone: 'contact', titre: "Coordonnées" },
 	// 		{ route: "fairplay-equipe/evaluation", icone: 'happy', titre: "Evaluations" },
 	// 		{ route: "fairplay-equipe/redaction", icone: 'create', titre: "Feuilles rédigées" },
 		]

@@ -192,7 +192,7 @@ class Equipe implements UserInterface, \Serializable
     }
 
 	/**
-	 * @Groups({"coordonnees"})
+	 * @Groups({"responsables"})
 	 * @return Collection|Responsable[]
 	 */
     public function getResponsables(): Collection

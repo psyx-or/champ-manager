@@ -1,0 +1,32 @@
+<app-generic-menu [menu]="menu" [obj]="equipe"></app-generic-menu>
+
+<!-- Responsables -->
+<h2 *ngIf="equipe.responsables[0].nom" class="section">Responsables</h2>
+<ng-container *ngFor="let resp of equipe.responsables">
+	<div *ngIf="resp.nom" class="row">
+		<div class="col-4">{{resp.nom}}</div>
+		<div class="col-4">{{resp.tel1}}</div>
+		<div class="col-4">{{resp.mail}}</div>
+	</div>
+</ng-container>
+
+<!-- Terrain -->
+<h2 class="section">Terrain</h2>
+<div>
+	<div *ngIf="!equipe.terrain || equipe.terrain == ''">Pas de terrain</div>
+	<div *ngIf="equipe.terrain && equipe.terrain != ''" class="terrain">{{equipe.terrain}}</div>
+	<br>
+</div>
+
+<!-- Créneaux -->
+<ng-container *ngFor="let creneau of equipe.creneaux; let i = index;">
+	<div *ngIf="creneau.heureDisp">
+		Créneau {{i+1}}: le {{jours[creneau.jour]}} à {{creneau.heureDisp}}
+	</div>
+</ng-container>
+
+<!-- Carte -->
+<div *ngIf="equipe.position">
+	<h2 class="section">Emplacement</h2>
+	<div #gmap class="carte"></div>
+</div>

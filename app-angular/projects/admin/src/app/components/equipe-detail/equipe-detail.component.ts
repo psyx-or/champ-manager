@@ -4,7 +4,7 @@ import { Creneau } from 'projects/commun/src/app/model/Creneau';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CartePositionnementComponent } from '../carte-positionnement/carte-positionnement.component';
 import { RequeteService } from 'projects/commun/src/app/services/requete.service';
-import { openModal } from 'projects/commun/src/app/utils/utils';
+import { openModal, jours } from 'projects/commun/src/app/utils/utils';
 import { EquipeService } from 'projects/commun/src/app/services/equipe.service';
 
 @Component({
@@ -18,7 +18,7 @@ export class EquipeDetailComponent {
 
 	@Input() equipe: Equipe;
 
-	jours = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi'];
+	jours = jours;
 
 	constructor(
 		public requeteService: RequeteService,

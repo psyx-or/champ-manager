@@ -30,7 +30,6 @@ import { ParametresComponent } from './components/parametres/parametres.componen
 import { ParametresResolver } from './components/parametres/parametres.resolver';
 import { EquipeDetailComponent } from './components/equipe-detail/equipe-detail.component';
 import { EquipeComponent } from './components/equipe/equipe.component';
-import { EquipeResolver } from './components/equipe/equipe.resolver';
 import { CanDeactivateGuard } from './utils/can-deactivate.guard';
 import { ModalConfirmComponent } from './components/modal-confirm/modal-confirm.component';
 import { FairplayClassementComponent } from './components/fairplay-classement/fairplay-classement.component';
@@ -82,7 +81,6 @@ import { CommunModule } from 'projects/commun/src/app/commun.module';
 	  FpformsResumeResolver,
 	  ChampModeleResolver,
 	  ParametresResolver,
-	  EquipeResolver,
 	  CanDeactivateGuard,
 	  FairplayEquipeResolver
   ],

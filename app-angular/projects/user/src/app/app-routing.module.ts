@@ -11,16 +11,18 @@ import { HierarchieResolver } from '@commun/src/app/components/coupe/hierarchie.
 import { ClassementChampionnatComponent } from './components/classement-championnat/classement-championnat.component';
 import { ClassementEquipeComponent } from './components/classement-equipe/classement-equipe.component';
 import { ClassementEquipeResolver } from './components/classement-equipe/classement-equipe.resolver';
+import { EquipeComponent } from './components/equipe/equipe.component';
+import { EquipeResolver } from '@commun/src/app/utils/equipe.resolver';
 
 const routes: Routes = [
 	{ path: '', pathMatch: 'full', redirectTo: 'championnats' },
-	{ path: 'championnats', component: ChampionnatsComponent, resolve: { championnats: ChampionnatResolver }, runGuardsAndResolvers: "always" },
+	{ path: 'championnats', component: ChampionnatsComponent, resolve: { championnats: ChampionnatResolver } },
 	{ path: 'classement/:champId', component: ClassementChampionnatComponent, resolve: { champ: ClassementResolver } },
 	{ path: 'coupe/:champId', component: CoupeComponent, data: { menu: menus.championnat }, resolve: { journee: HierarchieResolver } },
 	{ path: 'matches/:champId', component: MatchesChampionnatComponent, resolve: { champ: MatchesResolver } },
-	{ path: 'equipe/:equipeId/classement', component: ClassementEquipeComponent, resolve: { dto: ClassementEquipeResolver } },
+	{ path: 'equipe/classement/:equipeId', component: ClassementEquipeComponent, resolve: { dto: ClassementEquipeResolver } },
 	// { path: 'calendrier', component: CalendrierComponent, resolve: { sports: SportResolver } },
-	// { path: 'equipe/:equipeId', component: EquipeComponent, resolve: { equipe: EquipeResolver }, runGuardsAndResolvers: "always", canDeactivate: [CanDeactivateGuard] },
+	{ path: 'equipe/:equipeId', component: EquipeComponent, resolve: { equipe: EquipeResolver } },
 	// { path: 'fairplay-classement', component: FairplayClassementComponent, resolve: { sports: SportResolver } },
 ];
 

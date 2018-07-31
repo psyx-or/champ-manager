@@ -89,6 +89,7 @@ export class EquipeService {
 	 */
 	private fromServer(equipe: Equipe): Equipe {
 		// On s'assure de pouvoir saisir 2 responsables
+		if (equipe.responsables == null) equipe.responsables = [];
 		for (let i = equipe.responsables.length; i < 2; i++)
 			equipe.responsables.push(new Responsable());
 		// Et au moins un créneau

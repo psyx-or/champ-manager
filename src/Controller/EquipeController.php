@@ -16,6 +16,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use App\Outils\Annuaire;
 use App\Entity\Parametre;
 use App\Outils\Mail;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 
 /**
@@ -47,11 +48,16 @@ class EquipeController extends CMController
 	/**
 	 * @Route("/equipe/{id}", requirements={"id"="\d+"})
 	 * @Method("GET")
-	 * @IsGranted("ROLE_ADMIN")
 	 */
-    public function getEquipe(Equipe $equipe)
+    public function getEquipe(Equipe $equipe, AuthorizationCheckerInterface $authChecker)
     {
-        return $this->groupJson($equipe, 'simple', 'coordonnees');
+		$groupes = array('simple', 'coordonnees');
+		// TODO: authentification remembered
+		if (true === $authChecker->isGranted('ROLE_ADMIN')) {
+			array_push($groupes, 'responsables');
+		}
+
+        return $this->groupJson($equipe, ...$groupes);
 	}
 
     /**
@@ -85,7 +91,7 @@ class EquipeController extends CMController
     {
 		$saison = $request->query->get('saison');
 
-        return $this->groupJson($this->getEquipes($sport, $saison, $entityManager), 'simple', 'coordonnees');
+        return $this->groupJson($this->getEquipes($sport, $saison, $entityManager), 'simple', 'coordonnees', 'responsables');
 	}
 
 	/**

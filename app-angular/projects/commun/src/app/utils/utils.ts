@@ -4,6 +4,8 @@ import { NgbModal, NgbModalOptions } from "@ng-bootstrap/ng-bootstrap";
 import { Match } from "../model/Match";
 import { Equipe } from "../model/Equipe";
 
+/** Jours de la semaine */
+export var jours = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi'];
 
 /**
  * Renvoie la saison en cours

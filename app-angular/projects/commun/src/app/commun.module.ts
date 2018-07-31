@@ -13,6 +13,7 @@ import { IsTypePipe } from "./utils/is-type.pipe";
 import { MatchesResolver } from "./utils/matches.resolver";
 import { HierarchieResolver } from "./components/coupe/hierarchie.resolver";
 import { CoupeComponent } from "./components/coupe/coupe.component";
+import { EquipeResolver } from "./utils/equipe.resolver";
 
 @NgModule({
 	declarations: [
@@ -33,6 +34,7 @@ import { CoupeComponent } from "./components/coupe/coupe.component";
 		ChampionnatResolver,
 		ClassementResolver,
 		HierarchieResolver,
+		EquipeResolver,
 		MatchesResolver
 	],
 	entryComponents: [

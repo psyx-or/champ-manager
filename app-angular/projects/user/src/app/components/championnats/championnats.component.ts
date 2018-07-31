@@ -50,7 +50,7 @@ export class ChampionnatsComponent implements OnInit {
 	 * @param equipe
 	 */
 	selectEquipe(equipe: Equipe): void {
-		this.router.navigate(['equipe', equipe.id, 'classement']);
+		this.router.navigate(['equipe', 'classement', equipe.id]);
 	}
 
 	/**

@@ -1,29 +1,41 @@
 <table class="table table-striped table-score mb-0">
 	<tbody>
 
-		<!-- Si vrai match-->
-		<tr *ngFor="let match of matchesStyles">
-			<ng-container *ngIf="!match.match.exempt">
-				<!-- Equipe 1 + score 1 -->
-				<td class="text-right" [ngClass]="match.style1">{{match.match.dispEquipe1}}</td>
-				<ng-container *ngIf="match.match.dispScore1 || match.match.dispScore2">
-					<td class="text-right score">{{match.match.dispScore1}}</td>
-					<!-- Séparateur-->
+		<tr *ngFor="let match of matchesExt">
+			<!-- Si vrai match-->
+			<ng-container *ngIf="!match.exempt">
+	
+				<!-- Equipe 1 -->
+				<td class="text-right" [ngClass]="match.style1">{{match.dispEquipe1}}</td>
+
+				<!-- Score -->
+				<ng-container *ngIf="match.dispScore1 || match.dispScore2">
+					<td class="text-right score">{{match.dispScore1}}</td>
 					<td class="separateur text-center">-</td>
-					<!-- Score 2 + équipe 2 -->
-					<td class="text-left score">{{match.match.dispScore2}}</td>
+					<td class="text-left score">{{match.dispScore2}}</td>
 				</ng-container>
-				<ng-container *ngIf="!match.match.dispScore1 && !match.match.dispScore2">
+
+				<!-- Pas de score -->
+				<ng-container *ngIf="!match.dispScore1 && !match.dispScore2">
 					<td class="ajouer text-center" colspan="3">A jouer</td>
 				</ng-container>
-				<td class="text-left" [ngClass]="match.style2">{{match.match.dispEquipe2}}</td>
+
+				<!-- Equipe 2 -->
+				<td class="text-left" [ngClass]="match.style2">{{match.dispEquipe2}}</td>
+
+				<!-- Date et terrain -->
+				<td *ngIf="avecDates" class="infodate">{{match.date}}</td>
+				<td *ngIf="avecDates" class="infodate">{{match.terrain}}</td>
+
 			</ng-container>
 
+			
 			<!-- Si exempt -->
-			<ng-container *ngIf="match.match.exempt">
+			<ng-container *ngIf="match.exempt">
 				<td colspan="5" class="text-center">
-					Exempt: {{ match.match.exempt.nom }}
+					Exempt: {{ match.exempt.nom }}
 				</td>
+				<td colspan="2" *ngIf="avecDates"></td>
 			</ng-container>
 		</tr>
 

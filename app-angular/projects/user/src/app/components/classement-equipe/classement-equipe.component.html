@@ -1,5 +1,9 @@
 <app-generic-menu [menu]="menu" [obj]="equipe"></app-generic-menu>
 
+<ngb-alert *ngIf="champs.length == 0" [dismissible]="false" type="info">
+	Pas de classement pour cette équipe et la saison en cours.
+</ngb-alert>
+
 <div *ngFor="let champ of champs">
 	<h2 class="section">{{champ.nom}}</h2>
 

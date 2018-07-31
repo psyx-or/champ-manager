@@ -1,11 +1,20 @@
 <app-generic-menu [menu]="menu" [obj]="equipe"></app-generic-menu>
 
-<!-- Liste des journées-->
+<ngb-alert *ngIf="championnats.length == 0" [dismissible]="false" type="info">
+	Pas de match pour cette équipe et la saison en cours.
+</ngb-alert>
+
+<!-- Liste des championnats-->
 <div *ngFor="let championnat of championnats">
 
-	<!-- Description de la journée -->
-	<h2 class="section">
-		{{ championnat.nom }} 
+	<!-- Description du championnat -->
+	<h2 class="section d-flex justify-content-between">
+		{{ championnat.nom }}
+		<span>
+		<a [download]="championnat.nom" [href]="championnat.calendrier" class="btn btn-sm btn-outline-secondary" ngbTooltip="Exporter dans votre calendrier">
+			<i class="icon ion-md-calendar"></i>
+		</a>
+		</span>
 	</h2>
 
 	<!-- Liste des matches-->

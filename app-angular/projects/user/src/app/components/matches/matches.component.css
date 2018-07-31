@@ -2,6 +2,10 @@ table {
 	table-layout: fixed;
 }
 
+td {
+	vertical-align: middle;
+}
+
 .separateur {
 	width: 2em;
 }
@@ -18,4 +22,8 @@ table {
 .ajouer {
 	width: calc(5em + 4 * 0.75rem);
 	font-style: italic;
+}
+
+.infodate {
+	white-space: pre-line;
 }

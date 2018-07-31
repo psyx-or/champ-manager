@@ -1,5 +1,6 @@
 import { Equipe } from "./Equipe";
 import { FPFeuille } from "./FPFeuille";
+import { Journee } from "@commun/src/app/model/Journee";
 
 /**
  * Un match
@@ -25,4 +26,5 @@ export class Match {
 	dispEquipe2?: string;
 	dispScore1?: string|number;
 	dispScore2?: string|number;
+	journee?: Journee;
 }

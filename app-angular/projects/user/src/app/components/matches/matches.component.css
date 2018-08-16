@@ -27,3 +27,8 @@ td {
 .infodate {
 	white-space: pre-line;
 }
+
+.sansterrain {
+	color: #6c757d;
+	font-style: italic;
+}

@@ -25,11 +25,11 @@
 
 				<!-- Date et terrain -->
 				<td *ngIf="avecDates" class="infodate">{{match.date}}</td>
-				<td *ngIf="avecDates" class="infodate">{{match.terrain}}</td>
+				<td *ngIf="avecDates" class="infodate" [class.sansterrain]="match.terrain == PAS_DE_TERRAIN">{{match.terrain}}</td>
 
 			</ng-container>
 
-			
+
 			<!-- Si exempt -->
 			<ng-container *ngIf="match.exempt">
 				<td colspan="5" class="text-center">

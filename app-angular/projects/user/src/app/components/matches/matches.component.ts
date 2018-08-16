@@ -20,6 +20,8 @@ class MatchExt extends Match {
   styleUrls: ['./matches.component.css']
 })
 export class MatchesComponent implements OnInit {
+
+	readonly PAS_DE_TERRAIN = "Pas de terrain";
 	
 	@Input() matches: Match[];
 	@Input() equipe: Equipe;
@@ -94,7 +96,7 @@ export class MatchesComponent implements OnInit {
 		}
 		else if (!match.equipe1.terrain) {
 			match.date = `Du ${moment(match.journee.debut).format("DD/MM/YYYY")} au ${moment(match.journee.fin).format("DD/MM/YYYY")}`;
-			match.terrain = "Pas de terrain";
+			match.terrain = this.PAS_DE_TERRAIN;
 		}
 		else {
 			match.date = match.equipe1.creneaux

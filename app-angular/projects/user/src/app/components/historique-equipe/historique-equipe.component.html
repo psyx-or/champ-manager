@@ -1,0 +1,44 @@
+<app-generic-menu [menu]="menu" [obj]="equipe"></app-generic-menu>
+
+<ngb-alert *ngIf="champs.length == 0" [dismissible]="false" type="info">
+	Pas d'historique pour cette équipe.
+</ngb-alert>
+
+<div *ngIf="champs.length > 0">
+	<table class="table table-striped text-center table-bordered">
+		<thead>
+			<tr>
+				<th scope="col">Saison</th>
+				<th scope="col">Poule</th>
+				<th scope="col">Pos</th>
+				<th scope="col" class="separation">Pts</th>
+				<th scope="col" class="separation">J</th>
+				<th scope="col">G</th>
+				<th scope="col">N</th>
+				<th scope="col">P</th>
+				<th scope="col">FO</th>
+				<th scope="col" class="separation">Pour</th>
+				<th scope="col">Contre</th>
+				<th scope="col">Diff</th>
+				<th scope="col" class="separation">Pén</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let champ of champs">
+				<td>{{champ.saison}}</td>
+				<td>{{champ.nom}}</td>
+				<td class="font-weight-bold">{{champ.classements[0].position}}</td>
+				<td class="separation">{{champ.classements[0].pts}}</td>
+				<td class="separation">{{champ.classements[0].mTotal}}</td>
+				<td>{{champ.classements[0].mVict}}</td>
+				<td>{{champ.classements[0].mNul == null ? "-" : champ.classements[0].mNul}}</td>
+				<td>{{champ.classements[0].mDef}}</td>
+				<td>{{champ.classements[0].mFo}}</td>
+				<td class="separation">{{champ.classements[0].pour}}</td>
+				<td>{{champ.classements[0].contre}}</td>
+				<td>{{champ.classements[0].pour - champ.classements[0].contre | signe}}</td>
+				<td class="separation">{{champ.classements[0].penalite}}</td>
+			</tr>
+		</tbody>
+	</table>
+</div>

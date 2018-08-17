@@ -32,6 +32,14 @@ export class ClassementService {
 	}
 
 	/**
+	 * Récupère l'historique des classements d'une équipe
+	 * @param equipeId
+	 */
+	public getHistoriqueEquipe(equipId: number): Observable<ChampionnatEquipeDTO> {
+		return this.http.get<ChampionnatEquipeDTO>("/api/classement/equipe/" + equipId + "/historique");
+	}
+
+	/**
 	 * Met à jour des classements
 	 * @param champ
 	 * @param classements 

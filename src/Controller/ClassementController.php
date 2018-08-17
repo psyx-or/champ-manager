@@ -58,6 +58,29 @@ class ClassementController extends CMController
 	}
 
 	/**
+	 * @Route("/classement/equipe/{id}/historique")
+	 * @Method("GET")
+	 */
+	public function getHistoriqueClassementsEquipe(Equipe $equipe, Request $request, EntityManagerInterface $entityManager)
+	{
+		$query = $entityManager->createQuery(
+			"SELECT c, class
+			 FROM App\Entity\Championnat c
+			 JOIN c.classements class
+			 WHERE class.equipe = :equipe
+			 ORDER BY c.id DESC"
+		);
+
+		$query->setParameter("equipe", $equipe);
+
+		$res = new ChampionnatEquipeDTO();
+		$res->setEquipe($equipe);
+		$res->setChampionnats($query->getResult());
+
+		return $this->groupJson($res, 'simple', 'classement');
+	}
+
+	/**
 	 * @Route("/classement/{id}")
 	 * @Method("PATCH")
 	 * @IsGranted("ROLE_ADMIN")

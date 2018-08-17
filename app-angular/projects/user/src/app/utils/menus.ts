@@ -22,6 +22,7 @@ export var menus: { [nom: string]: Menu } = {
 		items: [
 			{ route: "equipe/classement", icone: 'podium', titre: "Classement" },
 			{ route: "equipe/matches", icone: 'clipboard', titre: "Matches" },
+			{ route: "equipe/historique", icone: 'filing', titre: "Historique" },
 			{ route: "equipe", icone: 'contact', titre: "Coordonnées" },
 	// 		{ route: "fairplay-equipe/redaction", icone: 'create', titre: "Feuilles rédigées" },
 		]

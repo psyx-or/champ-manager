@@ -91,16 +91,16 @@ export class MatchesComponent implements OnInit {
 		this.avecDates = true;
 
 		if (!match.equipe1) {
-			match.date = `Du ${moment(match.journee.debut).format("DD/MM/YYYY")} au ${moment(match.journee.fin).format("DD/MM/YYYY")}`;
+			match.date = `Du ${moment(match.journee.debut).add(1, 'day').format("DD/MM/YYYY")} au ${moment(match.journee.fin).format("DD/MM/YYYY")}`;
 			match.terrain = "A décider";
 		}
 		else if (!match.equipe1.terrain) {
-			match.date = `Du ${moment(match.journee.debut).format("DD/MM/YYYY")} au ${moment(match.journee.fin).format("DD/MM/YYYY")}`;
+			match.date = `Du ${moment(match.journee.debut).add(1, 'day').format("DD/MM/YYYY")} au ${moment(match.journee.fin).format("DD/MM/YYYY")}`;
 			match.terrain = this.PAS_DE_TERRAIN;
 		}
 		else {
 			match.date = match.equipe1.creneaux
-				.map(c => `${jours[c.jour]} ${moment(match.journee.debut).add('day', c.jour).format("DD/MM/YYYY")} à ${moment(c.heure).format("HH:mm")}`)
+				.map(c => `${jours[c.jour]} ${moment(match.journee.debut).add(c.jour + 1, 'days').format("DD/MM/YYYY")} à ${moment(c.heure).format("HH:mm")}`)
 				.join("\n");
 			match.terrain = match.equipe1.terrain;
 		}

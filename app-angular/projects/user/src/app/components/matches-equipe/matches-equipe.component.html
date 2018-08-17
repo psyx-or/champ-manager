@@ -11,9 +11,9 @@
 	<h2 class="section d-flex justify-content-between">
 		{{ championnat.nom }}
 		<span>
-		<a [download]="championnat.nom" [href]="championnat.calendrier" class="btn btn-sm btn-outline-secondary" ngbTooltip="Exporter dans votre calendrier">
-			<i class="icon ion-md-calendar"></i>
-		</a>
+			<a [download]="championnat.nom + '.ics'" [href]="championnat.calendrier" class="btn btn-sm btn-outline-secondary" ngbTooltip="Exporter dans votre calendrier">
+				<i class="icon ion-md-calendar"></i>
+			</a>
 		</span>
 	</h2>
 

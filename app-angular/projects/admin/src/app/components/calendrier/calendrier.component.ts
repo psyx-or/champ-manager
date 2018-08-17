@@ -52,7 +52,7 @@ export class CalendrierComponent implements OnInit {
 			this.championnatService.getCalendrierCourant(this.selSport),
 			calendriers => {
 				calendriers.forEach(c => {
-					c.debutStr = c.debut && moment(c.debut).add('day', 1).format("DD/MM/YYYY")
+					c.debutStr = c.debut && moment(c.debut).add(1, 'day').format("DD/MM/YYYY")
 					c.finStr = c.fin && moment(c.fin).format("DD/MM/YYYY")
 				});
 				this.calendriers = calendriers

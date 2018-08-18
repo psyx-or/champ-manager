@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { menus } from '../../utils/menus';
 import { Equipe } from '@commun/src/app/model/Equipe';
 import { Championnat } from '@commun/src/app/model/Championnat';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ChampionnatEquipeDTO } from '@commun/src/app/model/ChampionnatEquipeDTO';
 
 @Component({
@@ -23,6 +23,7 @@ export class HistoriqueEquipeComponent implements OnInit {
 	 */
 	constructor(
 		private route: ActivatedRoute,
+		private router: Router,
 	) { }
 
 	/**
@@ -37,4 +38,11 @@ export class HistoriqueEquipeComponent implements OnInit {
 			);
 	}
 
+	/**
+	 * Affiche le classement d'un championnat
+	 * @param champ 
+	 */
+	afficheClassement(champ: Championnat) {
+		this.router.navigate(["classement", champ.id]);
+	}
 }

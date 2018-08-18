@@ -1,3 +1,7 @@
 .separation {
 	border-left-width: 4px;
 }
+
+.table-hover tbody tr:hover {
+	cursor: pointer;
+}

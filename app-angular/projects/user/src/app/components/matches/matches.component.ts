@@ -22,6 +22,7 @@ class MatchExt extends Match {
 export class MatchesComponent implements OnInit {
 
 	readonly PAS_DE_TERRAIN = "Pas de terrain";
+	readonly STYLE_MEME_EQUIPE = "font-weight-bold";
 	
 	@Input() matches: Match[];
 	@Input() equipe: Equipe;
@@ -57,25 +58,25 @@ export class MatchesComponent implements OnInit {
 		let style = "";
 		if (this.equipe != null) {
 			if (match[`equipe${i}`] && match[`equipe${i}`].id == this.equipe.id)
-				style = "font-weight-bold ";
+				style = this.STYLE_MEME_EQUIPE + " ";
 			else
-				return null;
+				return "text-dark";
 		}
 
 		if (match[`forfait${i}`])
-			return style + "forfait";
+			return style + "forfait text-dark";
 		if (match[`forfait${j}`])
 			return style + "text-success";
 
 		if (match[`score${i}`] === null || match[`score${j}`] === null)
-			return style;
+			return style + "text-dark";
 
 		if (match[`score${i}`] > match[`score${j}`])
 			return style + "text-success";
 		if (match[`score${i}`] < match[`score${j}`])
 			return style + "text-danger";
 
-		return style;
+		return style + "text-dark";
 	}
 
 	/**
@@ -84,15 +85,14 @@ export class MatchesComponent implements OnInit {
 	 */
 	calculeDate(match: MatchExt): void {
 		if (match.dispScore1 !==null || match.exempt)
-			return null;
+			return;
 		if (!match.journee || !match.journee.debut)
-			return null;
+			return;
 
 		this.avecDates = true;
 
 		if (!match.equipe1) {
 			match.date = `Du ${moment(match.journee.debut).add(1, 'day').format("DD/MM/YYYY")} au ${moment(match.journee.fin).format("DD/MM/YYYY")}`;
-			match.terrain = "A décider";
 		}
 		else if (!match.equipe1.terrain) {
 			match.date = `Du ${moment(match.journee.debut).add(1, 'day').format("DD/MM/YYYY")} au ${moment(match.journee.fin).format("DD/MM/YYYY")}`;

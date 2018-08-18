@@ -1,5 +1,5 @@
 
-<table class="table table-striped text-center table-bordered">
+<table class="table table-striped text-center table-bordered table-hover">
 	<thead>
 		<tr>
 			<th scope="col">#</th>
@@ -17,7 +17,7 @@
 		</tr>
 	</thead>
 	<tbody>
-		<tr *ngFor="let class of classements; let i = index;" [class.table-primary]="equipe && class.equipe.id == equipe.id">
+		<tr *ngFor="let class of classements; let i = index;" [class.table-primary]="equipe && class.equipe.id == equipe.id" (click)="afficheMatches(class.equipe)">
 			<td>{{i > 0 && class.position == classements[i-1].position ? "-" : class.position}}</td>
 			<td>{{class.equipe.nom}}</td>
 			<td class="font-weight-bold">{{class.pts}}</td>

@@ -6,7 +6,10 @@
 			<ng-container *ngIf="!match.exempt">
 	
 				<!-- Equipe 1 -->
-				<td class="text-right" [ngClass]="match.style1">{{match.dispEquipe1}}</td>
+				<td class="text-right">
+					<span *ngIf="!match.equipe1 || match.style1.indexOf(STYLE_MEME_EQUIPE) > -1" [ngClass]="match.style1">{{match.dispEquipe1}}</span>
+					<a    *ngIf="match.equipe1 && match.style1.indexOf(STYLE_MEME_EQUIPE) == -1" [ngClass]="match.style1" [routerLink]="['/equipe','matches',match.equipe1.id]">{{match.dispEquipe1}}</a>
+				</td>
 
 				<!-- Score -->
 				<ng-container *ngIf="match.dispScore1 || match.dispScore2">
@@ -21,11 +24,16 @@
 				</ng-container>
 
 				<!-- Equipe 2 -->
-				<td class="text-left" [ngClass]="match.style2">{{match.dispEquipe2}}</td>
+				<td class="text-left">
+					<span *ngIf="!match.equipe2 || match.style2.indexOf(STYLE_MEME_EQUIPE) > -1" [ngClass]="match.style2">{{match.dispEquipe2}}</span>
+					<a    *ngIf="match.equipe2 && match.style2.indexOf(STYLE_MEME_EQUIPE) == -1" [ngClass]="match.style2" [routerLink]="['/equipe','matches',match.equipe2.id]">{{match.dispEquipe2}}</a>
+				</td>
 
 				<!-- Date et terrain -->
 				<td *ngIf="avecDates" class="infodate">{{match.date}}</td>
-				<td *ngIf="avecDates" class="infodate" [class.sansterrain]="match.terrain == PAS_DE_TERRAIN">{{match.terrain}}</td>
+				<td *ngIf="avecDates" class="infodate" [class.sansterrain]="match.terrain == PAS_DE_TERRAIN">
+					<a *ngIf="match.terrain" [routerLink]="['/equipe', match.equipe1.id]">{{match.terrain}}</a>
+				</td>
 
 			</ng-container>
 

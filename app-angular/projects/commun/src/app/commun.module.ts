@@ -16,6 +16,10 @@ import { CoupeComponent } from "./components/coupe/coupe.component";
 import { EquipeResolver } from "./utils/equipe.resolver";
 import { LoginComponent } from "./components/login/login.component";
 import { FormsModule } from "@angular/forms";
+import { CartePositionnementComponent } from "./components/carte-positionnement/carte-positionnement.component";
+import { EquipeDetailComponent } from "./components/equipe-detail/equipe-detail.component";
+import { ModalConfirmComponent } from "./components/modal-confirm/modal-confirm.component";
+import { CanDeactivateGuard } from "./utils/can-deactivate.guard";
 
 @NgModule({
 	declarations: [
@@ -24,6 +28,9 @@ import { FormsModule } from "@angular/forms";
 		GenericMenuComponent,
 		CoupeComponent,
 		LoginComponent,
+		CartePositionnementComponent,
+		EquipeDetailComponent,
+		ModalConfirmComponent,
 		IsTypePipe,
 		SignePipe
 	],
@@ -34,6 +41,7 @@ import { FormsModule } from "@angular/forms";
 		FormsModule,
 	],
 	providers: [
+		CanDeactivateGuard,
 		SportResolver,
 		ChampionnatResolver,
 		ClassementResolver,
@@ -44,12 +52,15 @@ import { FormsModule } from "@angular/forms";
 	entryComponents: [
 		ModalComponent,
 		LoginComponent,
+		ModalConfirmComponent,
+		CartePositionnementComponent,
 	],
 	exports: [
 		ModalComponent,
 		RechercheEquipeComponent,
 		GenericMenuComponent,
 		CoupeComponent,
+		EquipeDetailComponent,
 		IsTypePipe,
 		SignePipe,
 	]

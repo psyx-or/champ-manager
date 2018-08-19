@@ -1,11 +1,11 @@
 import { Component, Input, ViewChild, TemplateRef } from '@angular/core';
-import { Equipe } from 'projects/commun/src/app/model/Equipe';
-import { Creneau } from 'projects/commun/src/app/model/Creneau';
+import { Equipe } from '../../model/Equipe';
+import { Creneau } from '../../model/Creneau';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CartePositionnementComponent } from '../carte-positionnement/carte-positionnement.component';
-import { RequeteService } from 'projects/commun/src/app/services/requete.service';
-import { openModal, jours } from 'projects/commun/src/app/utils/utils';
-import { EquipeService } from 'projects/commun/src/app/services/equipe.service';
+import { RequeteService } from '../../services/requete.service';
+import { openModal, jours } from '../../utils/utils';
+import { EquipeService } from '../../services/equipe.service';
 
 @Component({
   selector: 'app-equipe-detail',
@@ -17,6 +17,7 @@ export class EquipeDetailComponent {
 	@ViewChild('envoiMail') envoiMailTpl: TemplateRef<any>;
 
 	@Input() equipe: Equipe;
+	@Input() motdepasse: boolean;
 
 	jours = jours;
 

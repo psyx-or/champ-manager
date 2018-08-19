@@ -1,17 +1,17 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { RequeteService } from 'projects/commun/src/app/services/requete.service';
-import { EquipeService } from 'projects/commun/src/app/services/equipe.service';
-import { Equipe } from 'projects/commun/src/app/model/Equipe';
-import { CanComponentDeactivate } from '@commun/src/app/utils/can-deactivate.guard';
-import { menus } from '../../utils/menus';
+import { menus } from "../../utils/menus";
+import { Equipe } from "@commun/src/app/model/Equipe";
+import { OnInit, Component } from "@angular/core";
+import { ActivatedRoute, Router } from "@angular/router";
+import { RequeteService } from "@commun/src/app/services/requete.service";
+import { EquipeService } from "@commun/src/app/services/equipe.service";
+import { CanComponentDeactivate } from "@commun/src/app/utils/can-deactivate.guard";
 
 @Component({
-  selector: 'app-equipe',
-  templateUrl: './equipe.component.html',
-  styleUrls: ['./equipe.component.css']
+	selector: 'app-equipe-edition',
+	templateUrl: './equipe-edition.component.html',
+	styleUrls: ['./equipe-edition.component.css']
 })
-export class EquipeComponent implements OnInit, CanComponentDeactivate {
+export class EquipeEditionComponent implements OnInit, CanComponentDeactivate {
 
 	menu = menus.equipe;
 	equipe: Equipe;
@@ -53,7 +53,7 @@ export class EquipeComponent implements OnInit, CanComponentDeactivate {
 			n => {
 				alert("Equipe mise à jour");
 				this.initial = JSON.stringify(this.equipe);
-				this.router.navigate(["/equipe", this.equipe.id]);
+				this.router.navigate([]);
 			}
 		);
 	}

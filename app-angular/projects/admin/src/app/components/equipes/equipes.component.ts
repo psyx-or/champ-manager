@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { RequeteService } from 'projects/commun/src/app/services/requete.service';
 import { EquipeService } from 'projects/commun/src/app/services/equipe.service';
 import { Equipe } from 'projects/commun/src/app/model/Equipe';
-import { CanComponentDeactivate } from '../../utils/can-deactivate.guard';
+import { CanComponentDeactivate } from '@commun/src/app/utils/can-deactivate.guard';
 
 @Component({
   selector: 'app-equipes',

@@ -5,7 +5,7 @@ import { ChampionnatService } from 'projects/commun/src/app/services/championnat
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { RequeteService } from 'projects/commun/src/app/services/requete.service';
-import { CanComponentDeactivate } from '../../utils/can-deactivate.guard';
+import { CanComponentDeactivate } from '@commun/src/app/utils/can-deactivate.guard';
 import { menus } from '../../utils/menus';
 
 @Component({

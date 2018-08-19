@@ -4,7 +4,7 @@ import { RequeteService } from 'projects/commun/src/app/services/requete.service
 import { FairplayService } from '../../services/fairplay.service';
 import { openModal } from 'projects/commun/src/app/utils/utils';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { CanComponentDeactivate } from '../../utils/can-deactivate.guard';
+import { CanComponentDeactivate } from '@commun/src/app/utils/can-deactivate.guard';
 import { FPForm, FPQuestionType } from 'projects/commun/src/app/model/FPForm';
 import { menus } from '../../utils/menus';
 

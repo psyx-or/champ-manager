@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { RequeteService } from 'projects/commun/src/app/services/requete.service';
 import { ParametreService } from '../../services/parametre.service';
 import { sort } from 'projects/commun/src/app/utils/utils';
-import { CanComponentDeactivate } from '../../utils/can-deactivate.guard';
+import { CanComponentDeactivate } from '@commun/src/app/utils/can-deactivate.guard';
 import { Parametre } from 'projects/commun/src/app/model/Parametre';
 import { menus } from '../../utils/menus';
 

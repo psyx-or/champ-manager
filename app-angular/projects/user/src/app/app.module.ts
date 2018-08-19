@@ -20,6 +20,7 @@ import { MatchesEquipeComponent } from './components/matches-equipe/matches-equi
 import { MatchesEquipeResolver } from './components/matches-equipe/matches-equipe.resolver';
 import { HistoriqueEquipeComponent } from './components/historique-equipe/historique-equipe.component';
 import { HistoriqueEquipeResolver } from './components/historique-equipe/historique-equipe.resolver';
+import { EquipeEditionComponent } from './components/equipe-edition/equipe-edition.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { HistoriqueEquipeResolver } from './components/historique-equipe/histori
     ClassementEquipeComponent,
     EquipeComponent,
     MatchesEquipeComponent,
-    HistoriqueEquipeComponent
+    HistoriqueEquipeComponent,
+    EquipeEditionComponent
   ],
   imports: [
     BrowserModule,

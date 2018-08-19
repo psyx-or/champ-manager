@@ -118,15 +118,18 @@ class EquipeController extends CMController
 	/**
 	 * @Route("/equipe/")
 	 * @Method("POST")
-	 * @IsGranted("ROLE_ADMIN")
+	 * @IsGranted("ROLE_USER")
 	 * @ParamConverter("equipes", converter="cm_converter", options={"classe":"App\Entity\Equipe[]"})
 	 */
-	public function majEquipe(array $equipes, EntityManagerInterface $entityManager, UserPasswordEncoderInterface $encoder)
+	public function majEquipe(array $equipes, EntityManagerInterface $entityManager, UserPasswordEncoderInterface $encoder, AuthorizationCheckerInterface $authChecker)
 	{
 		$repository = $this->getDoctrine()->getRepository(Equipe::class);
 
 		foreach ($equipes as $equipe)
 		{
+			if (false === $authChecker->isGranted('ROLE_ADMIN') && $equipe->getId() != $this->getUser()->getId())
+				throw $this->createAccessDeniedException();
+
 			$entite = $repository->find($equipe->getId());
 
 			$changeMdp = $entite->getPassword() == null;
@@ -187,7 +190,7 @@ class EquipeController extends CMController
 			else
 				$entite->setPosition(null);
 
-			if ($changeMdp)
+			if ($changeMdp && true === $authChecker->isGranted('ROLE_ADMIN'))
 				Mail::envoie($this->changeMdp($entite, $entityManager, $encoder));
 		}
 

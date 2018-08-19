@@ -4,7 +4,7 @@ import { JourneeService } from '../../services/journee.service';
 import { NgbDatepickerI18n, NgbDateStruct, NgbDatepickerConfig, NgbDatepicker } from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'moment';
 import { RequeteService } from 'projects/commun/src/app/services/requete.service';
-import { CanComponentDeactivate } from '../../utils/can-deactivate.guard';
+import { CanComponentDeactivate } from '@commun/src/app/utils/can-deactivate.guard';
 import { Championnat } from 'projects/commun/src/app/model/Championnat';
 import { Journee } from 'projects/commun/src/app/model/Journee';
 import { menus } from '../../utils/menus';

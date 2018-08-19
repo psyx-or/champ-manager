@@ -71,6 +71,7 @@ export class EquipeService {
 	 * @param equipes 
 	 */
 	public majEquipes(equipes: Equipe[]): Observable<number> {
+		this.clearCache();
 		return this.http.post<number>("/api/equipe/", equipes.map(this.toServer));
 	}
 

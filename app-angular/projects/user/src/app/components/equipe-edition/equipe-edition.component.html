@@ -1,0 +1,15 @@
+<h1>
+	{{equipe.nom}}
+</h1>
+<br>
+
+<h2 class="section">Mot de passe</h2>
+<!-- TODO -->
+
+<h2 class="section">Informations</h2>
+<br>
+<form class="form" (ngSubmit)="submit()" ngNativeValidate>
+	<app-equipe-detail [equipe]="equipe" [motdepasse]="false"></app-equipe-detail>
+
+	<button type="submit" class="btn btn-primary mt-3" [disabled]="requeteService.chargement">Valider</button>
+</form>

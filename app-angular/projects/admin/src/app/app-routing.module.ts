@@ -21,7 +21,7 @@ import { ParametresComponent } from './components/parametres/parametres.componen
 import { ParametresResolver } from './components/parametres/parametres.resolver';
 import { EquipeComponent } from './components/equipe/equipe.component';
 import { EquipeResolver } from '@commun/src/app/utils/equipe.resolver';
-import { CanDeactivateGuard } from './utils/can-deactivate.guard';
+import { CanDeactivateGuard } from '@commun/src/app/utils/can-deactivate.guard';
 import { FairplayClassementComponent } from './components/fairplay-classement/fairplay-classement.component';
 import { MatchesResolver } from '@commun/src/app/utils/matches.resolver';
 import { CalendrierDoublonsComponent } from './components/calendrier-doublons/calendrier-doublons.component';

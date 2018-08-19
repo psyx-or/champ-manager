@@ -24,13 +24,9 @@ import { FairplayComponent } from './components/fairplay/fairplay.component';
 import { ChampCaracteristiquesComponent } from './components/champ-caracteristiques/champ-caracteristiques.component';
 import { ChampModeleComponent } from './components/champ-modele/champ-modele.component';
 import { ChampModeleResolver } from './utils/champ-modele.resolver';
-import { CartePositionnementComponent } from './components/carte-positionnement/carte-positionnement.component';
 import { ParametresComponent } from './components/parametres/parametres.component';
 import { ParametresResolver } from './components/parametres/parametres.resolver';
-import { EquipeDetailComponent } from './components/equipe-detail/equipe-detail.component';
 import { EquipeComponent } from './components/equipe/equipe.component';
-import { CanDeactivateGuard } from './utils/can-deactivate.guard';
-import { ModalConfirmComponent } from './components/modal-confirm/modal-confirm.component';
 import { FairplayClassementComponent } from './components/fairplay-classement/fairplay-classement.component';
 import { CalendrierDoublonsComponent } from './components/calendrier-doublons/calendrier-doublons.component';
 import { FairplayEquipeComponent } from './components/fairplay-equipe/fairplay-equipe.component';
@@ -56,11 +52,8 @@ import { CommunModule } from 'projects/commun/src/app/commun.module';
     FairplayComponent,
     ChampCaracteristiquesComponent,
     ChampModeleComponent,
-    CartePositionnementComponent,
     ParametresComponent,
-    EquipeDetailComponent,
     EquipeComponent,
-    ModalConfirmComponent,
     FairplayClassementComponent,
     CalendrierDoublonsComponent,
     FairplayEquipeComponent
@@ -79,15 +72,12 @@ import { CommunModule } from 'projects/commun/src/app/commun.module';
 	  FpformsResumeResolver,
 	  ChampModeleResolver,
 	  ParametresResolver,
-	  CanDeactivateGuard,
 	  FairplayEquipeResolver
   ],
   bootstrap: [AppComponent],
   entryComponents: [
 	  ChampImportComponent,
 	  FairplayComponent,
-	  CartePositionnementComponent,
-	  ModalConfirmComponent
   ]
 })																																																																																																																																																																																														
 export class AppModule { }

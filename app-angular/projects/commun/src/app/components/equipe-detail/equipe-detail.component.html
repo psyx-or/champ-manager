@@ -89,7 +89,7 @@
 </div>
 
 <!-- Envoi de mot de passe -->
-<div class="form-group form-row mb-0">
+<div class="form-group form-row mb-0" *ngIf="motdepasse">
 	<div class="col-sm-4">
 		<button type="button" class="btn form-control btn-secondary" 
 				(click)="changeMdp(equipe)">Envoyer un mot de passe manuellement</button>

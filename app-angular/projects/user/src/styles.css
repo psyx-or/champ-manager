@@ -5,3 +5,9 @@ h2.section {
 	border-bottom: solid 1px gray;
 	padding-bottom: 10px;
 }
+
+.modal-xl > .modal-dialog {
+    max-width: unset;
+    min-width: 95%;   
+    width: 95%;
+}

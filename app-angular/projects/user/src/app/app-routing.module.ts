@@ -17,6 +17,8 @@ import { MatchesEquipeComponent } from './components/matches-equipe/matches-equi
 import { MatchesEquipeResolver } from './components/matches-equipe/matches-equipe.resolver';
 import { HistoriqueEquipeComponent } from './components/historique-equipe/historique-equipe.component';
 import { HistoriqueEquipeResolver } from './components/historique-equipe/historique-equipe.resolver';
+import { EquipeEditionComponent } from './components/equipe-edition/equipe-edition.component';
+import { CanDeactivateGuard } from '@commun/src/app/utils/can-deactivate.guard';
 
 const routes: Routes = [
 	{ path: '', pathMatch: 'full', redirectTo: 'championnats' },
@@ -27,6 +29,7 @@ const routes: Routes = [
 	{ path: 'equipe/classement/:equipeId', component: ClassementEquipeComponent, resolve: { dto: ClassementEquipeResolver } },
 	{ path: 'equipe/matches/:equipeId', component: MatchesEquipeComponent, resolve: { equipe: EquipeResolver, championnats: MatchesEquipeResolver } },
 	{ path: 'equipe/historique/:equipeId', component: HistoriqueEquipeComponent, resolve: { dto: HistoriqueEquipeResolver } },
+	{ path: 'equipe/edit/:equipeId', component: EquipeEditionComponent, resolve: { equipe: EquipeResolver }, runGuardsAndResolvers: "always", canDeactivate: [CanDeactivateGuard] },
 	{ path: 'equipe/:equipeId', component: EquipeComponent, resolve: { equipe: EquipeResolver }, runGuardsAndResolvers: "always" },
 ];
 

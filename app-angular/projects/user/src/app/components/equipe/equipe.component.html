@@ -1,5 +1,10 @@
 <app-generic-menu [menu]="menu" [obj]="equipe"></app-generic-menu>
 
+<!-- Message de connexion si nécessaire-->
+<ngb-alert *ngIf="!equipe.responsables[0].nom" [dismissible]="false" type="info">
+	Connectez-vous pour connaître les responsables de cette équipe.
+</ngb-alert>
+
 <!-- Responsables -->
 <h2 *ngIf="equipe.responsables[0].nom" class="section">Responsables</h2>
 <ng-container *ngFor="let resp of equipe.responsables">

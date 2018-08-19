@@ -43,6 +43,13 @@ export class EquipeService {
 	}
 
 	/**
+	 * Vide le cache
+	 */
+	public clearCache(): void {
+		this.cache = null;
+	}
+
+	/**
 	 * Renvoie le nom des équipes d'un sport
 	 * @param sport 
 	 */

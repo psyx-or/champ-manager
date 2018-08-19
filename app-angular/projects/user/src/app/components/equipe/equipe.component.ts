@@ -1,8 +1,10 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { menus } from '../../utils/menus';
 import { Equipe } from '@commun/src/app/model/Equipe';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { jours } from 'projects/commun/src/app/utils/utils';
+import { AuthentService } from '../../services/authent.service';
+import { EquipeService } from '@commun/src/app/services/equipe.service';
 
 @Component({
   selector: 'app-equipe',
@@ -21,6 +23,9 @@ export class EquipeComponent implements OnInit, AfterViewInit {
 
 	constructor(
 		private route: ActivatedRoute,
+		private router: Router,
+		private authentService: AuthentService,
+		private equipeService: EquipeService,
 	) { }
 
 	/**
@@ -31,6 +36,13 @@ export class EquipeComponent implements OnInit, AfterViewInit {
 			.subscribe((data: { equipe: Equipe }) => {
 				this.equipe = data.equipe;
 			});
+
+		this.authentService.getEquipe().subscribe(equipeConnectee => {
+			if (this.equipe && (equipeConnectee != null) != (this.equipe.responsables[0].nom != null)) {
+				this.equipeService.clearCache();
+				this.router.navigate([]);
+			}
+		});
 	}
 
 	/**

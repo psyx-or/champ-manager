@@ -27,7 +27,7 @@ const routes: Routes = [
 	{ path: 'equipe/classement/:equipeId', component: ClassementEquipeComponent, resolve: { dto: ClassementEquipeResolver } },
 	{ path: 'equipe/matches/:equipeId', component: MatchesEquipeComponent, resolve: { equipe: EquipeResolver, championnats: MatchesEquipeResolver } },
 	{ path: 'equipe/historique/:equipeId', component: HistoriqueEquipeComponent, resolve: { dto: HistoriqueEquipeResolver } },
-	{ path: 'equipe/:equipeId', component: EquipeComponent, resolve: { equipe: EquipeResolver } },
+	{ path: 'equipe/:equipeId', component: EquipeComponent, resolve: { equipe: EquipeResolver }, runGuardsAndResolvers: "always" },
 ];
 
 @NgModule({

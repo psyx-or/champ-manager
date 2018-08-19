@@ -52,8 +52,8 @@ class EquipeController extends CMController
     public function getEquipe(Equipe $equipe, AuthorizationCheckerInterface $authChecker)
     {
 		$groupes = array('simple', 'coordonnees');
-		// TODO: authentification remembered
-		if (true === $authChecker->isGranted('ROLE_ADMIN')) {
+		
+		if (true === $authChecker->isGranted('ROLE_USER')) {
 			array_push($groupes, 'responsables');
 		}
 

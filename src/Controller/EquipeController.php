@@ -200,6 +200,25 @@ class EquipeController extends CMController
 	}
 
 	/**
+	 * @Route("/equipe/{id}/mdp")
+	 * @Method("POST")
+	 * @IsGranted("ROLE_USER")
+	 * @ParamConverter("equipe", converter="doctrine.orm")
+	 */
+	public function setMdp(Equipe $equipe, Request $request, EntityManagerInterface $entityManager, UserPasswordEncoderInterface $encoder, AuthorizationCheckerInterface $authChecker)
+	{
+		if (false === $authChecker->isGranted('ROLE_ADMIN') && $equipe->getId() != $this->getUser()->getId())
+			throw $this->createAccessDeniedException();
+
+		$encoded = $encoder->encodePassword($equipe, $request->getContent());
+
+		$equipe->setPassword($encoded);
+		$entityManager->flush();
+
+		return $this->json("ok");
+	}
+
+	/**
 	 * @Route("/equipe/{id}")
 	 * @Method("PATCH")
 	 * @IsGranted("ROLE_ADMIN")

@@ -3,13 +3,42 @@
 </h1>
 <br>
 
-<h2 class="section">Mot de passe</h2>
-<!-- TODO -->
+<div class="card">
+	<!-- Nom de l'équipe -->
+	<div class="card-header">
+		Changement du mot de passe
+	</div>
 
-<h2 class="section">Informations</h2>
+	<!-- Description -->
+	<div class="card-body">
+		<form class="form" (ngSubmit)="changeMdp()" ngNativeValidate>
+			<div class="form-group">
+				<label for="mdp1">Nouveau mot de passe</label>
+				<input type="password" class="form-control" name="mdp1" id="mdp1" [(ngModel)]="mdp1">
+			</div>
+			<div class="form-group">
+				<label for="mdp2">Confirmation du mot de passe</label>
+				<input type="password" class="form-control" name="mdp2" id="mdp2" [(ngModel)]="mdp2">
+			</div>
+			<button type="submit" class="btn btn-primary" [disabled]="requeteService.chargement || mdp1 == '' || mdp2 != mdp1">Valider</button>
+		</form>
+	</div>
+</div>
+
 <br>
-<form class="form" (ngSubmit)="submit()" ngNativeValidate>
-	<app-equipe-detail [equipe]="equipe" [motdepasse]="false"></app-equipe-detail>
 
-	<button type="submit" class="btn btn-primary mt-3" [disabled]="requeteService.chargement">Valider</button>
-</form>
+<div class="card">
+	<!-- Nom de l'équipe -->
+	<div class="card-header">
+		Informations
+	</div>
+	
+	<!-- Description -->
+	<div class="card-body">
+		<form class="form" (ngSubmit)="submit()" ngNativeValidate>
+			<app-equipe-detail [equipe]="equipe" [motdepasse]="false"></app-equipe-detail>
+
+			<button type="submit" class="btn btn-primary" [disabled]="requeteService.chargement">Valider</button>
+		</form>
+	</div>
+</div>

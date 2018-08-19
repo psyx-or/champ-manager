@@ -92,6 +92,15 @@ export class EquipeService {
 	}
 
 	/**
+	 * Force le mot de passe d'une équipe
+	 * @param equipe 
+	 * @param mdp 
+	 */
+	public setMdp(equipe: Equipe, mdp: string): Observable<any> {
+		return this.http.post<any>(`/api/equipe/${equipe.id}/mdp`, mdp);
+	}
+
+	/**
 	 * Transforme les contats d'une équipe pour faciliter l'affichage
 	 * @param equipe 
 	 */

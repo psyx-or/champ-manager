@@ -16,6 +16,8 @@ export class EquipeEditionComponent implements OnInit, CanComponentDeactivate {
 	menu = menus.equipe;
 	equipe: Equipe;
 	initial: string;
+	mdp1: string = '';
+	mdp2: string = '';
 
 	constructor(
 		private route: ActivatedRoute,
@@ -42,6 +44,15 @@ export class EquipeEditionComponent implements OnInit, CanComponentDeactivate {
 		return JSON.stringify(this.equipe) == this.initial;
 	}
 
+	/**
+	 * Change le mot de passe de l'équipe
+	 */
+	changeMdp() {
+		this.requeteService.requete(
+			this.equipeService.setMdp(this.equipe, this.mdp1),
+			() => { alert("Mot de passe changé"); this.mdp1 = this.mdp2 = ''; }
+		);
+	}
 
 	/**
 	 * Mise à jour de l'équipe

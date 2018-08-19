@@ -16,6 +16,12 @@
             <ul class="navbar-nav">
                 <li class="nav-item"><a class="nav-link" routerLink="/championnats"><i class="icon ion-md-trophy"></i> Championnats</a></li>
             </ul>
-        </div>
+		</div>
+		
+		<!-- Bouton de connexion/déconnexion-->
+		<div>
+			<button *ngIf="equipe == null" class="btn btn-success" (click)="connexion()"><i class="icon ion-md-key"></i> Connexion</button>
+			<button *ngIf="equipe != null" class="btn btn-secondary" (click)="deconnexion()"><i class="icon ion-md-walk"></i> Déconnexion</button>
+		</div>
     </div>
 </nav>

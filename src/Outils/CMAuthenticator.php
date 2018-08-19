@@ -11,6 +11,7 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use App\DTO\UserDTO;
 
 /**
  * Authentification par login/mot de passe
@@ -35,7 +36,9 @@ class CMAuthenticator extends AbstractGuardAuthenticator
      */
     public function supports(Request $request)
     {
-        return $request->query->has('login') && $request->query->has('password');
+		return $request->query->has('login') && $request->query->has('password')
+			   ||
+			   $request->request->has('login') && $request->request->has('password');
     }
 
     /**
@@ -45,8 +48,8 @@ class CMAuthenticator extends AbstractGuardAuthenticator
     public function getCredentials(Request $request)
     {
         return array(
-            'login' => $request->query->get('login'),
-            'password' => $request->query->get('password'),
+            'login' => $request->query->has('login') ? $request->query->get('login') : $request->request->get('login'),
+            'password' => $request->query->has('password') ? $request->query->get('password') : $request->request->get('password'),
         );
     }
 
@@ -66,7 +69,7 @@ class CMAuthenticator extends AbstractGuardAuthenticator
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
 		// needed for remember me
-        return new Response();
+        return new JsonResponse(new UserDTO($token->getUser()));
     }
 
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
@@ -85,7 +88,7 @@ class CMAuthenticator extends AbstractGuardAuthenticator
     {
         $data = array(
             // you might translate this message
-            'message' => 'Authentication Required'
+			'message' => 'Authentication Required'
         );
 
         return new JsonResponse($data, Response::HTTP_UNAUTHORIZED);

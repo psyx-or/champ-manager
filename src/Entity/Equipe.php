@@ -301,6 +301,7 @@ class Equipe implements UserInterface, \Serializable
 			$this->id,
 			$this->login,
 			$this->password,
+			$this->nom,
 		));
 	}
 
@@ -311,6 +312,7 @@ class Equipe implements UserInterface, \Serializable
 			$this->id,
 			$this->login,
 			$this->password,
+			$this->nom,
 		) = unserialize($serialized, ['allowed_classes' => false]);
 	}
  

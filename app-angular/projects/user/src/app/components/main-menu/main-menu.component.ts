@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { environment } from '../../../environments/environment';
+import { RequeteService } from '@commun/src/app/services/requete.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { AuthentService } from '../../services/authent.service';
+import { LoginComponent } from '@commun/src/app/components/login/login.component';
+import { Equipe } from '@commun/src/app/model/Equipe';
 
 @Component({
   selector: 'app-main-menu',
@@ -9,10 +14,45 @@ import { environment } from '../../../environments/environment';
 export class MainMenuComponent implements OnInit {
 
 	DEPLOY_PATH = environment.DEPLOY_PATH;
+
+	equipe: Equipe;
 	
-	constructor() { }
+	constructor(
+		public requeteService: RequeteService,
+		private modalService: NgbModal,
+		private authentService: AuthentService
+	) { }
 
 	ngOnInit() {
+		this.authentService.getEquipe().subscribe(
+			equipe => this.equipe = equipe
+		);
 	}
 
+
+	/**
+	 * Connexion
+	 * @param erreur Vrai s'il y a eu une erreur lors de la tentative précédente'
+	 */
+	connexion(erreur: boolean): void {
+		const modal = this.modalService.open(LoginComponent, { centered: true, backdrop: 'static' });
+		modal.componentInstance.error = erreur;
+		modal.result.then(creds => {
+			this.requeteService.requete(
+				this.authentService.authentifie(creds),
+				ok => {
+					if (!ok) this.connexion(true);
+				}
+			);
+		});
+	}
+
+	/**
+	 * Déconnexion
+	 */
+	deconnexion(): void {
+		this.requeteService.requete(
+			this.authentService.deconnecte()
+		);
+	}
 }

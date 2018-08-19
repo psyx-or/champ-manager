@@ -8,7 +8,6 @@ import { ChampionnatsComponent } from './components/championnats/championnats.co
 import { HttpClientModule } from '@angular/common/http';
 import { ChampCreationComponent } from './components/champ-creation/champ-creation.component';
 import { FormsModule } from '@angular/forms';
-import { LoginComponent } from './components/login/login.component';
 import { JourneesChampComponent } from './components/journees-champ/journees-champ.component';
 import { ClassementComponent } from './components/classement/classement.component';
 import { MatchesComponent } from './components/matches/matches.component';
@@ -45,7 +44,6 @@ import { CommunModule } from 'projects/commun/src/app/commun.module';
     MainMenuComponent,
     ChampionnatsComponent,
     ChampCreationComponent,
-    LoginComponent,
     JourneesChampComponent,
     ClassementComponent,
     MatchesComponent,
@@ -86,7 +84,6 @@ import { CommunModule } from 'projects/commun/src/app/commun.module';
   ],
   bootstrap: [AppComponent],
   entryComponents: [
-	  LoginComponent,
 	  ChampImportComponent,
 	  FairplayComponent,
 	  CartePositionnementComponent,

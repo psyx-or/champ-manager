@@ -14,6 +14,8 @@ import { MatchesResolver } from "./utils/matches.resolver";
 import { HierarchieResolver } from "./components/coupe/hierarchie.resolver";
 import { CoupeComponent } from "./components/coupe/coupe.component";
 import { EquipeResolver } from "./utils/equipe.resolver";
+import { LoginComponent } from "./components/login/login.component";
+import { FormsModule } from "@angular/forms";
 
 @NgModule({
 	declarations: [
@@ -21,6 +23,7 @@ import { EquipeResolver } from "./utils/equipe.resolver";
 		RechercheEquipeComponent,
 		GenericMenuComponent,
 		CoupeComponent,
+		LoginComponent,
 		IsTypePipe,
 		SignePipe
 	],
@@ -28,6 +31,7 @@ import { EquipeResolver } from "./utils/equipe.resolver";
 		BrowserModule,
 		NgbModule.forRoot(),
 		HttpClientModule,
+		FormsModule,
 	],
 	providers: [
 		SportResolver,
@@ -39,6 +43,7 @@ import { EquipeResolver } from "./utils/equipe.resolver";
 	],
 	entryComponents: [
 		ModalComponent,
+		LoginComponent,
 	],
 	exports: [
 		ModalComponent,

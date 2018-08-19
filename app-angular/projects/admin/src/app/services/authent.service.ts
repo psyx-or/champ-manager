@@ -17,10 +17,15 @@ export class AuthentService {
 	 * @param creds 
 	 */
 	public authentifie(creds?): Observable<boolean> {
-		// TODO: forcer les droits admin
+		let body: FormData = new FormData();
+		if (creds != null) {
+			body.set('login', creds.login);
+			body.set('password', creds.password);
+		}
+
 		return new Observable<boolean>(observer => {
-			this.http.get<Object>("/api/me", { params: creds }).subscribe(
-				obj => { observer.next(true); observer.complete(); },
+			this.http.post<any>("/api/me", body).subscribe(
+				obj => { observer.next(obj.roles.indexOf("ROLE_ADMIN") != -1); observer.complete(); },
 				err => { observer.next(false); observer.complete(); })
 		});
 	}

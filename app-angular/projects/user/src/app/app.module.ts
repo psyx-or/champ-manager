@@ -17,10 +17,11 @@ import { ClassementEquipeComponent } from './components/classement-equipe/classe
 import { ClassementEquipeResolver } from './components/classement-equipe/classement-equipe.resolver';
 import { EquipeComponent } from './components/equipe/equipe.component';
 import { MatchesEquipeComponent } from './components/matches-equipe/matches-equipe.component';
-import { MatchesEquipeResolver } from './components/matches-equipe/matches-equipe.resolver';
+import { MatchesEquipeResolver } from './utils/matches-equipe.resolver';
 import { HistoriqueEquipeComponent } from './components/historique-equipe/historique-equipe.component';
 import { HistoriqueEquipeResolver } from './components/historique-equipe/historique-equipe.resolver';
 import { EquipeEditionComponent } from './components/equipe-edition/equipe-edition.component';
+import { MatchesSaisieComponent } from './components/matches-saisie/matches-saisie.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { EquipeEditionComponent } from './components/equipe-edition/equipe-editi
     EquipeComponent,
     MatchesEquipeComponent,
     HistoriqueEquipeComponent,
-    EquipeEditionComponent
+    EquipeEditionComponent,
+    MatchesSaisieComponent
   ],
   imports: [
     BrowserModule,

@@ -24,7 +24,18 @@ export var menus: { [nom: string]: Menu } = {
 			{ route: "equipe/matches", icone: 'clipboard', titre: "Matches" },
 			{ route: "equipe/historique", icone: 'filing', titre: "Historique" },
 			{ route: "equipe", icone: 'contact', titre: "Coordonnées" },
-	// 		{ route: "fairplay-equipe/redaction", icone: 'create', titre: "Feuilles rédigées" },
 		]
-	}
+	},
+
+	/** Menu pour l'équipe connectée */
+	equipeConnectee: {
+		titre: (e: Equipe) => e.nom,
+		items: [
+			{ route: "equipe/classement", icone: 'podium', titre: "Classement" },
+			{ route: "equipe/matches", icone: 'clipboard', titre: "Matches" },
+			{ route: "equipe/saisie", icone: 'create', titre: "Saisie des résultats" },
+			{ route: "equipe/historique", icone: 'filing', titre: "Historique" },
+			{ route: "equipe/edit", icone: 'contact', titre: "Coordonnées" },
+		]
+	},
 }

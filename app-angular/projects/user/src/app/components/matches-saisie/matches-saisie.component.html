@@ -1,0 +1,18 @@
+<app-generic-menu [menu]="menu" [obj]="equipe"></app-generic-menu>
+
+<ngb-alert *ngIf="championnats.length == 0" [dismissible]="false" type="info">
+	Pas de match pour cette équipe et la saison en cours.
+</ngb-alert>
+
+<!-- Liste des championnats-->
+<div *ngFor="let championnat of championnats">
+
+	<!-- Description du championnat -->
+	<h2 class="section d-flex justify-content-between">
+		{{ championnat.nom }}
+	</h2>
+
+	<!-- Liste des matches-->
+	<app-matches [matches]="championnat.matches" [equipe]="equipe" [saisie]="true"></app-matches>
+
+</div>

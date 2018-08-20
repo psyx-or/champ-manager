@@ -13,7 +13,7 @@ import { CanComponentDeactivate } from "@commun/src/app/utils/can-deactivate.gua
 })
 export class EquipeEditionComponent implements OnInit, CanComponentDeactivate {
 
-	menu = menus.equipe;
+	menu = menus.equipeConnectee;
 	equipe: Equipe;
 	initial: string;
 	mdp1: string = '';

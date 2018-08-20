@@ -26,6 +26,7 @@ export class MatchesComponent implements OnInit {
 	
 	@Input() matches: Match[];
 	@Input() equipe: Equipe;
+	@Input() saisie: boolean = false;
 
 	avecDates: boolean = false;
 	matchesExt: MatchExt[];
@@ -89,7 +90,7 @@ export class MatchesComponent implements OnInit {
 		if (!match.journee || !match.journee.debut)
 			return;
 
-		this.avecDates = true;
+		this.avecDates = !this.saisie;
 
 		if (!match.equipe1) {
 			match.date = `Du ${moment(match.journee.debut).add(1, 'day').format("DD/MM/YYYY")} au ${moment(match.journee.fin).format("DD/MM/YYYY")}`;

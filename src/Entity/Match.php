@@ -347,6 +347,14 @@ class Match
 		return $this->fpFeuille1;
 	}
 
+	/**
+	 * @Groups({"fpid"})
+	 */
+	public function getFpIdFeuille1(): ?int
+	{
+		return $this->fpFeuille1 == null ? null : $this->fpFeuille1->getId();
+	}
+
 	public function setFpFeuille1(?FPFeuille $fpFeuille1): self
 	{
 		$this->fpFeuille1 = $fpFeuille1;
@@ -360,6 +368,14 @@ class Match
 	public function getFpFeuille2(): ?FPFeuille
 	{
 		return $this->fpFeuille2;
+	}
+
+	/**
+	 * @Groups({"fpid"})
+	 */
+	public function getFpIdFeuille2(): ?int
+	{
+		return $this->fpFeuille2 == null ? null : $this->fpFeuille2->getId();
 	}
 
 	public function setFpFeuille2(?FPFeuille $fpFeuille2): self

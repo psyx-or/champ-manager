@@ -20,7 +20,6 @@ import { CalendrierComponent } from './components/calendrier/calendrier.componen
 import { FairplayEditorComponent } from './components/fairplay-editor/fairplay-editor.component';
 import { FpformsResolver } from './components/fairplay-editor/fairplay-forms.resolver';
 import { FpformsResumeResolver } from './components/champ-creation/fairplay-forms-resume.resolver';
-import { FairplayComponent } from './components/fairplay/fairplay.component';
 import { ChampCaracteristiquesComponent } from './components/champ-caracteristiques/champ-caracteristiques.component';
 import { ChampModeleComponent } from './components/champ-modele/champ-modele.component';
 import { ChampModeleResolver } from './utils/champ-modele.resolver';
@@ -49,7 +48,6 @@ import { CommunModule } from 'projects/commun/src/app/commun.module';
     EquipesComponent,
     CalendrierComponent,
     FairplayEditorComponent,
-    FairplayComponent,
     ChampCaracteristiquesComponent,
     ChampModeleComponent,
     ParametresComponent,
@@ -77,7 +75,6 @@ import { CommunModule } from 'projects/commun/src/app/commun.module';
   bootstrap: [AppComponent],
   entryComponents: [
 	  ChampImportComponent,
-	  FairplayComponent,
   ]
 })																																																																																																																																																																																														
 export class AppModule { }

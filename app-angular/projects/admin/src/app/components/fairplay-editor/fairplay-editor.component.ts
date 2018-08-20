@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RequeteService } from 'projects/commun/src/app/services/requete.service';
-import { FairplayService } from '../../services/fairplay.service';
+import { FairplayService } from 'projects/commun/src/app/services/fairplay.service';
 import { openModal } from 'projects/commun/src/app/utils/utils';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CanComponentDeactivate } from '@commun/src/app/utils/can-deactivate.guard';

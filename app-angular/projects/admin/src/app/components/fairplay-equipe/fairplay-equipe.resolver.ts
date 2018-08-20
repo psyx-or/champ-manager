@@ -2,7 +2,7 @@ import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from "@angular/r
 import { RequeteService } from "projects/commun/src/app/services/requete.service";
 import { Observable } from "rxjs";
 import { Injectable } from "@angular/core";
-import { FairplayService } from "../../services/fairplay.service";
+import { FairplayService } from "projects/commun/src/app/services/fairplay.service";
 import { FPFeuille } from "projects/commun/src/app/model/FPFeuille";
 
 @Injectable()

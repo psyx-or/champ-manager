@@ -3,11 +3,11 @@ import { RequeteService } from 'projects/commun/src/app/services/requete.service
 import { MatchService } from 'projects/commun/src/app/services/match.service';
 import { fromDisp, toDisp } from 'projects/commun/src/app/utils/utils';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { FairplayComponent } from '../fairplay/fairplay.component';
 import { Journee } from 'projects/commun/src/app/model/Journee';
 import { FPForm } from 'projects/commun/src/app/model/FPForm';
 import { Match } from 'projects/commun/src/app/model/Match';
 import { FPFeuille } from 'projects/commun/src/app/model/FPFeuille';
+import { FairplayComponent } from '@commun/src/app/components/fairplay/fairplay.component';
 
 @Component({
   selector: 'app-match-journee',
@@ -73,6 +73,6 @@ export class MatchJourneeComponent implements OnInit {
 		const modal = this.modalService.open(FairplayComponent, { centered: true, backdrop: 'static', size: 'lg' });
 		modal.componentInstance.match = match;
 		modal.componentInstance.equipe = equipe;
-		modal.result.then((res: FPFeuille) => match['fpFeuille'+equipe] = res);
+		modal.result.then((res: FPFeuille) => match['fpFeuille'+equipe] = res, () => {});
 	}
 }

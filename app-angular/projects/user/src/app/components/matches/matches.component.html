@@ -35,6 +35,14 @@
 					<a *ngIf="match.terrain" [routerLink]="['/equipe', match.equipe1.id]">{{match.terrain}}</a>
 				</td>
 
+				<!-- Saisie du résultat -->
+				<td *ngIf="saisie" class="text-center">
+					<span class="text-muted" *ngIf="match.statut == Statuts.VALIDE">Match validé</span>
+					<span class="text-muted" *ngIf="match.statut == Statuts.AJOUER"><button class="btn btn-primary" (click)="saisieFairPlay(match)">Saisie</button></span>
+					<span class="text-muted" *ngIf="match.statut == Statuts.JOUE"><button class="btn btn-warning" (click)="saisieFairPlay(match)">Renseigner le fair-play</button></span>
+					<span class="text-muted" *ngIf="match.statut == Statuts.JOUE_FP"><button class="btn btn-secondary" (click)="saisieFairPlay(match)">Modifier</button></span>
+				</td>
+
 			</ng-container>
 
 
@@ -44,6 +52,7 @@
 					Exempt: {{ match.exempt.nom }}
 				</td>
 				<td colspan="2" *ngIf="avecDates"></td>
+				<td *ngIf="saisie"></td>
 			</ng-container>
 		</tr>
 

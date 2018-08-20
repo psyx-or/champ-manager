@@ -3,7 +3,7 @@ import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/r
 import { Observable } from 'rxjs';
 import { RequeteService } from 'projects/commun/src/app/services/requete.service';
 import { FPForm } from 'projects/commun/src/app/model/FPForm';
-import { FairplayService } from '../../services/fairplay.service';
+import { FairplayService } from 'projects/commun/src/app/services/fairplay.service';
 
 @Injectable()
 export class FpformsResumeResolver implements Resolve<FPForm[]> {

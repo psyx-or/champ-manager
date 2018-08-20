@@ -21,6 +21,8 @@ export class Match {
 	exempt?: Equipe;
 	fpFeuille1?: FPFeuille;
 	fpFeuille2?: FPFeuille;
+	hasFpFeuille1?: boolean;
+	hasFpFeuille2?: boolean;
 
 	dispEquipe1?: string;
 	dispEquipe2?: string;

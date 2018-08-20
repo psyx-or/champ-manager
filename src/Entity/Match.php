@@ -348,11 +348,11 @@ class Match
 	}
 
 	/**
-	 * @Groups({"fpid"})
+	 * @Groups({"hasfp"})
 	 */
-	public function getFpIdFeuille1(): ?int
+	public function getHasFpFeuille1(): ?bool
 	{
-		return $this->fpFeuille1 == null ? null : $this->fpFeuille1->getId();
+		return $this->fpFeuille1 != null;
 	}
 
 	public function setFpFeuille1(?FPFeuille $fpFeuille1): self
@@ -371,11 +371,11 @@ class Match
 	}
 
 	/**
-	 * @Groups({"fpid"})
+	 * @Groups({"hasfp"})
 	 */
-	public function getFpIdFeuille2(): ?int
+	public function getHasFpFeuille2(): ? bool
 	{
-		return $this->fpFeuille2 == null ? null : $this->fpFeuille2->getId();
+		return $this->fpFeuille2 != null;
 	}
 
 	public function setFpFeuille2(?FPFeuille $fpFeuille2): self

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 import { RequeteService } from 'projects/commun/src/app/services/requete.service';
-import { FairplayService } from '../../services/fairplay.service';
+import { FairplayService } from 'projects/commun/src/app/services/fairplay.service';
 import { FPForm } from 'projects/commun/src/app/model/FPForm';
 
 @Injectable()

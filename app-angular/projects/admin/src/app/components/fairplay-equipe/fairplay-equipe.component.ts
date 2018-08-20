@@ -3,8 +3,8 @@ import { Equipe } from 'projects/commun/src/app/model/Equipe';
 import { ActivatedRoute } from '@angular/router';
 import { FPFeuille } from 'projects/commun/src/app/model/FPFeuille';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { FairplayComponent } from '../fairplay/fairplay.component';
 import { menus } from '../../utils/menus';
+import { FairplayComponent } from '@commun/src/app/components/fairplay/fairplay.component';
 
 @Component({
   selector: 'app-fairplay-equipe',
@@ -46,6 +46,6 @@ export class FairplayEquipeComponent implements OnInit {
 	fairplay(feuille: FPFeuille, i: number): void {
 		const modal = this.modalService.open(FairplayComponent, { centered: true, backdrop: 'static', size: 'lg' });
 		modal.componentInstance.feuille = feuille;
-		modal.result.then((res: FPFeuille) => this.feuilles[i].ratio = res.ratio);
+		modal.result.then((res: FPFeuille) => this.feuilles[i].ratio = res.ratio, () => {});
 	}
 }

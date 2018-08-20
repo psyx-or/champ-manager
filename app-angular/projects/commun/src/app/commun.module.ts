@@ -20,6 +20,7 @@ import { CartePositionnementComponent } from "./components/carte-positionnement/
 import { EquipeDetailComponent } from "./components/equipe-detail/equipe-detail.component";
 import { ModalConfirmComponent } from "./components/modal-confirm/modal-confirm.component";
 import { CanDeactivateGuard } from "./utils/can-deactivate.guard";
+import { FairplayComponent } from "./components/fairplay/fairplay.component";
 
 @NgModule({
 	declarations: [
@@ -31,6 +32,7 @@ import { CanDeactivateGuard } from "./utils/can-deactivate.guard";
 		CartePositionnementComponent,
 		EquipeDetailComponent,
 		ModalConfirmComponent,
+		FairplayComponent,
 		IsTypePipe,
 		SignePipe
 	],
@@ -54,6 +56,7 @@ import { CanDeactivateGuard } from "./utils/can-deactivate.guard";
 		LoginComponent,
 		ModalConfirmComponent,
 		CartePositionnementComponent,
+		FairplayComponent,
 	],
 	exports: [
 		ModalComponent,
@@ -61,6 +64,7 @@ import { CanDeactivateGuard } from "./utils/can-deactivate.guard";
 		GenericMenuComponent,
 		CoupeComponent,
 		EquipeDetailComponent,
+		FairplayComponent,
 		IsTypePipe,
 		SignePipe,
 	]

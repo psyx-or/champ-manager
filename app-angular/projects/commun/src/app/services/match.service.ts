@@ -58,6 +58,23 @@ export class MatchService {
 	}
 
 	/**
+	 * Met à jour un match
+	 * @param journee 
+	 */
+	public majMatch(match: Match, feuille?: File): Observable<any> {
+		let body: FormData = new FormData();
+		body.set("id", match.id.toString());
+		body.set("score1", match.score1 + "");
+		body.set("score2", match.score2 + "");
+		body.set("forfait1", match.forfait1 + "");
+		body.set("forfait2", match.forfait2 + "");
+		if (feuille)
+			body.set("feuille", feuille, feuille.name);
+
+		return this.http.post<any>("/api/match/", body);
+	}
+
+	/**
 	 * Renvoie la liste des matches à valider
 	 * @param sport
 	 */

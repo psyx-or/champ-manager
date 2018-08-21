@@ -35,6 +35,8 @@
 					<a *ngIf="match.terrain" [routerLink]="['/equipe', match.equipe1.id]">{{match.terrain}}</a>
 				</td>
 
+				<!-- TODO: feuille de match -->
+
 				<!-- Saisie du résultat -->
 				<td *ngIf="saisie" class="text-center">
 					<span class="text-muted" *ngIf="match.statut == Statuts.VALIDE">Match validé</span>

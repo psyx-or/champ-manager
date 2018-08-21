@@ -22,6 +22,7 @@ import { HistoriqueEquipeComponent } from './components/historique-equipe/histor
 import { HistoriqueEquipeResolver } from './components/historique-equipe/historique-equipe.resolver';
 import { EquipeEditionComponent } from './components/equipe-edition/equipe-edition.component';
 import { MatchesSaisieComponent } from './components/matches-saisie/matches-saisie.component';
+import { ResultatSaisieComponent } from './components/resultat-saisie/resultat-saisie.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { MatchesSaisieComponent } from './components/matches-saisie/matches-sais
     MatchesEquipeComponent,
     HistoriqueEquipeComponent,
     EquipeEditionComponent,
-    MatchesSaisieComponent
+    MatchesSaisieComponent,
+    ResultatSaisieComponent
   ],
   imports: [
     BrowserModule,
@@ -52,6 +54,9 @@ import { MatchesSaisieComponent } from './components/matches-saisie/matches-sais
 	MatchesEquipeResolver,
 	HistoriqueEquipeResolver
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [
+	  ResultatSaisieComponent,
+  ]
 })
 export class AppModule { }

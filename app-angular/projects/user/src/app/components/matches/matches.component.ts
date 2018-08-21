@@ -6,6 +6,8 @@ import * as moment from 'moment';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FPFeuille } from '@commun/src/app/model/FPFeuille';
 import { FairplayComponent } from '@commun/src/app/components/fairplay/fairplay.component';
+import { ResultatSaisieComponent } from '../resultat-saisie/resultat-saisie.component';
+import { Router } from '@angular/router';
 
 enum StatutMatch { VALIDE, AJOUER, JOUE, JOUE_FP }
 
@@ -41,6 +43,7 @@ export class MatchesComponent implements OnInit {
 
 
 	constructor(
+		private router: Router,
 		private modalService: NgbModal
 	) { }
 
@@ -132,7 +135,7 @@ export class MatchesComponent implements OnInit {
 		if (match.valide) {
 			match.statut = StatutMatch.VALIDE;
 		}
-		else if (match.score1 == null && match.score2 == null && !match.forfait1 && !match.forfait2) {
+		else if (match.valide === null) {
 			match.statut = StatutMatch.AJOUER;
 		}
 		else if (this.avecFP) {
@@ -155,10 +158,10 @@ export class MatchesComponent implements OnInit {
 		if (!this.avecFP)
 			return this.saisieResultat(match);
 
-		let iEquipe = match.equipe1.id ? 1 : 2;
+		let iEquipe = match.equipe1.id == this.equipe.id ? 1 : 2;
 		const modal = this.modalService.open(FairplayComponent, { centered: true, backdrop: 'static', size: 'lg' });
 		modal.componentInstance.match = match;
-		modal.componentInstance.equipe = this.equipe.id == iEquipe;
+		modal.componentInstance.equipe = iEquipe;
 		modal.result.then((res: FPFeuille) => {
 			match['hasFpFeuille' + iEquipe] = true;
 			this.calculeStatut(match);
@@ -171,6 +174,10 @@ export class MatchesComponent implements OnInit {
 	 * @param match 
 	 */
 	saisieResultat(match: MatchExt): void {
-		//TODO
+		const modal = this.modalService.open(ResultatSaisieComponent, { centered: true, backdrop: 'static' });
+		modal.componentInstance.match = match;
+		modal.result.then((res: FPFeuille) => {
+			this.router.navigate(["equipe", "classement", this.equipe.id]);
+		}, () => { });
 	}
 }

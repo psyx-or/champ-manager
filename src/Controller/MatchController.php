@@ -110,11 +110,41 @@ class MatchController extends CMController
 
 	/**
 	 * @Route("/match/")
+	 * @Method("POST")
+	 * @IsGranted("ROLE_USER")
+	 */
+	public function maj(Request $request, EntityManagerInterface $entityManager, AuthorizationCheckerInterface $authChecker)
+	{
+		$match = new Match();
+		$match->setId($request->request->get('id'));
+		$match->setForfait1($request->request->get('forfait1') == "true");
+		$match->setForfait2($request->request->get('forfait2') == "true");
+
+		if (!$match->getForfait1())
+			$match->setScore1($request->request->get('score1'));
+		if (!$match->getForfait2())
+			$match->setScore2($request->request->get('score2'));
+
+		if ($request->files->has("feuille"))
+		{
+			$fichier = $request->files->get("feuille");
+			$nom = "feuille_".$match->getId().".".$fichier->getClientOriginalExtension();
+
+			$fichier->move($this->getParameter('rep_feuilles'),	$nom);
+
+			$match->setFeuille($nom);
+		}
+		
+		return $this->majListe(array($match), $entityManager, $authChecker);
+	}
+
+	/**
+	 * @Route("/match/")
 	 * @Method("PUT")
 	 * @IsGranted("ROLE_ADMIN")
 	 * @ParamConverter("matches", converter="cm_converter", options={"classe":"App\Entity\Match[]"})
 	 */
-	public function maj(array $matches, EntityManagerInterface $entityManager) 
+	public function majListe(array $matches, EntityManagerInterface $entityManager, AuthorizationCheckerInterface $authChecker) 
 	{
 		$res = array();
 		$repository = $this->getDoctrine()->getRepository(Match::class);
@@ -123,8 +153,22 @@ class MatchController extends CMController
 		foreach ($matches as $match) 
 		{
 			$entity = $repository->find($match->getId());
+
+			// Petits contrôles pour les petits malins
+			if (false === $authChecker->isGranted('ROLE_ADMIN')) 
+			{
+				if ($entity->getEquipe1()->getId() != $this->getUser()->getId() && $entity->getEquipe2()->getId() != $this->getUser()->getId())
+					throw $this->createAccessDeniedException();
+				if ($entity->getValide())
+					throw $this->createAccessDeniedException();
+			}
+
 			array_push($res, $entity);
 			$champ = $entity->getJournee()->getChampionnat();
+
+			// Feuille de match
+			if ($match->getFeuille() != null)
+				$entity->setFeuille($match->getFeuille());
 
 			// Si pas de modif, on passe
 			if ($entity->getScore1() == $match->getScore1() && $entity->getScore2() == $match->getScore2() &&
@@ -137,11 +181,11 @@ class MatchController extends CMController
 			$entity->setScore2($match->getScore2());
 			$entity->setForfait2($match->getForfait2());
 			if ($match->getScore1() != null || $match->getScore2() != null || $match->getForfait1() || $match->getForfait2())
-				$entity->setValide(true);
+				$entity->setValide($authChecker->isGranted('ROLE_ADMIN') === true);
 			else
 				$entity->setValide(null);
 
-			// TODO: date saisie && remplissage feuille de fair-play && feuille de match
+			// TODO: date saisie
 
 			// Si c'est un match de coupe, on met à jour le match suivant
 			// avec l'équipe vainqueur

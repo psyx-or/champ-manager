@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -145,10 +146,17 @@ class FairPlayController extends CMController
 	/**
 	 * @Route("/fairplay/feuille/{id}/{equipe}")
 	 * @Method("GET")
-	 * @IsGranted("ROLE_ADMIN")
+	 * @IsGranted("ROLE_USER")
 	 */
-	public function getFeuille(Match $match, $equipe)
+	public function getFeuille(Match $match, $equipe, AuthorizationCheckerInterface $authChecker)
 	{
+		if (false === $authChecker->isGranted('ROLE_ADMIN')) 
+		{
+			$redacteur = ($equipe == 1 ? $match->getEquipe1() : $match->getEquipe2());
+			if ($redacteur->getId() != $this->getUser()->getId())
+				throw $this->createAccessDeniedException();
+		}
+
 		$fpForm = $match->getJournee()->getChampionnat()->getFpForm();
 		$feuille = $equipe == 1 ? $match->getFpFeuille1() : $match->getFpFeuille2();
 		
@@ -183,12 +191,15 @@ class FairPlayController extends CMController
 	/**
 	 * @Route("/fairplay/feuille/{id}")
 	 * @Method("POST")
-	 * @IsGranted("ROLE_ADMIN")
+	 * @IsGranted("ROLE_USER")
 	 * @ParamConverter("match", converter="doctrine.orm")
 	 * @ParamConverter("dto", converter="cm_converter")
 	 */
-	public function majFeuille(Match $match, FPFeuilleAfficheDTO $dto, EntityManagerInterface $entityManager)
+	public function majFeuille(Match $match, FPFeuilleAfficheDTO $dto, EntityManagerInterface $entityManager, AuthorizationCheckerInterface $authChecker)
 	{
+		if (false === $authChecker->isGranted('ROLE_ADMIN') && $dto->getFpFeuille()->getEquipeRedactrice()->getId() != $this->getUser()->getId())
+				throw $this->createAccessDeniedException();
+
 		// Récupération des équipes
 		$repository = $this->getDoctrine()->getRepository(Equipe::class);
 		$dto->getFpFeuille()->setEquipeRedactrice($repository->find($dto->getFpFeuille()->getEquipeRedactrice()->getId()));

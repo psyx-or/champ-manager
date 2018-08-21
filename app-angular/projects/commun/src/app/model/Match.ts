@@ -13,7 +13,7 @@ export class Match {
 	score2?: number;
 	feuille?: string;
 	dateSaisie: Date;
-	valide: boolean;
+	valide?: boolean;
 	forfait1: boolean;
 	forfait2: boolean;
 	match1?: Match;

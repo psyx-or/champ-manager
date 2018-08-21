@@ -11,3 +11,12 @@ h2.section {
     min-width: 95%;   
     width: 95%;
 }
+
+.modal-content {
+	max-height: 90vh;
+	overflow-y: auto;
+}
+
+.custom-file-input:lang(fr) ~ .custom-file-label::after {
+	content: "Parcourir...";
+}

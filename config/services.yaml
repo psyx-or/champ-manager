@@ -2,6 +2,7 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     db.table_prefix: cm_
+    rep_feuilles: '%kernel.project_dir%/feuilles'
 
 services:
     # default configuration for services in *this* file

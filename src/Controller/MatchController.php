@@ -78,11 +78,11 @@ class MatchController extends CMController
 
 		return $this->groupJson($query->getResult(), 'simple', 'matches', 'coordonnees', 'hasfp');
 	}
-	
-    /**
-     * @Route("/match/{id}")
-     * @Method("GET")
-     */
+
+	/**
+	 * @Route("/match/{id}", requirements={"id"="\d+"})
+	 * @Method("GET")
+	 */
     public function liste(Championnat $championnat, AuthorizationCheckerInterface $authChecker)
     {
 		$groupes = array('simple', 'matches');
@@ -92,6 +92,16 @@ class MatchController extends CMController
 
         return $this->groupJson($championnat, ...$groupes);
 	}
+	/**
+	 * @Route("/match/{feuille}")
+	 * @Method("GET")
+	 * @IsGranted("ROLE_USER")
+	 */
+	public function getFeuille(string $feuille)
+	{
+		return $this->file($this->getParameter('rep_feuilles')."/".basename($feuille));
+	}
+
 
 	/**
 	 * @Route("/match/{id}")

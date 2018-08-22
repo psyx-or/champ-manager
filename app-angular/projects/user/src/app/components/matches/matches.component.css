@@ -31,3 +31,7 @@ td {
 .sansterrain {
 	font-style: italic;
 }
+
+td.feuille {
+	width: 2em;
+}

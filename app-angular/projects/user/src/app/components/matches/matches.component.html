@@ -35,7 +35,12 @@
 					<a *ngIf="match.terrain" [routerLink]="['/equipe', match.equipe1.id]">{{match.terrain}}</a>
 				</td>
 
-				<!-- TODO: feuille de match -->
+				<!-- Feuille de match -->
+				<td *ngIf="saisie" class="text-center feuille">
+					<a *ngIf="match.feuille" [href]="'/api/match/' + match.feuille" ngbTooltip="Afficher la feuille de match" class="btn btn-primary">
+						<i class="icon ion-md-clipboard"></i>
+					</a>
+				</td>
 
 				<!-- Saisie du résultat -->
 				<td *ngIf="saisie" class="text-center">
@@ -54,7 +59,7 @@
 					Exempt: {{ match.exempt.nom }}
 				</td>
 				<td colspan="2" *ngIf="avecDates"></td>
-				<td *ngIf="saisie"></td>
+				<td colspan="2" *ngIf="saisie"></td>
 			</ng-container>
 		</tr>
 

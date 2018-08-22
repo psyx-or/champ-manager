@@ -130,8 +130,6 @@ export class MatchesComponent implements OnInit {
 		if (!this.equipe || !match.equipe1 || !match.equipe2)
 			return;
 
-		//TODO: feuille de match
-
 		if (match.valide) {
 			match.statut = StatutMatch.VALIDE;
 		}

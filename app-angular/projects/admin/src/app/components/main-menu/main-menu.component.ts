@@ -12,9 +12,18 @@ export class MainMenuComponent {
 
 	DEPLOY_PATH = environment.DEPLOY_PATH;
 
+	navbarOpen: boolean = false;
+
 	constructor(
 		private router: Router
 	) { }
+
+	/**
+	 * Affiche/masque le menu en vue réduite
+	 */
+	toggleNavbar() {
+		this.navbarOpen = !this.navbarOpen;
+	}
 
 	/**
 	 * Sélection d'une équipe dans la zone de recherche

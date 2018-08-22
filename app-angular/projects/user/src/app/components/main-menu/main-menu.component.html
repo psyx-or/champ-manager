@@ -6,24 +6,26 @@
             <img src="{{DEPLOY_PATH}}assets/brand.png" width="30" height="30" class="d-inline-block align-top">
         </a>
 
-        <!-- Toggler --><!-- TODO -->
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+        <!-- Toggler -->
+        <button class="navbar-toggler" type="button" (click)="toggleNavbar()">
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <!-- Menu -->
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
+        <div class="collapse navbar-collapse" [class.show]="navbarOpen">
+			
+			<!-- Menu -->
+            <ul class="navbar-nav mr-auto">
                 <li class="nav-item"><a class="nav-link" routerLink="/championnats"><i class="icon ion-md-trophy"></i> Championnats</a></li>
                 <li class="nav-item" *ngIf="equipe != null"><a class="nav-link" [routerLink]="['/equipe', 'saisie', equipe.id]"><i class="icon ion-md-create"></i> Saisie des résultats</a></li>
                 <li class="nav-item" *ngIf="equipe != null"><a class="nav-link" [routerLink]="['/equipe', 'edit', equipe.id]"><i class="icon ion-md-contact"></i> Coordonnées</a></li>
             </ul>
+
+			<!-- Bouton de connexion/déconnexion-->
+			<div>
+				<button *ngIf="equipe == null" class="btn btn-success" (click)="connexion()"><i class="icon ion-md-key"></i> Connexion</button>
+				<button *ngIf="equipe != null" class="btn btn-secondary" (click)="deconnexion()"><i class="icon ion-md-walk"></i> Déconnexion</button>
+			</div>
 		</div>
 		
-		<!-- Bouton de connexion/déconnexion-->
-		<div>
-			<button *ngIf="equipe == null" class="btn btn-success" (click)="connexion()"><i class="icon ion-md-key"></i> Connexion</button>
-			<button *ngIf="equipe != null" class="btn btn-secondary" (click)="deconnexion()"><i class="icon ion-md-walk"></i> Déconnexion</button>
-		</div>
     </div>
 </nav>

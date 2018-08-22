@@ -16,6 +16,7 @@ export class MainMenuComponent implements OnInit {
 	DEPLOY_PATH = environment.DEPLOY_PATH;
 
 	equipe: Equipe;
+	navbarOpen: boolean = false;
 	
 	constructor(
 		public requeteService: RequeteService,
@@ -29,6 +30,12 @@ export class MainMenuComponent implements OnInit {
 		);
 	}
 
+	/**
+	 * Affiche/masque le menu en vue réduite
+	 */
+	toggleNavbar() {
+		this.navbarOpen = !this.navbarOpen;
+	}
 
 	/**
 	 * Connexion

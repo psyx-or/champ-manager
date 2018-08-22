@@ -7,13 +7,14 @@
         </a>
 
         <!-- Toggler -->
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+		<button class="navbar-toggler" type="button" (click)="toggleNavbar()">
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <!-- Menu -->
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
+		<div class="collapse navbar-collapse" [class.show]="navbarOpen">
+
+			<!-- Menu -->
+            <ul class="navbar-nav mr-auto">
                 <li class="nav-item"><a class="nav-link" routerLink="/championnats"><i class="icon ion-md-trophy"></i> Championnats</a></li>
                 <li class="nav-item"><a class="nav-link" routerLink="/matches/avalider"><i class="icon ion-md-checkbox-outline"></i> Matches à valider</a></li>
                 <li class="nav-item"><a class="nav-link" routerLink="/equipes"><i class="icon ion-md-contacts"></i> Equipes</a></li>
@@ -28,11 +29,11 @@
 					</div>
 				</li>
             </ul>
-        </div>
 
-		<!-- Zone de recherche -->
-		<div>
-			<app-recherche-equipe (select)="selectEquipe($event)"></app-recherche-equipe>
-		</div>
+			<!-- Zone de recherche -->
+			<div>
+				<app-recherche-equipe (select)="selectEquipe($event)"></app-recherche-equipe>
+			</div>
+        </div>
     </div>
 </nav>

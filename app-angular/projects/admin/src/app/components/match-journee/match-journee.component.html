@@ -32,16 +32,16 @@
 					</td>
 
 					<!-- Feuille de match-->
-					<td class="text-center lien pt-2">
-						<span *ngIf="match.feuille" (click)="afficheFeuille(match)" ngbTooltip="Feuille de match">
-							<i class='icon ion-md-clipboard'></i>
-						</span>
+					<td class="text-center">
+						<a *ngIf="match.feuille" [href]="'/api/match/' + match.feuille" ngbTooltip="Afficher la feuille de match" class="text-dark">
+							<i class="icon ion-md-clipboard"></i>
+						</a>
 					</td>
 					<!-- Bouton de validation -->
 					<td *ngIf="match.valide === false" class="text-center">
 						<button class="btn btn-success" type="button" (click)="valide(match)">Valider</button>
 					</td>
-					<td *ngIf="match.valide === true" class="text-center text-success valide pt-2">
+					<td *ngIf="match.valide === true" class="text-center text-success valide">
 						<div ngbTooltip="Match validé">
 							<i class='icon ion-md-checkbox-outline'></i>
 						</div>

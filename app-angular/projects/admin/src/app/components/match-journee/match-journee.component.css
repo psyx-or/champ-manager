@@ -19,3 +19,7 @@
 .matchvalide input[type="text"] {
 	background-color: #28a74560 !important;
 }
+
+td {
+	vertical-align: middle;
+}

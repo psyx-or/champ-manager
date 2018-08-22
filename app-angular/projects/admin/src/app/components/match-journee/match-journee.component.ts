@@ -56,15 +56,6 @@ export class MatchJourneeComponent implements OnInit {
 	}
 
 	/**
-	 * Affiche une feuille de match
-	 * @param match 
-	 */
-	afficheFeuille(match: Match): void {
-		//TODO affichage feuille de match
-		alert(match.feuille);
-	}
-
-	/**
 	 * Affiche une feuille de fair-play et récupère l'éventuel nouveau ratio
 	 * @param match 
 	 * @param equipe 

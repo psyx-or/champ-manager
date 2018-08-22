@@ -14,7 +14,7 @@
 		<div class="form-group">
 			<label for="score1">{{match.equipe1.nom}}</label>
 			<input type="number" class="form-control" name="score1" id="score1" 
-				   [(ngModel)]="match.score1" [disabled]="match.forfait1" required>
+				   [(ngModel)]="match.score1" [disabled]="match.forfait1 || desactive" required>
 
 			<div class="form-check">
 				<input class="form-check-input" type="checkbox" name="forfait1" id="forfait1" [(ngModel)]="match.forfait1">
@@ -27,7 +27,7 @@
 		<div class="form-group">
 			<label for="score2">{{match.equipe2.nom}}</label>
 			<input type="number" class="form-control" name="score2" id="score2" 
-			       [(ngModel)]="match.score2" [disabled]="match.forfait2" required>
+			       [(ngModel)]="match.score2" [disabled]="match.forfait2 || desactive" required>
 
 			<div class="form-check">
 				<input class="form-check-input" type="checkbox" name="forfait2" id="forfait2" [(ngModel)]="match.forfait2">
@@ -51,6 +51,7 @@
 		------------------- -->
 	<div class="modal-footer">
 		<button type="button" class="btn btn-secondary" (click)="activeModal.dismiss()">Annuler</button>
+		<button type="button" class="btn btn-danger" [disabled]="requeteService.chargement" (click)="annulerSaisie()" *ngIf="match.valide === false">Effacer la saisie</button>
 		<button type="submit" class="btn btn-primary" [disabled]="requeteService.chargement">Enregistrer</button>
 	</div>
 

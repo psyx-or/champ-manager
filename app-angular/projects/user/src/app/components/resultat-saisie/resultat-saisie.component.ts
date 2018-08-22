@@ -14,6 +14,7 @@ export class ResultatSaisieComponent {
 	@Input() match: Match;
 
 	feuille: File;
+	desactive: boolean = false;
 
 	constructor(
 		public activeModal: NgbActiveModal,
@@ -21,12 +22,31 @@ export class ResultatSaisieComponent {
 		private matchService: MatchService
 	) { }
 
+	/**
+	 * Sélection de la feuille de match
+	 * @param fichiers 
+	 */
 	selectionFichier(fichiers: FileList) {
 		this.feuille = fichiers.item(0);
 	}
 
-	//TODO: annulation de saisie
+	/**
+	 * Annule la saisie existante
+	 */
+	annulerSaisie() {
+		this.desactive = true;
+		
+		this.match.score1 = null;
+		this.match.score2 = null;
+		this.match.forfait1 = false;
+		this.match.forfait2 = false;
 
+		this.submit();
+	}
+
+	/**
+	 * Validation du formulaire
+	 */
 	submit() {
 		this.requeteService.requete(
 			this.matchService.majMatch(this.match, this.feuille),

@@ -92,6 +92,7 @@ class MatchController extends CMController
 
         return $this->groupJson($championnat, ...$groupes);
 	}
+	
 	/**
 	 * @Route("/match/{feuille}")
 	 * @Method("GET")
@@ -130,9 +131,9 @@ class MatchController extends CMController
 		$match->setForfait1($request->request->get('forfait1') == "true");
 		$match->setForfait2($request->request->get('forfait2') == "true");
 
-		if (!$match->getForfait1())
+		if (!$match->getForfait1() && $request->request->has('score1'))
 			$match->setScore1($request->request->get('score1'));
-		if (!$match->getForfait2())
+		if (!$match->getForfait2() && $request->request->has('score2'))
 			$match->setScore2($request->request->get('score2'));
 
 		if ($request->files->has("feuille"))
@@ -191,9 +192,15 @@ class MatchController extends CMController
 			$entity->setScore2($match->getScore2());
 			$entity->setForfait2($match->getForfait2());
 			if ($match->getScore1() != null || $match->getScore2() != null || $match->getForfait1() || $match->getForfait2())
+			{
 				$entity->setValide($authChecker->isGranted('ROLE_ADMIN') === true);
+			}
 			else
+			{
+				// Annulation de saisie
 				$entity->setValide(null);
+				$entity->setFeuille(null);
+			}
 
 			// TODO: date saisie
 

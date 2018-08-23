@@ -58,7 +58,7 @@ DirectoryIndex index.php
     RewriteRule ^ %{ENV:BASE}/index.php [L]
 
     RewriteCond %{REQUEST_FILENAME} /admin
-    RewriteRule ^ - [L]
+    RewriteRule ^ %{ENV:BASE}/admin/index.html [L]
 	
 	RewriteCond %{REQUEST_FILENAME} !/user
 	RewriteRule ^ %{ENV:BASE}/user/index.html

@@ -5,7 +5,7 @@
     "ng": "ng",
     "start-admin": "ng serve admin --proxy-config proxy.conf.json",
     "admin-local": "ng build admin --base-href /edsa-champ-manager/ --deploy-url /edsa-champ-manager/admin/",
-    "admin-remote": "ng build admin --prod --base-href / --deploy-url /admin/",
+    "admin-remote": "ng build admin --prod --base-href /admin/ --deploy-url /admin/",
     "start-user": "ng serve user --proxy-config proxy.conf.json --port 4201",
     "user-local": "ng build user --base-href /edsa-champ-manager/ --deploy-url /edsa-champ-manager/user/",
     "user-remote": "ng build user --prod --base-href / --deploy-url /user/",

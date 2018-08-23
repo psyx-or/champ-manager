@@ -56,9 +56,12 @@ DirectoryIndex index.php
     # Rewrite all other queries to the front controller.
 	RewriteCond %{REQUEST_FILENAME} /api
     RewriteRule ^ %{ENV:BASE}/index.php [L]
+
+    RewriteCond %{REQUEST_FILENAME} /admin
+    RewriteRule ^ - [L]
 	
-	RewriteCond %{REQUEST_FILENAME} !/admin
-	RewriteRule ^ %{ENV:BASE}/admin/index.html
+	RewriteCond %{REQUEST_FILENAME} !/user
+	RewriteRule ^ %{ENV:BASE}/user/index.html
 </IfModule>
 
 <IfModule !mod_rewrite.c>

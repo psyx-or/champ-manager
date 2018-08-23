@@ -153,7 +153,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/user",
+            "outputPath": "../public/user",
             "index": "projects/user/src/index.html",
             "main": "projects/user/src/main.ts",
             "polyfills": "projects/user/src/polyfills.ts",
@@ -231,33 +231,6 @@
               "projects/user/tsconfig.app.json",
               "projects/user/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
-        }
-      }
-    },
-    "user-e2e": {
-      "root": "projects/user-e2e/",
-      "projectType": "application",
-      "architect": {
-        "e2e": {
-          "builder": "@angular-devkit/build-angular:protractor",
-          "options": {
-            "protractorConfig": "projects/user-e2e/protractor.conf.js",
-            "devServerTarget": "user:serve"
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "user:serve:production"
-            }
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": "projects/user-e2e/tsconfig.e2e.json",
             "exclude": [
               "**/node_modules/**"
             ]

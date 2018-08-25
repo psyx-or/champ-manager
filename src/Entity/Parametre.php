@@ -12,6 +12,9 @@ class Parametre
 	public const MAIL_EMETTEUR = 'MAIL_EMETTEUR';
 	public const MAIL_MDP_OBJET = 'MAIL_MDP_OBJET';
 	public const MAIL_MDP_VALEUR = 'MAIL_MDP_VALEUR';
+	public const FP_DUREE = 'FP_DUREE';
+	public const MAIL_FP_OBJET = 'MAIL_FP_OBJET';
+	public const MAIL_FP_VALEUR = 'MAIL_FP_VALEUR';
 
 	/**
 	 * @ORM\Id()

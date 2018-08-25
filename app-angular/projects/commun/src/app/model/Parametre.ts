@@ -5,6 +5,7 @@
 export enum ChampType {
 	"STR" = "STR",
 	"TEXTE" = "TEXTE",
+	"NOMBRE" = "NOMBRE"
 }
 
 /**

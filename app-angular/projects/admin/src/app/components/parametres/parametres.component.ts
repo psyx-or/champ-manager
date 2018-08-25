@@ -47,6 +47,7 @@ export class ParametresComponent implements OnInit, CanComponentDeactivate {
 	 * Mise à jour des paramètres
 	 */
 	submit(): void {
+		this.parametres.forEach(p => p.valeur = p.valeur.toString());
 		this.requeteService.requete(
 			this.parametreService.maj(this.parametres),
 			parametres => {

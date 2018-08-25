@@ -9,7 +9,7 @@ use Doctrine\DBAL\Schema\Schema;
 use App\Entity\Parametre;
 use App\Entity\ParametreType;
 
-final class VersionParametres extends AbstractMigration implements ContainerAwareInterface
+final class VersionParametres2 extends AbstractMigration implements ContainerAwareInterface
 {
 	use ContainerAwareTrait;
 
@@ -18,30 +18,28 @@ final class VersionParametres extends AbstractMigration implements ContainerAwar
 		$em = $this->container->get('doctrine.orm.entity_manager');
 
 		$param = new Parametre();
-		$param->setNom("MAIL_EMETTEUR")
-			  ->setDescription("Adresse mail à utiliser comme expéditeur des envois de mail")
+		$param->setNom("FP_DUREE")
+			  ->setDescription("Nombre de jours pour remplir la feuille de fair-play")
+			  ->setType(ParametreType::NOMBRE)
+			  ->setValeur("7");
+		$em->persist($param);
+
+		$param = new Parametre();
+		$param->setNom("MAIL_FP_OBJET")
+			  ->setDescription("Objet du mail pour la feuille de fair-play")
 			  ->setType(ParametreType::STR)
-			  ->setValeur("Nom affiché <xx@xx.com>");
+			  ->setValeur("Feuille de fair-play à remplir");
 		$em->persist($param);
 		
 		$param = new Parametre();
-		$param->setNom("MAIL_MDP_OBJET")
-			  ->setDescription("Objet du mail de changement de mot de passe")
-			  ->setType(ParametreType::STR)
-			  ->setValeur("Identifiants pour mettre à jour en ligne les résultats des rencontres");
-		$em->persist($param);
-		
-		$param = new Parametre();
-		$param->setNom("MAIL_MDP_VALEUR")
-			  ->setDescription("Contenu du mail de changement de mot de passe")
+		$param->setNom("MAIL_FP_VALEUR")
+			  ->setDescription("Contenu du mail pour la feuille de fair-play")
 			  ->setType(ParametreType::TEXTE)
 			  ->setValeur('Bonjour,
 
-Vous pouvez désormais mettre à jour les résultats de votre équipe directement sur le site de la FSGT38:
+Vous avez $nb jours pour mettre à jour la feuille de fair-play pour le match $equipe1 - $equipe2.
 
 Site: https://clubs.fsgt38.org/
-Identifiant: $equipe
-Mot de passe: $password
 
 Cordialement,
 Le comité de la FSGT38

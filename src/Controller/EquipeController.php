@@ -195,7 +195,7 @@ class EquipeController extends CMController
 				$entite->setPosition(null);
 
 			if ($changeMdp && true === $authChecker->isGranted('ROLE_ADMIN'))
-				Mail::envoie($this->changeMdp($entite, $entityManager, $encoder));
+				Mail::envoie($this->changeMdp($entite, $entityManager, $encoder), $this->getDoctrine());
 		}
 
 		$entityManager->flush();
@@ -243,16 +243,10 @@ class EquipeController extends CMController
 		$equipe->setPassword($encoded);
 		$entityManager->flush();
 
-		$destinataires = array();
-		foreach ($equipe->getResponsables() as $resp)
-			if ($resp->getMail() != null)
-				if (strpos($resp->getMail(),'psycholive') !== false || strpos($resp->getMail(), 'fsgt') !== false) // TODO: filtre mail
-					array_push($destinataires, $resp->getMail());
-
 		$repository = $this->getDoctrine()->getRepository(Parametre::class);
 
 		return array(
-			"destinataires" => implode(",", $destinataires),
+			"destinataires" => Mail::getDestinataires($equipe),
 			"objet" => $repository->find(Parametre::MAIL_MDP_OBJET)->getValeur(),
 			"corps" => str_replace('$password', $plainPassword, str_replace('$equipe', $equipe->getLogin(), $repository->find(Parametre::MAIL_MDP_VALEUR)->getValeur())));
 	}

@@ -17,6 +17,7 @@ use App\Entity\ChampionnatType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use App\Entity\Equipe;
+use App\Outils\Mail;
 
 
 /**
@@ -202,7 +203,19 @@ class MatchController extends CMController
 				$entity->setFeuille(null);
 			}
 
-			// TODO: date saisie
+			if (false === $authChecker->isGranted('ROLE_ADMIN') && $entity->getDateSaisie() == null)
+			{
+				$entity->setDateSaisie(new \DateTime());
+
+				// Envoi des mails d'avertissement pour remplir le fair-play
+				if ($entity->getJournee()->getChampionnat()->getFpForm() != null)
+				{
+					if ($entity->getFpFeuille1() == null)
+						Mail::envoieMailFP($entity, $entity->getEquipe1(), $this->getDoctrine());
+					if ($entity->getFpFeuille2() == null)
+						Mail::envoieMailFP($entity, $entity->getEquipe2(), $this->getDoctrine());
+				}
+			}
 
 			// Si c'est un match de coupe, on met à jour le match suivant
 			// avec l'équipe vainqueur

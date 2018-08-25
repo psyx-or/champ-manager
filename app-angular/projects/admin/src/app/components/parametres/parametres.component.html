@@ -5,6 +5,9 @@
 
 	<div class="form-group" *ngFor="let param of parametres">
 		<label for="param_{{param.nom}}">{{param.description}}</label>
+		<input *ngIf="param.type == 'NOMBRE'"
+				type="number" class="form-control" name="param_{{param.nom}}" id="param_{{param.nom}}"
+				[(ngModel)]="param.valeur">
 		<input *ngIf="param.type == 'STR'"
 				type="text" class="form-control" name="param_{{param.nom}}" id="param_{{param.nom}}"
 				[(ngModel)]="param.valeur">

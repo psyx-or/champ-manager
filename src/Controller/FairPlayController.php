@@ -18,6 +18,7 @@ use App\Entity\FPQuestion;
 use App\Entity\FPReponse;
 use App\Entity\Equipe;
 use App\Entity\Sport;
+use App\Entity\Parametre;
 
 /**
  * @Route("/api")
@@ -197,8 +198,20 @@ class FairPlayController extends CMController
 	 */
 	public function majFeuille(Match $match, FPFeuilleAfficheDTO $dto, EntityManagerInterface $entityManager, AuthorizationCheckerInterface $authChecker)
 	{
-		if (false === $authChecker->isGranted('ROLE_ADMIN') && $dto->getFpFeuille()->getEquipeRedactrice()->getId() != $this->getUser()->getId())
+		if (false === $authChecker->isGranted('ROLE_ADMIN'))
+		{
+			if ($dto->getFpFeuille()->getEquipeRedactrice()->getId() != $this->getUser()->getId())
 				throw $this->createAccessDeniedException();
+
+			if ($match->getDateSaisie() != null) 
+			{
+				$repository = $this->getDoctrine()->getRepository(Parametre::class);
+				$fpDuree = $repository->find(Parametre::FP_DUREE)->getValeur();
+				$interval = date_diff($match->getDateSaisie(), new \DateTime());
+				if ($interval->days > $fpDuree)
+					throw $this->createAccessDeniedException();
+			}
+		}
 
 		// Récupération des équipes
 		$repository = $this->getDoctrine()->getRepository(Equipe::class);

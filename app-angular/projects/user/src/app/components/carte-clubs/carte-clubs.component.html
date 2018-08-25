@@ -1,0 +1,38 @@
+<h1><i class="icon ion-md-map"></i> Carte des clubs</h1>
+
+<br>
+
+<!----------------------
+	Contrôles
+  ------------------- -->
+
+<div class="row">
+	<!-- Sélection du sport -->
+	<div class="col-md-3">
+		<select class="form-control" id="sport" name="sport" [(ngModel)]="selSport" (ngModelChange)="chargeEquipes($event)">
+			<option [ngValue]="null" hidden>-- Choisissez un sport --</option>
+			<option *ngFor="let s of sports" [ngValue]="s">{{s.nom}}</option>
+		</select>
+	</div>
+
+	<!-- Géocodage -->
+	<div class="col-md-9" *ngIf="equipes">
+		<div class="input-group">
+			<input type="text" class="form-control" placeholder="Entrer une adresse" [(ngModel)]="adresse" (keyup.enter)="geocode()">
+			<div class="input-group-append">
+				<button type="button" class="btn btn-primary" (click)="geocode()">Centrer</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<br>
+
+
+<!----------------------
+	Carte
+  ------------------- -->
+
+<div [class.d-none]="!equipes">
+	<div #gmap class="carte"></div>
+</div>

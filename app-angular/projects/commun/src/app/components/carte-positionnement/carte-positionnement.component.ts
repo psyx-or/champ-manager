@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Equipe } from 'projects/commun/src/app/model/Equipe';
 
@@ -20,7 +20,8 @@ export class CartePositionnementComponent implements OnInit {
 	position: string;
 
 	constructor(
-		public activeModal: NgbActiveModal
+		public activeModal: NgbActiveModal,
+		private changeDetector: ChangeDetectorRef
 	) { }
 
 	/**
@@ -71,6 +72,7 @@ export class CartePositionnementComponent implements OnInit {
 					let position = results[0].geometry.location;
 					this.position = position.toUrlValue();
 					this.centre(position);
+					this.changeDetector.detectChanges();
 				}
 				else if (status == google.maps.GeocoderStatus.ZERO_RESULTS) {
 					alert("Adresse non trouvée");

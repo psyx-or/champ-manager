@@ -23,6 +23,7 @@ import { HistoriqueEquipeResolver } from './components/historique-equipe/histori
 import { EquipeEditionComponent } from './components/equipe-edition/equipe-edition.component';
 import { MatchesSaisieComponent } from './components/matches-saisie/matches-saisie.component';
 import { ResultatSaisieComponent } from './components/resultat-saisie/resultat-saisie.component';
+import { CarteClubsComponent } from './components/carte-clubs/carte-clubs.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { ResultatSaisieComponent } from './components/resultat-saisie/resultat-s
     HistoriqueEquipeComponent,
     EquipeEditionComponent,
     MatchesSaisieComponent,
-    ResultatSaisieComponent
+    ResultatSaisieComponent,
+    CarteClubsComponent
   ],
   imports: [
     BrowserModule,

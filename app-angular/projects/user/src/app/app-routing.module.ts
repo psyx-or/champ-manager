@@ -20,10 +20,13 @@ import { HistoriqueEquipeResolver } from './components/historique-equipe/histori
 import { EquipeEditionComponent } from './components/equipe-edition/equipe-edition.component';
 import { CanDeactivateGuard } from '@commun/src/app/utils/can-deactivate.guard';
 import { MatchesSaisieComponent } from './components/matches-saisie/matches-saisie.component';
+import { CarteClubsComponent } from './components/carte-clubs/carte-clubs.component';
+import { SportResolver } from '@commun/src/app/utils/sports.resolver';
 
 const routes: Routes = [
 	{ path: '', pathMatch: 'full', redirectTo: 'championnats' },
 	{ path: 'championnats', component: ChampionnatsComponent, resolve: { championnats: ChampionnatResolver } },
+	{ path: 'carte', component: CarteClubsComponent, resolve: { sports: SportResolver } },
 	{ path: 'classement/:champId', component: ClassementChampionnatComponent, resolve: { champ: ClassementResolver } },
 	{ path: 'coupe/:champId', component: CoupeComponent, data: { menu: menus.championnat }, resolve: { journee: HierarchieResolver } },
 	{ path: 'matches/:champId', component: MatchesChampionnatComponent, resolve: { champ: MatchesResolver } },

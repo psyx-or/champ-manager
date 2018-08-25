@@ -85,13 +85,17 @@ class EquipeController extends CMController
 	/**
 	 * @Route("/equipe/{nom}/detail")
 	 * @Method("GET")
-	 * @IsGranted("ROLE_ADMIN")
 	 */
-    public function listeSportSaisonDetail(Sport $sport, Request $request, EntityManagerInterface $entityManager)
+    public function listeSportSaisonDetail(Sport $sport, Request $request, EntityManagerInterface $entityManager, AuthorizationCheckerInterface $authChecker)
     {
 		$saison = $request->query->get('saison');
+		$groupes = array('simple', 'coordonnees');
 
-        return $this->groupJson($this->getEquipes($sport, $saison, $entityManager), 'simple', 'coordonnees', 'responsables');
+		if (true === $authChecker->isGranted('ROLE_ADMIN')) {
+			array_push($groupes, 'responsables');
+		}
+
+        return $this->groupJson($this->getEquipes($sport, $saison, $entityManager), ...$groupes);
 	}
 
 	/**

@@ -20,6 +20,7 @@ class MatchExt extends Match {
 	date?: string;
 	terrain?: string;
 	statut?: StatutMatch;
+	fpLate?: boolean;
 }
 
 @Component({
@@ -37,6 +38,7 @@ export class MatchesComponent implements OnInit {
 	@Input() equipe: Equipe;
 	@Input() saisie: boolean = false;
 	@Input() avecFP: boolean = false;
+	@Input() fpDuree = 0;
 
 	avecDates: boolean = false;
 	matchesExt: MatchExt[];
@@ -137,7 +139,11 @@ export class MatchesComponent implements OnInit {
 			match.statut = StatutMatch.AJOUER;
 		}
 		else if (this.avecFP) {
-			if (this.equipe.id == match.equipe1.id && !match.hasFpFeuille1 ||
+			if (match.dateSaisie != null && moment(match.dateSaisie).add(this.fpDuree, 'days').isBefore(moment().startOf('day'))) {
+				match.statut = StatutMatch.JOUE_FP;
+				match.fpLate = true;
+			}
+			else if (this.equipe.id == match.equipe1.id && !match.hasFpFeuille1 ||
 				this.equipe.id == match.equipe2.id && !match.hasFpFeuille2)
 				match.statut = StatutMatch.JOUE;
 			else
@@ -153,7 +159,7 @@ export class MatchesComponent implements OnInit {
 	 * @param match 
 	 */
 	saisieFairPlay(match: MatchExt): void {
-		if (!this.avecFP)
+		if (!this.avecFP || match.fpLate)
 			return this.saisieResultat(match);
 
 		let iEquipe = match.equipe1.id == this.equipe.id ? 1 : 2;

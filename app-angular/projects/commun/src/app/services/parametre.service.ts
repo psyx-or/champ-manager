@@ -26,4 +26,12 @@ export class ParametreService {
 	public maj(parametres: Parametre[]): Observable<Parametre[]> {
 		return this.http.post<Parametre[]>("/api/parametre", parametres);		
 	}
+
+	/**
+	 * Renvoie la valeur d'un paramètre
+	 * @param nom 
+	 */
+	public get(nom: string): Observable<string> {
+		return this.http.get<string>("/api/parametre/" + nom);
+	}
 }

@@ -46,4 +46,14 @@ class ParametreController extends Controller
 
 		return $this->liste();
 	}
+
+	/**
+	 * @Route("/parametre/{nom}")
+	 * @Method("GET")
+	 * @IsGranted("ROLE_USER")
+	 */
+	public function getParam(Parametre $param)
+	{
+		return $this->json($param->getValeur());
+	}
 }

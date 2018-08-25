@@ -24,6 +24,7 @@ import { EquipeEditionComponent } from './components/equipe-edition/equipe-editi
 import { MatchesSaisieComponent } from './components/matches-saisie/matches-saisie.component';
 import { ResultatSaisieComponent } from './components/resultat-saisie/resultat-saisie.component';
 import { CarteClubsComponent } from './components/carte-clubs/carte-clubs.component';
+import { FPDureeParamResolver } from './components/matches-saisie/fpdureeparam.resolver';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ import { CarteClubsComponent } from './components/carte-clubs/carte-clubs.compon
   providers: [
 	ClassementEquipeResolver,
 	MatchesEquipeResolver,
-	HistoriqueEquipeResolver
+	HistoriqueEquipeResolver,
+	FPDureeParamResolver,
   ],
   bootstrap: [AppComponent],
   entryComponents: [

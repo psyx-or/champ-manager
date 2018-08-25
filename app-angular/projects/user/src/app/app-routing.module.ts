@@ -22,6 +22,7 @@ import { CanDeactivateGuard } from '@commun/src/app/utils/can-deactivate.guard';
 import { MatchesSaisieComponent } from './components/matches-saisie/matches-saisie.component';
 import { CarteClubsComponent } from './components/carte-clubs/carte-clubs.component';
 import { SportResolver } from '@commun/src/app/utils/sports.resolver';
+import { FPDureeParamResolver } from './components/matches-saisie/fpdureeparam.resolver';
 
 const routes: Routes = [
 	{ path: '', pathMatch: 'full', redirectTo: 'championnats' },
@@ -34,7 +35,7 @@ const routes: Routes = [
 	{ path: 'equipe/matches/:equipeId', component: MatchesEquipeComponent, resolve: { equipe: EquipeResolver, championnats: MatchesEquipeResolver } },
 	{ path: 'equipe/historique/:equipeId', component: HistoriqueEquipeComponent, resolve: { dto: HistoriqueEquipeResolver } },
 	{ path: 'equipe/edit/:equipeId', component: EquipeEditionComponent, resolve: { equipe: EquipeResolver }, runGuardsAndResolvers: "always", canDeactivate: [CanDeactivateGuard] },
-	{ path: 'equipe/saisie/:equipeId', component: MatchesSaisieComponent, resolve: { equipe: EquipeResolver, championnats: MatchesEquipeResolver }, runGuardsAndResolvers: "always" },
+	{ path: 'equipe/saisie/:equipeId', component: MatchesSaisieComponent, resolve: { equipe: EquipeResolver, championnats: MatchesEquipeResolver, fpDuree: FPDureeParamResolver }, runGuardsAndResolvers: "always" },
 	{ path: 'equipe/:equipeId', component: EquipeComponent, resolve: { equipe: EquipeResolver }, runGuardsAndResolvers: "always" },
 ];
 

@@ -136,6 +136,8 @@ class EquipeController extends CMController
 
 			$entite = $repository->find($equipe->getId());
 
+			$entite->setNom($equipe->getNom());
+
 			$changeMdp = $entite->getPassword() == null;
 
 			foreach ($entite->getResponsables() as $entiteResp)

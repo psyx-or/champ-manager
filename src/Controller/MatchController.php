@@ -201,6 +201,11 @@ class MatchController extends CMController
 				// Annulation de saisie
 				$entity->setValide(null);
 				$entity->setFeuille(null);
+				$entity->setDateSaisie(null);
+				if ($entity->getFpFeuille1() != null)
+					$entityManager->remove($entity->getFpFeuille1());
+				if ($entity->getFpFeuille2() != null)
+					$entityManager->remove($entity->getFpFeuille2());
 			}
 
 			if (false === $authChecker->isGranted('ROLE_ADMIN') && $entity->getDateSaisie() == null)
@@ -232,7 +237,12 @@ class MatchController extends CMController
 
 		$entityManager->flush();
 
-		return $this->groupJson($res, 'simple');
+		$groupes = array('simple');
+		if (true === $authChecker->isGranted('ROLE_ADMIN')) {
+			array_push($groupes, 'fp');
+		}
+
+		return $this->groupJson($res, ...$groupes);
 	}
 
 	/**

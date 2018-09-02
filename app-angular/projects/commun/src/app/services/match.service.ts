@@ -42,6 +42,14 @@ export class MatchService {
 	}
 
 	/**
+	 * Renvoie les hiérarchies de matches associées à une équipe
+	 * @param equipeId 
+	 */
+	public getHierarchies(equipeId: number): Observable<Journee[]> {
+		return this.http.get<Journee[]>("/api/match/hierarchie/equipe/" + equipeId, { params: { saison: getSaisonCourante() }});
+	}
+
+	/**
 	 * Valide un match
 	 * @param match 
 	 */

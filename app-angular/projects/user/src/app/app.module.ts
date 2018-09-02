@@ -25,6 +25,8 @@ import { MatchesSaisieComponent } from './components/matches-saisie/matches-sais
 import { ResultatSaisieComponent } from './components/resultat-saisie/resultat-saisie.component';
 import { CarteClubsComponent } from './components/carte-clubs/carte-clubs.component';
 import { FPDureeParamResolver } from './components/matches-saisie/fpdureeparam.resolver';
+import { CoupesEquipeComponent } from './components/coupes-equipe/coupes-equipe.component';
+import { HierarchiesEquipeResolver } from './components/coupes-equipe/hierarchies-equipe.resolver';
 
 @NgModule({
   declarations: [
@@ -42,7 +44,8 @@ import { FPDureeParamResolver } from './components/matches-saisie/fpdureeparam.r
     EquipeEditionComponent,
     MatchesSaisieComponent,
     ResultatSaisieComponent,
-    CarteClubsComponent
+    CarteClubsComponent,
+    CoupesEquipeComponent
   ],
   imports: [
     BrowserModule,
@@ -57,6 +60,7 @@ import { FPDureeParamResolver } from './components/matches-saisie/fpdureeparam.r
 	MatchesEquipeResolver,
 	HistoriqueEquipeResolver,
 	FPDureeParamResolver,
+	HierarchiesEquipeResolver,
   ],
   bootstrap: [AppComponent],
   entryComponents: [

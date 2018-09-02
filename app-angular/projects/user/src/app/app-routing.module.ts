@@ -23,6 +23,8 @@ import { MatchesSaisieComponent } from './components/matches-saisie/matches-sais
 import { CarteClubsComponent } from './components/carte-clubs/carte-clubs.component';
 import { SportResolver } from '@commun/src/app/utils/sports.resolver';
 import { FPDureeParamResolver } from './components/matches-saisie/fpdureeparam.resolver';
+import { CoupesEquipeComponent } from './components/coupes-equipe/coupes-equipe.component';
+import { HierarchiesEquipeResolver } from './components/coupes-equipe/hierarchies-equipe.resolver';
 
 const routes: Routes = [
 	{ path: '', pathMatch: 'full', redirectTo: 'championnats' },
@@ -32,6 +34,7 @@ const routes: Routes = [
 	{ path: 'coupe/:champId', component: CoupeComponent, data: { menu: menus.championnat }, resolve: { journee: HierarchieResolver } },
 	{ path: 'matches/:champId', component: MatchesChampionnatComponent, resolve: { champ: MatchesResolver } },
 	{ path: 'equipe/classement/:equipeId', component: ClassementEquipeComponent, resolve: { dto: ClassementEquipeResolver } },
+	{ path: 'equipe/coupes/:equipeId', component: CoupesEquipeComponent, resolve: { equipe: EquipeResolver, journees: HierarchiesEquipeResolver } },
 	{ path: 'equipe/matches/:equipeId', component: MatchesEquipeComponent, resolve: { equipe: EquipeResolver, championnats: MatchesEquipeResolver } },
 	{ path: 'equipe/historique/:equipeId', component: HistoriqueEquipeComponent, resolve: { dto: HistoriqueEquipeResolver } },
 	{ path: 'equipe/edit/:equipeId', component: EquipeEditionComponent, resolve: { equipe: EquipeResolver }, runGuardsAndResolvers: "always", canDeactivate: [CanDeactivateGuard] },

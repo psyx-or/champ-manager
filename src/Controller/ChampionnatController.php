@@ -391,7 +391,6 @@ class ChampionnatController extends CMController
 	 */
 	private function creeMatchesCoupe(Championnat $championnat, array $equipes, EntityManagerInterface $entityManager, int $i = -1, array &$journees = array())
 	{
-		// TODO: supprimer la finale et les demi (plateau final)?
 		// La journée
 		if (isset($journees[$i]))
 		{

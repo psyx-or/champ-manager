@@ -1,0 +1,11 @@
+<app-generic-menu [menu]="menu" [obj]="equipe"></app-generic-menu>
+
+<ngb-alert *ngIf="journees.length == 0" [dismissible]="false" type="info">
+	Cette équipe n'est engagée dans aucune phase finale de coupe pour cette saison.
+</ngb-alert>
+
+<div *ngFor="let journee of journees">
+	<h2 class="section">{{journee.championnat.nom}}</h2>
+	<br>
+	<app-coupe [journee]="journee"></app-coupe>
+</div>

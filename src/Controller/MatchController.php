@@ -38,6 +38,33 @@ class MatchController extends CMController
 	}
 
 	/**
+	 * @Route("/match/hierarchie/equipe/{id}")
+	 * @Method("GET")
+	 */
+    public function hierarchiesEquipe(Equipe $equipe, Request $request, EntityManagerInterface $entityManager)
+    {
+		$saison = $request->query->get('saison');
+
+		$query = $entityManager->createQuery(
+			"SELECT j
+			 FROM App\Entity\Journee j
+			 JOIN j.championnat c
+			 JOIN c.journees j1
+			 JOIN j1.matches m 
+			 JOIN m.equipe1 e1 JOIN m.equipe2 e2
+			 WHERE c.saison = :saison
+			   AND (m.equipe1 = :equipe OR m.equipe2 = :equipe)
+			   AND j.numero = -1
+			 ORDER BY c.id DESC"
+		);
+
+		$query->setParameter("saison", $saison);
+		$query->setParameter("equipe", $equipe);
+
+        return $this->groupJson($query->getResult(), 'simple', 'hierarchie');
+	}
+
+	/**
 	 * @Route("/match/avalider/{nom}")
 	 * @Method("GET")
 	 * @IsGranted("ROLE_ADMIN")

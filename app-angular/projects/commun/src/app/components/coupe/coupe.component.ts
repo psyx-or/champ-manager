@@ -1,7 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { RequeteService } from '../../services/requete.service';
-import { MatchService } from '../../services/match.service';
 import { Championnat } from '../../model/Championnat';
 import { Match } from '../../model/Match';
 import { Equipe } from '../../model/Equipe';
@@ -65,6 +63,8 @@ class Cellule {
 })
 export class CoupeComponent implements OnInit {
 
+	@Input() journee: Journee;
+
 	menu: Menu;
 	champ: Championnat;
 	plateau: Cellule[][];
@@ -79,23 +79,32 @@ export class CoupeComponent implements OnInit {
 	 */
 	constructor(
 		private route: ActivatedRoute,
-		private requeteService: RequeteService,
-		private matchService: MatchService
 	) { }
 
 	/**
 	 * Initialisation
 	 */
 	ngOnInit() {
-		this.route.data
-			.subscribe((data: { journee: Journee, menu: Menu }) => {
-				this.menu = data.menu;
-				this.champ = data.journee.championnat;
-				this.plateau = new Array<Cellule[]>();
-				this.buildPlateau(data.journee.matches[0], 0, 0);
-				this.retournePlateau();
-			}
-		);
+		if (this.journee != null)
+			this.init(this.journee);
+		else
+			this.route.data
+				.subscribe((data: { journee: Journee, menu: Menu }) => {
+					this.menu = data.menu;
+					this.init(data.journee);
+				}
+			);
+	}
+
+	/**
+	 * Initialisation réelle
+	 * @param journee 
+	 */
+	private init(journee: Journee) {
+		this.champ = journee.championnat;
+		this.plateau = new Array<Cellule[]>();
+		this.buildPlateau(journee.matches[0], 0, 0);
+		this.retournePlateau();
 	}
 
 	/**

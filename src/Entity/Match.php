@@ -98,13 +98,13 @@ class Match
 	private $parent2;
 
 	/**
-	 * @ORM\OneToOne(targetEntity="App\Entity\FPFeuille", inversedBy="matchEquipe1", cascade={"persist", "remove"})
+	 * @ORM\OneToOne(targetEntity="App\Entity\FPFeuille", inversedBy="matchEquipe1", cascade={"remove"})
 	 * @ORM\JoinColumn(onDelete="SET NULL")
 	 */
 	private $fpFeuille1;
 
 	/**
-	 * @ORM\OneToOne(targetEntity="App\Entity\FPFeuille", inversedBy="matchEquipe2", cascade={"persist", "remove"})
+	 * @ORM\OneToOne(targetEntity="App\Entity\FPFeuille", inversedBy="matchEquipe2", cascade={"remove"})
 	 * @ORM\JoinColumn(onDelete="SET NULL")
 	 */
 	private $fpFeuille2;

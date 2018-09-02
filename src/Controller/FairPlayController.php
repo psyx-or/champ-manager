@@ -215,41 +215,51 @@ class FairPlayController extends CMController
 			}
 		}
 
+		$entity = new FPFeuille();
+		$entity->setCommentaire($dto->getFpFeuille()->getCommentaire());
+		$entity->setFpMatch($match);
+
 		// Récupération des équipes
 		$repository = $this->getDoctrine()->getRepository(Equipe::class);
-		$dto->getFpFeuille()->setEquipeRedactrice($repository->find($dto->getFpFeuille()->getEquipeRedactrice()->getId()));
-		$dto->getFpFeuille()->setEquipeEvaluee($repository->find($dto->getFpFeuille()->getEquipeEvaluee()->getId()));
+		$entity->setEquipeRedactrice($repository->find($dto->getFpFeuille()->getEquipeRedactrice()->getId()));
+		$entity->setEquipeEvaluee($repository->find($dto->getFpFeuille()->getEquipeEvaluee()->getId()));
 
 		// On remet les réponses
 		$score = 0;
 		$repository = $this->getDoctrine()->getRepository(FPQuestion::class);
+		$reponses = array();
 		foreach ($dto->getReponses() as $id => $val)
 		{
 			$question = $repository->find($id);
 			$reponse = new FPReponse();
-			$dto->getFpFeuille()->addReponse($reponse);
 			$reponse->setQuestion($question);
 			$reponse->setReponse($val);
 			$score += $val;
+			array_push($reponses, $reponse);
 		}
-		$dto->getFpFeuille()->setRatio(100 * $score / count($dto->getReponses()));
+		$entity->setRatio(100 * $score / count($dto->getReponses()));
 
 		// On enregistre
-		$entity = null;
 		if ($dto->getFpFeuille()->getId() != null)
 		{
-			$dto->getFpFeuille()->setFpMatch($match);
-			$entity = $entityManager->merge($dto->getFpFeuille());
+			$entity->setId($dto->getFpFeuille()->getId());
+			foreach ($reponses as $reponse)
+				$entity->addReponse($reponse);
+
+			$entity = $entityManager->merge($entity);
 		}
 		else
 		{
-			$entity = $dto->getFpFeuille();
-			$entity->setFpMatch($match);
 			$entityManager->persist($entity);
 			if ($entity->getEquipeRedactrice()->getId() == $match->getEquipe1()->getId())
 				$match->setFpFeuille1($entity);
 			if ($entity->getEquipeRedactrice()->getId() == $match->getEquipe2()->getId())
 				$match->setFpFeuille2($entity);
+
+			$entityManager->flush();
+
+			foreach ($reponses as $reponse)
+				$entity->addReponse($reponse);
 		}
 
 		$entityManager->flush();

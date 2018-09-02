@@ -12,6 +12,14 @@ export var jours = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi'];
  */
 export function getSaisonCourante(): string {
 	let date = new Date();
+	return getSaison(date);
+}
+
+/**
+ * Renvoie la saison correspondant à une date
+ * @param date 
+ */
+export function getSaison(date: Date): string {
 	return date.getMonth() < 8 ? (date.getFullYear() - 1) + " / " + date.getFullYear() : date.getFullYear() + " / " + (date.getFullYear() + 1);
 }
 

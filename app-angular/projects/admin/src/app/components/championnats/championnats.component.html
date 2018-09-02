@@ -1,11 +1,34 @@
 <h1><i class="icon ion-md-trophy"></i> Championnats</h1>
 
+
+<!----------------------
+	Ajout de championnat
+  ------------------- -->
+
 <div class="action-bar">
     <a class="btn btn-outline-primary" routerLink="/champ-creation"><i class="icon ion-md-add"></i> Créer un championnat</a>
 </div>
 
+<!----------------------
+	Saison
+  ------------------- -->
+
+<div class="form-group form-row">
+	<label for="saison" class="col-sm-2 col-form-label">Saison</label>
+	<div class="col-sm-2">
+		<select class="form-control" id="saison" name="saison" (change)="changeSaison($event.target.value)">
+			<option *ngFor="let s of saisons">{{s}}</option>
+		</select>
+	</div>
+</div>
+
+
+<!----------------------
+	Championnats
+  ------------------- -->
+
 <ngb-alert *ngIf="sports && sports.length == 0" [dismissible]="false" type="info">
-	Pas de championnat pour la saison en cours.
+	Pas de championnat pour la saison sélectionnée.
 </ngb-alert>
 
 <div class="card bg-primary" *ngFor="let sport of sports">

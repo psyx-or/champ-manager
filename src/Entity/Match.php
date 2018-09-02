@@ -99,11 +99,13 @@ class Match
 
 	/**
 	 * @ORM\OneToOne(targetEntity="App\Entity\FPFeuille", inversedBy="matchEquipe1", cascade={"persist", "remove"})
+	 * @ORM\JoinColumn(onDelete="SET NULL")
 	 */
 	private $fpFeuille1;
 
 	/**
 	 * @ORM\OneToOne(targetEntity="App\Entity\FPFeuille", inversedBy="matchEquipe2", cascade={"persist", "remove"})
+	 * @ORM\JoinColumn(onDelete="SET NULL")
 	 */
 	private $fpFeuille2;
 

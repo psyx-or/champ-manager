@@ -45,6 +45,7 @@
 				<!-- Saisie du résultat -->
 				<td *ngIf="saisie" class="text-center">
 					<span class="text-muted" *ngIf="match.statut == Statuts.VALIDE">Match validé</span>
+					<span class="text-muted" *ngIf="match.statut == Statuts.RETARD">Match clôturé</span>
 					<span class="text-muted" *ngIf="match.statut == Statuts.AJOUER"><button class="btn btn-primary" (click)="saisieFairPlay(match)">Saisie</button></span>
 					<span class="text-muted" *ngIf="match.statut == Statuts.JOUE"><button class="btn btn-warning" (click)="saisieFairPlay(match)">Renseigner le fair-play</button></span>
 					<span class="text-muted" *ngIf="match.statut == Statuts.JOUE_FP"><button class="btn btn-secondary" (click)="saisieFairPlay(match)">Modifier</button></span>

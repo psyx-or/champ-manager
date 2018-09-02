@@ -200,15 +200,17 @@ class FairPlayController extends CMController
 	{
 		if (false === $authChecker->isGranted('ROLE_ADMIN'))
 		{
+			// Vérification du rédacteur
 			if ($dto->getFpFeuille()->getEquipeRedactrice()->getId() != $this->getUser()->getId())
 				throw $this->createAccessDeniedException();
 
-			if ($match->getDateSaisie() != null) 
+			// Vérification de la date
+			if ($match->getJournee()->getFin() != null) 
 			{
 				$repository = $this->getDoctrine()->getRepository(Parametre::class);
-				$fpDuree = $repository->find(Parametre::FP_DUREE)->getValeur();
-				$interval = date_diff($match->getDateSaisie(), new \DateTime());
-				if ($interval->days > $fpDuree)
+				$dureeSaisie = $repository->find(Parametre::DUREE_SAISIE)->getValeur();
+				$interval = date_diff(new \DateTime(), $match->getJournee()->getFin());
+				if ($interval->invert == 1 && $interval->days > $dureeSaisie)
 					throw $this->createAccessDeniedException();
 			}
 		}

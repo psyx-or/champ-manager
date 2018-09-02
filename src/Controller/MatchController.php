@@ -18,6 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use App\Entity\Equipe;
 use App\Outils\Mail;
+use App\Entity\Parametre;
 
 
 /**
@@ -189,6 +190,9 @@ class MatchController extends CMController
 		$repository = $this->getDoctrine()->getRepository(Match::class);
 		$champ = null;
 
+		$repositoryParam = $this->getDoctrine()->getRepository(Parametre::class);
+		$dureeSaisie = $repositoryParam->find(Parametre::DUREE_SAISIE)->getValeur();
+
 		foreach ($matches as $match) 
 		{
 			$entity = $repository->find($match->getId());
@@ -200,6 +204,13 @@ class MatchController extends CMController
 					throw $this->createAccessDeniedException();
 				if ($entity->getValide())
 					throw $this->createAccessDeniedException();
+				
+				// Vérification de la date
+				if ($entity->getJournee()->getFin() != null) {
+					$interval = date_diff(new \DateTime(), $entity->getJournee()->getFin());
+					if ($interval->invert == 1 && $interval->days > $dureeSaisie)
+						throw $this->createAccessDeniedException();
+				}
 			}
 
 			array_push($res, $entity);

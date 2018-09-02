@@ -19,7 +19,7 @@ export class MatchesSaisieComponent implements OnInit {
 	menu = menus.equipeConnectee;
 	equipe: Equipe;
 	championnats: ChampionnatExt[];
-	fpDuree: number;
+	dureeSaisie: number;
 
 	constructor(
 		private route: ActivatedRoute,
@@ -30,10 +30,10 @@ export class MatchesSaisieComponent implements OnInit {
 	 */
 	ngOnInit() {
 		this.route.data
-			.subscribe((data: { equipe: Equipe, championnats: ChampionnatExt[], fpDuree: number }) => {
+			.subscribe((data: { equipe: Equipe, championnats: ChampionnatExt[], dureeSaisie: number }) => {
 				this.equipe = data.equipe;
 				this.championnats = data.championnats;
-				this.fpDuree = data.fpDuree;
+				this.dureeSaisie = data.dureeSaisie;
 				this.championnats.forEach(c => {
 					c.matches = c.journees.map(j => { j.matches[0].journee = j; return j.matches[0]; });
 				});

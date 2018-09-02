@@ -42,12 +42,12 @@ class FPFeuille
     private $reponses;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Match", mappedBy="fpFeuille1", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="App\Entity\Match", mappedBy="fpFeuille1")
      */
     private $matchEquipe1;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Match", mappedBy="fpFeuille2", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="App\Entity\Match", mappedBy="fpFeuille2")
      */
     private $matchEquipe2;
 

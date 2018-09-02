@@ -43,7 +43,7 @@ class Mail
 				"objet" => $repository->find(Parametre::MAIL_FP_OBJET)->getValeur(),
 				"corps" => str_replace(
 					array('$nb', '$equipe1', '$equipe2'),
-					array($repository->find(Parametre::FP_DUREE)->getValeur(), $match->getEquipe1()->getNom(), $match->getEquipe2()->getNom()),
+					array($repository->find(Parametre::DUREE_SAISIE)->getValeur(), $match->getEquipe1()->getNom(), $match->getEquipe2()->getNom()),
 					$repository->find(Parametre::MAIL_FP_VALEUR)->getValeur())
 			),
 			$doctrine

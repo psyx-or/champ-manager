@@ -9,7 +9,7 @@ import { FairplayComponent } from '@commun/src/app/components/fairplay/fairplay.
 import { ResultatSaisieComponent } from '../resultat-saisie/resultat-saisie.component';
 import { Router } from '@angular/router';
 
-enum StatutMatch { VALIDE, AJOUER, JOUE, JOUE_FP }
+enum StatutMatch { VALIDE, AJOUER, RETARD, JOUE, JOUE_FP }
 
 /**
  * On rajoute quelques attributs aux matches pour l'affichage
@@ -20,7 +20,6 @@ class MatchExt extends Match {
 	date?: string;
 	terrain?: string;
 	statut?: StatutMatch;
-	fpLate?: boolean;
 }
 
 @Component({
@@ -38,7 +37,7 @@ export class MatchesComponent implements OnInit {
 	@Input() equipe: Equipe;
 	@Input() saisie: boolean = false;
 	@Input() avecFP: boolean = false;
-	@Input() fpDuree = 0;
+	@Input() dureeSaisie: number = 0;
 
 	avecDates: boolean = false;
 	matchesExt: MatchExt[];
@@ -135,22 +134,19 @@ export class MatchesComponent implements OnInit {
 		if (match.valide) {
 			match.statut = StatutMatch.VALIDE;
 		}
+		else if (match.journee.fin != null && moment(match.journee.fin).add(this.dureeSaisie, 'days').isBefore(moment().startOf('day'))) {
+			match.statut = StatutMatch.RETARD;
+		}
 		else if (match.valide === null) {
 			match.statut = StatutMatch.AJOUER;
 		}
-		else if (this.avecFP) {
-			if (match.dateSaisie != null && moment(match.dateSaisie).add(this.fpDuree, 'days').isBefore(moment().startOf('day'))) {
-				match.statut = StatutMatch.JOUE_FP;
-				match.fpLate = true;
-			}
-			else if (this.equipe.id == match.equipe1.id && !match.hasFpFeuille1 ||
+		else {
+			if (!this.avecFP || 
+				this.equipe.id == match.equipe1.id && !match.hasFpFeuille1 ||
 				this.equipe.id == match.equipe2.id && !match.hasFpFeuille2)
 				match.statut = StatutMatch.JOUE;
 			else
 				match.statut = StatutMatch.JOUE_FP;
-		}
-		else {
-			match.statut = StatutMatch.JOUE_FP;
 		}
 	}
 
@@ -159,7 +155,7 @@ export class MatchesComponent implements OnInit {
 	 * @param match 
 	 */
 	saisieFairPlay(match: MatchExt): void {
-		if (!this.avecFP || match.fpLate)
+		if (!this.avecFP)
 			return this.saisieResultat(match);
 
 		let iEquipe = match.equipe1.id == this.equipe.id ? 1 : 2;

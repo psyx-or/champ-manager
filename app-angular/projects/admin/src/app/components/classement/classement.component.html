@@ -1,5 +1,11 @@
 <app-generic-menu [menu]="menu" [obj]="champ"></app-generic-menu>
 
+<div>
+	<button class="btn btn-secondary" type="button" (click)="changeExempt()">Ajouter une équipe</button>
+</div>
+
+<br>
+
 <form class="inline-form" (ngSubmit)="submit()" ngNativeValidate>
 	<table class="table table-striped text-center table-bordered">
 		<thead>
@@ -22,9 +28,14 @@
 			<tr *ngFor="let class of classements; let i = index;">
 				<td>{{i > 0 && class.position == classements[i-1].position ? "-" : class.position}}</td>
 				<td>
+					<button type="button" class="btn btn-outline-danger btn-sm" ngbTooltip="Retirer l'équipe" (click)="retireEquipe(class.equipe)">
+						<i class="icon ion-md-trash"></i>
+					</button>
+					&nbsp;
 					<button type="button" class="btn btn-outline-secondary btn-sm" ngbTooltip="Remplacer l'équipe" (click)="change(class.equipe)">
 						<i class="icon ion-md-swap"></i>
 					</button>
+					&nbsp;
 					{{class.equipe.nom}}
 				</td>
 				<td class="font-weight-bold">{{class.pts}}</td>
@@ -65,4 +76,13 @@
 			</select>
 		</div>
 	</form>
+</ng-template>
+
+
+<!----------------------
+	Fenêtre de confirmation de suppression d'équipe
+  ------------------- -->
+
+<ng-template #supprEquipe let-equipe>
+	Etes-vous sûr de vouloir retirer l'équipe {{ equipe.nom }} du championnat {{ champ.nom}}&nbsp;?
 </ng-template>

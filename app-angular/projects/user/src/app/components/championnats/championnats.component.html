@@ -11,7 +11,7 @@ Rechercher une équipe :
 <br>
 
 <!-- Choix de championnat -->
-... ou sélectionner un championnat :
+<span *ngIf="sports && sports.length > 0">... ou sélectionner un championnat :</span>
 <div class="form-group form-row" *ngIf="sports && sports.length > 0">
 	<div class="col-md-3 col-xs-12">
 		<select class="form-control" id="sport" name="sport"

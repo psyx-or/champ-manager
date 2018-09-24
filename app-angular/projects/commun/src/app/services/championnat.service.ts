@@ -82,7 +82,17 @@ export class ChampionnatService {
 	 * Remplace une équipe dans un championnat
 	 */
 	public remplace(championnat: Championnat, oldEquipe: Equipe, newEquipe: Equipe): Observable<Classement[]> {
-		return this.http.patch<Classement[]>("/api/championnat/" + championnat.id + "/remplace/" + oldEquipe.id + "/" + newEquipe.id, null);
+		if (oldEquipe.id)
+			return this.http.patch<Classement[]>("/api/championnat/" + championnat.id + "/remplace/" + oldEquipe.id + "/" + newEquipe.id, null);
+		else
+			return this.http.patch<Classement[]>("/api/championnat/" + championnat.id + "/ajoute/" + newEquipe.id, null);
+	}
+
+	/**
+	 * Retire une équipe dans un championnat
+	 */
+	public retire(championnat: Championnat, oldEquipe: Equipe): Observable<Classement[]> {
+		return this.http.patch<Classement[]>("/api/championnat/" + championnat.id + "/retire/" + oldEquipe.id, null);
 	}
 
 	/**

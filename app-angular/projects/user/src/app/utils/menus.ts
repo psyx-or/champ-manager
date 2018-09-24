@@ -23,7 +23,7 @@ export var menus: { [nom: string]: Menu } = {
 			{ route: "equipe/classement", icone: 'podium', titre: "Classement" },
 			{ route: "equipe/coupes", icone: 'git-network', titre: "Coupes" },
 			{ route: "equipe/matches", icone: 'clipboard', titre: "Matches" },
-			{ route: "equipe/historique", icone: 'filing', titre: "Historique" },
+			{ route: "equipe/historique", icone: 'film', titre: "Historique" },
 			{ route: "equipe", icone: 'contact', titre: "Coordonnées" },
 		]
 	},
@@ -36,7 +36,7 @@ export var menus: { [nom: string]: Menu } = {
 			{ route: "equipe/coupes", icone: 'git-network', titre: "Coupes" },
 			{ route: "equipe/matches", icone: 'clipboard', titre: "Matches" },
 			{ route: "equipe/saisie", icone: 'create', titre: "Saisie des résultats" },
-			{ route: "equipe/historique", icone: 'filing', titre: "Historique" },
+			{ route: "equipe/historique", icone: 'film', titre: "Historique" },
 			{ route: "equipe/edit", icone: 'contact', titre: "Coordonnées" },
 		]
 	},

@@ -19,6 +19,7 @@ import { menus } from '../../utils/menus';
 export class ClassementComponent implements OnInit {
 
 	@ViewChild('changeEquipe') changeEquipeTpl: TemplateRef<any>;
+	@ViewChild('supprEquipe') supprEquipeTpl: TemplateRef<any>;
 	
 	menu = menus.championnat;
 	champ: Championnat = null;
@@ -97,10 +98,42 @@ export class ClassementComponent implements OnInit {
 		);
 	}
 
+	/**
+	 * Effectue le remplacement
+	 */
 	changeAction(): void {
 		this.requeteService.requete(
 			this.championnatService.remplace(this.champ, this.remplacement.oldEquipe, this.remplacement.newEquipe),
-			classements => this.classements = classements
+			classements => {
+				if (classements) this.classements = classements; 
+				else alert("Ajout impossible: pas d'équipe exempte");
+			}
 		)
+	}
+
+	/**
+	 * Remplace l'équipe exempte par une autre
+	 */
+	changeExempt(): void {
+		this.change({id: null, nom: "EXEMPT"});
+	}
+
+	/**
+	 * Remplace une équipe par une équipe exempte
+	 * @param equipe 
+	 */
+	retireEquipe(equipe: Equipe): void {
+		openModal(
+			this,
+			"Suppression d'équipe",
+			this.supprEquipeTpl,
+			equipe,
+			() => {
+				this.requeteService.requete(
+					this.championnatService.retire(this.champ, equipe),
+					classements => this.classements = classements
+				);
+			}
+		);
 	}
 }

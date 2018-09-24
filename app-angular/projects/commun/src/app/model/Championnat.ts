@@ -24,7 +24,6 @@ export class Championnat {
     public ptnul?: number;
     public ptdef: number;
 	public type: ChampType;
-	public termine: boolean;
 	public journees: Journee[];
 	public classements: Classement[];
 	public fpForm?: FPForm;

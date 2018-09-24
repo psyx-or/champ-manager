@@ -189,6 +189,82 @@ class ChampionnatController extends CMController
 	}
 
 	/**
+	 * @Route("/championnat/{id}/ajoute/{new}")
+	 * @Method("PATCH")
+	 * @ParamConverter("championnat", options={"id" = "id"})
+	 * @ParamConverter("newEquipe", options={"id" = "new"})
+	 * @IsGranted("ROLE_ADMIN")
+	 */
+	public function ajoute(Championnat $championnat, Equipe $newEquipe, EntityManagerInterface $entityManager)
+	{
+		$exempt = false;
+
+		// Mise à jour des matches
+		$q = $entityManager->createQuery("SELECT m FROM App\Entity\Match m JOIN m.journee j WHERE j.championnat = :champ")->setParameter("champ", $championnat);
+		foreach ($q->getResult() as $match)
+		{
+			if ($match->getExempt() == null)
+				continue;
+
+			$exempt = true;
+
+			if ($match->getEquipe1() == null)
+				$match->setEquipe1($newEquipe);
+			if ($match->getEquipe2() == null)
+				$match->setEquipe2($newEquipe);
+		}
+
+		if (!$exempt)
+			return $this->json(null);
+
+		// Mise à jour du classement
+		$this->creeClassements($championnat, array($newEquipe), $entityManager);
+		MatchFunctions::calculeClassement($championnat, $entityManager);
+
+		$entityManager->flush();
+		$entityManager->refresh($championnat);
+
+		return $this->groupJson($championnat->getClassements(), 'simple');
+	}
+
+	/**
+	 * @Route("/championnat/{id}/retire/{old}")
+	 * @Method("PATCH")
+	 * @ParamConverter("championnat", options={"id" = "id"})
+	 * @ParamConverter("oldEquipe", options={"id" = "old"})
+	 * @IsGranted("ROLE_ADMIN")
+	 */
+	public function retire(Championnat $championnat, Equipe $oldEquipe, EntityManagerInterface $entityManager)
+	{
+		// Mise à jour du classement
+		foreach ($championnat->getClassements() as $class)
+		{
+			if ($class->getEquipe() != $oldEquipe)
+				continue;
+				
+			$entityManager->remove($class);
+			break;
+		}
+
+		MatchFunctions::calculeClassement($championnat, $entityManager);
+
+		// Mise à jour des matches
+		$q = $entityManager->createQuery("SELECT m FROM App\Entity\Match m JOIN m.journee j WHERE j.championnat = :champ")->setParameter("champ", $championnat);
+		foreach ($q->getResult() as $match)
+		{
+			if ($match->getEquipe1() == $oldEquipe)
+				$match->setEquipe1(null);
+			if ($match->getEquipe2() == $oldEquipe)
+				$match->setEquipe2(null);
+		}
+
+		$entityManager->flush();
+		$entityManager->refresh($championnat);
+
+		return $this->groupJson($championnat->getClassements(), 'simple');
+	}
+
+	/**
 	 * @Route("/championnat/{id}/importe")
 	 * @Method("POST")
 	 * @IsGranted("ROLE_ADMIN")

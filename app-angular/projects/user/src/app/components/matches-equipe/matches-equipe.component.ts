@@ -21,6 +21,8 @@ class ChampionnatExt extends Championnat {
 })
 export class MatchesEquipeComponent implements OnInit {
 
+	// TODO: mise en relief des matches concernant son équipe!
+
 	menu = menus.equipe;
 	equipe: Equipe;
 	championnats: ChampionnatExt[];

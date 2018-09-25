@@ -101,7 +101,7 @@ export class MatchesComponent implements OnInit {
 	 * @param match 
 	 */
 	calculeDate(match: MatchExt): void {
-		if (match.dispScore1 !==null || match.exempt)
+		if (match.dispScore1 !== null || match.exempt)
 			return;
 		if (!match.journee || !match.journee.debut)
 			return;

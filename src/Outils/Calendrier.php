@@ -59,6 +59,9 @@ class Calendrier
 				$first = true;
 				foreach ($journee->getMatches() as $match)
 				{
+					if ($match->getEquipe1() == null && $match->getMatch1() == null && $match->getEquipe2() == null && $match->getMatch2() == null)
+						continue;
+
 					$i++;
 					$table->addRow();
 					$matches[$match->getId()] = $i;

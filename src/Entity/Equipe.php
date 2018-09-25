@@ -64,6 +64,7 @@ class Equipe implements UserInterface, \Serializable
 
 	/**
 	 * @ORM\OneToMany(targetEntity="App\Entity\Creneau", mappedBy="equipe", orphanRemoval=true)
+	 * @ORM\OrderBy({"jour" = "ASC"})
 	 */
     private $creneaux;
 

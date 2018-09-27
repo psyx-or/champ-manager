@@ -17,8 +17,10 @@
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item"><a class="nav-link" routerLink="/championnats"><i class="icon ion-md-trophy"></i> Championnats</a></li>
                 <li class="nav-item"><a class="nav-link" routerLink="/carte"><i class="icon ion-md-map"></i> Carte des clubs</a></li>
-                <li class="nav-item" *ngIf="equipe != null"><a class="nav-link" [routerLink]="['/equipe', 'saisie', equipe.id]"><i class="icon ion-md-create"></i> Saisie des résultats</a></li>
                 <li class="nav-item" *ngIf="equipe != null"><a class="nav-link" [routerLink]="['/equipe', 'edit', equipe.id]"><i class="icon ion-md-contact"></i> Coordonnées</a></li>
+				<form class="form-inline" *ngIf="equipe != null">
+					<a class="btn btn-primary" [routerLink]="['/equipe', 'saisie', equipe.id]"><i class="icon ion-md-create"></i> Saisie des résultats</a>
+				</form>
             </ul>
 
 			<!-- Bouton de connexion/déconnexion-->

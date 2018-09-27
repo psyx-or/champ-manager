@@ -19,8 +19,8 @@ export class AuthentService {
 	public authentifie(creds?): Observable<boolean> {
 		let body: FormData = new FormData();
 		if (creds != null) {
-			body.set('login', creds.login);
-			body.set('password', creds.password);
+			body.append('login', creds.login);
+			body.append('password', creds.password);
 		}
 
 		return new Observable<boolean>(observer => {

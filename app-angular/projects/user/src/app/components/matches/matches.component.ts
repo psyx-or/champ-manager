@@ -8,6 +8,7 @@ import { FPFeuille } from '@commun/src/app/model/FPFeuille';
 import { FairplayComponent } from '@commun/src/app/components/fairplay/fairplay.component';
 import { ResultatSaisieComponent } from '../resultat-saisie/resultat-saisie.component';
 import { Router } from '@angular/router';
+import { AuthentService } from '../../services/authent.service';
 
 enum StatutMatch { VALIDE, AJOUER, RETARD, JOUE, JOUE_FP }
 
@@ -41,9 +42,11 @@ export class MatchesComponent implements OnInit {
 
 	avecDates: boolean = false;
 	matchesExt: MatchExt[];
+	authentifie: boolean = false;
 
 
 	constructor(
+		private authentService: AuthentService,
 		private router: Router,
 		private modalService: NgbModal
 	) { }
@@ -52,6 +55,9 @@ export class MatchesComponent implements OnInit {
 	 * Initialisation
 	 */
 	ngOnInit() {
+		this.authentService.getEquipe().subscribe(
+			equipe => this.authentifie = (equipe != null)
+		);
 		this.matchesExt = this.matches.sort( (m1, m2) => this.equipe != null ? 0 :
 			(((m1.exempt == null ) == (m2.exempt == null)) ? 0 : (m1.exempt ? 1 : -1))
 		).map(toDisp);

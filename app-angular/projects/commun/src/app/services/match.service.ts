@@ -71,15 +71,15 @@ export class MatchService {
 	 */
 	public majMatch(match: Match, feuille?: File): Observable<any> {
 		let body: FormData = new FormData();
-		body.set("id", match.id.toString());
+		body.append("id", match.id.toString());
 		if (match.score1 != null)
-			body.set("score1", match.score1 + "");
+			body.append("score1", match.score1 + "");
 		if (match.score2 != null)
-			body.set("score2", match.score2 + "");
-		body.set("forfait1", match.forfait1 + "");
-		body.set("forfait2", match.forfait2 + "");
+			body.append("score2", match.score2 + "");
+		body.append("forfait1", match.forfait1 + "");
+		body.append("forfait2", match.forfait2 + "");
 		if (feuille)
-			body.set("feuille", feuille, feuille.name);
+			body.append("feuille", feuille, feuille.name);
 
 		return this.http.post<any>("/api/match/", body);
 	}

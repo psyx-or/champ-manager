@@ -30,7 +30,12 @@
 				</td>
 
 				<!-- Date et terrain -->
-				<td *ngIf="avecDates" class="infodate">{{match.date}}</td>
+				<td *ngIf="avecDates" class="infodate">
+					<span *ngIf="match.date">{{match.date}}</span>
+					<a *ngIf="!match.date && authentifie && match.feuille" [href]="'/api/match/' + match.feuille" ngbTooltip="Afficher la feuille de match" class="btn btn-primary">
+						<i class="icon ion-md-clipboard"></i>
+					</a>
+				</td>
 				<td *ngIf="avecDates" class="infodate" [class.sansterrain]="match.terrain == PAS_DE_TERRAIN">
 					<a *ngIf="match.terrain" [routerLink]="['/equipe', match.equipe1.id]">{{match.terrain}}</a>
 				</td>

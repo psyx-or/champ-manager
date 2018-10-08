@@ -286,7 +286,7 @@ class ChampionnatController extends CMController
 				{
 					if ($matchDest->getEquipe1() != null && $matchDest->getEquipe2() != null &&
 						$matchDest->getEquipe1() == $matchSource->getEquipe1() && $matchDest->getEquipe2() == $matchSource->getEquipe2() &&
-						($matchSource->getScore1() != null || $matchSource->getScore2() != null || $matchSource->getForfait1() || $matchSource->getForfait2()))
+						($matchSource->getScore1() !== null || $matchSource->getScore2() !== null || $matchSource->getForfait1() || $matchSource->getForfait2()))
 					{
 						$i++;
 						$matchDest->setScore1($matchSource->getScore1());

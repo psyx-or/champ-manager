@@ -140,7 +140,7 @@ class MatchController extends CMController
 	 */
     public function valide(Match $match, EntityManagerInterface $entityManager)
     {
-		if ($match->getScore1() != null && $match->getScore2() != null)
+		if (($match->getScore1() !== null || $match->getForfait1()) && ($match->getScore2() !== null || $match->getForfait2()))
 			$match->setValide(true);
 
 		$entityManager->flush();
@@ -221,7 +221,7 @@ class MatchController extends CMController
 				$entity->setFeuille($match->getFeuille());
 
 			// Si pas de modif, on passe
-			if ($entity->getScore1() == $match->getScore1() && $entity->getScore2() == $match->getScore2() &&
+			if ($entity->getScore1() === $match->getScore1() && $entity->getScore2() === $match->getScore2() &&
 				$entity->getForfait1() == $match->getForfait1() && $entity->getForfait2() == $match->getForfait2())
 				continue;
 
@@ -230,7 +230,7 @@ class MatchController extends CMController
 			$entity->setForfait1($match->getForfait1());
 			$entity->setScore2($match->getScore2());
 			$entity->setForfait2($match->getForfait2());
-			if ($match->getScore1() != null || $match->getScore2() != null || $match->getForfait1() || $match->getForfait2())
+			if ($match->getScore1() !== null || $match->getScore2() !== null || $match->getForfait1() || $match->getForfait2())
 			{
 				$entity->setValide($authChecker->isGranted('ROLE_ADMIN') === true);
 			}

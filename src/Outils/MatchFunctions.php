@@ -27,7 +27,7 @@ class MatchFunctions {
 			return $match->getEquipe1();
 
 		// Gestion du score
-		if ($match->getScore1() == $match->getScore2())
+		if ($match->getScore1() === $match->getScore2())
 			return null;
 		else
 			return ($match->getScore1() > $match->getScore2()) ? $match->getEquipe1() : $match->getEquipe2();
@@ -68,7 +68,7 @@ class MatchFunctions {
 		foreach ($q->getResult() as $match) 
 		{
 			// Si le match n'a pas été joué, on laisse tomber
-			if ($match->getScore1() == null && $match->getScore2() == null &&
+			if ($match->getScore1() === null && $match->getScore2() === null &&
 				!$match->getForfait1() && !$match->getForfait2())
 				continue;
 
@@ -128,9 +128,9 @@ class MatchFunctions {
 			$class->setMDef($class->getMDef() + 1);
 		}
 
-		if ($scorePour != null)
+		if ($scorePour !== null)
 			$class->setPour($class->getPour() + $scorePour);
-		if ($scoreContre != null)
+		if ($scoreContre !== null)
 			$class->setContre($class->getContre() + $scoreContre);
 	}
 

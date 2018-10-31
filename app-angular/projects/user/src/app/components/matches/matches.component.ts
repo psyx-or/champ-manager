@@ -147,9 +147,9 @@ export class MatchesComponent implements OnInit {
 			match.statut = StatutMatch.AJOUER;
 		}
 		else {
-			if (!this.avecFP || 
+			if (this.avecFP && ( 
 				this.equipe.id == match.equipe1.id && !match.hasFpFeuille1 ||
-				this.equipe.id == match.equipe2.id && !match.hasFpFeuille2)
+				this.equipe.id == match.equipe2.id && !match.hasFpFeuille2))
 				match.statut = StatutMatch.JOUE;
 			else
 				match.statut = StatutMatch.JOUE_FP;

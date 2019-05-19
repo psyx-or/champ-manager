@@ -22,7 +22,7 @@ export class ChampCreationComponent implements OnInit {
 	@ViewChild('caractComp') caractComp: ChampCaracteristiquesComponent;
 
 	championnat: Championnat;
-	equipes = Array(24);
+	equipes = Array(32);
 	itequipes = Array(this.equipes.length);
 	equipesSport: Equipe[] = null;
 	modeles: ChampModele[];

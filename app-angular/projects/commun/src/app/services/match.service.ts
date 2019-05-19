@@ -67,7 +67,8 @@ export class MatchService {
 
 	/**
 	 * Met à jour un match
-	 * @param journee 
+	 * @param match 
+	 * @param feuille 
 	 */
 	public majMatch(match: Match, feuille?: File): Observable<any> {
 		let body: FormData = new FormData();

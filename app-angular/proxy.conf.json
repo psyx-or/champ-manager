@@ -1,6 +1,6 @@
 {
    "/api/*": {
-      "target": "http://localhost/edsa-champ-manager/",
+      "target": "http://localhost/champ-manager/",
       "secure": false
    }
 }

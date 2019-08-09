@@ -1,57 +1,49 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Championnat } from '../../model/Championnat';
 import { Match } from '../../model/Match';
-import { Equipe } from '../../model/Equipe';
 import { getVainqueur } from '../../utils/utils';
 import { Journee } from '../../model/Journee';
 import { Menu } from '../generic-menu/generic-menu.model';
-
+import { Treant } from 'treant-js';
 
 /**
- * Une cellule du plateau
+ * Node content
  */
-class Cellule {
-	label: string;
-	rowspan: number;
-	colspan: number;
-	perdant?: boolean;
-
-	/**
-	 * Construit la cellule à partir d'un match
-	 * @param match 
-	 * @param rowspan 
-	 * @param col 
-	 */
-	public static fromMatch(match: Match, vainqueur: Equipe|null, rowspan: number, col: number): Cellule {
-		let label;
-		if (vainqueur != null) {
-			label = vainqueur.nom;
-		}
-		else {
-			label = "?";
-		}
-
-		return {
-			label: label,
-			rowspan: rowspan,
-			colspan: 1
-		};
-	}
-
-	/**
-	 * Construit la cellule à partir d'une équipe
-	 * @param equipe 
-	 */
-	public static fromEquipe(equipe: Equipe): Cellule {
-		return {
-			label: equipe.nom,
-			rowspan: 1,
-			colspan: 1
-		};
-	}
+interface Node {
+	text: {
+		name: string | { val: string, href: string },
+		desc?: string,
+	},
+	HTMLclass?: string,
+	children?: Array<Node>
 }
 
+/**
+ * Chart configuration
+ */
+const chart = {
+	chart: {
+		container: "#chart",
+		levelSeparation: 20,
+		siblingSeparation: 15,
+		subTeeSeparation: 30,
+		rootOrientation: "EAST",
+
+		node: {
+			HTMLclass: "Treant-match",
+			drawLineThrough: true
+		},
+		connectors: {
+			type: "straight",
+			style: {
+				"stroke-width": 2,
+				"stroke": "#ccc"
+			}
+		}
+	},
+	nodeStructure: <Node>null,
+};
 
 //--------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------
@@ -61,14 +53,13 @@ class Cellule {
   templateUrl: './coupe.component.html',
   styleUrls: ['./coupe.component.css']
 })
-export class CoupeComponent implements OnInit {
+export class CoupeComponent implements OnInit, AfterViewInit {
 
 	@Input() journee: Journee;
 
 	menu: Menu;
 	champ: Championnat;
-	plateau: Cellule[][];
-	maxCol: number = 0;
+	nbEquipes: number;
 
 
 	/**
@@ -79,6 +70,7 @@ export class CoupeComponent implements OnInit {
 	 */
 	constructor(
 		private route: ActivatedRoute,
+		private router: Router,
 	) { }
 
 	/**
@@ -97,80 +89,89 @@ export class CoupeComponent implements OnInit {
 	}
 
 	/**
+	 * Fin de l'initialisation
+	 */
+	ngAfterViewInit(): void {
+		new Treant(chart);
+	}
+
+	/**
 	 * Initialisation réelle
 	 * @param journee 
 	 */
 	private init(journee: Journee) {
 		this.champ = journee.championnat;
-		this.plateau = new Array<Cellule[]>();
-		this.buildPlateau(journee.matches[0], 0, 0);
-		this.retournePlateau();
+		[chart.nodeStructure, this.nbEquipes] = this.buildChart(journee.matches[0]);
 	}
 
 	/**
-	 * Retourne le plateau de façon à avoir la finale à droite et non à gauche
+	 * Génération récursive de l'arbre des matches
+	 * @param match Le match de plus haut niveau
+	 * @returns Le noeud de 1er niveau et le nombre d'équipes au total
 	 */
-	private retournePlateau() {
-		this.plateau.forEach( ligne => {
-			ligne.reverse();
+	private buildChart(match: Match): [Node, number] {
 
-			// Si la ligne est plus courte que les autres, ajuster la longueur de la première cellule
-			ligne[0].colspan = this.maxCol - ligne.length + 2;
-
-			// Suppression des cellules vides
-			let index = ligne.findIndex(x => x === undefined);
-			if (index != -1) ligne.splice(index);
-		});
-	}
-
-	/**
-	 * Parcourt récursivement les matches pour construire le plateau
-	 * @param match Match courant
-	 * @param r Numéro de ligne sur le plateau
-	 * @param c Numéro de colonne sur le plateau
-	 */
-	private buildPlateau(match: Match, r: number, c: number): Cellule {
-		let cell1: Cellule = null;
-		let cell2: Cellule = null;
-
-		// Construction de la cellule de la première équipe
-		if (match.match1 != null)
-			cell1 = this.buildPlateau(match.match1, r, c + 1);
-		else
-			cell1 = this.enregistre(Cellule.fromEquipe(match.equipe1), r, c + 1);
-
-		// Construction de la cellule de la seconde équipe
-		if (match.match2 != null)
-			cell2 = this.buildPlateau(match.match2, r + cell1.rowspan, c + 1);
-		else
-			cell2 = this.enregistre(Cellule.fromEquipe(match.equipe2), r + cell1.rowspan, c + 1);
-
-		// Si le match a été joué, qui a gagné?
+		let nbEquipes = 0;
 		let vainqueur = getVainqueur(match);
+
+		// Création du noeud du match
+		let node: Node = {
+			text: {
+				name: {
+					val: " ",
+					href: null,
+				},
+				desc: vainqueur != null ? match.score1 + " à " + match.score2 : "",
+			},
+			children: [
+			]
+		};
+
 		if (vainqueur != null) {
-			if (vainqueur == match.equipe1)
-				cell1.perdant = false;
-			else
-				cell1.perdant = true;
-			
-			cell2.perdant = !cell1.perdant;
+			node.text.name = {
+				val: vainqueur.nom,
+				href: this.router.createUrlTree(["equipe", "matches", vainqueur.id]).toString()
+			};
 		}
 
-		// Construction de la cellule du match
-		return this.enregistre(Cellule.fromMatch(match, vainqueur, cell1.rowspan + cell2.rowspan, c), r, c);
-	}
+		// 1er fils
+		if (match.match1 != null) {
+			let res = this.buildChart(match.match1);
+			node.children.push(res[0]);
+			nbEquipes += res[1];
+		}
+		else {
+			node.children.push({
+				text: {
+					name: {
+						val: match.equipe1.nom,
+						href: this.router.createUrlTree(["equipe", "matches", match.equipe1.id]).toString()
+					},
+				},
+				HTMLclass: "Treant-match-initial",
+			});
+			nbEquipes++;
+		}
 
-	/**
-	 * Enregistre une cellule sur le plateau à la position indiquée
-	 * @param cell 
-	 * @param r Numéro de ligne sur le plateau
-	 * @param c Numéro de colonne sur le plateau
-	 */
-	private enregistre(cell: Cellule, r: number, c: number): Cellule {
-		this.maxCol = Math.max(this.maxCol, c);
-		if (this.plateau[r] == undefined)
-			this.plateau[r] = new Array<Cellule>();
-		this.plateau[r][c] = cell;
-		return cell;
+		// 2e fils
+		if (match.match2 != null) {
+			let res = this.buildChart(match.match2);
+			node.children.push(res[0]);
+			nbEquipes += res[1];
+		}
+		else {
+			node.children.push({
+				text: {
+					name: {
+						val: match.equipe2.nom,
+						href: this.router.createUrlTree(["equipe", "matches", match.equipe2.id]).toString()
+					},
+				},
+				HTMLclass: "Treant-match-initial",
+			});
+			nbEquipes++;
+		}
+		
+		return [node, nbEquipes];
 	}
 }

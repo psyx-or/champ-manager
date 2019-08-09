@@ -1,13 +1,3 @@
 <app-generic-menu [menu]="menu" [obj]="champ" *ngIf="menu"></app-generic-menu>
 
-<table class="table table-bordered">
-	<tbody>
-		<tr *ngFor="let ligne of plateau">
-			<td *ngFor="let cell of ligne" 
-				[attr.colspan]="cell.colspan" [attr.rowspan]="cell.rowspan"
-				class="align-middle" [ngClass]="{'table-danger': cell.perdant === true, 'table-success': cell.perdant === false}">
-				{{ cell.label }}
-			</td>
-		</tr>
-	</tbody>
-</table>
+<div id="chart" [style.height]="(nbEquipes * 45) + 'px'"></div>

@@ -30,7 +30,9 @@
     "core-js": "^2.5.4",
     "ionicons": "^4.1.2",
     "moment": "^2.22.2",
+    "raphael": "^2.2.8",
     "rxjs": "^6.0.0",
+    "treant-js": "^1.0.1",
     "zone.js": "^0.8.26"
   },
   "devDependencies": {

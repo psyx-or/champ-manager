@@ -47,11 +47,14 @@
             ],
             "styles": [
               "projects/admin/src/styles.css",
+              "projects/commun/src/styles.css",
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "node_modules/ionicons/dist/css/ionicons.min.css"
             ],
-            "scripts": []
-          },
+			"scripts": [
+				"./node_modules/raphael/raphael.js"
+			]
+		},
           "configurations": {
             "production": {
               "fileReplacements": [
@@ -165,10 +168,13 @@
             ],
             "styles": [
               "projects/user/src/styles.css",
+              "projects/commun/src/styles.css",
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "node_modules/ionicons/dist/css/ionicons.min.css"
             ],
-            "scripts": []
+            "scripts": [
+				"./node_modules/raphael/raphael.js"
+			]
           },
           "configurations": {
             "production": {

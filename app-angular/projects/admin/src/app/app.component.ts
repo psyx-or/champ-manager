@@ -48,8 +48,9 @@ export class AppComponent implements OnInit {
 				if (connected) return;
 
 				// Sinon, affichage de la pop-up de connexion pour récupérer les identifiants et recommencer
-				const modal = this.modalService.open(LoginComponent, { centered: true, backdrop: 'static' });
+				const modal = this.modalService.open(LoginComponent, { centered: true, backdrop: 'static', keyboard: false });
 				modal.componentInstance.error = !first;
+				modal.componentInstance.dismissable = false;
 				modal.result.then(creds => this.checkConnexion(false, creds));
 			});
 	}

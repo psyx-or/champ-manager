@@ -58,7 +58,7 @@ import { CommunModule } from 'projects/commun/src/app/commun.module';
   ],
   imports: [
     BrowserModule,
-    NgbModule.forRoot(),
+    NgbModule,
     AppRoutingModule,
     HttpClientModule,
 	FormsModule,

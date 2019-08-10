@@ -18,8 +18,8 @@ import { ChampCaracteristiquesComponent } from '../champ-caracteristiques/champ-
 })
 export class ChampCreationComponent implements OnInit {
 
-	@ViewChild('ajoutEquipes') ajoutEquipesTpl: TemplateRef<any>;
-	@ViewChild('caractComp') caractComp: ChampCaracteristiquesComponent;
+	@ViewChild('ajoutEquipes', {static:true}) ajoutEquipesTpl: TemplateRef<any>;
+	@ViewChild('caractComp', {static:true}) caractComp: ChampCaracteristiquesComponent;
 
 	championnat: Championnat;
 	equipes = Array(32);

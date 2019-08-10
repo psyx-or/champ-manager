@@ -16,7 +16,7 @@ import * as moment from 'moment';
 })
 export class ChampionnatsComponent implements OnInit {
 
-	@ViewChild('supprChamp') supprChampTpl: TemplateRef<any>;
+	@ViewChild('supprChamp', {static:true}) supprChampTpl: TemplateRef<any>;
 
 	saisons: string[] = [];
 	sports: Sport[];

@@ -15,7 +15,7 @@ import { menus } from '../../utils/menus';
 })
 export class ChampModeleComponent implements OnInit, CanComponentDeactivate {
 
-	@ViewChild('supprModele') supprModeleTpl: TemplateRef<any>;
+	@ViewChild('supprModele', {static:true}) supprModeleTpl: TemplateRef<any>;
 
 	menu = menus.parametres;
 	selModele: ChampModele;

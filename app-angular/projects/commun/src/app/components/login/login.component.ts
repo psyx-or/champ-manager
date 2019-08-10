@@ -9,6 +9,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 export class LoginComponent {
 	
 	@Input() error: boolean;
+	@Input() dismissable: boolean;
 
 	creds = { login: null, password: null };
 
@@ -20,4 +21,7 @@ export class LoginComponent {
 		this.activeModal.close(this.creds);
 	}
 
+	dismiss(): void {
+		this.activeModal.dismiss();
+	}
 }

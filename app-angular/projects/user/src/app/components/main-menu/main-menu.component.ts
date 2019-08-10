@@ -44,6 +44,7 @@ export class MainMenuComponent implements OnInit {
 	connexion(erreur: boolean): void {
 		const modal = this.modalService.open(LoginComponent, { centered: true, backdrop: 'static' });
 		modal.componentInstance.error = erreur;
+		modal.componentInstance.dismissable = true;
 		modal.result.then(creds => {
 			this.requeteService.requete(
 				this.authentService.authentifie(creds),

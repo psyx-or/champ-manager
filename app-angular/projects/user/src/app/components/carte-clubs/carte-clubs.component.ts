@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, TemplateRef, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectorRef, ElementRef } from '@angular/core';
 import { Sport } from '@commun/src/app/model/Sport';
 import { ActivatedRoute } from '@angular/router';
 import { Equipe } from '@commun/src/app/model/Equipe';
@@ -12,7 +12,7 @@ import { RequeteService } from '@commun/src/app/services/requete.service';
 })
 export class CarteClubsComponent implements OnInit {
 
-	@ViewChild('gmap') gmapElement: any;
+	@ViewChild('gmap', {static: true}) gmapElement: ElementRef<Element>;
 
 	map: google.maps.Map;
 	geocoder: google.maps.Geocoder;

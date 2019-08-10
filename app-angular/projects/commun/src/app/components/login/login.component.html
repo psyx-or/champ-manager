@@ -39,6 +39,7 @@
 		Pied
 	------------------- -->
 	<div class="modal-footer">
+		<button *ngIf="dismissable" type="button" class="btn btn-secondary" (click)="dismiss()">Annuler</button>
 		<button type="submit" class="btn btn-primary">Connexion</button>
 	</div>
 

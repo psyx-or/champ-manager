@@ -18,8 +18,8 @@ import { menus } from '../../utils/menus';
 })
 export class ClassementComponent implements OnInit {
 
-	@ViewChild('changeEquipe') changeEquipeTpl: TemplateRef<any>;
-	@ViewChild('supprEquipe') supprEquipeTpl: TemplateRef<any>;
+	@ViewChild('changeEquipe', {static:true}) changeEquipeTpl: TemplateRef<any>;
+	@ViewChild('supprEquipe', {static:true}) supprEquipeTpl: TemplateRef<any>;
 	
 	menu = menus.championnat;
 	champ: Championnat = null;

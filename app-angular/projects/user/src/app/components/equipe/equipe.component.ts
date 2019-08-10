@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, ElementRef } from '@angular/core';
 import { menus } from '../../utils/menus';
 import { Equipe } from '@commun/src/app/model/Equipe';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -13,7 +13,7 @@ import { EquipeService } from '@commun/src/app/services/equipe.service';
 })
 export class EquipeComponent implements OnInit, AfterViewInit {
 
-	@ViewChild('gmap') gmapElement: any;
+	@ViewChild('gmap', {static: false}) gmapElement: ElementRef<Element>;
 
 	menu = menus.equipe;
 	jours = jours;

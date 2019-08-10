@@ -14,7 +14,7 @@ import { EquipeService } from '../../services/equipe.service';
 })
 export class EquipeDetailComponent {
 
-	@ViewChild('envoiMail') envoiMailTpl: TemplateRef<any>;
+	@ViewChild('envoiMail', {static: true}) envoiMailTpl: TemplateRef<any>;
 
 	@Input() equipe: Equipe;
 	@Input() motdepasse: boolean;
@@ -67,7 +67,7 @@ export class EquipeDetailComponent {
 	 * @param equipe 
 	 */
 	positionne(equipe: Equipe): void {
-		const modal = this.modalService.open(CartePositionnementComponent, { backdrop: 'static', windowClass: 'modal-xl' });
+		const modal = this.modalService.open(CartePositionnementComponent, { backdrop: 'static', windowClass: 'modal-xxl' });
 		modal.componentInstance.equipe = equipe;
 		modal.result.then((res: string) => equipe.position = res, () => { });
 	}

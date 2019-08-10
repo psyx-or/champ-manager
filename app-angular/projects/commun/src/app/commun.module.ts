@@ -38,7 +38,7 @@ import { FairplayComponent } from "./components/fairplay/fairplay.component";
 	],
 	imports: [
 		BrowserModule,
-		NgbModule.forRoot(),
+		NgbModule,
 		HttpClientModule,
 		FormsModule,
 	],

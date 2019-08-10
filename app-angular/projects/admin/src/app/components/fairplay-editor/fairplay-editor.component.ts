@@ -15,8 +15,8 @@ import { menus } from '../../utils/menus';
 })
 export class FairplayEditorComponent implements OnInit, CanComponentDeactivate {
 
-	@ViewChild('supprFeuille') supprFeuilleTpl: TemplateRef<any>;
-	@ViewChild('supprFeuilleUtilisee') supprFeuilleUtiliseeTpl: TemplateRef<any>;
+	@ViewChild('supprFeuille', {static:true}) supprFeuilleTpl: TemplateRef<any>;
+	@ViewChild('supprFeuilleUtilisee', {static:true}) supprFeuilleUtiliseeTpl: TemplateRef<any>;
 
 	menu = menus.parametres;
 	fpforms: FPForm[];

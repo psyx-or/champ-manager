@@ -2,13 +2,8 @@
     margin-bottom: 10px;
 }
 
-.modal-xl > .modal-dialog {
+.modal-xxl > .modal-dialog {
     max-width: unset;
     min-width: 1000px;   
     width: 95%;
-}
-
-.modal-content {
-	max-height: 90vh;
-	overflow-y: auto;
 }

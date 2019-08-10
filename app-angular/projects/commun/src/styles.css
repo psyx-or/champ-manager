@@ -1,3 +1,10 @@
+/* Pour les modales */
+
+.modal-content {
+	max-height: 90vh;
+	overflow-y: auto;
+}
+
 
 /* Pour les tableaux de coupe */
 .Treant { position: relative; overflow: hidden; padding: 0 !important; }

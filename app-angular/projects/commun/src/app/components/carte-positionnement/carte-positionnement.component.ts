@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ChangeDetectorRef, ElementRef } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Equipe } from 'projects/commun/src/app/model/Equipe';
 
@@ -11,7 +11,7 @@ export class CartePositionnementComponent implements OnInit {
 
 	@Input() equipe: Equipe;
 	
-	@ViewChild('gmap') gmapElement: any;
+	@ViewChild('gmap', {static: true}) gmapElement: ElementRef<Element>;
 
 	map: google.maps.Map;
 	geocoder: google.maps.Geocoder;
@@ -87,8 +87,7 @@ export class CartePositionnementComponent implements OnInit {
 	 * Centre la carte sur une position
 	 * @param position 
 	 */
-	centre(position: google.maps.LatLng)
-	{
+	centre(position: google.maps.LatLng) {
 		this.marqueur.setPosition(position);
 		this.map.setCenter(position);
 		if (this.map.getZoom()<16) this.map.setZoom(16);

@@ -49,7 +49,7 @@ import { HierarchiesEquipeResolver } from './components/coupes-equipe/hierarchie
   ],
   imports: [
     BrowserModule,
-    NgbModule.forRoot(),
+    NgbModule,
     AppRoutingModule,
     HttpClientModule,
 	FormsModule,

@@ -6,15 +6,10 @@ h2.section {
 	padding-bottom: 10px;
 }
 
-.modal-xl > .modal-dialog {
+.modal-xxl > .modal-dialog {
     max-width: unset;
     min-width: 95%;   
     width: 95%;
-}
-
-.modal-content {
-	max-height: 90vh;
-	overflow-y: auto;
 }
 
 .custom-file-input:lang(fr) ~ .custom-file-label::after {

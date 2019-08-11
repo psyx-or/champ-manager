@@ -393,4 +393,17 @@ class Equipe implements UserInterface, \Serializable
 
 		return $this;
 	}
+
+	/**
+	 * @Groups({"championnats"})
+	 */
+	public function getChampionnats(): array
+	{
+		$res = array();
+
+		foreach ($this->classements as $class)
+			array_push($res, $class->getChampionnat());
+
+		return $res;
+	}
 }

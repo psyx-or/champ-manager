@@ -83,7 +83,7 @@ class EquipeController extends CMController
     public function listeSportSaisonDetail(Sport $sport, Request $request, EntityManagerInterface $entityManager, AuthorizationCheckerInterface $authChecker)
     {
 		$saison = $request->query->get('saison');
-		$groupes = array('simple', 'coordonnees');
+		$groupes = array('simple', 'coordonnees', 'championnats');
 
 		if (true === $authChecker->isGranted('ROLE_ADMIN')) {
 			array_push($groupes, 'responsables');
@@ -98,7 +98,7 @@ class EquipeController extends CMController
 	private function getEquipes(Sport $sport, $saison, EntityManagerInterface $entityManager)
 	{
 		$query = $entityManager->createQuery(
-			"SELECT e
+			"SELECT e, classe, champ
 			 FROM App\Entity\Equipe e
 			 JOIN e.classements classe
 			 JOIN classe.championnat champ

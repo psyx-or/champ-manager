@@ -9,3 +9,7 @@ select, select option {
 .position {
 	font-style: italic;
 }
+
+.liste:not(:last-of-type)::after {
+	content: ", ";
+}

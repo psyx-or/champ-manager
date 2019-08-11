@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use App\Entity\Parametre;
@@ -12,7 +11,7 @@ use Doctrine\ORM\EntityManagerInterface;
 /**
  * @Route("/api")
  */
-class ParametreController extends Controller
+class ParametreController extends CMController
 {
 	/**
 	 * @Route("/parametre", methods={"GET"})

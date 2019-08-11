@@ -2,18 +2,14 @@
 
 namespace App\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use App\DTO\UserDTO;
 
 /**
  * @Route("/api")
  */
-class SecurityController extends Controller
+class SecurityController extends CMController
 {
     /**
      * @Route("/me")

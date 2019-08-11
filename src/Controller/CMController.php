@@ -2,12 +2,12 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * Ajoute des méthodes utilitaires pour les controlleurs
  */
-class CMController extends Controller {
+class CMController extends AbstractController {
 
 	/**
 	 * Surcharge de la méthode json() pour ajouter uniquement la notion de groupe pour la sérialisation

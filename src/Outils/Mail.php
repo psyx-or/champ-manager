@@ -4,7 +4,6 @@ namespace App\Outils;
 
 use App\Entity\Match;
 use App\Entity\Equipe;
-use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use App\Entity\Parametre;
 

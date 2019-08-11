@@ -3,19 +3,19 @@
 namespace App\Controller;
 
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Doctrine\ORM\EntityManagerInterface;
 
 use App\Entity\Championnat;
 use App\Entity\Journee;
 use App\Entity\Match;
 use App\Entity\Sport;
-use Doctrine\ORM\EntityManagerInterface;
 use App\Outils\MatchFunctions;
 use App\Entity\ChampionnatType;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use App\Entity\Equipe;
 use App\Outils\Mail;
 use App\Entity\Parametre;
@@ -174,7 +174,7 @@ class MatchController extends CMController
 
 			$match->setFeuille($nom);
 		}
-		
+
 		return $this->majListe(array($match), $entityManager, $authChecker);
 	}
 
@@ -233,6 +233,20 @@ class MatchController extends CMController
 			if ($match->getScore1() !== null || $match->getScore2() !== null || $match->getForfait1() || $match->getForfait2())
 			{
 				$entity->setValide($authChecker->isGranted('ROLE_ADMIN') === true);
+
+				if (false === $authChecker->isGranted('ROLE_ADMIN') && $entity->getDateSaisie() == null)
+				{
+					$entity->setDateSaisie(new \DateTime());
+
+					// Envoi des mails d'avertissement pour remplir le fair-play
+					if ($entity->getJournee()->getChampionnat()->getFpForm() != null && !$entity->getForfait1() && !$entity->getForfait2())
+					{
+						if ($entity->getFpFeuille1() == null)
+							Mail::envoieMailFP($entity, $entity->getEquipe1(), $this->getDoctrine());
+						if ($entity->getFpFeuille2() == null)
+							Mail::envoieMailFP($entity, $entity->getEquipe2(), $this->getDoctrine());
+					}
+				}
 			}
 			else
 			{
@@ -244,20 +258,6 @@ class MatchController extends CMController
 					$entityManager->remove($entity->getFpFeuille1());
 				if ($entity->getFpFeuille2() != null)
 					$entityManager->remove($entity->getFpFeuille2());
-			}
-
-			if (false === $authChecker->isGranted('ROLE_ADMIN') && $entity->getDateSaisie() == null)
-			{
-				$entity->setDateSaisie(new \DateTime());
-
-				// Envoi des mails d'avertissement pour remplir le fair-play
-				if ($entity->getJournee()->getChampionnat()->getFpForm() != null)
-				{
-					if ($entity->getFpFeuille1() == null)
-						Mail::envoieMailFP($entity, $entity->getEquipe1(), $this->getDoctrine());
-					if ($entity->getFpFeuille2() == null)
-						Mail::envoieMailFP($entity, $entity->getEquipe2(), $this->getDoctrine());
-				}
 			}
 
 			// Si c'est un match de coupe, on met à jour le match suivant

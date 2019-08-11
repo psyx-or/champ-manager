@@ -1,4 +1,4 @@
-.card:not(:last-of-type) {
+.card:not(:last-of-type), .forfait {
 	margin-bottom: 20px;
 }
 

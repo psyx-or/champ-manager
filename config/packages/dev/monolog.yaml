@@ -7,6 +7,12 @@ monolog:
             excluded_404s:
                 # regex: exclude all 404 errors from the logs
                 - ^/
+            channels: ["!app"]
+        app:
+            type: fingers_crossed
+            action_level: debug
+            handler: nested
+            channels: ["app"]
         nested:
             type: stream
             path: "%kernel.logs_dir%/%kernel.environment%.log"

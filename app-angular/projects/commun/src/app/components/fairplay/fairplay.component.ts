@@ -16,6 +16,7 @@ export class FairplayComponent implements OnInit {
 	@Input() equipe: 1 | 2;
 	@Input() feuille: FPFeuille;
 	dto: FPFeuilleAfficheDTO;
+	forfait: boolean;
 
 	constructor(
 		public activeModal: NgbActiveModal,
@@ -32,7 +33,10 @@ export class FairplayComponent implements OnInit {
 				this.fairplayService.getFeuilleById(this.feuille) :
 				this.fairplayService.getFeuille(this.match, this.equipe)
 			),
-			dto => this.dto = dto
+			dto => {
+				this.dto = dto;
+				this.forfait = dto.fpFeuille.id == null && (this.match.forfait1 || this.match.forfait2);
+			}
 		)
 	}
 
@@ -40,16 +44,21 @@ export class FairplayComponent implements OnInit {
 	 * Indique si le formulaire a été rempli intégralement
 	 */
 	isIncomplet(): boolean {
-		return Object.values(this.dto.reponses).includes(null);
+		return !this.forfait && Object.values(this.dto.reponses).includes(null);
 	}
 
 	/**
 	 * Envoi du formulaire
 	 */
 	submit(): void {
-		this.requeteService.requete(
-			this.fairplayService.majFeuille(this.dto),
-			res => this.activeModal.close(res)
-		);
+		if (this.forfait) {
+			this.activeModal.close(null);
+		}
+		else {
+			this.requeteService.requete(
+				this.fairplayService.majFeuille(this.dto),
+				res => this.activeModal.close(res)
+			);
+		}
 	}
 }

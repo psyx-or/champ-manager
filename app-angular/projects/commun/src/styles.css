@@ -5,6 +5,11 @@
 	overflow-y: auto;
 }
 
+/* Divers */
+
+label.btn:not(.active) {
+    cursor: pointer;
+}
 
 /* Pour les tableaux de coupe */
 .Treant { position: relative; overflow: hidden; padding: 0 !important; }

@@ -276,8 +276,6 @@ class FairPlayController extends CMController
 	{
 		$saison = $request->query->get('saison');
 
-		$repository = $this->getDoctrine()->getRepository(FPQuestion::class);
-
 		$query = $entityManager->createQuery(
 			"SELECT f
 			 FROM App\Entity\FPFeuille f
@@ -303,8 +301,6 @@ class FairPlayController extends CMController
 	public function getRedaction(Equipe $equipe, Request $request, EntityManagerInterface $entityManager)
 	{
 		$saison = $request->query->get('saison');
-
-		$repository = $this->getDoctrine()->getRepository(FPQuestion::class);
 
 		$query = $entityManager->createQuery(
 			"SELECT f

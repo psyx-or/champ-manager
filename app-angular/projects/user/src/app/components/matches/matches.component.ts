@@ -147,9 +147,10 @@ export class MatchesComponent implements OnInit {
 			match.statut = StatutMatch.AJOUER;
 		}
 		else {
-			if (this.avecFP && ( 
-				this.equipe.id == match.equipe1.id && !match.hasFpFeuille1 ||
-				this.equipe.id == match.equipe2.id && !match.hasFpFeuille2))
+			if (this.avecFP &&
+				!match.forfait1 && !match.forfait2 && ( 
+					this.equipe.id == match.equipe1.id && !match.hasFpFeuille1 ||
+					this.equipe.id == match.equipe2.id && !match.hasFpFeuille2))
 				match.statut = StatutMatch.JOUE;
 			else
 				match.statut = StatutMatch.JOUE_FP;
@@ -169,8 +170,10 @@ export class MatchesComponent implements OnInit {
 		modal.componentInstance.match = match;
 		modal.componentInstance.equipe = iEquipe;
 		modal.result.then((res: FPFeuille) => {
-			match['hasFpFeuille' + iEquipe] = true;
-			this.calculeStatut(match);
+			if (res) {
+				match['hasFpFeuille' + iEquipe] = true;
+				this.calculeStatut(match);
+			}
 			this.saisieResultat(match);
 		}, () => {});
 	}
@@ -182,7 +185,7 @@ export class MatchesComponent implements OnInit {
 	saisieResultat(match: MatchExt): void {
 		const modal = this.modalService.open(ResultatSaisieComponent, { centered: true, backdrop: 'static' });
 		modal.componentInstance.match = match;
-		modal.result.then((res: FPFeuille) => {
+		modal.result.then(() => {
 			this.router.navigate(["equipe", "classement", this.equipe.id]);
 		}, () => { });
 	}

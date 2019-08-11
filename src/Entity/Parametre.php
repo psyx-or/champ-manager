@@ -15,6 +15,8 @@ class Parametre
 	public const DUREE_SAISIE = 'DUREE_SAISIE';
 	public const MAIL_FP_OBJET = 'MAIL_FP_OBJET';
 	public const MAIL_FP_VALEUR = 'MAIL_FP_VALEUR';
+	public const SEUIL_FORFAIT_WARN = 'SEUIL_FORFAIT_WARN';
+	public const SEUIL_FORFAIT_DANGER = 'SEUIL_FORFAIT_DANGER';
 
 	/**
 	 * @ORM\Id()

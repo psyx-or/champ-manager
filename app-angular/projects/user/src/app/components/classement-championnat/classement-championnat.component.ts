@@ -12,6 +12,7 @@ export class ClassementChampionnatComponent implements OnInit {
 
 	menu = menus.championnat;
 	champ: Championnat = null;
+	seuilsForfait: [Number, Number];
 
 
 	/**
@@ -27,8 +28,9 @@ export class ClassementChampionnatComponent implements OnInit {
 	 */
 	ngOnInit() {
 		this.route.data
-			.subscribe((data: { champ: Championnat }) => {
+			.subscribe((data: { champ: Championnat, seuilsForfait: [Number, Number] }) => {
 				this.champ = data.champ;
+				this.seuilsForfait = data.seuilsForfait;
 			}
 		);
 	}

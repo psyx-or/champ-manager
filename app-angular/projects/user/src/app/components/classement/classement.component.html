@@ -1,5 +1,5 @@
 
-<table class="table table-striped text-center table-bordered table-hover">
+<table class="table table-striped table-sm text-center table-bordered table-hover">
 	<thead>
 		<tr>
 			<th scope="col">#</th>
@@ -17,7 +17,11 @@
 		</tr>
 	</thead>
 	<tbody>
-		<tr *ngFor="let class of classements; let i = index;" [class.table-primary]="equipe && class.equipe.id == equipe.id" (click)="afficheMatches(class.equipe)">
+		<tr *ngFor="let class of classements; let i = index;" (click)="afficheMatches(class.equipe)"
+			[class.table-primary]="equipe && class.equipe.id == equipe.id" 
+			[ngClass]="class.mFo >= seuilsForfait[1] ? 'table-danger' : (class.mFo >= seuilsForfait[0] ? 'table-warning' : null)"
+			[ngbTooltip]="class.mFo >= seuilsForfait[0] ? 'Forfait général possible au bout de ' + seuilsForfait[1] + ' forfaits' : null">
+
 			<td>{{i > 0 && class.position == classements[i-1].position ? "-" : class.position}}</td>
 			<td>{{class.equipe.nom}}</td>
 			<td class="font-weight-bold">{{class.pts}}</td>

@@ -25,15 +25,16 @@ import { SportResolver } from '@commun/src/app/utils/sports.resolver';
 import { DureeSaisieParamResolver } from './components/matches-saisie/dureesaisieparam.resolver';
 import { CoupesEquipeComponent } from './components/coupes-equipe/coupes-equipe.component';
 import { HierarchiesEquipeResolver } from './components/coupes-equipe/hierarchies-equipe.resolver';
+import { SeuilsForfaitParamResolver } from '@commun/src/app/utils/seuils-forfait.resolver';
 
 const routes: Routes = [
 	{ path: '', pathMatch: 'full', redirectTo: 'championnats' },
 	{ path: 'championnats', component: ChampionnatsComponent, resolve: { championnats: ChampionnatResolver } },
 	{ path: 'carte', component: CarteClubsComponent, resolve: { sports: SportResolver } },
-	{ path: 'classement/:champId', component: ClassementChampionnatComponent, resolve: { champ: ClassementResolver } },
+	{ path: 'classement/:champId', component: ClassementChampionnatComponent, resolve: { champ: ClassementResolver, seuilsForfait: SeuilsForfaitParamResolver } },
 	{ path: 'coupe/:champId', component: CoupeComponent, data: { menu: menus.championnat }, resolve: { journee: HierarchieResolver } },
 	{ path: 'matches/:champId', component: MatchesChampionnatComponent, resolve: { champ: MatchesResolver } },
-	{ path: 'equipe/classement/:equipeId', component: ClassementEquipeComponent, resolve: { dto: ClassementEquipeResolver } },
+	{ path: 'equipe/classement/:equipeId', component: ClassementEquipeComponent, resolve: { dto: ClassementEquipeResolver, seuilsForfait: SeuilsForfaitParamResolver } },
 	{ path: 'equipe/coupes/:equipeId', component: CoupesEquipeComponent, resolve: { equipe: EquipeResolver, journees: HierarchiesEquipeResolver } },
 	{ path: 'equipe/matches/:equipeId', component: MatchesEquipeComponent, resolve: { equipe: EquipeResolver, championnats: MatchesEquipeResolver } },
 	{ path: 'equipe/historique/:equipeId', component: HistoriqueEquipeComponent, resolve: { dto: HistoriqueEquipeResolver } },

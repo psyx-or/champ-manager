@@ -23,6 +23,7 @@ export class ClassementComponent implements OnInit {
 	
 	menu = menus.championnat;
 	champ: Championnat = null;
+	seuilsForfait: [Number, Number];
 	classements: Classement[];
 	remplacement: {
 		oldEquipe: Equipe;
@@ -50,8 +51,9 @@ export class ClassementComponent implements OnInit {
 	 */
 	ngOnInit() {
 		this.route.data
-			.subscribe((data: { champ: Championnat }) => {
+			.subscribe((data: { champ: Championnat, seuilsForfait: [Number, Number] }) => {
 				this.champ = data.champ;
+				this.seuilsForfait = data.seuilsForfait;
 				this.classements = sort(data.champ.classements, 'position');
 			}
 		);

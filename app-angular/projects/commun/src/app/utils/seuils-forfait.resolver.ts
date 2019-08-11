@@ -1,20 +1,23 @@
 import { Injectable } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, forkJoin } from 'rxjs';
 import { RequeteService } from 'projects/commun/src/app/services/requete.service';
 import { ParametreService } from 'projects/commun/src/app/services/parametre.service';
 
 @Injectable()
-export class DureeSaisieParamResolver implements Resolve<Number> {
+export class SeuilsForfaitParamResolver implements Resolve<[Number,Number]> {
 
 	constructor(
 		private requeteService: RequeteService,
 		private parametreService: ParametreService,
 	) { }
 
-	resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Number> {
+	resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<[Number, Number]> {
 		return this.requeteService.recupere(
-			this.parametreService.getInt("DUREE_SAISIE")
+			forkJoin(
+				this.parametreService.getInt("SEUIL_FORFAIT_WARN"),
+				this.parametreService.getInt("SEUIL_FORFAIT_DANGER")
+			)
 		);
 	}
 }

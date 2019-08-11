@@ -14,6 +14,7 @@ export class ClassementComponent implements OnInit {
 
 	@Input() champ: Championnat = null;
 	@Input() equipe: Equipe = null;
+	@Input() seuilsForfait: [Number, Number];
 
 	classements: Classement[];
 

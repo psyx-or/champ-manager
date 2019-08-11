@@ -1,12 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Parametre } from 'projects/commun/src/app/model/Parametre';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { tap, map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ParametreService {
+
+	private cache = new Map<string,string>();
 
 	constructor(
 		private http: HttpClient
@@ -24,6 +27,7 @@ export class ParametreService {
 	 * @param parametres 
 	 */
 	public maj(parametres: Parametre[]): Observable<Parametre[]> {
+		this.cache.clear();
 		return this.http.post<Parametre[]>("/api/parametre", parametres);		
 	}
 
@@ -32,6 +36,21 @@ export class ParametreService {
 	 * @param nom 
 	 */
 	public get(nom: string): Observable<string> {
-		return this.http.get<string>("/api/parametre/" + nom);
+		if (this.cache.has(nom))
+			return of(this.cache.get(nom));
+		else
+			return this.http.get<string>("/api/parametre/" + nom).pipe(
+				tap(val => this.cache.set(nom, val))
+			);
+	}
+
+	/**
+	 * Renvoie la valeur d'un paramètre entier
+	 * @param nom 
+	 */
+	public getInt(nom: string): Observable<number> {
+		return this.get(nom).pipe(
+			map(parseInt)
+		);
 	}
 }

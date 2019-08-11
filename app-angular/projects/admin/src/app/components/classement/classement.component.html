@@ -7,7 +7,7 @@
 <br>
 
 <form class="inline-form" (ngSubmit)="submit()" ngNativeValidate>
-	<table class="table table-striped text-center table-bordered">
+	<table class="table table-striped table-sm text-center table-bordered">
 		<thead>
 			<tr>
 				<th scope="col">#</th>
@@ -25,7 +25,8 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr *ngFor="let class of classements; let i = index;">
+			<tr *ngFor="let class of classements; let i = index;" 
+			    [ngClass]="class.mFo >= seuilsForfait[1] ? 'table-danger' : (class.mFo >= seuilsForfait[0] ? 'table-warning' : null)">
 				<td>{{i > 0 && class.position == classements[i-1].position ? "-" : class.position}}</td>
 				<td>
 					<button type="button" class="btn btn-outline-danger btn-sm" ngbTooltip="Retirer l'équipe" (click)="retireEquipe(class.equipe)">

@@ -221,4 +221,16 @@ class FPFeuille
 
         return $this;
     }
+
+	/**
+	 * @Groups({"alerte"})
+	 */
+	public function getAlerte(): bool
+	{
+		foreach ($this->reponses as $rep) 
+			if ($rep->getReponse() < 0 && $rep->getQuestion()->getAlerte())
+				return true;
+		
+		return false;
+	}
 }

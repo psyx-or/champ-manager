@@ -56,7 +56,7 @@
 			<div class="row">
 				<div class="col-10 text-left">
 					<input type="text" class="form-control" name="lib_{{i}}" required
-						[(ngModel)]="cat.libelle" placeholder="Libellé de la carégorie">
+						[(ngModel)]="cat.libelle" placeholder="Libellé de la catégorie">
 				</div>
 				<div class="col-2 text-right">
 					<button type="button" class="btn btn-outline-secondary" (click)="deplacer(selfpform.categories, i, -1)"
@@ -129,19 +129,26 @@
 							</select>
 						</div>
 					</div>
+
+					<!-- Alerte -->
+					<div class="form-group form-check">
+						<input type="checkbox" class="form-check-input" id="alerte_{{i}}_{{j}}" name="alerte_{{i}}_{{j}}"
+						       [(ngModel)]="q.alerte">
+						<label class="form-check-label" for="alerte_{{i}}_{{j}}">Déclenche une alerte</label>
+					</div>
 				</div>
 			</div>
 
 			<!-- Ajout de question -->
 			<div class="mb-3">
-				<button class="btn btn-outline-success btn-sm" type="button" (click)="cat.questions.push({})"><i class="icon ion-md-add"></i> Ajouter une question</button>
+				<button class="btn btn-outline-success btn-sm" type="button" (click)="ajouterQuestion(cat)"><i class="icon ion-md-add"></i> Ajouter une question</button>
 			</div>
 		</div>
 	</div>
 
 	<!-- Ajout de catégorie -->
 	<div class="mb-3">
-		<button class="btn btn-outline-success" type="button" (click)="selfpform.categories.push({questions: []})"><i class="icon ion-md-add"></i> Ajouter une catégorie</button>
+		<button class="btn btn-outline-success" type="button" (click)="ajouterCategorie(selfpform)"><i class="icon ion-md-add"></i> Ajouter une catégorie</button>
 	</div>
 
 	<button type="submit" class="btn btn-primary" 

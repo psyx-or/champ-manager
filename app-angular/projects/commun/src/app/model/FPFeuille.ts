@@ -20,4 +20,5 @@ export class FPFeuille {
 	equipeEvaluee?: Equipe;
 	commentaire?: string;
 	ratio?: number;
+	alerte?: boolean;
 }

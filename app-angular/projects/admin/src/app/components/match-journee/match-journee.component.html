@@ -3,7 +3,8 @@
 		<tbody>
 
 			<!-- Si vrai match-->
-			<tr *ngFor="let match of journee.matches" [class.matchvalide]="match.valide === true">
+			<tr *ngFor="let match of journee.matches" 
+			    [class.matchvalide]="match.valide === true" [class.table-warning]="match.fpFeuille1?.alerte || match.fpFeuille2?.alerte">
 				<ng-container *ngIf="!match.exempt">
 
 					<!-- Fair-play 1 -->

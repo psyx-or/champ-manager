@@ -5,7 +5,7 @@ import { FairplayService } from 'projects/commun/src/app/services/fairplay.servi
 import { openModal } from 'projects/commun/src/app/utils/utils';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CanComponentDeactivate } from '@commun/src/app/utils/can-deactivate.guard';
-import { FPForm, FPQuestionType } from 'projects/commun/src/app/model/FPForm';
+import { FPForm, FPQuestionType, FPCategorie } from 'projects/commun/src/app/model/FPForm';
 import { menus } from '../../utils/menus';
 
 @Component({
@@ -109,7 +109,31 @@ export class FairplayEditorComponent implements OnInit, CanComponentDeactivate {
 		tab[index] = b;
 		tab[index + sens] = a;
 	}
-	
+
+	/**
+	 * Ajoute une catégorie à une feuille de fair-play
+	 * @param form 
+	 */
+	ajouterCategorie(form: FPForm) {
+		form.categories.push({
+			libelle: null,
+			questions: [],
+		});
+	}
+
+	/**
+	 * Ajoute une question à une catégorie
+	 * @param cat 
+	 */
+	ajouterQuestion(cat: FPCategorie) {
+		cat.questions.push({
+			titre: null,
+			libelle: null,
+			type: null,
+			alerte: false,
+		});
+	}
+
 	/**
 	 * Mise à jour / création de la feuille de fair-play
 	 */

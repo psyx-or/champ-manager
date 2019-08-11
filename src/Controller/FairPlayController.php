@@ -256,7 +256,7 @@ class FairPlayController extends CMController
 
 		$entityManager->flush();
 
-		return $this->groupJson($entity, 'simple');
+		return $this->groupJson($entity, 'simple', 'alerte');
 	}
 
 	/**

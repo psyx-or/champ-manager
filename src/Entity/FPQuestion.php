@@ -50,6 +50,11 @@ class FPQuestion
      */
     private $reponses;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $alerte;
+
     public function __construct()
     {
         $this->reponses = new ArrayCollection();
@@ -64,11 +69,11 @@ class FPQuestion
     }
 
 	public function setId($id) : self
-	{
-		$this->id = $id;
-
-		return $this;
-	}
+         	{
+         		$this->id = $id;
+         
+         		return $this;
+         	}
 
     public function getCategorie(): ?FPCategorie
     {
@@ -86,16 +91,16 @@ class FPQuestion
 	 * @Groups({"simple"})
 	 */
 	public function getTitre() : ? string
-	{
-		return $this->titre;
-	}
+         	{
+         		return $this->titre;
+         	}
 
 	public function setTitre(string $titre) : self
-	{
-		$this->titre = $titre;
-
-		return $this;
-	}
+         	{
+         		$this->titre = $titre;
+         
+         		return $this;
+         	}
 
 	/**
 	 * @Groups({"simple"})
@@ -167,6 +172,21 @@ class FPQuestion
                 $reponse->setQuestion(null);
             }
         }
+
+        return $this;
+    }
+
+	/**
+	 * @Groups({"simple"})
+	 */
+    public function getAlerte(): ?bool
+    {
+        return $this->alerte;
+    }
+
+    public function setAlerte(bool $alerte): self
+    {
+        $this->alerte = $alerte;
 
         return $this;
     }

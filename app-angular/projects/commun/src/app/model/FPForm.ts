@@ -35,4 +35,5 @@ export class FPQuestion {
 	public titre: string;
 	public libelle?: string;
 	public type: FPQuestionType;
+	public alerte: boolean;
 }

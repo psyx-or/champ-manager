@@ -5,6 +5,11 @@
 			<!-- Si vrai match-->
 			<ng-container *ngIf="!match.exempt">
 	
+				<!-- Journée -->
+				<td *ngIf="saisie">
+					{{match.journee.libelle}}
+				</td>
+
 				<!-- Equipe 1 -->
 				<td class="text-right">
 					<span *ngIf="!match.equipe1 || match.style1.indexOf(STYLE_MEME_EQUIPE) > -1" [ngClass]="match.style1">{{match.dispEquipe1}}</span>

@@ -5,7 +5,6 @@ namespace App\Controller;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Doctrine\ORM\EntityManagerInterface;
@@ -26,8 +25,7 @@ use App\Entity\Parametre;
 class FairPlayController extends CMController
 {
 	/**
-	 * @Route("/fairplay")
-	 * @Method("GET")
+	 * @Route("/fairplay", methods={"GET"})
 	 */
     public function listeForm(Request $request)
     {
@@ -38,8 +36,7 @@ class FairPlayController extends CMController
 	}
 
 	/**
-	 * @Route("/fairplay/classement/{nom}")
-	 * @Method("GET")
+	 * @Route("/fairplay/classement/{nom}", methods={"GET"})
 	 * @IsGranted("ROLE_ADMIN")
 	 */
     public function classement(Sport $sport, Request $request, EntityManagerInterface $entityManager)
@@ -66,8 +63,7 @@ class FairPlayController extends CMController
 	}
 
 	/**
-	 * @Route("/fairplay/{id}")
-	 * @Method("DELETE")
+	 * @Route("/fairplay/{id}", methods={"DELETE"})
 	 * @IsGranted("ROLE_ADMIN")
 	 */
 	public function supprimeForm(FPForm $form, EntityManagerInterface $entityManager)
@@ -82,8 +78,7 @@ class FairPlayController extends CMController
 	}
 
 	/**
-	 * @Route("/fairplay")
-	 * @Method("POST")
+	 * @Route("/fairplay", methods={"POST"})
 	 * @IsGranted("ROLE_ADMIN")
 	 * @ParamConverter("dto", converter="cm_converter")
 	 */
@@ -124,8 +119,7 @@ class FairPlayController extends CMController
 	}
 
 	/**
-	 * @Route("/fairplay/feuille/{id}")
-	 * @Method("GET")
+	 * @Route("/fairplay/feuille/{id}", methods={"GET"})
 	 * @IsGranted("ROLE_ADMIN")
 	 */
 	public function getFeuilleById(FPFeuille $feuille)
@@ -145,8 +139,7 @@ class FairPlayController extends CMController
 	}
 
 	/**
-	 * @Route("/fairplay/feuille/{id}/{equipe}")
-	 * @Method("GET")
+	 * @Route("/fairplay/feuille/{id}/{equipe}", methods={"GET"})
 	 * @IsGranted("ROLE_USER")
 	 */
 	public function getFeuille(Match $match, $equipe, AuthorizationCheckerInterface $authChecker)
@@ -190,8 +183,7 @@ class FairPlayController extends CMController
 	}
 
 	/**
-	 * @Route("/fairplay/feuille/{id}")
-	 * @Method("POST")
+	 * @Route("/fairplay/feuille/{id}", methods={"POST"})
 	 * @IsGranted("ROLE_USER")
 	 * @ParamConverter("match", converter="doctrine.orm")
 	 * @ParamConverter("dto", converter="cm_converter")
@@ -268,8 +260,7 @@ class FairPlayController extends CMController
 	}
 
 	/**
-	 * @Route("/fairplay/{id}/evaluation")
-	 * @Method("GET")
+	 * @Route("/fairplay/{id}/evaluation", methods={"GET"})
 	 * @IsGranted("ROLE_ADMIN")
 	 */
 	public function getEvaluation(Equipe $equipe, Request $request, EntityManagerInterface $entityManager)
@@ -294,8 +285,7 @@ class FairPlayController extends CMController
 	}
 
 	/**
-	 * @Route("/fairplay/{id}/redaction")
-	 * @Method("GET")
+	 * @Route("/fairplay/{id}/redaction", methods={"GET"})
 	 * @IsGranted("ROLE_ADMIN")
 	 */
 	public function getRedaction(Equipe $equipe, Request $request, EntityManagerInterface $entityManager)

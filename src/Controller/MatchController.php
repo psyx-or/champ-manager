@@ -5,7 +5,6 @@ namespace App\Controller;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Doctrine\ORM\EntityManagerInterface;
@@ -26,10 +25,9 @@ use App\Entity\Parametre;
  */
 class MatchController extends CMController
 {
-    /**
-     * @Route("/match/hierarchie/{id}")
-     * @Method("GET")
-     */
+	/**
+	 * @Route("/match/hierarchie/{id}", methods={"GET"})
+	 */
     public function hierarchie(Championnat $championnat)
     {
 		$repository = $this->getDoctrine()->getRepository(Journee::class);
@@ -39,8 +37,7 @@ class MatchController extends CMController
 	}
 
 	/**
-	 * @Route("/match/hierarchie/equipe/{id}")
-	 * @Method("GET")
+	 * @Route("/match/hierarchie/equipe/{id}", methods={"GET"})
 	 */
     public function hierarchiesEquipe(Equipe $equipe, Request $request, EntityManagerInterface $entityManager)
     {
@@ -66,8 +63,7 @@ class MatchController extends CMController
 	}
 
 	/**
-	 * @Route("/match/avalider/{nom}")
-	 * @Method("GET")
+	 * @Route("/match/avalider/{nom}", methods={"GET"})
 	 * @IsGranted("ROLE_ADMIN")
 	 */
 	public function aValider(Sport $sport, EntityManagerInterface $entityManager)
@@ -86,8 +82,7 @@ class MatchController extends CMController
 	}
 
 	/**
-	 * @Route("/match/equipe/{id}")
-	 * @Method("GET")
+	 * @Route("/match/equipe/{id}", methods={"GET"})
 	 */
 	public function listeEquipe(Equipe $equipe, Request $request, EntityManagerInterface $entityManager)
 	{
@@ -109,8 +104,7 @@ class MatchController extends CMController
 	}
 
 	/**
-	 * @Route("/match/{id}", requirements={"id"="\d+"})
-	 * @Method("GET")
+	 * @Route("/match/{id}", requirements={"id"="\d+"}, methods={"GET"})
 	 */
     public function liste(Championnat $championnat, AuthorizationCheckerInterface $authChecker)
     {
@@ -121,10 +115,9 @@ class MatchController extends CMController
 
         return $this->groupJson($championnat, ...$groupes);
 	}
-	
+
 	/**
-	 * @Route("/match/{feuille}")
-	 * @Method("GET")
+	 * @Route("/match/{feuille}", methods={"GET"})
 	 * @IsGranted("ROLE_USER")
 	 */
 	public function getFeuille(string $feuille)
@@ -134,8 +127,7 @@ class MatchController extends CMController
 
 
 	/**
-	 * @Route("/match/{id}")
-	 * @Method("PATCH")
+	 * @Route("/match/{id}", methods={"PATCH"})
 	 * @IsGranted("ROLE_ADMIN")
 	 */
     public function valide(Match $match, EntityManagerInterface $entityManager)
@@ -149,8 +141,7 @@ class MatchController extends CMController
 	}
 
 	/**
-	 * @Route("/match/")
-	 * @Method("POST")
+	 * @Route("/match/", methods={"POST"})
 	 * @IsGranted("ROLE_USER")
 	 */
 	public function maj(Request $request, EntityManagerInterface $entityManager, AuthorizationCheckerInterface $authChecker)
@@ -179,8 +170,7 @@ class MatchController extends CMController
 	}
 
 	/**
-	 * @Route("/match/")
-	 * @Method("PUT")
+	 * @Route("/match/", methods={"PUT"})
 	 * @IsGranted("ROLE_ADMIN")
 	 * @ParamConverter("matches", converter="cm_converter", options={"classe":"App\Entity\Match[]"})
 	 */
@@ -284,8 +274,7 @@ class MatchController extends CMController
 	}
 
 	/**
-	 * @Route("/match/{id}/inverse")
-	 * @Method("PATCH")
+	 * @Route("/match/{id}/inverse", methods={"PATCH"})
 	 * @IsGranted("ROLE_ADMIN")
 	 */
 	public function inverse(Match $match, EntityManagerInterface $entityManager)
@@ -325,8 +314,7 @@ class MatchController extends CMController
 	}
 
 	/**
-	 * @Route("/match/{nom}/doublons")
-	 * @Method("GET")
+	 * @Route("/match/{nom}/doublons", methods={"GET"})
 	 * @IsGranted("ROLE_ADMIN")
 	 */
 	public function doublons(Sport $sport, Request $request, EntityManagerInterface $entityManager)

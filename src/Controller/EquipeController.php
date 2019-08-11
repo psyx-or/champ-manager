@@ -6,7 +6,6 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Doctrine\ORM\EntityManagerInterface;
@@ -24,10 +23,9 @@ use App\Outils\Mail;
  */
 class EquipeController extends CMController
 {
-    /**
-     * @Route("/equipe/recherche")
-     * @Method("GET")
-     */
+	/**
+	 * @Route("/equipe/recherche", methods={"GET"})
+	 */
     public function recherche(Request $request, EntityManagerInterface $entityManager)
     {
 		$q = $request->query->get('q');
@@ -46,8 +44,7 @@ class EquipeController extends CMController
 	}
 
 	/**
-	 * @Route("/equipe/{id}", requirements={"id"="\d+"})
-	 * @Method("GET")
+	 * @Route("/equipe/{id}", requirements={"id"="\d+"}, methods={"GET"})
 	 */
     public function getEquipe(Equipe $equipe, AuthorizationCheckerInterface $authChecker)
     {
@@ -60,10 +57,9 @@ class EquipeController extends CMController
         return $this->groupJson($equipe, ...$groupes);
 	}
 
-    /**
-     * @Route("/equipe/{nom}")
-     * @Method("GET")
-     */
+	/**
+	 * @Route("/equipe/{nom}", methods={"GET"})
+	 */
     public function listeSport(Sport $sport)
     {
         $repository = $this->getDoctrine()->getRepository(Equipe::class);
@@ -71,8 +67,7 @@ class EquipeController extends CMController
 	}
 
 	/**
-	 * @Route("/equipe/{nom}/annuaire")
-	 * @Method("GET")
+	 * @Route("/equipe/{nom}/annuaire", methods={"GET"})
 	 * @IsGranted("ROLE_ADMIN")
 	 */
 	public function annuaire(Sport $sport, Request $request, EntityManagerInterface $entityManager)
@@ -83,8 +78,7 @@ class EquipeController extends CMController
 	}
 
 	/**
-	 * @Route("/equipe/{nom}/detail")
-	 * @Method("GET")
+	 * @Route("/equipe/{nom}/detail", methods={"GET"})
 	 */
     public function listeSportSaisonDetail(Sport $sport, Request $request, EntityManagerInterface $entityManager, AuthorizationCheckerInterface $authChecker)
     {
@@ -120,8 +114,7 @@ class EquipeController extends CMController
 	}
 
 	/**
-	 * @Route("/equipe/")
-	 * @Method("POST")
+	 * @Route("/equipe/", methods={"POST"})
 	 * @IsGranted("ROLE_USER")
 	 * @ParamConverter("equipes", converter="cm_converter", options={"classe":"App\Entity\Equipe[]"})
 	 */
@@ -206,8 +199,7 @@ class EquipeController extends CMController
 	}
 
 	/**
-	 * @Route("/equipe/{id}/mdp")
-	 * @Method("POST")
+	 * @Route("/equipe/{id}/mdp", methods={"POST"})
 	 * @IsGranted("ROLE_USER")
 	 * @ParamConverter("equipe", converter="doctrine.orm")
 	 */
@@ -225,8 +217,7 @@ class EquipeController extends CMController
 	}
 
 	/**
-	 * @Route("/equipe/{id}")
-	 * @Method("PATCH")
+	 * @Route("/equipe/{id}", methods={"PATCH"})
 	 * @IsGranted("ROLE_ADMIN")
 	 */
 	public function envoiMdpManuel(Equipe $equipe, EntityManagerInterface $entityManager, UserPasswordEncoderInterface $encoder)

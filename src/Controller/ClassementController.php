@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Doctrine\ORM\EntityManagerInterface;
@@ -21,18 +20,16 @@ use App\DTO\ChampionnatEquipeDTO;
  */
 class ClassementController extends CMController
 {
-    /**
-     * @Route("/classement/{id}")
-     * @Method("GET")
-     */
+	/**
+	 * @Route("/classement/{id}", methods={"GET"})
+	 */
     public function getClassement(Championnat $championnat)
     {
         return $this->groupJson($championnat, 'simple', 'classement');
     }
 
 	/**
-	 * @Route("/classement/equipe/{id}")
-	 * @Method("GET")
+	 * @Route("/classement/equipe/{id}", methods={"GET"})
 	 */
 	public function getClassementsEquipe(Equipe $equipe, Request $request, EntityManagerInterface $entityManager)
 	{
@@ -58,8 +55,7 @@ class ClassementController extends CMController
 	}
 
 	/**
-	 * @Route("/classement/equipe/{id}/historique")
-	 * @Method("GET")
+	 * @Route("/classement/equipe/{id}/historique", methods={"GET"})
 	 */
 	public function getHistoriqueClassementsEquipe(Equipe $equipe, Request $request, EntityManagerInterface $entityManager)
 	{
@@ -81,8 +77,7 @@ class ClassementController extends CMController
 	}
 
 	/**
-	 * @Route("/classement/{id}")
-	 * @Method("PATCH")
+	 * @Route("/classement/{id}", methods={"PATCH"})
 	 * @IsGranted("ROLE_ADMIN")
 	 * @ParamConverter("championnat", converter="doctrine.orm")
 	 * @ParamConverter("classements", converter="cm_converter", options={"classe":"App\Entity\Classement[]"})

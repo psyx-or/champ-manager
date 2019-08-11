@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 use App\Entity\Sport;
 
@@ -12,10 +11,9 @@ use App\Entity\Sport;
  */
 class SportController extends CMController
 {
-    /**
-     * @Route("/sport")
-     * @Method("GET")
-     */
+	/**
+	 * @Route("/sport", methods={"GET"})
+	 */
     public function index()
     {
         $repository = $this->getDoctrine()->getRepository(Sport::class);

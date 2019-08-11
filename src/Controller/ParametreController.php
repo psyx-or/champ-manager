@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use App\Entity\Parametre;
@@ -16,8 +15,7 @@ use Doctrine\ORM\EntityManagerInterface;
 class ParametreController extends Controller
 {
 	/**
-	 * @Route("/parametre")
-	 * @Method("GET")
+	 * @Route("/parametre", methods={"GET"})
 	 * @IsGranted("ROLE_ADMIN")
 	 */
     public function liste()
@@ -27,8 +25,7 @@ class ParametreController extends Controller
     }
 
 	/**
-	 * @Route("/parametre")
-	 * @Method("POST")
+	 * @Route("/parametre", methods={"POST"})
 	 * @IsGranted("ROLE_ADMIN")
 	 * @ParamConverter("parametres", converter="cm_converter", options={"classe":"App\Entity\Parametre[]"})
 	 */
@@ -48,8 +45,7 @@ class ParametreController extends Controller
 	}
 
 	/**
-	 * @Route("/parametre/{nom}")
-	 * @Method("GET")
+	 * @Route("/parametre/{nom}", methods={"GET"})
 	 * @IsGranted("ROLE_USER")
 	 */
 	public function getParam(Parametre $param)

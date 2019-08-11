@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Doctrine\ORM\EntityManagerInterface;
@@ -27,10 +26,9 @@ use App\Entity\ChampModele;
  */
 class ChampionnatController extends CMController
 {
-    /**
-     * @Route("/championnat")
-     * @Method("GET")
-     */
+	/**
+	 * @Route("/championnat", methods={"GET"})
+	 */
     public function liste(Request $request)
     {
 		$query = array();
@@ -50,8 +48,7 @@ class ChampionnatController extends CMController
 	}
 
 	/**
-	 * @Route("/championnat/modele")
-	 * @Method("GET")
+	 * @Route("/championnat/modele", methods={"GET"})
 	 * @IsGranted("ROLE_ADMIN")
 	 */
 	public function listeModeles()
@@ -61,8 +58,7 @@ class ChampionnatController extends CMController
 	}
 
 	/**
-	 * @Route("/championnat/modele/{id}")
-	 * @Method("DELETE")
+	 * @Route("/championnat/modele/{id}", methods={"DELETE"})
 	 * @IsGranted("ROLE_ADMIN")
 	 */
 	public function supprimeModele(ChampModele $modele, EntityManagerInterface $entityManager)
@@ -73,8 +69,7 @@ class ChampionnatController extends CMController
 	}
 
 	/**
-	 * @Route("/championnat/modele")
-	 * @Method("POST")
+	 * @Route("/championnat/modele", methods={"POST"})
 	 * @ParamConverter("modele", converter="cm_converter")
 	 * @IsGranted("ROLE_ADMIN")
 	 */
@@ -101,8 +96,7 @@ class ChampionnatController extends CMController
 	}
 
 	/**
-	 * @Route("/championnat/{nom}/calendrier")
-	 * @Method("GET")
+	 * @Route("/championnat/{nom}/calendrier", methods={"GET"})
 	 * @IsGranted("ROLE_ADMIN")
 	 */
 	public function calendrier(Sport $sport, Request $request, EntityManagerInterface $entityManager)
@@ -126,8 +120,7 @@ class ChampionnatController extends CMController
 	}
 
 	/**
-	 * @Route("/championnat/{nom}/calendrier/genere")
-	 * @Method("GET")
+	 * @Route("/championnat/{nom}/calendrier/genere", methods={"GET"})
 	 * @IsGranted("ROLE_ADMIN")
 	 */
 	public function genereCalendrier(Sport $sport, Request $request, EntityManagerInterface $entityManager)
@@ -140,11 +133,10 @@ class ChampionnatController extends CMController
 		return $this->file($ftmp, "Calendrier " . $sport->getNom() . " - " . date('Y-m-d') . ".docx");
 	}
 
-    /**
-     * @Route("/championnat/{id}")
-     * @Method("DELETE")
+	/**
+	 * @Route("/championnat/{id}", methods={"DELETE"})
 	 * @IsGranted("ROLE_ADMIN")
-     */
+	 */
     public function supprime(Championnat $championnat, EntityManagerInterface $entityManager)
     {
 		$entityManager->remove($championnat);
@@ -153,8 +145,7 @@ class ChampionnatController extends CMController
     }
 
 	/**
-	 * @Route("/championnat/{id}/remplace/{old}/{new}")
-	 * @Method("PATCH")
+	 * @Route("/championnat/{id}/remplace/{old}/{new}", methods={"PATCH"})
 	 * @ParamConverter("championnat", options={"id" = "id"})
 	 * @ParamConverter("oldEquipe", options={"id" = "old"})
 	 * @ParamConverter("newEquipe", options={"id" = "new"})
@@ -189,8 +180,7 @@ class ChampionnatController extends CMController
 	}
 
 	/**
-	 * @Route("/championnat/{id}/ajoute/{new}")
-	 * @Method("PATCH")
+	 * @Route("/championnat/{id}/ajoute/{new}", methods={"PATCH"})
 	 * @ParamConverter("championnat", options={"id" = "id"})
 	 * @ParamConverter("newEquipe", options={"id" = "new"})
 	 * @IsGranted("ROLE_ADMIN")
@@ -228,8 +218,7 @@ class ChampionnatController extends CMController
 	}
 
 	/**
-	 * @Route("/championnat/{id}/retire/{old}")
-	 * @Method("PATCH")
+	 * @Route("/championnat/{id}/retire/{old}", methods={"PATCH"})
 	 * @ParamConverter("championnat", options={"id" = "id"})
 	 * @ParamConverter("oldEquipe", options={"id" = "old"})
 	 * @IsGranted("ROLE_ADMIN")
@@ -265,8 +254,7 @@ class ChampionnatController extends CMController
 	}
 
 	/**
-	 * @Route("/championnat/{id}/importe")
-	 * @Method("POST")
+	 * @Route("/championnat/{id}/importe", methods={"POST"})
 	 * @IsGranted("ROLE_ADMIN")
 	 * @ParamConverter("champDest", converter="doctrine.orm")
 	 * @ParamConverter("championnats", converter="cm_converter", options={"classe":"App\Entity\Championnat[]"})
@@ -308,12 +296,11 @@ class ChampionnatController extends CMController
 		return $this->json($i);
 	}
 
-    /**
-     * @Route("/championnat")
-     * @Method("POST")
+	/**
+	 * @Route("/championnat", methods={"POST"})
 	 * @IsGranted("ROLE_ADMIN")
 	 * @ParamConverter("dto", converter="cm_converter")
-     */
+	 */
 	public function cree(ChampCreationDTO $dto, EntityManagerInterface $entityManager) 
 	{
 		// Création du sport si besoin

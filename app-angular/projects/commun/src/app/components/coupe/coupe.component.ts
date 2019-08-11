@@ -2,10 +2,11 @@ import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Championnat } from '../../model/Championnat';
 import { Match } from '../../model/Match';
-import { getVainqueur } from '../../utils/utils';
+import { getVainqueur, toDisp, calculeStyle } from '../../utils/utils';
 import { Journee } from '../../model/Journee';
 import { Menu } from '../generic-menu/generic-menu.model';
 import { Treant } from 'treant-js';
+import { Equipe } from '../../model/Equipe';
 
 /**
  * Node content
@@ -15,35 +16,9 @@ interface Node {
 		name: string | { val: string, href: string },
 		desc?: string,
 	},
-	HTMLclass?: string,
+	HTMLclass: string,
 	children?: Array<Node>
 }
-
-/**
- * Chart configuration
- */
-const chart = {
-	chart: {
-		container: "#chart",
-		levelSeparation: 20,
-		siblingSeparation: 15,
-		subTeeSeparation: 30,
-		rootOrientation: "EAST",
-
-		node: {
-			HTMLclass: "Treant-match",
-			drawLineThrough: true
-		},
-		connectors: {
-			type: "straight",
-			style: {
-				"stroke-width": 2,
-				"stroke": "#ccc"
-			}
-		}
-	},
-	nodeStructure: <Node>null,
-};
 
 //--------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------
@@ -56,10 +31,37 @@ const chart = {
 export class CoupeComponent implements OnInit, AfterViewInit {
 
 	@Input() journee: Journee;
+	@Input() equipe: Equipe;
 
 	menu: Menu;
 	champ: Championnat;
 	nbEquipes: number;
+
+	/**
+	 * Chart configuration
+	 */
+	private chart = {
+		chart: {
+			container: "#chart-",
+			levelSeparation: 20,
+			siblingSeparation: 15,
+			subTeeSeparation: 30,
+			rootOrientation: "EAST",
+
+			node: {
+				HTMLclass: "Treant-match",
+				drawLineThrough: true
+			},
+			connectors: {
+				type: "straight",
+				style: {
+					"stroke-width": 2,
+					"stroke": "#ccc"
+				}
+			}
+		},
+		nodeStructure: <Node>null,
+	};
 
 
 	/**
@@ -92,7 +94,8 @@ export class CoupeComponent implements OnInit, AfterViewInit {
 	 * Fin de l'initialisation
 	 */
 	ngAfterViewInit(): void {
-		new Treant(chart);
+		this.chart.chart.container += this.champ.id;
+		new Treant(this.chart);
 	}
 
 	/**
@@ -101,7 +104,7 @@ export class CoupeComponent implements OnInit, AfterViewInit {
 	 */
 	private init(journee: Journee) {
 		this.champ = journee.championnat;
-		[chart.nodeStructure, this.nbEquipes] = this.buildChart(journee.matches[0]);
+		[this.chart.nodeStructure, this.nbEquipes] = this.buildChart(journee.matches[0]);
 	}
 
 	/**
@@ -113,6 +116,7 @@ export class CoupeComponent implements OnInit, AfterViewInit {
 
 		let nbEquipes = 0;
 		let vainqueur = getVainqueur(match);
+		toDisp(match);
 
 		// Création du noeud du match
 		let node: Node = {
@@ -121,10 +125,10 @@ export class CoupeComponent implements OnInit, AfterViewInit {
 					val: " ",
 					href: null,
 				},
-				desc: vainqueur != null ? match.score1 + " à " + match.score2 : "",
+				desc: vainqueur != null ? match.dispScore1 + " - " + match.dispScore2 : "",
 			},
-			children: [
-			]
+			HTMLclass: "",
+			children: []
 		};
 
 		if (vainqueur != null) {
@@ -135,42 +139,47 @@ export class CoupeComponent implements OnInit, AfterViewInit {
 		}
 
 		// 1er fils
+		let child1: Node = null;
+		let nb: number;
 		if (match.match1 != null) {
-			let res = this.buildChart(match.match1);
-			node.children.push(res[0]);
-			nbEquipes += res[1];
+			[child1, nb] = this.buildChart(match.match1);
 		}
 		else {
-			node.children.push({
+			child1 = {
 				text: {
 					name: {
 						val: match.equipe1.nom,
 						href: this.router.createUrlTree(["equipe", "matches", match.equipe1.id]).toString()
 					},
 				},
-				HTMLclass: "Treant-match-initial",
-			});
-			nbEquipes++;
+				HTMLclass: "Treant-match-initial ",
+			};
+			nb = 1;
 		}
+		nbEquipes += nb;
+		child1.HTMLclass += calculeStyle(match, 1, this.equipe);
+		node.children.push(child1);
 
 		// 2e fils
+		let child2: Node = null;
 		if (match.match2 != null) {
-			let res = this.buildChart(match.match2);
-			node.children.push(res[0]);
-			nbEquipes += res[1];
+			[child2, nb] = this.buildChart(match.match2);
 		}
 		else {
-			node.children.push({
+			child2 = {
 				text: {
 					name: {
 						val: match.equipe2.nom,
 						href: this.router.createUrlTree(["equipe", "matches", match.equipe2.id]).toString()
 					},
 				},
-				HTMLclass: "Treant-match-initial",
-			});
-			nbEquipes++;
+				HTMLclass: "Treant-match-initial ",
+			};
+			nb = 1;
 		}
+		nbEquipes += nb;
+		child2.HTMLclass += calculeStyle(match, 2, this.equipe);
+		node.children.push(child2);
 		
 		return [node, nbEquipes];
 	}

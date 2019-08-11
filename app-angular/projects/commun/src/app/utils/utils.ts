@@ -4,6 +4,10 @@ import { NgbModal, NgbModalOptions } from "@ng-bootstrap/ng-bootstrap";
 import { Match } from "../model/Match";
 import { Equipe } from "../model/Equipe";
 
+
+/* Constantes */
+export const STYLE_MEME_EQUIPE = "font-weight-bold";
+
 /** Jours de la semaine */
 export var jours = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi'];
 
@@ -114,4 +118,39 @@ export function getVainqueur(m: Match): Equipe|null {
 		return null;
 	else
 		return (m.score1 > m.score2) ? m.equipe1 : m.equipe2;
+}
+
+
+/**
+ * Calcule le style associé à une équipe
+ * @param match 
+ * @param i Index de l'équipe considérée
+ * @param equipe Equipe actuellement sélectionnée
+ */
+export function calculeStyle(match: Match, i: 1|2, equipe: Equipe): string {
+	const j = 3 - i;
+	let style = "";
+	if (equipe != null) {
+		if (match[`equipe${i}`] && match[`equipe${i}`].id == equipe.id)
+			style = STYLE_MEME_EQUIPE + " ";
+		else if (match[`forfait${i}`])
+			return "forfait text-dark";
+		else
+			return "text-dark";
+	}
+
+	if (match[`forfait${i}`])
+		return style + "forfait text-dark";
+	if (match[`forfait${j}`])
+		return style + "text-success";
+
+	if (match[`score${i}`] === null || match[`score${j}`] === null)
+		return style + "text-dark";
+
+	if (match[`score${i}`] > match[`score${j}`])
+		return style + "text-success";
+	if (match[`score${i}`] < match[`score${j}`])
+		return style + "text-danger";
+
+	return style + "text-dark";
 }

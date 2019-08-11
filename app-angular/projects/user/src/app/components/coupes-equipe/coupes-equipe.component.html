@@ -7,5 +7,5 @@
 <div *ngFor="let journee of journees">
 	<h2 class="section">{{journee.championnat.nom}}</h2>
 	<br>
-	<app-coupe [journee]="journee"></app-coupe>
+	<app-coupe [journee]="journee" [equipe]="equipe"></app-coupe>
 </div>

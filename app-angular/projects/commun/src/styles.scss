@@ -11,6 +11,10 @@ label.btn:not(.active) {
     cursor: pointer;
 }
 
+.forfait {
+	text-decoration: line-through;
+}
+
 /* Pour les tableaux de coupe */
 .Treant { position: relative; overflow: hidden; padding: 0 !important; }
 
@@ -35,3 +39,28 @@ label.btn:not(.active) {
 .Treant-match.Treant-match-initial .node-name { position: absolute; top: -1em; }
 
 .Treant-match.Treant-match-initial { height: calc(1em + 2 * 2px);  }
+
+@import "functions";
+@import "variables";
+@import "mixins";
+@import "utilities/text";
+
+.Treant .text-success a {
+	@extend .text-success;
+}
+
+.Treant .text-dark a {
+	@extend .text-dark;
+}
+
+.Treant .text-danger a {
+	@extend .text-danger;
+}
+
+.Treant .font-weight-bold a {
+	@extend .font-weight-bold;
+}
+
+.Treant .forfait a {
+	@extend .forfait;
+}

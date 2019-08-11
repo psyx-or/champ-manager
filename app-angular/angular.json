@@ -47,10 +47,15 @@
             ],
             "styles": [
               "projects/admin/src/styles.css",
-              "projects/commun/src/styles.css",
+              "projects/commun/src/styles.scss",
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "node_modules/ionicons/dist/css/ionicons.min.css"
             ],
+			"stylePreprocessorOptions": {
+				"includePaths": [
+					"node_modules/bootstrap/scss"
+				]
+			},
 			"scripts": [
 				"./node_modules/raphael/raphael.js"
 			]
@@ -168,10 +173,15 @@
             ],
             "styles": [
               "projects/user/src/styles.css",
-              "projects/commun/src/styles.css",
+              "projects/commun/src/styles.scss",
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "node_modules/ionicons/dist/css/ionicons.min.css"
             ],
+			"stylePreprocessorOptions": {
+				"includePaths": [
+					"node_modules/bootstrap/scss"
+				]
+			},
             "scripts": [
 				"./node_modules/raphael/raphael.js"
 			]

@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Match } from '@commun/src/app/model/Match';
-import { toDisp, jours } from '@commun/src/app/utils/utils';
+import { toDisp, jours, calculeStyle, STYLE_MEME_EQUIPE } from '@commun/src/app/utils/utils';
 import { Equipe } from '@commun/src/app/model/Equipe';
 import * as moment from 'moment';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -31,7 +31,7 @@ class MatchExt extends Match {
 export class MatchesComponent implements OnInit {
 
 	readonly PAS_DE_TERRAIN = "Pas de terrain";
-	readonly STYLE_MEME_EQUIPE = "font-weight-bold";
+	readonly STYLE_MEME_EQUIPE = STYLE_MEME_EQUIPE;
 	readonly Statuts = StatutMatch;
 	
 	@Input() matches: Match[];
@@ -62,44 +62,11 @@ export class MatchesComponent implements OnInit {
 			(((m1.exempt == null ) == (m2.exempt == null)) ? 0 : (m1.exempt ? 1 : -1))
 		).map(toDisp);
 		this.matchesExt.forEach( m => {
-			m.style1 = this.calculeStyle(m, 1, 2);
-			m.style2 = this.calculeStyle(m, 2, 1);
+			m.style1 = calculeStyle(m, 1, this.equipe);
+			m.style2 = calculeStyle(m, 2, this.equipe);
 			this.calculeDate(m);
 			if (this.saisie) this.calculeStatut(m);
 		});
-	}
-
-	/**
-	 * Calcule le style associé à une équipe
-	 * @param match 
-	 * @param i 
-	 * @param j 
-	 */
-	calculeStyle(match, i, j): string {
-		let style = "";
-		if (this.equipe != null) {
-			if (match[`equipe${i}`] && match[`equipe${i}`].id == this.equipe.id)
-				style = this.STYLE_MEME_EQUIPE + " ";
-			else if (match[`forfait${i}`])
-				return "forfait text-dark";
-			else
-				return "text-dark";
-		}
-
-		if (match[`forfait${i}`])
-			return style + "forfait text-dark";
-		if (match[`forfait${j}`])
-			return style + "text-success";
-
-		if (match[`score${i}`] === null || match[`score${j}`] === null)
-			return style + "text-dark";
-
-		if (match[`score${i}`] > match[`score${j}`])
-			return style + "text-success";
-		if (match[`score${i}`] < match[`score${j}`])
-			return style + "text-danger";
-
-		return style + "text-dark";
 	}
 
 	/**

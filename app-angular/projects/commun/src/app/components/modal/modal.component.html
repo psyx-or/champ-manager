@@ -17,5 +17,6 @@
 	------------------- -->
 <div class="modal-footer">
 	<button type="button" class="btn btn-secondary" (click)="activeModal.dismiss()">Annuler</button>
-	<button type="button" class="btn btn-danger" (click)="activeModal.close()" *ngIf="valider">Confirmer</button>
+	<button type="button" class="btn btn-danger" (click)="activeModal.close()" *ngIf="valider && !formulaire">Confirmer</button>
+	<button type="submit" class="btn btn-danger" *ngIf="valider && formulaire" form="formulaire">Confirmer</button>
 </div>

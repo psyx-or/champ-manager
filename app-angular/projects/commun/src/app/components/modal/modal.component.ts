@@ -12,6 +12,7 @@ export class ModalComponent {
 	@Input() contenu: TemplateRef<any>;
 	@Input() contexte: Object;
 	@Input() valider: boolean;
+	@Input() formulaire: boolean;
 
 	constructor(
 		public activeModal: NgbActiveModal

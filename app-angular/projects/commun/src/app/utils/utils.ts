@@ -1,6 +1,6 @@
 import { ModalComponent } from "../components/modal/modal.component";
 import { TemplateRef } from "@angular/core";
-import { NgbModal, NgbModalOptions } from "@ng-bootstrap/ng-bootstrap";
+import { NgbModal, NgbModalOptions, NgbModalRef } from "@ng-bootstrap/ng-bootstrap";
 import { Match } from "../model/Match";
 import { Equipe } from "../model/Equipe";
 
@@ -52,8 +52,18 @@ export function sort<T>(tab: T[], attr: string): T[] {
  * @param contenu Contenu de la fenêtre
  * @param contexte Variable associée au contenu
  * @param cb Callback en cas de validation
+ * @param taille
+ * @param formulaire Vrai si le contenu est un formulaire (dans ce cas, son id doit être "formulaire" et il doit fermer la modale dans son submit)
  */
-export function openModal(composant: { modalService: NgbModal }, titre: string, contenu: TemplateRef<any>, contexte: any, cb?: () => void, taille?: "sm" | "lg") {
+export function openModal(
+		composant: { modalService: NgbModal },
+		titre: string,
+		contenu: TemplateRef<any>,
+		contexte: any,
+		cb?: () => void,
+		taille?: "sm" | "lg",
+		formulaire?: boolean): NgbModalRef {
+
 	let options: NgbModalOptions = { centered: true, backdrop: 'static' };
 	if (taille) options.size = taille;
 
@@ -62,7 +72,9 @@ export function openModal(composant: { modalService: NgbModal }, titre: string, 
 	modal.componentInstance.contenu = contenu;
 	modal.componentInstance.contexte = { $implicit: contexte };
 	modal.componentInstance.valider = (cb != null);
+	modal.componentInstance.formulaire = formulaire || false;
 	modal.result.then((res) => { if (cb) cb.bind(composant)(res) }, () => {});
+	return modal;
 }
 
 /**

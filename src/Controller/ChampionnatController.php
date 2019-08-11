@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Doctrine\ORM\EntityManagerInterface;
@@ -212,6 +213,57 @@ class ChampionnatController extends CMController
 		MatchFunctions::calculeClassement($championnat, $entityManager);
 
 		$entityManager->flush();
+		$entityManager->refresh($championnat);
+
+		return $this->groupJson($championnat->getClassements(), 'simple');
+	}
+
+	/**
+	 * @Route("/championnat/{id}/forfait/{equipe}", methods={"PATCH"})
+	 * @ParamConverter("championnat", options={"id" = "id"})
+	 * @ParamConverter("equipe", options={"id" = "equipe"})
+	 * @IsGranted("ROLE_ADMIN")
+	 */
+	public function forfaitGeneral(Request $request, Championnat $championnat, Equipe $equipe, EntityManagerInterface $entityManager, AuthorizationCheckerInterface $authChecker, MatchController $matchController)
+	{
+		$score = $request->query->get("score");
+
+		// Mise à jour des matches
+		$q = $entityManager->createQuery
+		(
+			"SELECT m 
+			 FROM App\Entity\Match m 
+			 JOIN m.journee j
+			 WHERE j.championnat = :champ
+			   AND (m.equipe1 = :equipe OR m.equipe2 = :equipe)"
+		);
+		$q->setParameter("champ", $championnat);
+		$q->setParameter("equipe", $equipe);
+
+		$matches = array();
+		foreach ($q->getResult() as $match)
+		{
+			if ($match->getEquipe1() == $equipe && $match->getEquipe2() != null)
+			{
+				$match->setScore1(null);
+				$match->setScore2($score);
+				$match->setForfait1(true);
+				$match->setForfait2(false);
+				array_push($matches, $match);
+			}
+			if ($match->getEquipe2() == $equipe && $match->getEquipe1() != null)
+			{
+				$match->setScore1($score);
+				$match->setScore2(null);
+				$match->setForfait1(false);
+				$match->setForfait2(true);
+				array_push($matches, $match);
+			}
+		}
+
+		// Mise à jour des matches et du classement
+		$matchController->majListe($matches, $entityManager, $authChecker);
+
 		$entityManager->refresh($championnat);
 
 		return $this->groupJson($championnat->getClassements(), 'simple');

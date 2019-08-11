@@ -96,6 +96,13 @@ export class ChampionnatService {
 	}
 
 	/**
+	 * Forfait général pour une équipe dans un championnat
+	 */
+	public forfaitGeneral(championnat: Championnat, equipe: Equipe, score: number): Observable<Classement[]> {
+		return this.http.patch<Classement[]>("/api/championnat/" + championnat.id + "/forfait/" + equipe.id, null, { params: { score: score.toString() } });
+	}
+
+	/**
 	 * Importe les résultats existants de championnats dans un nouveau championnat
 	 * @param champDest 
 	 * @param champSources 

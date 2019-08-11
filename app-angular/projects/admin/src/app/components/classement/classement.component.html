@@ -1,7 +1,7 @@
 <app-generic-menu [menu]="menu" [obj]="champ"></app-generic-menu>
 
 <div>
-	<button class="btn btn-secondary" type="button" (click)="changeExempt()">Ajouter une équipe</button>
+	<button *ngIf="classements.length % 2 == 1" class="btn btn-secondary" type="button" (click)="changeExempt()">Ajouter une équipe</button>
 </div>
 
 <br>
@@ -31,6 +31,10 @@
 				<td>
 					<button type="button" class="btn btn-outline-danger btn-sm" ngbTooltip="Retirer l'équipe" (click)="retireEquipe(class.equipe)">
 						<i class="icon ion-md-trash"></i>
+					</button>
+					&nbsp;
+					<button type="button" class="btn btn-outline-danger btn-sm" ngbTooltip="Forfait général" (click)="forfaitGeneral(class.equipe)">
+						<i class="icon ion-md-walk"></i>
 					</button>
 					&nbsp;
 					<button type="button" class="btn btn-outline-secondary btn-sm" ngbTooltip="Remplacer l'équipe" (click)="change(class.equipe)">
@@ -68,7 +72,7 @@
   ------------------- -->
 
 <ng-template #changeEquipe let-equipe>
-	<form class="form">
+	<form class="form" id="formulaire" ngNativeValidate (ngSubmit)="modal.close()">
 		<div class="form-group">
 			<label for="new_equipe">Remplacer l'équipe {{equipe.nom}} par l'équipe :</label>
 			<select class="form-control" id="new_equipe" name="new_equipe" required 
@@ -86,4 +90,19 @@
 
 <ng-template #supprEquipe let-equipe>
 	Etes-vous sûr de vouloir retirer l'équipe {{ equipe.nom }} du championnat {{ champ.nom}}&nbsp;?
+</ng-template>
+
+
+<!----------------------
+	Fenêtre de forfait général
+  ------------------- -->
+
+<ng-template #forfaitEquipe let-equipe>
+	<form class="form" id="formulaire" ngNativeValidate (ngSubmit)="modal.close()">
+		<div class="form-group">
+			<label for="score">Nombre de buts pour les adversaires&nbsp;:</label>
+			<input class="form-control" type="number" min="0"
+			       id="score" name="score" required [(ngModel)]="forfait.score"/>
+		</div>
+	</form>
 </ng-template>

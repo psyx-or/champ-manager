@@ -7,7 +7,7 @@ import { Classement } from 'projects/commun/src/app/model/Classement';
 import { sort, openModal } from 'projects/commun/src/app/utils/utils';
 import { Equipe } from 'projects/commun/src/app/model/Equipe';
 import { EquipeService } from 'projects/commun/src/app/services/equipe.service';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ChampionnatService } from 'projects/commun/src/app/services/championnat.service';
 import { menus } from '../../utils/menus';
 
@@ -20,16 +20,19 @@ export class ClassementComponent implements OnInit {
 
 	@ViewChild('changeEquipe', {static:true}) changeEquipeTpl: TemplateRef<any>;
 	@ViewChild('supprEquipe', {static:true}) supprEquipeTpl: TemplateRef<any>;
+	@ViewChild('forfaitEquipe', {static:true}) forfaitEquipeTpl: TemplateRef<any>;
 	
 	menu = menus.championnat;
 	champ: Championnat = null;
 	seuilsForfait: [Number, Number];
 	classements: Classement[];
+	modal: NgbModalRef;
 	remplacement: {
 		oldEquipe: Equipe;
 		newEquipe?: Equipe;
 		equipes?: Equipe[];
 	};
+	forfait = {	score: <number>null };
 
 	/**
 	 * Constructeur
@@ -88,12 +91,14 @@ export class ClassementComponent implements OnInit {
 					alert("Pas d'équipe pour remplacer");
 				}
 				else {
-					openModal(
+					this.modal = openModal(
 						this,
 						"Remplacement d'équipe",
 						this.changeEquipeTpl,
 						equipe,
-						this.changeAction
+						this.changeAction,
+						null,
+						true
 					);
 				}
 			}
@@ -107,7 +112,7 @@ export class ClassementComponent implements OnInit {
 		this.requeteService.requete(
 			this.championnatService.remplace(this.champ, this.remplacement.oldEquipe, this.remplacement.newEquipe),
 			classements => {
-				if (classements) this.classements = classements; 
+				if (classements) this.classements = sort(classements, 'position');
 				else alert("Ajout impossible: pas d'équipe exempte");
 			}
 		)
@@ -133,9 +138,30 @@ export class ClassementComponent implements OnInit {
 			() => {
 				this.requeteService.requete(
 					this.championnatService.retire(this.champ, equipe),
-					classements => this.classements = classements
+					classements => this.classements = sort(classements, 'position')
 				);
 			}
+		);
+	}
+
+	/**
+	 * Forfait général pour une équipe
+	 * @param equipe
+	 */
+	forfaitGeneral(equipe: Equipe): void {
+		this.modal = openModal(
+			this,
+			`Forfait général pour ${equipe.nom}`,
+			this.forfaitEquipeTpl,
+			equipe,
+			() => {
+				this.requeteService.requete(
+					this.championnatService.forfaitGeneral(this.champ, equipe, this.forfait.score),
+					classements => this.classements = sort(classements, 'position')
+				);
+			},
+			null,
+			true
 		);
 	}
 }

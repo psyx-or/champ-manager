@@ -4,10 +4,10 @@ import { Observable, of } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { getSaisonCourante } from '../utils/utils';
 import { FPForm } from '../model/FPForm';
-import { Sport } from '../model/Sport';
-import { FPClassement } from '../model/FPClassement';
+import { FPResultat } from '../model/FPClassement';
 import { Match } from '../model/Match';
 import { FPFeuilleAfficheDTO, FPFeuille } from '../model/FPFeuille';
+import { Championnat } from '../model/Championnat';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +15,7 @@ import { FPFeuilleAfficheDTO, FPFeuille } from '../model/FPFeuille';
 export class FairplayService {
 
 	private cache: FPForm[];
-	private lastClassement: { sport: Sport, class: FPClassement[] };
+	private cacheFPResultat: FPResultat;
 
 	constructor(
 		private http: HttpClient
@@ -79,19 +79,17 @@ export class FairplayService {
 
 	/**
 	 * Récupère le classement du fair-play
-	 * @param sport 
+	 * @param champId
 	 */
-	public getClassement(sport: Sport): Observable<FPClassement[]> {
-		return this.http.get<FPClassement[]>(`/api/fairplay/classement/${sport.nom}`, { params: { saison: getSaisonCourante() }}).pipe(
-			tap(classements => this.lastClassement = {sport: sport, class: classements})
-		)
-	}
-
-	/**
-	 * Récupère le dernier classement du fair-play récupéré
-	 */
-	public getLastClassement(): null | {sport: Sport, class: FPClassement[] } {
-		return this.lastClassement;
+	public getClassement(champId: number): Observable<FPResultat> {
+		if (this.cacheFPResultat && this.cacheFPResultat.champ.id == champId) {
+			return of(this.cacheFPResultat);
+		}
+		else {
+			return this.http.get<FPResultat>(`/api/fairplay/classement/${champId}`).pipe(
+				tap(res => this.cacheFPResultat = res)
+			);
+		}
 	}
 
 	/**
@@ -99,7 +97,7 @@ export class FairplayService {
 	 * @param equipeId 
 	 * @param type "evaluation" | "redaction"
 	 */
-	public getFeuilles(equipeId: number, type: string): Observable<FPFeuille[]> {
-		return this.http.get<FPFeuille[]>(`/api/fairplay/${equipeId}/${type}`, { params: { saison: getSaisonCourante() }});
+	public getFeuilles(equipeId: number, type: string): Observable<Championnat[]> {
+		return this.http.get<Championnat[]>(`/api/fairplay/${equipeId}/${type}`, { params: { saison: getSaisonCourante() }});
 	}
 }

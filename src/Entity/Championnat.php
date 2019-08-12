@@ -274,4 +274,19 @@ class Championnat
 
         return $this;
     }
+
+	/**
+	 * @Groups({"feuilles"})
+	 */
+	public function getFpFeuilles(): array
+	{
+		$res = array();
+
+		foreach ($this->getJournees() as $journee)
+			foreach ($journee->getMatches() as $match)
+				foreach ($match->getFpFeuilles() as $feuille)
+					array_push($res, $feuille);
+
+		return $res;
+	}
 }

@@ -2,6 +2,7 @@ import { Sport } from "./Sport";
 import { Journee } from "./Journee";
 import { Classement } from "./Classement";
 import { FPForm } from "./FPForm";
+import { FPFeuille } from "./FPFeuille";
 
 /**
  * Types de championnat
@@ -27,6 +28,7 @@ export class Championnat {
 	public journees: Journee[];
 	public classements: Classement[];
 	public fpForm?: FPForm;
+	public fpFeuilles: FPFeuille[];
 
     public constructor(init?: Partial<Championnat>) {
         Object.assign(this, init);

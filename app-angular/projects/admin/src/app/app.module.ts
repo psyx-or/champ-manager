@@ -31,6 +31,7 @@ import { CalendrierDoublonsComponent } from './components/calendrier-doublons/ca
 import { FairplayEquipeComponent } from './components/fairplay-equipe/fairplay-equipe.component';
 import { FairplayEquipeResolver } from './components/fairplay-equipe/fairplay-equipe.resolver';
 import { CommunModule } from 'projects/commun/src/app/commun.module';
+import { FpClassementResolver } from './components/fairplay-classement/fairplay-classement.resolver';
 
 
 @NgModule({
@@ -70,7 +71,8 @@ import { CommunModule } from 'projects/commun/src/app/commun.module';
 	  FpformsResumeResolver,
 	  ChampModeleResolver,
 	  ParametresResolver,
-	  FairplayEquipeResolver
+	  FairplayEquipeResolver,
+	  FpClassementResolver,
   ],
   bootstrap: [AppComponent],
   entryComponents: [

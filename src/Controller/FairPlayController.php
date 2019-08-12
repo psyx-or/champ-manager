@@ -16,8 +16,9 @@ use App\Entity\FPFeuille;
 use App\Entity\FPQuestion;
 use App\Entity\FPReponse;
 use App\Entity\Equipe;
-use App\Entity\Sport;
 use App\Entity\Parametre;
+use App\Entity\Championnat;
+use App\DTO\FPResultatDTO;
 
 /**
  * @Route("/api")
@@ -36,30 +37,29 @@ class FairPlayController extends CMController
 	}
 
 	/**
-	 * @Route("/fairplay/classement/{nom}", methods={"GET"})
+	 * @Route("/fairplay/classement/{id}", methods={"GET"})
 	 * @IsGranted("ROLE_ADMIN")
 	 */
-    public function classement(Sport $sport, Request $request, EntityManagerInterface $entityManager)
+    public function classement(Championnat $champ, EntityManagerInterface $entityManager)
     {
-		$saison = $request->query->get('saison');
-
 		$query = $entityManager->createQuery(
 			"SELECT e AS equipe, AVG(f.ratio) AS ratio, COUNT(f) AS nb
 			 FROM App\Entity\Equipe e
 			 JOIN e.fpEvaluees f
 			 JOIN f.fpMatch m
 			 JOIN m.journee j
-			 JOIN j.championnat c
-			 WHERE c.sport = :sport
-			   AND c.saison = :saison
+			 WHERE j.championnat = :champ
 			 GROUP BY e
 			 ORDER BY AVG(f.ratio) DESC"
 		);
 
-		$query->setParameter("sport", $sport);
-		$query->setParameter("saison", $saison);
+		$query->setParameter("champ", $champ);
 
-        return $this->groupJson($query->getResult(), "simple");
+		$res = new FPResultatDTO();
+		$res->setChamp($champ);
+		$res->setFpClassements($query->getResult());
+
+        return $this->groupJson($res, "simple");
 	}
 
 	/**
@@ -268,20 +268,20 @@ class FairPlayController extends CMController
 		$saison = $request->query->get('saison');
 
 		$query = $entityManager->createQuery(
-			"SELECT f
-			 FROM App\Entity\FPFeuille f
-			 JOIN f.fpMatch m
-			 JOIN m.journee j
-			 JOIN j.championnat c
+			"SELECT c, j, m, f
+			 FROM App\Entity\Championnat c
+			 JOIN c.journees j
+			 JOIN j.matches m
+			 JOIN m.fpFeuilles f
 			 WHERE f.equipeEvaluee = :equipe
 			   AND c.saison = :saison
-			 ORDER BY f.ratio DESC"
+			 ORDER BY c.id DESC, f.ratio DESC"
 		);
 
 		$query->setParameter("equipe", $equipe);
 		$query->setParameter("saison", $saison);
 
-		return $this->groupJson($query->getResult(), "complet", "simple");
+		return $this->groupJson($query->getResult(), "complet", "simple", "feuilles");
 	}
 
 	/**
@@ -293,19 +293,19 @@ class FairPlayController extends CMController
 		$saison = $request->query->get('saison');
 
 		$query = $entityManager->createQuery(
-			"SELECT f
-			 FROM App\Entity\FPFeuille f
-			 JOIN f.fpMatch m
-			 JOIN m.journee j
-			 JOIN j.championnat c
+			"SELECT c, j, m, f
+			 FROM App\Entity\Championnat c
+			 JOIN c.journees j
+			 JOIN j.matches m
+			 JOIN m.fpFeuilles f
 			 WHERE f.equipeRedactrice = :equipe
 			   AND c.saison = :saison
-			 ORDER BY f.ratio DESC"
+			 ORDER BY c.id DESC, f.ratio DESC"
 		);
 
 		$query->setParameter("equipe", $equipe);
 		$query->setParameter("saison", $saison);
 
-		return $this->groupJson($query->getResult(), "complet", "simple");
+		return $this->groupJson($query->getResult(), "complet", "simple", "feuilles");
 	}
 }

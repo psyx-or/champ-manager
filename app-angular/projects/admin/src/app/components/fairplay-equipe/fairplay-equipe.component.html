@@ -1,31 +1,39 @@
 <app-generic-menu [menu]="menu" [obj]="equipe"></app-generic-menu>
 
 
-<ngb-alert *ngIf="feuilles && feuilles.length == 0" [dismissible]="false" type="info">
+<ngb-alert *ngIf="championnats && championnats.length == 0" [dismissible]="false" type="info">
 	Pas d'évaluation de fair-play pour cette équipe et la saison courante
 </ngb-alert>
 
-<div *ngIf="feuilles && feuilles.length > 0">
+<div *ngIf="championnats && championnats.length > 0">
 	<ngb-alert [dismissible]="false" type="info">
 		Les notes vont de 100 (toutes les évaluations d'une feuille sont positives) à -100 (toutes les évaluations d'une feuille sont négatives).
 	</ngb-alert>
 
-	<table class="table table-striped text-center table-bordered table-hover">
-		<thead>
-			<tr>
-				<th scope="col">Equipe</th>
-				<th scope="col">Pts</th>
-				<th scope="col">Commentaire</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr *ngFor="let feuille of feuilles; let i = index;" (click)="fairplay(feuille, i)">
-				<td>{{feuille[attrAffiche].nom}}</td>
-				<td class="font-weight-bold" [ngClass]="{'text-success': feuille.ratio>33, 'text-danger': feuille.ratio<-33}">
-					{{feuille.ratio}}
-				</td>
-				<td>{{feuille.commentaire}}</td>
-			</tr>
-		</tbody>
-	</table>
+	<!-- Liste des championnats-->
+	<div *ngFor="let championnat of championnats">
+	
+		<!-- Description du championnat -->
+		<h4>{{ championnat.nom }}</h4>
+		<hr>
+
+		<table class="table table-striped table-sm text-center table-bordered table-hover">
+			<thead>
+				<tr>
+					<th scope="col">Equipe</th>
+					<th scope="col">Pts</th>
+					<th scope="col">Commentaire</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr *ngFor="let feuille of championnat.fpFeuilles; let i = index;" (click)="fairplay(feuille, championnat, i)">
+					<td>{{feuille[attrAffiche].nom}}</td>
+					<td class="font-weight-bold" [ngClass]="{'text-success': feuille.ratio>33, 'text-danger': feuille.ratio<-33}">
+						{{feuille.ratio}}
+					</td>
+					<td>{{feuille.commentaire}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
 </div>

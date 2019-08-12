@@ -1,20 +1,4 @@
-<h1>
-	<i class="icon ion-md-happy"></i> Classement de fair-play
-</h1>
-
-
-<!----------------------
-	Sport
-  ------------------- -->
-
-<div class="form-group form-row">
-	<label for="sport" class="col-sm-2 col-form-label">Sport</label>
-	<div class="col-sm-2">
-		<select class="form-control" id="sport" name="sport" [(ngModel)]="selSport" (ngModelChange)="selectionSport($event)">
-			<option *ngFor="let s of sports" [ngValue]="s">{{s.nom}}</option>
-		</select>
-	</div>
-</div>
+<app-generic-menu [menu]="menu" [obj]="champ"></app-generic-menu>
 
 
 <!----------------------
@@ -22,7 +6,7 @@
   ------------------- -->
 
 <ngb-alert *ngIf="classements && classements.length == 0" [dismissible]="false" type="info">
-	Pas d'évaluation de fair-play pour ce sport et la saison courante
+	Pas d'évaluation de fair-play pour ce championnat
 </ngb-alert>
 
 <div *ngIf="classements && classements.length > 0">
@@ -31,7 +15,7 @@
 		Les notes vont de 100 (toutes les évaluations d'une feuille sont positives) à -100 (toutes les évaluations d'une feuille sont négatives).
 	</ngb-alert>
 
-	<table class="table table-striped text-center table-bordered table-hover">
+	<table class="table table-striped table-sm text-center table-bordered table-hover">
 		<thead>
 			<tr>
 				<th scope="col">#</th>

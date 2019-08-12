@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RequeteService } from 'projects/commun/src/app/services/requete.service';
 import { FairplayService } from 'projects/commun/src/app/services/fairplay.service';
-import { Sport } from 'projects/commun/src/app/model/Sport';
-import { FPClassement } from 'projects/commun/src/app/model/FPClassement';
+import { FPClassement, FPResultat } from 'projects/commun/src/app/model/FPClassement';
+import { Championnat } from '@commun/src/app/model/Championnat';
+import { menus } from '../../utils/menus';
 
 @Component({
   selector: 'app-fairplay-classement',
@@ -12,15 +13,13 @@ import { FPClassement } from 'projects/commun/src/app/model/FPClassement';
 })
 export class FairplayClassementComponent implements OnInit {
 
-	sports: Sport[];
-	selSport: Sport;
+	menu = menus.championnat;
+	champ: Championnat;
 	classements: FPClassement[];
 
 	constructor(
 		private route: ActivatedRoute,
 		public router: Router,
-		public requeteService: RequeteService,
-		private fairplayService: FairplayService,
 	) { }
 
 	/**
@@ -28,24 +27,9 @@ export class FairplayClassementComponent implements OnInit {
 	 */
 	ngOnInit() {
 		this.route.data
-			.subscribe((data: { sports: Sport[] }) => {
-				this.sports = data.sports;
-				let lastClass = this.fairplayService.getLastClassement();
-				if (lastClass) {
-					this.selSport = data.sports.find(s => s.nom == lastClass.sport.nom);
-					this.classements = lastClass.class;
-				}
+			.subscribe((data: { classement: FPResultat }) => {
+				this.champ = data.classement.champ;
+				this.classements = data.classement.fpClassements;
 			});
-	}
-
-
-	/**
-	 * Sélection d'un sport
-	 */
-	selectionSport(sport: Sport): void {
-		this.requeteService.requete(
-			this.fairplayService.getClassement(sport),
-			classements => this.classements = classements
-		);
 	}
 }

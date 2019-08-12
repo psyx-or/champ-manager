@@ -50,6 +50,10 @@
 						<a class="btn btn-sm btn-outline-primary" [routerLink]="['/classement', champ.id]" *ngIf="champ.type != 'COUPE'" [ngbTooltip]="infoClassement"><i class="icon ion-md-podium"></i></a>
 						<a class="btn btn-sm btn-outline-secondary" [routerLink]="['/coupe', champ.id]" *ngIf="champ.type == 'COUPE'" [ngbTooltip]="infoPlateau"><i class="icon ion-md-git-network"></i></a>
 						&nbsp;
+						<span *ngIf="champ.fpForm != null">
+							<a class="btn btn-sm btn-outline-primary" [routerLink]="['/fairplay-classement', champ.id]" ngbTooltip="Classement du fair-play"><i class="icon ion-md-happy"></i></a>
+							&nbsp;
+						</span>
 						<a class="btn btn-sm btn-outline-secondary" [routerLink]="['/journees', champ.id]" [ngbTooltip]="infoCalendrier"><i class="icon ion-md-calendar"></i></a>
 						&nbsp;
 						<button class="btn btn-sm btn-outline-secondary" (click)="importer(champ)" ngbTooltip="Importer les résultats d'autres poules"><i class="icon ion-md-arrow-round-up"></i></button>
@@ -84,7 +88,8 @@
 <ng-template #infoClassement>
 	Afficher le classement<br>
 	Attribuer les points de pénalité<br>
-	Echanger une équipe
+	Echanger une équipe<br>
+	Déclarer un forfait général
 </ng-template>
 
 <ng-template #infoPlateau>

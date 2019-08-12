@@ -31,6 +31,7 @@ import { CoupeComponent } from '@commun/src/app/components/coupe/coupe.component
 import { HierarchieResolver } from '@commun/src/app/components/coupe/hierarchie.resolver';
 import { menus } from './utils/menus';
 import { SeuilsForfaitParamResolver } from '@commun/src/app/utils/seuils-forfait.resolver';
+import { FpClassementResolver } from './components/fairplay-classement/fairplay-classement.resolver';
 
 const routes: Routes = [
 	{ path: '', pathMatch: 'full', redirectTo: 'championnats' },
@@ -48,8 +49,8 @@ const routes: Routes = [
 	{ path: 'champ-modele', component: ChampModeleComponent, resolve: { sports: SportResolver, fpForms: FpformsResumeResolver, modeles: ChampModeleResolver }, runGuardsAndResolvers: "always", canDeactivate: [CanDeactivateGuard] },
 	{ path: 'parametres', component: ParametresComponent, resolve: { parametres: ParametresResolver }, canDeactivate: [CanDeactivateGuard] },
 	{ path: 'equipe/:equipeId', component: EquipeComponent, resolve: { equipe: EquipeResolver }, runGuardsAndResolvers: "always", canDeactivate: [CanDeactivateGuard] },
-	{ path: 'fairplay-classement', component: FairplayClassementComponent, resolve: { sports: SportResolver } },
-	{ path: 'fairplay-equipe/:type/:equipeId', component: FairplayEquipeComponent, resolve: { equipe: EquipeResolver, feuilles: FairplayEquipeResolver } },
+	{ path: 'fairplay-classement/:champId', component: FairplayClassementComponent, resolve: { classement: FpClassementResolver } },
+	{ path: 'fairplay-equipe/:type/:equipeId', component: FairplayEquipeComponent, resolve: { equipe: EquipeResolver, championnats: FairplayEquipeResolver } },
 ];
 
 @NgModule({

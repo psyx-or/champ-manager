@@ -31,6 +31,7 @@ export var menus: { [nom: string]: Menu } = {
 			{ route: "matches", icone: 'clipboard', titre: "Matches" },
 			{ route: "classement", icone: 'podium', titre: "Classement", cond: (c: Championnat) => c.type == ChampType.Aller || c.type == ChampType["Aller/Retour"] },
 			{ route: "coupe", icone: 'git-network', titre: "Plateau", cond: (c: Championnat) => c.type == ChampType.Coupe },
+			{ route: "fairplay-classement", icone: 'happy', titre: "Classement de fair-play", cond: (c: Championnat) => c.fpForm != null },
 			{ route: "journees", icone: 'calendar', titre: "Calendrier" },
 		]
 	},

@@ -3,7 +3,7 @@ import { ChampionnatService } from 'projects/commun/src/app/services/championnat
 import { Championnat } from 'projects/commun/src/app/model/Championnat';
 import { Sport } from 'projects/commun/src/app/model/Sport';
 import { sort, openModal, getSaisonCourante, getSaison } from 'projects/commun/src/app/utils/utils';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { RequeteService } from 'projects/commun/src/app/services/requete.service';
 import { ChampImportComponent } from '../champ-import/champ-import.component';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -17,10 +17,13 @@ import * as moment from 'moment';
 export class ChampionnatsComponent implements OnInit {
 
 	@ViewChild('supprChamp', {static:true}) supprChampTpl: TemplateRef<any>;
+	@ViewChild('renommage', {static:true}) renommageTpl: TemplateRef<any>;
 
 	saisons: string[] = [];
 	sports: Sport[];
 	championnats: Map<string, Championnat[]>;
+	modal: NgbModalRef;
+	nouveauNom: string;
 
 
 	/**
@@ -102,4 +105,26 @@ export class ChampionnatsComponent implements OnInit {
 			championnats => this.initChamps(championnats)
 		);
 	}
+
+	/**
+	 * Renomme un championnat
+	 * @param champ 
+	 */
+	renommer(champ: Championnat) {
+		this.nouveauNom = champ.nom;
+		this.modal = openModal(
+			this,
+			`Renommer ${champ.nom}`,
+			this.renommageTpl,
+			champ,
+			() => {
+				this.requeteService.requete(
+					this.championnatService.renomme(champ, this.nouveauNom),
+					() => champ.nom = this.nouveauNom
+				);
+			},
+			null,
+			true
+		);
+		}
 }

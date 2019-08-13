@@ -103,6 +103,13 @@ export class ChampionnatService {
 	}
 
 	/**
+	 * Renomme un championnat
+	 */
+	public renomme(championnat: Championnat, nom: string): Observable<any> {
+		return this.http.patch("/api/championnat/" + championnat.id + "/renomme", nom);
+	}
+
+	/**
 	 * Importe les résultats existants de championnats dans un nouveau championnat
 	 * @param champDest 
 	 * @param champSources 

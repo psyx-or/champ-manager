@@ -306,6 +306,21 @@ class ChampionnatController extends CMController
 	}
 
 	/**
+	 * @Route("/championnat/{id}/renomme", methods={"PATCH"})
+	 * @ParamConverter("championnat", converter="doctrine.orm")
+	 * @IsGranted("ROLE_ADMIN")
+	 */
+	public function renomme(Request $request, Championnat $championnat, EntityManagerInterface $entityManager)
+	{
+		$nom = $request->getContent();
+		$championnat->setNom($nom);
+
+		$entityManager->flush();
+
+		return $this->groupJson($nom);
+	}
+
+	/**
 	 * @Route("/championnat/{id}/importe", methods={"POST"})
 	 * @IsGranted("ROLE_ADMIN")
 	 * @ParamConverter("champDest", converter="doctrine.orm")

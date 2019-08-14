@@ -22,6 +22,7 @@ import { ModalConfirmComponent } from "./components/modal-confirm/modal-confirm.
 import { CanDeactivateGuard } from "./utils/can-deactivate.guard";
 import { FairplayComponent } from "./components/fairplay/fairplay.component";
 import { SeuilsForfaitParamResolver } from "./utils/seuils-forfait.resolver";
+import { SanctionBaremeResolver } from "./utils/sanction-bareme.resolver";
 
 @NgModule({
 	declarations: [
@@ -52,6 +53,7 @@ import { SeuilsForfaitParamResolver } from "./utils/seuils-forfait.resolver";
 		EquipeResolver,
 		MatchesResolver,
 		SeuilsForfaitParamResolver,
+		SanctionBaremeResolver,
 	],
 	entryComponents: [
 		ModalComponent,

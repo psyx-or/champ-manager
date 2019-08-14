@@ -1,0 +1,95 @@
+<app-generic-menu [menu]="menu"></app-generic-menu>
+
+<form (ngSubmit)="submit()" ngNativeValidate>
+
+	<ng-container *ngFor="let cat of bareme; let i = index;">
+		<div *ngIf="cat.active" class="card categorie">
+		
+			<!-- Nom de la catégorie -->
+			<div class="card-header">
+				<div class="row">
+					<div class="col-10 text-left">
+						<input type="text" class="form-control" name="lib_{{i}}" required
+							[(ngModel)]="cat.libelle" placeholder="Libellé de la catégorie">
+					</div>
+
+					<div class="col-2 text-right">
+						<button type="button" class="btn btn-outline-danger" (click)="supprimerCategorie(cat, i)"
+								ngbTooltip="Supprimer la catégorie" container="body">
+							<i class="icon ion-md-trash"></i>
+						</button>
+					</div>
+				</div>
+			</div>
+	
+			<!-- Barèmes -->
+			<div class="card-body">
+
+				<ng-container *ngFor="let b of cat.baremes; let j = index;">
+					<div *ngIf="b.actif" class="card">
+
+						<!-- Titre de la sanction -->
+						<div class="card-header">
+							<div class="row">
+								<div class="col-10 text-left">
+									<input type="text" class="form-control" name="lib_{{i}}_{{j}}" required
+											[(ngModel)]="b.libelle" placeholder="Faute">
+								</div>
+								<div class="col-2 text-right">
+									<button type="button" class="btn btn-outline-danger" (click)="supprimerBareme(cat, b, j)"
+											ngbTooltip="Supprimer la ligne" container="body">
+										<i class="icon ion-md-trash"></i>
+									</button>
+								</div>
+							</div>
+						</div>
+
+						<div class="card-body">
+							<!-- Sanction joueur -->
+							<div class="form-group form-row">
+								<label for="sanction_joueur_{{i}}_{{j}}" class="col-sm-2 col-form-label">Sanction joueur</label>
+								<div class="col-sm-10">
+									<input type="text" class="form-control" name="sanction_joueur_{{i}}_{{j}}" id="sanction_joueur_{{i}}_{{j}}"
+										[(ngModel)]="b.sanctionJoueur">
+								</div>
+							</div>
+
+							<!-- Sanction club -->
+							<div class="form-group form-row">
+								<label for="sanction_equipe_{{i}}_{{j}}" class="col-sm-2 col-form-label">Sanction équipe</label>
+								<div class="col-sm-10">
+									<input type="text" class="form-control" name="sanction_equipe_{{i}}_{{j}}" id="sanction_equipe_{{i}}_{{j}}"
+										[(ngModel)]="b.sanctionEquipe">
+								</div>
+							</div>
+
+							<!-- Sanction dirigeant -->
+							<div class="form-group form-row">
+								<label for="sanction_dirigeant_{{i}}_{{j}}" class="col-sm-2 col-form-label">Sanction dirigeant</label>
+								<div class="col-sm-10">
+									<input type="text" class="form-control" name="sanction_dirigeant_{{i}}_{{j}}" id="sanction_dirigeant_{{i}}_{{j}}"
+										[(ngModel)]="b.sanctionDirigeant">
+								</div>
+							</div>
+						</div>
+					</div>
+				</ng-container>
+
+				<!-- Ajout de sanction -->
+				<div class="mb-3">
+					<button class="btn btn-outline-success btn-sm" type="button" (click)="ajouterBareme(cat)"><i class="icon ion-md-add"></i> Ajouter une ligne</button>
+				</div>
+
+			</div>
+		</div>
+	</ng-container>
+
+	<!-- Ajout de catégorie -->
+	<div class="mb-3">
+		<button class="btn btn-outline-success" type="button" (click)="ajouterCategorie()"><i class="icon ion-md-add"></i> Ajouter une catégorie</button>
+	</div>
+
+	<button type="submit" class="btn btn-primary" 
+	        [disabled]="requeteService.chargement">Valider</button>
+	
+</form>

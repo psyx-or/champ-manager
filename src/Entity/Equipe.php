@@ -83,6 +83,11 @@ class Equipe implements UserInterface, \Serializable
 	*/
 	private $position;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Sanction", mappedBy="equipe")
+     */
+    private $sanctions;
+
     public function __construct()
     {
         $this->classements = new ArrayCollection();
@@ -90,12 +95,13 @@ class Equipe implements UserInterface, \Serializable
         $this->creneaux = new ArrayCollection();
         $this->fpRedigees = new ArrayCollection();
         $this->fpEvaluees = new ArrayCollection();
+        $this->sanctions = new ArrayCollection();
     }
 
 	public function setId($id) : self
 	{
 		$this->id = $id;
-
+	
 		return $this;
 	}
 
@@ -277,133 +283,164 @@ class Equipe implements UserInterface, \Serializable
 	// ------------------------------------------------------
 
 	public function getUsername()
-	{
-		return $this->login;
-	}
+               	{
+               		return $this->login;
+               	}
 
 	public function getSalt()
-	{
-		return null;
-	}
+               	{
+               		return null;
+               	}
 
 	public function getRoles()
-	{
-		return array('ROLE_USER');
-	}
+               	{
+               		return array('ROLE_USER');
+               	}
 
 	public function eraseCredentials()
-	{
-	}
+               	{
+               	}
 
 	/** @see \Serializable::serialize() */
 	public function serialize()
-	{
-		return serialize(array(
-			$this->id,
-			$this->login,
-			$this->password,
-			$this->nom,
-		));
-	}
+               	{
+               		return serialize(array(
+               			$this->id,
+               			$this->login,
+               			$this->password,
+               			$this->nom,
+               		));
+               	}
 
 	/** @see \Serializable::unserialize() */
 	public function unserialize($serialized)
-	{
-		list(
-			$this->id,
-			$this->login,
-			$this->password,
-			$this->nom,
-		) = unserialize($serialized, ['allowed_classes' => false]);
-	}
+               	{
+               		list(
+               			$this->id,
+               			$this->login,
+               			$this->password,
+               			$this->nom,
+               		) = unserialize($serialized, ['allowed_classes' => false]);
+               	}
  
 	/**
 	 * @return Collection|FPFeuille[]
 	 */
 	public function getFpRedigees(): Collection
-	{
-		return $this->fpRedigees;
-	}
+               	{
+               		return $this->fpRedigees;
+               	}
 
 	public function addFpRedigee(FPFeuille $fpRedigee): self
-	{
-		if (!$this->fpRedigees->contains($fpRedigee)) {
-			$this->fpRedigees[] = $fpRedigee;
-			$fpRedigee->setEquipeRedactrice($this);
-		}
-		
-		return $this;
-	}
+               	{
+               		if (!$this->fpRedigees->contains($fpRedigee)) {
+               			$this->fpRedigees[] = $fpRedigee;
+               			$fpRedigee->setEquipeRedactrice($this);
+               		}
+               		
+               		return $this;
+               	}
 
 	public function removeFpRedigee(FPFeuille $fpRedigee): self
-	{
-		if ($this->fpRedigees->contains($fpRedigee)) {
-			$this->fpRedigees->removeElement($fpRedigee);
-			// set the owning side to null (unless already changed)
-			if ($fpRedigee->getEquipeRedactrice() === $this) {
-				$fpRedigee->setEquipeRedactrice(null);
-			}
-		}
-		
-		return $this;
-	}
+               	{
+               		if ($this->fpRedigees->contains($fpRedigee)) {
+               			$this->fpRedigees->removeElement($fpRedigee);
+               			// set the owning side to null (unless already changed)
+               			if ($fpRedigee->getEquipeRedactrice() === $this) {
+               				$fpRedigee->setEquipeRedactrice(null);
+               			}
+               		}
+               		
+               		return $this;
+               	}
 
 	/**
 	 * @return Collection|FPFeuille[]
 	 */
 	public function getFpEvaluees(): Collection
-	{
-		return $this->fpEvaluees;
-	}
+               	{
+               		return $this->fpEvaluees;
+               	}
 
 	public function addFpEvaluee(FPFeuille $fpEvaluee): self
-	{
-		if (!$this->fpEvaluees->contains($fpEvaluee)) {
-			$this->fpEvaluees[] = $fpEvaluee;
-			$fpEvaluee->setEquipeEvaluee($this);
-		}
-		
-		return $this;
-	}
+               	{
+               		if (!$this->fpEvaluees->contains($fpEvaluee)) {
+               			$this->fpEvaluees[] = $fpEvaluee;
+               			$fpEvaluee->setEquipeEvaluee($this);
+               		}
+               		
+               		return $this;
+               	}
 
 	public function removeFpEvaluee(FPFeuille $fpEvaluee): self
-	{
-		if ($this->fpEvaluees->contains($fpEvaluee)) {
-			$this->fpEvaluees->removeElement($fpEvaluee);
-			// set the owning side to null (unless already changed)
-			if ($fpEvaluee->getEquipeEvaluee() === $this) {
-				$fpEvaluee->setEquipeEvaluee(null);
-			}
-		}
-		
-		return $this;
-	}
+               	{
+               		if ($this->fpEvaluees->contains($fpEvaluee)) {
+               			$this->fpEvaluees->removeElement($fpEvaluee);
+               			// set the owning side to null (unless already changed)
+               			if ($fpEvaluee->getEquipeEvaluee() === $this) {
+               				$fpEvaluee->setEquipeEvaluee(null);
+               			}
+               		}
+               		
+               		return $this;
+               	}
 
 	/**
 	 * @Groups({"coordonnees"})
 	 */
 	public function getPosition(): ?string
-	{
-		return $this->position;
-	}
+               	{
+               		return $this->position;
+               	}
 
 	public function setPosition(?string $position): self
-	{
-		$this->position = $position;
-
-		return $this;
-	}
+               	{
+               		$this->position = $position;
+               
+               		return $this;
+               	}
 
 	/**
 	 * @Groups({"championnats"})
 	 */
 	public function getChampionnats(): array
-	{
-		$res = array();
+               	{
+               		$res = array();
+               
+               		foreach ($this->classements as $class)
+               			array_push($res, $class->getChampionnat());
+               
+               		return $res;
+               	}
 
-		foreach ($this->classements as $class)
-			array_push($res, $class->getChampionnat());
+    /**
+     * @return Collection|Sanction[]
+     */
+    public function getSanctions(): Collection
+    {
+        return $this->sanctions;
+    }
 
-		return $res;
-	}
+    public function addSanction(Sanction $sanction): self
+    {
+        if (!$this->sanctions->contains($sanction)) {
+            $this->sanctions[] = $sanction;
+            $sanction->setEquipe($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSanction(Sanction $sanction): self
+    {
+        if ($this->sanctions->contains($sanction)) {
+            $this->sanctions->removeElement($sanction);
+            // set the owning side to null (unless already changed)
+            if ($sanction->getEquipe() === $this) {
+                $sanction->setEquipe(null);
+            }
+        }
+
+        return $this;
+    }
 }

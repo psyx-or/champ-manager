@@ -65,5 +65,15 @@ export var menus: { [nom: string]: Menu } = {
 			{ route: "fairplay-equipe/evaluation", icone: 'happy', titre: "Evaluations" },
 			{ route: "fairplay-equipe/redaction", icone: 'create', titre: "Feuilles rédigées" },
 		]
-	}
+	},
+
+	/** Menu des sanctions */
+	sanctions: {
+		titre: "Sanctions",
+		icone: "rainy",
+		items: [
+			{ route: "sanction/liste", icone: 'film', titre: "Historique" },
+			{ route: "sanction/bareme", icone: 'list-box', titre: "Barème" },
+		]
+	},
 }

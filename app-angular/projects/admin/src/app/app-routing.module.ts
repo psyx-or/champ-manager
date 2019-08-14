@@ -31,6 +31,8 @@ import { HierarchieResolver } from '@commun/src/app/components/coupe/hierarchie.
 import { SeuilsForfaitParamResolver } from '@commun/src/app/utils/seuils-forfait.resolver';
 import { FpClassementResolver } from './components/fairplay-classement/fairplay-classement.resolver';
 import { CoupeAdminComponent } from './components/coupe-admin/coupe-admin.component';
+import { SanctionBaremeEditorComponent } from './components/sanction-bareme-editor/sanction-bareme-editor.component';
+import { SanctionBaremeResolver } from '@commun/src/app/utils/sanction-bareme.resolver';
 
 const routes: Routes = [
 	{ path: '', pathMatch: 'full', redirectTo: 'championnats' },
@@ -50,6 +52,7 @@ const routes: Routes = [
 	{ path: 'equipe/:equipeId', component: EquipeComponent, resolve: { equipe: EquipeResolver }, runGuardsAndResolvers: "always", canDeactivate: [CanDeactivateGuard] },
 	{ path: 'fairplay-classement/:champId', component: FairplayClassementComponent, resolve: { classement: FpClassementResolver } },
 	{ path: 'fairplay-equipe/:type/:equipeId', component: FairplayEquipeComponent, resolve: { equipe: EquipeResolver, championnats: FairplayEquipeResolver } },
+	{ path: 'sanction/bareme', component: SanctionBaremeEditorComponent, resolve: { bareme: SanctionBaremeResolver } },
 ];
 
 @NgModule({

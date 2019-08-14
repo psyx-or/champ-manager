@@ -37,6 +37,7 @@ import { SanctionBaremeEditorComponent } from './components/sanction-bareme-edit
 import { SanctionsComponent } from './components/sanctions/sanctions.component';
 import { SanctionsResolver } from './components/sanctions/sanctions.resolver';
 import { SanctionCreationComponent } from './components/sanction-creation/sanction-creation.component';
+import { SanctionEquipeComponent } from './components/sanction-equipe/sanction-equipe.component';
 
 
 @NgModule({
@@ -65,6 +66,7 @@ import { SanctionCreationComponent } from './components/sanction-creation/sancti
     SanctionBaremeEditorComponent,
     SanctionsComponent,
     SanctionCreationComponent,
+    SanctionEquipeComponent,
   ],
   imports: [
     BrowserModule,
@@ -72,7 +74,7 @@ import { SanctionCreationComponent } from './components/sanction-creation/sancti
     AppRoutingModule,
     HttpClientModule,
 	FormsModule,
-	CommunModule
+	CommunModule,
   ],
   providers: [
 	  JourneesChampResolver,

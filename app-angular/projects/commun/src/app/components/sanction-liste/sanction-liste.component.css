@@ -1,0 +1,20 @@
+.table td {
+	vertical-align: middle;
+}
+
+.categorie {
+	font-style: italic;
+	margin-top: 0.5em;
+}
+
+.peine:not(:first-child) {
+    border-top: 1px solid lightgray;
+    margin-top: 1em;
+    padding-top: 1em;
+}
+
+.cible {
+	font-weight: bold;
+	text-decoration: underline;
+	margin-bottom: 0.5em;
+}

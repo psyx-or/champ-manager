@@ -35,6 +35,8 @@ import { SanctionBaremeEditorComponent } from './components/sanction-bareme-edit
 import { SanctionBaremeResolver } from '@commun/src/app/utils/sanction-bareme.resolver';
 import { SanctionsComponent } from './components/sanctions/sanctions.component';
 import { SanctionsResolver } from './components/sanctions/sanctions.resolver';
+import { SanctionEquipeParamResolver } from '@commun/src/app/utils/sanction-equipe.resolver';
+import { SanctionEquipeComponent } from './components/sanction-equipe/sanction-equipe.component';
 
 const routes: Routes = [
 	{ path: '', pathMatch: 'full', redirectTo: 'championnats' },
@@ -56,6 +58,7 @@ const routes: Routes = [
 	{ path: 'fairplay-equipe/:type/:equipeId', component: FairplayEquipeComponent, resolve: { equipe: EquipeResolver, championnats: FairplayEquipeResolver } },
 	{ path: 'sanction-liste', component: SanctionsComponent, resolve: { sanctions: SanctionsResolver } },
 	{ path: 'sanction-bareme', component: SanctionBaremeEditorComponent, resolve: { bareme: SanctionBaremeResolver } },
+	{ path: 'sanction/:equipeId', component: SanctionEquipeComponent, resolve: { equipe: EquipeResolver, sanctions: SanctionEquipeParamResolver } },
 ];
 
 @NgModule({

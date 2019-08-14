@@ -8,61 +8,9 @@
     <button class="btn btn-primary" (click)="ajouterSanction()"><i class="icon ion-md-add"></i> Ajouter une sanction</button>
 </div>
 
-
+<!-- TODO: par sport -->
 <!----------------------
 	Liste des sanctions
   ------------------- -->
 
-<!-- Pas de question -->
-<ngb-alert *ngIf="sanctions.length == 0" [dismissible]="false" type="info">
-	Pas de sanctions
-</ngb-alert>
-
-<table *ngIf="sanctions.length > 0" class="table table-striped text-center table-bordered table-hover">
-	<thead>
-		<tr>
-			<th scope="col">Date</th>
-			<th scope="col">Equipe</th>
-			<th scope="col">Joueur</th>
-			<th scope="col">Faute</th>
-			<th scope="col">Commentaire</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr *ngFor="let sanction of sanctions">
-			<td>{{sanction.date | date:'dd/MM/y'}}</td>
-			<td>{{sanction.equipe.nom}}</td>
-			<td>{{sanction.joueur}}</td>
-			<td>
-				<div>
-					<button #popOver="ngbPopover" class="btn btn-link" (click)="toggleBareme(popOver, sanction.bareme)"
-					        popoverTitle="Barème" [ngbPopover]="popContent" triggers="manual" >
-						{{sanction.bareme.libelle}}
-					</button>
-				</div>
-				<div class="categorie">({{sanction.bareme.categorie.libelle}})</div>
-			</td>
-			<td>{{sanction.commentaire}}</td>
-		</tr>
-	</tbody>
-</table>
-
-
-<!----------------------
-	Détail de barême
-  ------------------- -->
-
-<ng-template #popContent let-bareme="bareme">
-	<div class="peine" *ngIf="bareme.sanctionDirigeant">
-		<div class="cible">Sanction pour le dirigeant</div>
-		<div>{{bareme.sanctionDirigeant}}</div>
-	</div>
-	<div class="peine" *ngIf="bareme.sanctionEquipe">
-		<div class="cible">Sanction pour l'équipe</div>
-		<div>{{bareme.sanctionEquipe}}</div>
-	</div>
-	<div class="peine" *ngIf="bareme.sanctionJoueur">
-		<div class="cible">Sanction pour le joueur</div>
-		<div>{{bareme.sanctionJoueur}}</div>
-	</div>
-</ng-template>
+<app-sanction-liste [sanctions]="sanctions" [avecJoueur]="true" [avecLien]="true"></app-sanction-liste>

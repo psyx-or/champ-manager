@@ -64,6 +64,7 @@ export var menus: { [nom: string]: Menu } = {
 			{ route: "equipe", icone: 'contact', titre: "Coordonnées" },
 			{ route: "fairplay-equipe/evaluation", icone: 'happy', titre: "Evaluations" },
 			{ route: "fairplay-equipe/redaction", icone: 'create', titre: "Feuilles rédigées" },
+			{ route: "sanction", icone: 'rainy', titre: "Sanctions" },
 		]
 	},
 

@@ -17,10 +17,17 @@ export class SanctionService {
     ) { }
 
 	/**
-	 * Récupère le barème des sanctions
+	 * Récupère les sanctions récentes
 	 */
 	public get(): Observable<Sanction[]> {
 		return this.http.get<Sanction[]>("/api/sanction", { params: { from: moment().subtract(2, 'year').toISOString() }});
+	}
+
+	/**
+	 * Récupère les sanctions d'une équipe
+	 */
+	public getEquipe(idEquipe: number): Observable<Sanction[]> {
+		return this.http.get<Sanction[]>("/api/sanction/equipe/" + idEquipe);
 	}
 
 	/**

@@ -23,6 +23,9 @@ import { CanDeactivateGuard } from "./utils/can-deactivate.guard";
 import { FairplayComponent } from "./components/fairplay/fairplay.component";
 import { SeuilsForfaitParamResolver } from "./utils/seuils-forfait.resolver";
 import { SanctionBaremeResolver } from "./utils/sanction-bareme.resolver";
+import { SanctionListeComponent } from "./components/sanction-liste/sanction-liste.component";
+import { SanctionEquipeParamResolver } from "./utils/sanction-equipe.resolver";
+import { RouterModule } from "@angular/router";
 
 @NgModule({
 	declarations: [
@@ -36,13 +39,15 @@ import { SanctionBaremeResolver } from "./utils/sanction-bareme.resolver";
 		ModalConfirmComponent,
 		FairplayComponent,
 		IsTypePipe,
-		SignePipe
+		SignePipe,
+		SanctionListeComponent,
 	],
 	imports: [
 		BrowserModule,
 		NgbModule,
 		HttpClientModule,
 		FormsModule,
+		RouterModule,
 	],
 	providers: [
 		CanDeactivateGuard,
@@ -54,6 +59,7 @@ import { SanctionBaremeResolver } from "./utils/sanction-bareme.resolver";
 		MatchesResolver,
 		SeuilsForfaitParamResolver,
 		SanctionBaremeResolver,
+		SanctionEquipeParamResolver,
 	],
 	entryComponents: [
 		ModalComponent,
@@ -71,6 +77,7 @@ import { SanctionBaremeResolver } from "./utils/sanction-bareme.resolver";
 		FairplayComponent,
 		IsTypePipe,
 		SignePipe,
+		SanctionListeComponent,
 	]
 })
 export class CommunModule { }

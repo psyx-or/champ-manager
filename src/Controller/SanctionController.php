@@ -89,6 +89,24 @@ class SanctionController extends CMController
 	}
 
 	/**
+	 * @Route("/sanction/equipe/{id}", methods={"GET"})
+	 * @IsGranted("ROLE_ADMIN")
+	 */
+	public function getHistoriqueEquipe(Equipe $equipe, EntityManagerInterface $entityManager)
+	{
+		$query = $entityManager->createQuery(
+			"SELECT s
+			 FROM App\Entity\Sanction s
+			 WHERE s.equipe = :equipe
+			 ORDER BY s.date DESC"
+		);
+
+		$query->setParameter("equipe", $equipe);
+
+		return $this->groupJson($query->getResult(), "simple", "equipe", "sanction_complet", "bareme", "sport", "categorie");
+	}
+
+	/**
 	 * @Route("/sanction", methods={"POST"})
 	 * @IsGranted("ROLE_ADMIN")
 	 * @ParamConverter("sanction", converter="cm_converter")

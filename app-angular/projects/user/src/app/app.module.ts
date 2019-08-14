@@ -27,6 +27,7 @@ import { CarteClubsComponent } from './components/carte-clubs/carte-clubs.compon
 import { DureeSaisieParamResolver } from './components/matches-saisie/dureesaisieparam.resolver';
 import { CoupesEquipeComponent } from './components/coupes-equipe/coupes-equipe.component';
 import { HierarchiesEquipeResolver } from './components/coupes-equipe/hierarchies-equipe.resolver';
+import { CoupeUserComponent } from './components/coupe-user/coupe-user.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { HierarchiesEquipeResolver } from './components/coupes-equipe/hierarchie
     MatchesSaisieComponent,
     ResultatSaisieComponent,
     CarteClubsComponent,
-    CoupesEquipeComponent
+    CoupesEquipeComponent,
+    CoupeUserComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,31 @@
+<app-generic-menu [menu]="menu" [obj]="journee.championnat"></app-generic-menu>
+
+<div>
+	<button class="btn btn-secondary" type="button" (click)="change()">Remplacer une équipe</button>
+</div>
+
+<app-coupe [journee]="journee"></app-coupe>
+
+
+<!----------------------
+	Fenêtre de modification d'équipe
+  ------------------- -->
+
+<ng-template #changeEquipe>
+	<form class="form" id="formulaire" ngNativeValidate (ngSubmit)="modal.close()">
+		<div class="form-group">
+			<label for="old_equipe">Equipe à retirer&nbsp;:</label>
+			<select class="form-control" id="old_equipe" name="old_equipe" required 
+			        [(ngModel)]="remplacement.oldEquipe">
+				<option *ngFor="let e of equipesActuelles" [ngValue]="e">{{e.nom}}</option>
+			</select>
+		</div>
+		<div class="form-group">
+			<label for="new_equipe">Equipe à ajouter&nbsp;:</label>
+			<select class="form-control" id="new_equipe" name="new_equipe" required 
+			        [(ngModel)]="remplacement.newEquipe">
+				<option *ngFor="let e of remplacement.equipes" [ngValue]="e">{{e.nom}}</option>
+			</select>
+		</div>
+	</form>
+</ng-template>

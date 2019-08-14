@@ -1,10 +1,9 @@
-import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, Input, AfterViewInit, OnChanges, ViewChild, ElementRef } from '@angular/core';
+import { Router } from '@angular/router';
 import { Championnat } from '../../model/Championnat';
 import { Match } from '../../model/Match';
 import { getVainqueur, toDisp, calculeStyle } from '../../utils/utils';
 import { Journee } from '../../model/Journee';
-import { Menu } from '../generic-menu/generic-menu.model';
 import { Treant } from 'treant-js';
 import { Equipe } from '../../model/Equipe';
 
@@ -28,12 +27,13 @@ interface Node {
   templateUrl: './coupe.component.html',
   styleUrls: ['./coupe.component.css']
 })
-export class CoupeComponent implements OnInit, AfterViewInit {
+export class CoupeComponent implements OnChanges, AfterViewInit {
+
+	@ViewChild('chartDiv', { static: false }) chartDiv: ElementRef<Element>;
 
 	@Input() journee: Journee;
 	@Input() equipe: Equipe;
 
-	menu: Menu;
 	champ: Championnat;
 	nbEquipes: number;
 
@@ -71,40 +71,25 @@ export class CoupeComponent implements OnInit, AfterViewInit {
 	 * @param matchService 
 	 */
 	constructor(
-		private route: ActivatedRoute,
 		private router: Router,
 	) { }
 
 	/**
 	 * Initialisation
 	 */
-	ngOnInit() {
-		if (this.journee != null)
-			this.init(this.journee);
-		else
-			this.route.data
-				.subscribe((data: { journee: Journee, menu: Menu }) => {
-					this.menu = data.menu;
-					this.init(data.journee);
-				}
-			);
+	ngOnChanges() {
+		this.champ = this.journee.championnat;
+		[this.chart.nodeStructure, this.nbEquipes] = this.buildChart(this.journee.matches[0]);
+		if (this.chartDiv) this.ngAfterViewInit();
 	}
 
 	/**
 	 * Fin de l'initialisation
 	 */
 	ngAfterViewInit(): void {
-		this.chart.chart.container += this.champ.id;
+		this.chartDiv.nativeElement.innerHTML = "";
+		this.chart.chart.container = `#chart-${this.champ.id}`;
 		new Treant(this.chart);
-	}
-
-	/**
-	 * Initialisation réelle
-	 * @param journee 
-	 */
-	private init(journee: Journee) {
-		this.champ = journee.championnat;
-		[this.chart.nodeStructure, this.nbEquipes] = this.buildChart(journee.matches[0]);
 	}
 
 	/**

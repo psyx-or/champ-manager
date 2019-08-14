@@ -32,6 +32,7 @@ import { FairplayEquipeComponent } from './components/fairplay-equipe/fairplay-e
 import { FairplayEquipeResolver } from './components/fairplay-equipe/fairplay-equipe.resolver';
 import { CommunModule } from 'projects/commun/src/app/commun.module';
 import { FpClassementResolver } from './components/fairplay-classement/fairplay-classement.resolver';
+import { CoupeAdminComponent } from './components/coupe-admin/coupe-admin.component';
 
 
 @NgModule({
@@ -55,7 +56,8 @@ import { FpClassementResolver } from './components/fairplay-classement/fairplay-
     EquipeComponent,
     FairplayClassementComponent,
     CalendrierDoublonsComponent,
-    FairplayEquipeComponent
+    FairplayEquipeComponent,
+    CoupeAdminComponent,
   ],
   imports: [
     BrowserModule,

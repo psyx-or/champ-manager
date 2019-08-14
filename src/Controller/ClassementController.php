@@ -14,6 +14,7 @@ use App\Outils\MatchFunctions;
 use App\Entity\Equipe;
 use Symfony\Component\HttpFoundation\Request;
 use App\DTO\ChampionnatEquipeDTO;
+use App\Outils\Classements;
 
 /**
  * @Route("/api")
@@ -21,7 +22,7 @@ use App\DTO\ChampionnatEquipeDTO;
 class ClassementController extends CMController
 {
 	/**
-	 * @Route("/classement/{id}", methods={"GET"})
+	 * @Route("/classement/{id}", requirements={"id"="\d+"}, methods={"GET"})
 	 */
     public function getClassement(Championnat $championnat)
     {
@@ -57,7 +58,7 @@ class ClassementController extends CMController
 	/**
 	 * @Route("/classement/equipe/{id}/historique", methods={"GET"})
 	 */
-	public function getHistoriqueClassementsEquipe(Equipe $equipe, Request $request, EntityManagerInterface $entityManager)
+	public function getHistoriqueClassementsEquipe(Equipe $equipe, EntityManagerInterface $entityManager)
 	{
 		$query = $entityManager->createQuery(
 			"SELECT c, class
@@ -103,5 +104,29 @@ class ClassementController extends CMController
 		$entityManager->flush();
 
 		return $this->getClassement($championnat);
+	}
+
+	/**
+	 * @Route("/classement/export", methods={"GET"})
+	 * @IsGranted("ROLE_ADMIN")
+	 */
+	public function export(Request $request, EntityManagerInterface $entityManager)
+	{
+		$saison = $request->query->get('saison');
+
+		$query = $entityManager->createQuery(
+			"SELECT s, c, class
+			 FROM App\Entity\Sport s
+			 JOIN s.championnats c
+			 JOIN c.classements class
+			 WHERE c.saison = :saison
+			 ORDER BY s.nom, c.nom "
+		);
+
+		$query->setParameter("saison", $saison);
+
+		$ftmp = Classements::genere($query->getResult());
+
+		return $this->file($ftmp, "Classements ".str_replace("/","-",$saison).".".date('Y-m-d').".xlsx");
 	}
 }

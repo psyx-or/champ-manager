@@ -60,9 +60,10 @@ class Championnat
      */
     private $type;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Classement", mappedBy="championnat", orphanRemoval=true)
-     */
+	/**
+	 * @ORM\OneToMany(targetEntity="App\Entity\Classement", mappedBy="championnat", orphanRemoval=true)
+	 * @ORM\OrderBy({"position" = "ASC"})
+	 */
     private $classements;
 
 	/**

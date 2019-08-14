@@ -8,6 +8,7 @@ import { RequeteService } from 'projects/commun/src/app/services/requete.service
 import { ChampImportComponent } from '../champ-import/champ-import.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as moment from 'moment';
+import { ClassementService } from '@commun/src/app/services/classement.service';
 
 @Component({
   selector: 'app-championnats',
@@ -24,6 +25,7 @@ export class ChampionnatsComponent implements OnInit {
 	championnats: Map<string, Championnat[]>;
 	modal: NgbModalRef;
 	nouveauNom: string;
+	lienExport: string;
 
 
 	/**
@@ -35,7 +37,8 @@ export class ChampionnatsComponent implements OnInit {
 		private router: Router,
 		public modalService: NgbModal,
 		private requeteService: RequeteService,
-        private championnatService: ChampionnatService
+        private championnatService: ChampionnatService,
+		private classementService: ClassementService,
     ) { }
 
 	/**
@@ -44,6 +47,8 @@ export class ChampionnatsComponent implements OnInit {
     ngOnInit() {
 		this.saisons.push(getSaisonCourante());
 		this.saisons.push(getSaison(moment().subtract(1, "year").toDate()));
+
+		this.creeLienExport(this.saisons[0]);
 
 		this.route.data
 			.subscribe((data: { championnats: Championnat[] }) => {
@@ -104,6 +109,7 @@ export class ChampionnatsComponent implements OnInit {
 			this.championnatService.getChampionnats(saison),
 			championnats => this.initChamps(championnats)
 		);
+		this.creeLienExport(saison);
 	}
 
 	/**
@@ -126,5 +132,12 @@ export class ChampionnatsComponent implements OnInit {
 			null,
 			true
 		);
-		}
+	}
+
+	/**
+	 * Met à jour le lien pour l'export des championnats
+	 */
+	private creeLienExport(saison: string) {
+		this.lienExport = this.classementService.lienExport(saison);
+	}
 }

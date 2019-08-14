@@ -124,7 +124,7 @@ class ChampionnatController extends CMController
 	 * @Route("/championnat/{nom}/calendrier/genere", methods={"GET"})
 	 * @IsGranted("ROLE_ADMIN")
 	 */
-	public function genereCalendrier(Sport $sport, Request $request, EntityManagerInterface $entityManager)
+	public function genereCalendrier(Sport $sport, Request $request)
 	{
 		$champs = explode(",", $request->query->get('champs'));
 

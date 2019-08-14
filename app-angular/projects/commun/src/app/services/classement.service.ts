@@ -47,4 +47,12 @@ export class ClassementService {
 	public maj(champ: Championnat, classements: Classement[]): Observable<Championnat> {
 		return this.http.patch<Championnat>("/api/classement/" + champ.id, classements);
 	}
+
+	/**
+	 * Génère le lien pour exporter les classements
+	 * @param saison 
+	 */
+	public lienExport(saison: string): string {
+		return "/api/classement/export?saison=" + saison;
+	}
 }

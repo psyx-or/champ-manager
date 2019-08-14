@@ -44,11 +44,17 @@ class Sanction
      */
     private $commentaire;
 
+	/**
+	 * @Groups({"simple"})
+	 */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+	/**
+	 * @Groups({"simple"})
+	 */
     public function getBareme(): ?SanctionBareme
     {
         return $this->bareme;
@@ -61,6 +67,9 @@ class Sanction
         return $this;
     }
 
+	/**
+	 * @Groups({"equipe"})
+	 */
     public function getEquipe(): ?Equipe
     {
         return $this->equipe;
@@ -73,6 +82,9 @@ class Sanction
         return $this;
     }
 
+	/**
+	 * @Groups({"sanction_complet"})
+	 */
     public function getJoueur(): ?string
     {
         return $this->joueur;
@@ -85,6 +97,9 @@ class Sanction
         return $this;
     }
 
+	/**
+	 * @Groups({"simple"})
+	 */
     public function getDate(): ?\DateTimeInterface
     {
         return $this->date;
@@ -97,6 +112,9 @@ class Sanction
         return $this;
     }
 
+	/**
+	 * @Groups({"simple"})
+	 */
     public function getCommentaire(): ?string
     {
         return $this->commentaire;

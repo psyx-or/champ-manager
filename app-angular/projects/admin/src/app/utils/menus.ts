@@ -72,8 +72,8 @@ export var menus: { [nom: string]: Menu } = {
 		titre: "Sanctions",
 		icone: "rainy",
 		items: [
-			{ route: "sanction/liste", icone: 'film', titre: "Historique" },
-			{ route: "sanction/bareme", icone: 'list-box', titre: "Barème" },
+			{ route: "sanction-liste", icone: 'film', titre: "Historique" },
+			{ route: "sanction-bareme", icone: 'list-box', titre: "Barème" },
 		]
 	},
 }

@@ -34,6 +34,9 @@ import { CommunModule } from 'projects/commun/src/app/commun.module';
 import { FpClassementResolver } from './components/fairplay-classement/fairplay-classement.resolver';
 import { CoupeAdminComponent } from './components/coupe-admin/coupe-admin.component';
 import { SanctionBaremeEditorComponent } from './components/sanction-bareme-editor/sanction-bareme-editor.component';
+import { SanctionsComponent } from './components/sanctions/sanctions.component';
+import { SanctionsResolver } from './components/sanctions/sanctions.resolver';
+import { SanctionCreationComponent } from './components/sanction-creation/sanction-creation.component';
 
 
 @NgModule({
@@ -60,6 +63,8 @@ import { SanctionBaremeEditorComponent } from './components/sanction-bareme-edit
     FairplayEquipeComponent,
     CoupeAdminComponent,
     SanctionBaremeEditorComponent,
+    SanctionsComponent,
+    SanctionCreationComponent,
   ],
   imports: [
     BrowserModule,
@@ -77,10 +82,12 @@ import { SanctionBaremeEditorComponent } from './components/sanction-bareme-edit
 	  ParametresResolver,
 	  FairplayEquipeResolver,
 	  FpClassementResolver,
+	  SanctionsResolver,
   ],
   bootstrap: [AppComponent],
   entryComponents: [
 	  ChampImportComponent,
+	  SanctionCreationComponent,
   ]
 })																																																																																																																																																																																														
 export class AppModule { }

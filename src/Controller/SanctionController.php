@@ -3,10 +3,15 @@
 namespace App\Controller;
 
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\SanctionCategorie;
+use App\Entity\Sanction;
+use App\Entity\SanctionBareme;
+use App\Entity\Equipe;
 
 /**
  * @Route("/api")
@@ -26,7 +31,7 @@ class SanctionController extends CMController
 			 ORDER BY c.libelle, b.libelle"
 		);
 
-        return $this->groupJson($query->getResult(), "bareme");
+        return $this->groupJson($query->getResult(), "bareme", "baremes");
 	}
 
 	/**
@@ -61,5 +66,46 @@ class SanctionController extends CMController
 		$entityManager->flush();
 
         return $this->getBareme($entityManager);
-    }
+	}
+
+	/**
+	 * @Route("/sanction", methods={"GET"})
+	 * @IsGranted("ROLE_ADMIN")
+	 */
+	public function getHistorique(Request $request, EntityManagerInterface $entityManager)
+	{
+		$date = $request->get("from");
+
+		$query = $entityManager->createQuery(
+			"SELECT s
+			 FROM App\Entity\Sanction s
+			 WHERE s.date > :date
+			 ORDER BY s.date DESC"
+		);
+
+		$query->setParameter("date", $date);
+
+		return $this->groupJson($query->getResult(), "simple", "equipe", "sanction_complet", "bareme", "sport", "categorie");
+	}
+
+	/**
+	 * @Route("/sanction", methods={"POST"})
+	 * @IsGranted("ROLE_ADMIN")
+	 * @ParamConverter("sanction", converter="cm_converter")
+	 */
+	public function creeSanction(Sanction $sanction, EntityManagerInterface $entityManager)
+	{
+		$sanction->setBareme(
+			$entityManager->getRepository(SanctionBareme::class)->find($sanction->getBareme()->getId())
+		);
+
+		$sanction->setEquipe(
+			$entityManager->getRepository(Equipe::class)->find($sanction->getEquipe()->getId())
+		);
+
+		$entityManager->persist($sanction);
+		$entityManager->flush();
+
+		return new Response();
+	}
 }

@@ -1,0 +1,98 @@
+<form class="form" (ngSubmit)="submit()" ngNativeValidate>
+
+	<!----------------------
+		Entête
+	------------------- -->
+	<div class="modal-header">
+		<h4 class="modal-title">Ajout de sanction</h4>
+	</div>
+
+	<!----------------------
+		Formulaire
+	------------------- -->
+	<div class="modal-body">
+
+		<div class="row">
+			<div class="col-6">
+				<!-- Sport -->
+				<div class="form-group">
+					<label for="sport">Sport&nbsp;:</label>
+					<select class="form-control" id="sport" name="sport" required [(ngModel)]="selSport" (change)="selectionSport()">
+						<option *ngFor="let s of sports" [ngValue]="s">{{s.nom}}</option>
+					</select>
+				</div>
+
+				<!-- Equipe -->
+				<div class="form-group">
+					<label for="equipe">Equipe&nbsp;:</label>
+					<select class="form-control" id="equipe" name="equipe" required [(ngModel)]="sanction.equipe">
+						<option *ngFor="let e of equipes" [ngValue]="e">{{e.nom}}</option>
+					</select>
+				</div>
+
+				<!-- Joueur -->
+				<div class="form-group">
+					<label for="joueur">Joueur&nbsp;:</label>
+					<input type="text" class="form-control" id="joueur" name="joueur" [(ngModel)]="sanction.joueur">
+				</div>
+
+				<!-- Catégorie -->
+				<div class="form-group">
+					<label for="categorie">Catégorie de faute&nbsp;:</label>
+					<select class="form-control" id="categorie" name="categorie" required [(ngModel)]="selCategorie">
+						<option *ngFor="let c of bareme" [ngValue]="c">{{c.libelle}}</option>
+					</select>
+				</div>
+
+				<!-- Barème  -->
+				<div class="form-group">
+					<label for="bareme">Faute&nbsp;:</label>
+					<select class="form-control" id="bareme" name="bareme" required [(ngModel)]="sanction.bareme">
+						<option *ngFor="let b of selCategorie?.baremes" [ngValue]="b">{{b.libelle}}</option>
+					</select>
+				</div>
+			</div>
+			
+			<div class="col-6" *ngIf="sanction.bareme">
+
+				<!-- Détail de la sanction -->
+				<div class="card">
+					<div class="card-header">{{sanction.bareme.libelle}}</div>
+					<div class="card-body">
+						<div class="peine" *ngIf="sanction.bareme.sanctionDirigeant">
+							<div class="cible">Sanction pour le dirigeant</div>
+							<div>{{sanction.bareme.sanctionDirigeant}}</div>
+						</div>
+						<div class="peine" *ngIf="sanction.bareme.sanctionEquipe">
+							<div class="cible">Sanction pour l'équipe</div>
+							<div>{{sanction.bareme.sanctionEquipe}}</div>
+						</div>
+						<div class="peine" *ngIf="sanction.bareme.sanctionJoueur">
+							<div class="cible">Sanction pour le joueur</div>
+							<div>{{sanction.bareme.sanctionJoueur}}</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-12">
+
+				<!-- Commentaire  -->
+				<div class="form-group">
+					<label for="commentaire">Commentaire&nbsp;:</label>
+					<textarea rows="4" class="form-control" id="commentaire" name="commentaire" [(ngModel)]="sanction.commentaire"></textarea>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+	<!----------------------
+		Pied
+	------------------- -->
+	<div class="modal-footer">
+		<button type="button" class="btn btn-secondary" (click)="activeModal.dismiss()">Annuler</button>
+		<button type="submit" class="btn btn-primary" [disabled]="requeteService.chargement">Confirmer</button>
+	</div>
+
+</form>

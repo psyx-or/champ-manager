@@ -66,7 +66,7 @@ class SanctionCategorie
     }
 
 	/**
-	 * @Groups({"bareme"})
+	 * @Groups({"baremes"})
 	 * @return Collection|SanctionBareme[]
 	 */
     public function getBaremes(): Collection

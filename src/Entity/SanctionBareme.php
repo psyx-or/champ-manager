@@ -75,6 +75,9 @@ class SanctionBareme
 		return $this;
 	}
 
+	/**
+	 * @Groups({"categorie"})
+	 */
     public function getCategorie(): ?SanctionCategorie
     {
         return $this->categorie;

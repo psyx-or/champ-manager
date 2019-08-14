@@ -1,3 +1,5 @@
+import { Equipe } from "./Equipe";
+
 export interface SanctionCategorie {
 	id?: number;
 	libelle: string;
@@ -11,4 +13,14 @@ export interface SanctionBareme {
 	sanctionEquipe: string;
 	sanctionDirigeant: string;
 	actif: boolean;
+	categorie?: SanctionCategorie;
+}
+
+export interface Sanction {
+	id?: number;
+	bareme: SanctionBareme;
+	equipe: Equipe;
+	joueur?: string;
+	date: Date;
+	commentaire: string;
 }

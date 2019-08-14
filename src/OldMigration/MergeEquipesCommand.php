@@ -2,19 +2,21 @@
 
 namespace App\OldMigration;
 
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Proxies\__CG__\App\Entity\Equipe;
 use App\Repository\EquipeRepository;
+use Symfony\Component\Console\Command\Command;
 
-class MergeEquipesCommand extends ContainerAwareCommand
+class MergeEquipesCommand extends Command
 {
 	protected static $defaultName = 'app:equipes-fusion';
-	
+
+	/** @var EntityManagerInterface */
 	private $entityManager;
+	/** @var EquipeRepository */
+	private $repEquipes;
 
 	private $fusions = array(
 		228 => 120,
@@ -71,9 +73,10 @@ class MergeEquipesCommand extends ContainerAwareCommand
 		273 => 114,
 	);
 
-	public function __construct(EntityManagerInterface $entityManager)
+	public function __construct(EntityManagerInterface $entityManager, EquipeRepository $repEquipes)
 	{
 		$this->entityManager = $entityManager;
+		$this->repEquipes = $repEquipes;
 
 		parent::__construct();
 	}
@@ -91,22 +94,20 @@ class MergeEquipesCommand extends ContainerAwareCommand
 
 		$io->title("Fusion des anciennes équipes");
 
-		$repEquipes = $this->getContainer()->get('doctrine')->getRepository(Equipe::class);
-
 		foreach ($this->fusions as $old => $new)
-			$this->fusionne($old, $new, $io, $repEquipes, $this->entityManager);
+			$this->fusionne($old, $new, $io);
 
 		$this->entityManager->flush();
 
 		$io->success('Migration terminée');
 	}
 
-	private function fusionne($oldId, $newId, SymfonyStyle $io, EquipeRepository $repEquipes, EntityManagerInterface $entityManager)
+	private function fusionne($oldId, $newId, SymfonyStyle $io)
 	{
 		$io->text("Fusion de $oldId vers $newId...");
 
-		$old = $repEquipes->find($oldId);
-		$new = $repEquipes->find($newId);
+		$old = $this->repEquipes->find($oldId);
+		$new = $this->repEquipes->find($newId);
 
 		// Contrôles
 		if ($old == null)
@@ -130,7 +131,7 @@ class MergeEquipesCommand extends ContainerAwareCommand
 		}
 
 		// Classements
-		$query = $entityManager->createQuery(
+		$query = $this->entityManager->createQuery(
 			"UPDATE App\Entity\Classement c
 			 SET c.equipe = :new
 			 WHERE c.equipe = :old"
@@ -140,7 +141,7 @@ class MergeEquipesCommand extends ContainerAwareCommand
 		$nbClassements = $query->execute();
 
 		// Matches
-		$query = $entityManager->createQuery(
+		$query = $this->entityManager->createQuery(
 			"UPDATE App\Entity\Match m
 			 SET m.equipe1 = :new
 			 WHERE m.equipe1 = :old"
@@ -149,7 +150,7 @@ class MergeEquipesCommand extends ContainerAwareCommand
 		$query->setParameter("old", $old);
 		$nbMatches = $query->execute();
 
-		$query = $entityManager->createQuery(
+		$query = $this->entityManager->createQuery(
 			"UPDATE App\Entity\Match m
 			 SET m.equipe2 = :new
 			 WHERE m.equipe2 = :old"
@@ -159,7 +160,7 @@ class MergeEquipesCommand extends ContainerAwareCommand
 		$nbMatches += $query->execute();
 
 		// Feuilles de fair-play
-		$query = $entityManager->createQuery(
+		$query = $this->entityManager->createQuery(
 			"UPDATE App\Entity\FpFeuille f
 			 SET f.equipeRedactrice = :new
 			 WHERE f.equipeRedactrice = :old"
@@ -168,7 +169,7 @@ class MergeEquipesCommand extends ContainerAwareCommand
 		$query->setParameter("old", $old);
 		$nbFeuilles = $query->execute();
 
-		$query = $entityManager->createQuery(
+		$query = $this->entityManager->createQuery(
 			"UPDATE App\Entity\FpFeuille f
 			 SET f.equipeEvaluee = :new
 			 WHERE f.equipeEvaluee = :old"
@@ -184,6 +185,6 @@ class MergeEquipesCommand extends ContainerAwareCommand
 		$io->text(" -> $nbClassements classements, $nbMatches matches modifiés et $nbFeuilles feuilles modifiées");
 
 		// Suppression
-		$entityManager->remove($old);
+		$this->entityManager->remove($old);
 	}
 }

@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { menus } from '../../utils/menus';
-import { Sanction, SanctionBareme } from '@commun/src/app/model/Sanction';
+import { Sanction } from '@commun/src/app/model/Sanction';
 import { ActivatedRoute } from '@angular/router';
 import { RequeteService } from '@commun/src/app/services/requete.service';
 import { SanctionService } from '@commun/src/app/services/sanction.service';
-import { NgbModal, NgbPopover } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { SanctionCreationComponent } from '../sanction-creation/sanction-creation.component';
-import { forkJoin } from 'rxjs';
-import { SportService } from '@commun/src/app/services/sport.service';
+import { Sport } from '@commun/src/app/model/Sport';
 
 @Component({
   selector: 'app-sanctions',
@@ -17,6 +16,8 @@ import { SportService } from '@commun/src/app/services/sport.service';
 export class SanctionsComponent implements OnInit {
 
 	menu = menus.sanctions;
+	sports: Sport[];
+	selSport: Sport;
 	sanctions: Sanction[];
 
 	constructor(
@@ -24,25 +25,22 @@ export class SanctionsComponent implements OnInit {
 		private modalService: NgbModal,
 		public requeteService: RequeteService,
 		private sanctionService: SanctionService,
-		private sportService: SportService,
 	) { }
 
 	/**
 	 * Initialisation
 	 */
 	ngOnInit() {
-		// Récupération des données
-		this.route.data.subscribe((data: { sanctions: Sanction[] }) => {
-			this.sanctions = data.sanctions;
-		});
+		this.route.data
+			.subscribe((data: { sports: Sport[] }) => this.sports = data.sports);
 	}
 
 	/**
-	 * Recharge les sanctions
+	 * Sélection d'un sport
 	 */
-	refresh() {
+	selectionSport(): void {
 		this.requeteService.requete(
-			this.sanctionService.get(),
+			this.sanctionService.get(this.selSport),
 			sanctions => this.sanctions = sanctions
 		);
 	}
@@ -52,15 +50,12 @@ export class SanctionsComponent implements OnInit {
 	 */
 	ajouterSanction() {
 		this.requeteService.requete(
-			forkJoin(
-				this.sportService.getSports(),
-				this.sanctionService.getBareme(),
-			),
-			([sports, bareme]) => {
+			this.sanctionService.getBareme(),
+			bareme => {
 				const modal = this.modalService.open(SanctionCreationComponent, { centered: true, size: 'lg' });
-				modal.componentInstance.sports = sports;
+				modal.componentInstance.sports = this.sports;
 				modal.componentInstance.bareme = bareme;
-				modal.result.then(this.refresh.bind(this));
+				modal.result.then(this.selectionSport.bind(this));
 			}
 		);
 	}

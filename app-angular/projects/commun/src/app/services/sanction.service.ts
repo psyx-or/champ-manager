@@ -4,6 +4,7 @@ import { Observable, of } from 'rxjs';
 import { SanctionCategorie, Sanction } from '../model/Sanction';
 import { tap } from 'rxjs/operators';
 import * as moment from 'moment';
+import { Sport } from '../model/Sport';
 
 @Injectable({
   providedIn: 'root'
@@ -19,8 +20,8 @@ export class SanctionService {
 	/**
 	 * Récupère les sanctions récentes
 	 */
-	public get(): Observable<Sanction[]> {
-		return this.http.get<Sanction[]>("/api/sanction", { params: { from: moment().subtract(2, 'year').toISOString() }});
+	public get(sport: Sport): Observable<Sanction[]> {
+		return this.http.get<Sanction[]>("/api/sanction/sport/" + sport.nom, { params: { from: moment().subtract(2, 'year').toISOString() }});
 	}
 
 	/**

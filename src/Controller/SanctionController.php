@@ -12,6 +12,7 @@ use App\Entity\SanctionCategorie;
 use App\Entity\Sanction;
 use App\Entity\SanctionBareme;
 use App\Entity\Equipe;
+use App\Entity\Sport;
 
 /**
  * @Route("/api")
@@ -69,21 +70,24 @@ class SanctionController extends CMController
 	}
 
 	/**
-	 * @Route("/sanction", methods={"GET"})
+	 * @Route("/sanction/sport/{nom}", methods={"GET"})
 	 * @IsGranted("ROLE_ADMIN")
 	 */
-	public function getHistorique(Request $request, EntityManagerInterface $entityManager)
+	public function getHistoriqueSport(Sport $sport, Request $request, EntityManagerInterface $entityManager)
 	{
 		$date = $request->get("from");
 
 		$query = $entityManager->createQuery(
 			"SELECT s
 			 FROM App\Entity\Sanction s
+			 JOIN s.equipe e
 			 WHERE s.date > :date
+			   AND e.sport = :sport
 			 ORDER BY s.date DESC"
 		);
 
 		$query->setParameter("date", $date);
+		$query->setParameter("sport", $sport);
 
 		return $this->groupJson($query->getResult(), "simple", "equipe", "sanction_complet", "bareme", "sport", "categorie");
 	}

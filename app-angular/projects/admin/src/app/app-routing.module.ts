@@ -34,7 +34,6 @@ import { CoupeAdminComponent } from './components/coupe-admin/coupe-admin.compon
 import { SanctionBaremeEditorComponent } from './components/sanction-bareme-editor/sanction-bareme-editor.component';
 import { SanctionBaremeResolver } from '@commun/src/app/utils/sanction-bareme.resolver';
 import { SanctionsComponent } from './components/sanctions/sanctions.component';
-import { SanctionsResolver } from './components/sanctions/sanctions.resolver';
 import { SanctionEquipeParamResolver } from '@commun/src/app/utils/sanction-equipe.resolver';
 import { SanctionEquipeComponent } from './components/sanction-equipe/sanction-equipe.component';
 
@@ -56,7 +55,7 @@ const routes: Routes = [
 	{ path: 'equipe/:equipeId', component: EquipeComponent, resolve: { equipe: EquipeResolver }, runGuardsAndResolvers: "always", canDeactivate: [CanDeactivateGuard] },
 	{ path: 'fairplay-classement/:champId', component: FairplayClassementComponent, resolve: { classement: FpClassementResolver } },
 	{ path: 'fairplay-equipe/:type/:equipeId', component: FairplayEquipeComponent, resolve: { equipe: EquipeResolver, championnats: FairplayEquipeResolver } },
-	{ path: 'sanction-liste', component: SanctionsComponent, resolve: { sanctions: SanctionsResolver } },
+	{ path: 'sanction-liste', component: SanctionsComponent, resolve: { sports: SportResolver } },
 	{ path: 'sanction-bareme', component: SanctionBaremeEditorComponent, resolve: { bareme: SanctionBaremeResolver } },
 	{ path: 'sanction/:equipeId', component: SanctionEquipeComponent, resolve: { equipe: EquipeResolver, sanctions: SanctionEquipeParamResolver } },
 ];

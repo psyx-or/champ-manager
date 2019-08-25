@@ -1,16 +1,36 @@
 <app-generic-menu [menu]="menu"></app-generic-menu>
 
+
 <!----------------------
-	Ajout de sanction
+	Sport
   ------------------- -->
 
-<div class="action-bar">
-    <button class="btn btn-primary" (click)="ajouterSanction()"><i class="icon ion-md-add"></i> Ajouter une sanction</button>
+<div class="form-group form-row">
+	<label for="sport" class="col-sm-2 col-form-label">Sport</label>
+	<div class="col-sm-2">
+		<select class="form-control" id="sport" name="sport"
+				[(ngModel)]="selSport" (change)="selectionSport()">
+			<option *ngFor="let s of sports" [ngValue]="s">{{s.nom}}</option>
+		</select>
+	</div>
 </div>
 
-<!-- TODO: par sport -->
-<!----------------------
-	Liste des sanctions
-  ------------------- -->
 
-<app-sanction-liste [sanctions]="sanctions" [avecJoueur]="true" [avecLien]="true"></app-sanction-liste>
+<ng-container *ngIf="sanctions">
+
+	<!----------------------
+		Ajout de sanction
+	------------------- -->
+
+	<div class="action-bar">
+		<button class="btn btn-primary" (click)="ajouterSanction()"><i class="icon ion-md-add"></i> Ajouter une sanction</button>
+	</div>
+
+
+	<!----------------------
+		Liste des sanctions
+	------------------- -->
+
+	<app-sanction-liste [sanctions]="sanctions" [avecJoueur]="true" [avecLien]="true"></app-sanction-liste>
+
+</ng-container>

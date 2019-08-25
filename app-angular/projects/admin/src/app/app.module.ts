@@ -35,7 +35,6 @@ import { FpClassementResolver } from './components/fairplay-classement/fairplay-
 import { CoupeAdminComponent } from './components/coupe-admin/coupe-admin.component';
 import { SanctionBaremeEditorComponent } from './components/sanction-bareme-editor/sanction-bareme-editor.component';
 import { SanctionsComponent } from './components/sanctions/sanctions.component';
-import { SanctionsResolver } from './components/sanctions/sanctions.resolver';
 import { SanctionCreationComponent } from './components/sanction-creation/sanction-creation.component';
 import { SanctionEquipeComponent } from './components/sanction-equipe/sanction-equipe.component';
 
@@ -84,7 +83,6 @@ import { SanctionEquipeComponent } from './components/sanction-equipe/sanction-e
 	  ParametresResolver,
 	  FairplayEquipeResolver,
 	  FpClassementResolver,
-	  SanctionsResolver,
   ],
   bootstrap: [AppComponent],
   entryComponents: [

@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { menus } from '../../utils/menus';
+import { setMenuEquipe } from '../../utils/menus';
 import { Equipe } from '@commun/src/app/model/Equipe';
 import { Sanction } from '@commun/src/app/model/Sanction';
 import { ActivatedRoute } from '@angular/router';
+import { AuthentService } from '../../services/authent.service';
+import { Menu } from 'projects/admin/src/app/utils/menus';
 
 @Component({
   selector: 'app-sanction-equipe',
@@ -11,12 +13,13 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class SanctionEquipeComponent implements OnInit {
 
-	menu = menus.equipe;
+	menu: Menu;
 	equipe: Equipe;
 	sanctions: Sanction[];
 
 	constructor(
 		private route: ActivatedRoute,
+		public authentService: AuthentService,
 	) { }
 
 	/**
@@ -27,6 +30,8 @@ export class SanctionEquipeComponent implements OnInit {
 		this.route.data.subscribe((data: { equipe: Equipe, sanctions: Sanction[] }) => {
 			this.equipe = data.equipe;
 			this.sanctions = data.sanctions;
+
+			setMenuEquipe(this);
 		});
 	}
 

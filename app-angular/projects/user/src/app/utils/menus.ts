@@ -1,6 +1,7 @@
 import { ChampType, Championnat } from "@commun/src/app/model/Championnat";
 import { Equipe } from "@commun/src/app/model/Equipe";
 import { Menu } from "@commun/src/app/components/generic-menu/generic-menu.model";
+import { AuthentService } from "../services/authent.service";
 
 /**
  * Les menus
@@ -52,4 +53,27 @@ export var menus: { [nom: string]: Menu } = {
 			{ route: "sanction-bareme", icone: 'list-box', titre: "Barème" },
 		]
 	},
+}
+
+/**
+ * Description d'un composant affichant le menu "équipe"
+ */
+export interface EquipeComponent {
+	menu: Menu;
+	equipe: Equipe;
+	authentService: AuthentService;
+}
+
+/**
+ * Fonction pour mettre à jour automatiquement le menu "équipe" en fonction de l'équipe connectée
+ */
+export function setMenuEquipe(comp: EquipeComponent) {
+	comp.authentService.getEquipe().subscribe(
+		equipe => {
+			if (equipe == null || comp.equipe == null || equipe.id != comp.equipe.id)
+				comp.menu = menus.equipe;
+			else
+				comp.menu = menus.equipeConnectee;
+		}
+	);
 }

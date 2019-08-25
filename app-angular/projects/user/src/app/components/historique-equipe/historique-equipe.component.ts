@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { menus } from '../../utils/menus';
+import { setMenuEquipe } from '../../utils/menus';
 import { Equipe } from '@commun/src/app/model/Equipe';
 import { Championnat } from '@commun/src/app/model/Championnat';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ChampionnatEquipeDTO } from '@commun/src/app/model/ChampionnatEquipeDTO';
+import { AuthentService } from '../../services/authent.service';
+import { Menu } from '@commun/src/app/components/generic-menu/generic-menu.model';
 
 @Component({
   selector: 'app-historique-equipe',
@@ -12,7 +14,7 @@ import { ChampionnatEquipeDTO } from '@commun/src/app/model/ChampionnatEquipeDTO
 })
 export class HistoriqueEquipeComponent implements OnInit {
 
-	menu = menus.equipe;
+	menu: Menu;
 	equipe: Equipe;
 	champs: Championnat[] = null;
 
@@ -24,6 +26,7 @@ export class HistoriqueEquipeComponent implements OnInit {
 	constructor(
 		private route: ActivatedRoute,
 		private router: Router,
+		public authentService: AuthentService,
 	) { }
 
 	/**
@@ -34,8 +37,9 @@ export class HistoriqueEquipeComponent implements OnInit {
 			.subscribe((data: { dto: ChampionnatEquipeDTO }) => {
 				this.equipe = data.dto.equipe;
 				this.champs = data.dto.championnats;
-			}
-			);
+
+				setMenuEquipe(this);
+			});
 	}
 
 	/**

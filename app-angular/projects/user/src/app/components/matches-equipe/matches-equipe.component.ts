@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { menus } from '../../utils/menus';
+import { setMenuEquipe } from '../../utils/menus';
 import { Championnat } from '@commun/src/app/model/Championnat';
 import { ActivatedRoute } from '@angular/router';
 import { Equipe } from '@commun/src/app/model/Equipe';
@@ -8,6 +8,8 @@ import { toDisp } from '@commun/src/app/utils/utils';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { Creneau } from '@commun/src/app/model/Creneau';
 import * as moment from 'moment';
+import { AuthentService } from '../../services/authent.service';
+import { Menu } from '@commun/src/app/components/generic-menu/generic-menu.model';
 
 class ChampionnatExt extends Championnat {
 	matches: Match[];
@@ -23,13 +25,14 @@ export class MatchesEquipeComponent implements OnInit {
 
 	// TODO: mise en relief des matches concernant son équipe!
 
-	menu = menus.equipe;
+	menu: Menu;
 	equipe: Equipe;
 	championnats: ChampionnatExt[];
 
 	constructor(
 		private route: ActivatedRoute,
 		private sanitizer: DomSanitizer,
+		public authentService: AuthentService,
 	) { }
 
 	/**
@@ -46,8 +49,9 @@ export class MatchesEquipeComponent implements OnInit {
 					c.calendrier = this.sanitizer.bypassSecurityTrustUrl(encodeURI(
 						'data:text/calendar;charset=utf8,' + this.createCalendar(c)));
 				});
-			}
-			);
+
+				setMenuEquipe(this);
+			});
 	}
 
 	/**

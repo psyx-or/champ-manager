@@ -15,6 +15,18 @@ label.btn:not(.active) {
 	text-decoration: line-through;
 }
 
+.card-section:not(:first-child) {
+    border-top: 1px solid lightgray;
+    margin-top: 1em;
+    padding-top: 1em;
+}
+
+.card-section-header {
+	font-weight: bold;
+	text-decoration: underline;
+	margin-bottom: 0.5em;
+}
+
 /* Pour les tableaux de coupe */
 .Treant { position: relative; overflow: hidden; padding: 0 !important; }
 

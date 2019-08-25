@@ -39,6 +39,17 @@ export var menus: { [nom: string]: Menu } = {
 			{ route: "equipe/saisie", icone: 'create', titre: "Saisie des résultats" },
 			{ route: "equipe/historique", icone: 'film', titre: "Historique" },
 			{ route: "equipe/edit", icone: 'contact', titre: "Coordonnées" },
+			{ route: "sanction", icone: 'rainy', titre: "Sanctions" },
+		]
+	},
+
+	/** Menu des sanctions */
+	sanctions: {
+		titre: "Sanctions",
+		icone: "rainy",
+		items: [
+			{ route: "sanction-liste", icone: 'film', titre: "Historique" },
+			{ route: "sanction-bareme", icone: 'list-box', titre: "Barème" },
 		]
 	},
 }

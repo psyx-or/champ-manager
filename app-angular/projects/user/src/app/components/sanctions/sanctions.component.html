@@ -1,0 +1,23 @@
+<app-generic-menu [menu]="menu"></app-generic-menu>
+
+
+<!----------------------
+	Sport
+  ------------------- -->
+
+<div class="form-group form-row">
+	<label for="sport" class="col-sm-2 col-form-label">Sport</label>
+	<div class="col-sm-2">
+		<select class="form-control" id="sport" name="sport"
+				[(ngModel)]="selSport" (change)="selectionSport()">
+			<option *ngFor="let s of sports" [ngValue]="s">{{s.nom}}</option>
+		</select>
+	</div>
+</div>
+
+
+<!----------------------
+	Liste des sanctions
+  ------------------- -->
+
+<app-sanction-liste [sanctions]="sanctions" [avecJoueur]="false" [avecLien]="true" *ngIf="sanctions"></app-sanction-liste>

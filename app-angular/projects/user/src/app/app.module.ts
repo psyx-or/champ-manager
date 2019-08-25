@@ -29,6 +29,8 @@ import { CoupesEquipeComponent } from './components/coupes-equipe/coupes-equipe.
 import { HierarchiesEquipeResolver } from './components/coupes-equipe/hierarchies-equipe.resolver';
 import { CoupeUserComponent } from './components/coupe-user/coupe-user.component';
 import { SanctionEquipeComponent } from './components/sanction-equipe/sanction-equipe.component';
+import { SanctionsComponent } from './components/sanctions/sanctions.component';
+import { SanctionBaremeComponent } from './components/sanction-bareme/sanction-bareme.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +52,8 @@ import { SanctionEquipeComponent } from './components/sanction-equipe/sanction-e
     CoupesEquipeComponent,
     CoupeUserComponent,
     SanctionEquipeComponent,
+    SanctionsComponent,
+    SanctionBaremeComponent,
   ],
   imports: [
     BrowserModule,

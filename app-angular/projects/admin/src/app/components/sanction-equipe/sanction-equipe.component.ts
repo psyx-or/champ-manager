@@ -3,6 +3,10 @@ import { ActivatedRoute } from '@angular/router';
 import { Equipe } from '@commun/src/app/model/Equipe';
 import { Sanction } from '@commun/src/app/model/Sanction';
 import { menus } from '../../utils/menus';
+import { RequeteService } from '@commun/src/app/services/requete.service';
+import { SanctionService } from '@commun/src/app/services/sanction.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { SanctionCreationComponent } from '../sanction-creation/sanction-creation.component';
 
 @Component({
   selector: 'app-sanction-equipe',
@@ -17,6 +21,9 @@ export class SanctionEquipeComponent implements OnInit {
 
 	constructor(
 		private route: ActivatedRoute,
+		private modalService: NgbModal,
+		public requeteService: RequeteService,
+		private sanctionService: SanctionService,
 	) { }
 
 	/**
@@ -30,4 +37,23 @@ export class SanctionEquipeComponent implements OnInit {
 		});
 	}
 
+	/**
+	 * Ouvre la fenêtre d'ajout de sanction
+	 */
+	ajouterSanction() {
+		this.requeteService.requete(
+			this.sanctionService.getBareme(),
+			bareme => {
+				const modal = this.modalService.open(SanctionCreationComponent, { centered: true, size: 'lg' });
+				modal.componentInstance.equipe = this.equipe;
+				modal.componentInstance.bareme = bareme;
+				modal.result.then(() => {
+					this.requeteService.requete(
+						this.sanctionService.getEquipe(this.equipe.id),
+						sanctions => this.sanctions = sanctions
+					);
+				});
+			}
+		);
+	}
 }

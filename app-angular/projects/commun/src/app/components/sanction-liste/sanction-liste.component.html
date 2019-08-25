@@ -43,16 +43,16 @@
   ------------------- -->
 
 <ng-template #popContent let-bareme="bareme">
-	<div class="peine" *ngIf="bareme.sanctionDirigeant">
-		<div class="cible">Sanction pour le dirigeant</div>
+	<div class="card-section" *ngIf="bareme.sanctionDirigeant">
+		<div class="card-section-header">Sanction pour le dirigeant</div>
 		<div>{{bareme.sanctionDirigeant}}</div>
 	</div>
-	<div class="peine" *ngIf="bareme.sanctionEquipe">
-		<div class="cible">Sanction pour l'équipe</div>
+	<div class="card-section" *ngIf="bareme.sanctionEquipe">
+		<div class="card-section-header">Sanction pour l'équipe</div>
 		<div>{{bareme.sanctionEquipe}}</div>
 	</div>
-	<div class="peine" *ngIf="bareme.sanctionJoueur">
-		<div class="cible">Sanction pour le joueur</div>
+	<div class="card-section" *ngIf="bareme.sanctionJoueur">
+		<div class="card-section-header">Sanction pour le joueur</div>
 		<div>{{bareme.sanctionJoueur}}</div>
 	</div>
 </ng-template>

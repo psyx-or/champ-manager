@@ -1,3 +1,15 @@
 <app-generic-menu [menu]="menu" [obj]="equipe"></app-generic-menu>
 
+<!----------------------
+	Ajout de sanction
+------------------- -->
+
+<div class="action-bar">
+	<button class="btn btn-primary" (click)="ajouterSanction()"><i class="icon ion-md-add"></i> Ajouter une sanction</button>
+</div>
+
+<!----------------------
+	Sanctions
+------------------- -->
+
 <app-sanction-liste [sanctions]="sanctions" [avecJoueur]="true"></app-sanction-liste>

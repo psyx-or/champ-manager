@@ -72,9 +72,8 @@ class SanctionController extends CMController
 
 	/**
 	 * @Route("/sanction/sport/{nom}", methods={"GET"})
-	 * @IsGranted("ROLE_ADMIN")
 	 */
-	public function getHistoriqueSport(Sport $sport, Request $request, EntityManagerInterface $entityManager)
+	public function getHistoriqueSport(Sport $sport, Request $request, EntityManagerInterface $entityManager, AuthorizationCheckerInterface $authChecker)
 	{
 		$date = $request->get("from");
 
@@ -90,7 +89,12 @@ class SanctionController extends CMController
 		$query->setParameter("date", $date);
 		$query->setParameter("sport", $sport);
 
-		return $this->groupJson($query->getResult(), "simple", "equipe", "sanction_complet", "bareme", "sport", "categorie");
+		$groupes = array("simple", "equipe", "bareme", "sport", "categorie");
+		if (true === $authChecker->isGranted('ROLE_ADMIN')) {
+			array_push($groupes, 'sanction_complet');
+		}
+
+		return $this->groupJson($query->getResult(), ...$groupes);
 	}
 
 	/**

@@ -27,9 +27,10 @@
 				<!-- Equipe -->
 				<div class="form-group">
 					<label for="equipe">Equipe&nbsp;:</label>
-					<select class="form-control" id="equipe" name="equipe" required [(ngModel)]="sanction.equipe">
+					<select class="form-control" id="equipe" name="equipe" required [(ngModel)]="sanction.equipe" *ngIf="equipe == null">
 						<option *ngFor="let e of equipes" [ngValue]="e">{{e.nom}}</option>
 					</select>
+					<input type="text" class="form-control" id="joueur" name="joueur" disabled [value]="equipe.nom" *ngIf="equipe != null">
 				</div>
 
 				<!-- Joueur -->
@@ -45,16 +46,16 @@
 				<div class="card">
 					<div class="card-header">{{sanction.bareme.libelle}}</div>
 					<div class="card-body">
-						<div class="peine" *ngIf="sanction.bareme.sanctionDirigeant">
-							<div class="cible">Sanction pour le dirigeant</div>
+						<div class="card-section" *ngIf="sanction.bareme.sanctionDirigeant">
+							<div class="card-section-header">Sanction pour le dirigeant</div>
 							<div>{{sanction.bareme.sanctionDirigeant}}</div>
 						</div>
-						<div class="peine" *ngIf="sanction.bareme.sanctionEquipe">
-							<div class="cible">Sanction pour l'équipe</div>
+						<div class="card-section" *ngIf="sanction.bareme.sanctionEquipe">
+							<div class="card-section-header">Sanction pour l'équipe</div>
 							<div>{{sanction.bareme.sanctionEquipe}}</div>
 						</div>
-						<div class="peine" *ngIf="sanction.bareme.sanctionJoueur">
-							<div class="cible">Sanction pour le joueur</div>
+						<div class="card-section" *ngIf="sanction.bareme.sanctionJoueur">
+							<div class="card-section-header">Sanction pour le joueur</div>
 							<div>{{sanction.bareme.sanctionJoueur}}</div>
 						</div>
 					</div>

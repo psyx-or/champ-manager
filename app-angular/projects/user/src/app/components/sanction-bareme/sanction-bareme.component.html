@@ -1,0 +1,39 @@
+<app-generic-menu [menu]="menu"></app-generic-menu>
+
+<ng-container *ngFor="let cat of bareme">
+
+	<!-- Nom de la catégorie -->
+	<h2 class="section">
+		{{cat.libelle}}
+	</h2>
+
+	<!-- Barèmes -->
+	<div class="row">
+		<div *ngFor="let b of cat.baremes" class="col-12 col-md-6 col-lg-4">
+
+			<div class="card">
+				<!-- Titre de la sanction -->
+				<div class="card-header">
+					{{b.libelle}}
+				</div>
+
+				<!-- Détail de la sanction -->
+				<div class="card-body">
+					<div class="card-section" *ngIf="b.sanctionDirigeant">
+						<div class="card-section-header">Sanction pour le dirigeant</div>
+						<div>{{b.sanctionDirigeant}}</div>
+					</div>
+					<div class="card-section" *ngIf="b.sanctionEquipe">
+						<div class="card-section-header">Sanction pour l'équipe</div>
+						<div>{{b.sanctionEquipe}}</div>
+					</div>
+					<div class="card-section" *ngIf="b.sanctionJoueur">
+						<div class="card-section-header">Sanction pour le joueur</div>
+						<div>{{b.sanctionJoueur}}</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</ng-container>
+

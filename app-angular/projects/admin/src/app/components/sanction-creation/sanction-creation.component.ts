@@ -15,6 +15,7 @@ export class SanctionCreationComponent implements OnInit {
 
 	@Input() bareme: SanctionCategorie[];
 	@Input() equipes: Equipe[];
+	@Input() equipe: Equipe;
 
 	selSport: Sport;
 	sanction: Sanction;
@@ -31,7 +32,7 @@ export class SanctionCreationComponent implements OnInit {
 	ngOnInit() {
 		this.sanction = {
 			date: new Date(),
-			equipe: null,
+			equipe: this.equipe,
 			joueur: null,
 			bareme: null,
 			commentaire: null

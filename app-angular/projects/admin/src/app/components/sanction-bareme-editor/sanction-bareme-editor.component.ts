@@ -4,6 +4,7 @@ import { SanctionService } from '@commun/src/app/services/sanction.service';
 import { ActivatedRoute } from '@angular/router';
 import { RequeteService } from '@commun/src/app/services/requete.service';
 import { SanctionCategorie, SanctionBareme } from '@commun/src/app/model/Sanction';
+import { CanComponentDeactivate } from '@commun/src/app/utils/can-deactivate.guard';
 
 interface SanctionCategorieExt extends SanctionCategorie {
 	active: boolean;
@@ -14,10 +15,11 @@ interface SanctionCategorieExt extends SanctionCategorie {
   templateUrl: './sanction-bareme-editor.component.html',
   styleUrls: ['./sanction-bareme-editor.component.css']
 })
-export class SanctionBaremeEditorComponent implements OnInit {
+export class SanctionBaremeEditorComponent implements OnInit, CanComponentDeactivate {
 
 	menu = menus.sanctions;
 	bareme: SanctionCategorieExt[];
+	initial: string;
 
 	constructor(
 		private route: ActivatedRoute,
@@ -36,11 +38,20 @@ export class SanctionBaremeEditorComponent implements OnInit {
 	}
 
 	/**
+	 * Vérification de la présence de modification
+	 */
+	canDeactivate(): boolean {
+		return !this.bareme || !this.initial || JSON.stringify(this.bareme) == this.initial;
+	}
+
+
+	/**
 	 * Ajoute les données nécessaires à l'affichage
 	 * @param bareme 
 	 */
 	private init(bareme: SanctionCategorie[]) {
 		this.bareme = bareme.map(c => ({ ...c, active: true }));
+		this.initial = JSON.stringify(this.bareme);
 	}
 
 	/**

@@ -25,6 +25,8 @@ import { CoupesEquipeComponent } from './components/coupes-equipe/coupes-equipe.
 import { HierarchiesEquipeResolver } from './components/coupes-equipe/hierarchies-equipe.resolver';
 import { SeuilsForfaitParamResolver } from '@commun/src/app/utils/seuils-forfait.resolver';
 import { CoupeUserComponent } from './components/coupe-user/coupe-user.component';
+import { SanctionEquipeParamResolver } from '@commun/src/app/utils/sanction-equipe.resolver';
+import { SanctionEquipeComponent } from './components/sanction-equipe/sanction-equipe.component';
 
 const routes: Routes = [
 	{ path: '', pathMatch: 'full', redirectTo: 'championnats' },
@@ -40,6 +42,7 @@ const routes: Routes = [
 	{ path: 'equipe/edit/:equipeId', component: EquipeEditionComponent, resolve: { equipe: EquipeResolver }, runGuardsAndResolvers: "always", canDeactivate: [CanDeactivateGuard] },
 	{ path: 'equipe/saisie/:equipeId', component: MatchesSaisieComponent, resolve: { equipe: EquipeResolver, championnats: MatchesEquipeResolver, dureeSaisie: DureeSaisieParamResolver }, runGuardsAndResolvers: "always" },
 	{ path: 'equipe/:equipeId', component: EquipeComponent, resolve: { equipe: EquipeResolver }, runGuardsAndResolvers: "always" },
+	{ path: 'sanction/:equipeId', component: SanctionEquipeComponent, resolve: { equipe: EquipeResolver, sanctions: SanctionEquipeParamResolver } },
 ];
 
 @NgModule({

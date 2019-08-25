@@ -5,6 +5,7 @@ namespace App\Controller;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Doctrine\ORM\EntityManagerInterface;
@@ -94,9 +95,8 @@ class SanctionController extends CMController
 
 	/**
 	 * @Route("/sanction/equipe/{id}", methods={"GET"})
-	 * @IsGranted("ROLE_ADMIN")
 	 */
-	public function getHistoriqueEquipe(Equipe $equipe, EntityManagerInterface $entityManager)
+	public function getHistoriqueEquipe(Equipe $equipe, EntityManagerInterface $entityManager, AuthorizationCheckerInterface $authChecker)
 	{
 		$query = $entityManager->createQuery(
 			"SELECT s
@@ -107,7 +107,12 @@ class SanctionController extends CMController
 
 		$query->setParameter("equipe", $equipe);
 
-		return $this->groupJson($query->getResult(), "simple", "equipe", "sanction_complet", "bareme", "sport", "categorie");
+		$groupes = array("simple", "equipe", "bareme", "sport", "categorie");
+		if (true === $authChecker->isGranted('ROLE_ADMIN')) {
+			array_push($groupes, 'sanction_complet');
+		}
+
+		return $this->groupJson($query->getResult(), ...$groupes);
 	}
 
 	/**

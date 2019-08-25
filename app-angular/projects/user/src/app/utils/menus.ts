@@ -25,6 +25,7 @@ export var menus: { [nom: string]: Menu } = {
 			{ route: "equipe/matches", icone: 'clipboard', titre: "Matches" },
 			{ route: "equipe/historique", icone: 'film', titre: "Historique" },
 			{ route: "equipe", icone: 'contact', titre: "Coordonnées" },
+			{ route: "sanction", icone: 'rainy', titre: "Sanctions" },
 		]
 	},
 

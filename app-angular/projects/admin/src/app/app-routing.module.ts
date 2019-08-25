@@ -56,7 +56,7 @@ const routes: Routes = [
 	{ path: 'fairplay-classement/:champId', component: FairplayClassementComponent, resolve: { classement: FpClassementResolver } },
 	{ path: 'fairplay-equipe/:type/:equipeId', component: FairplayEquipeComponent, resolve: { equipe: EquipeResolver, championnats: FairplayEquipeResolver } },
 	{ path: 'sanction-liste', component: SanctionsComponent, resolve: { sports: SportResolver } },
-	{ path: 'sanction-bareme', component: SanctionBaremeEditorComponent, resolve: { bareme: SanctionBaremeResolver } },
+	{ path: 'sanction-bareme', component: SanctionBaremeEditorComponent, resolve: { bareme: SanctionBaremeResolver }, canDeactivate: [CanDeactivateGuard] },
 	{ path: 'sanction/:equipeId', component: SanctionEquipeComponent, resolve: { equipe: EquipeResolver, sanctions: SanctionEquipeParamResolver } },
 ];
 

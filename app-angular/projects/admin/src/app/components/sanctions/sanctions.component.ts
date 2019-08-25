@@ -7,6 +7,8 @@ import { SanctionService } from '@commun/src/app/services/sanction.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { SanctionCreationComponent } from '../sanction-creation/sanction-creation.component';
 import { Sport } from '@commun/src/app/model/Sport';
+import { EquipeService } from '@commun/src/app/services/equipe.service';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-sanctions',
@@ -25,6 +27,7 @@ export class SanctionsComponent implements OnInit {
 		private modalService: NgbModal,
 		public requeteService: RequeteService,
 		private sanctionService: SanctionService,
+		private equipeService: EquipeService,
 	) { }
 
 	/**
@@ -50,10 +53,13 @@ export class SanctionsComponent implements OnInit {
 	 */
 	ajouterSanction() {
 		this.requeteService.requete(
-			this.sanctionService.getBareme(),
-			bareme => {
+			forkJoin(
+				this.equipeService.getEquipesCourantes(this.selSport),
+				this.sanctionService.getBareme(),
+			),
+			([equipes, bareme]) => {
 				const modal = this.modalService.open(SanctionCreationComponent, { centered: true, size: 'lg' });
-				modal.componentInstance.sports = this.sports;
+				modal.componentInstance.equipes = equipes;
 				modal.componentInstance.bareme = bareme;
 				modal.result.then(this.selectionSport.bind(this));
 			}

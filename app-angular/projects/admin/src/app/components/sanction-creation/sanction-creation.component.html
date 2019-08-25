@@ -14,11 +14,13 @@
 
 		<div class="row">
 			<div class="col-6">
-				<!-- Sport -->
+				<!-- Barème  -->
 				<div class="form-group">
-					<label for="sport">Sport&nbsp;:</label>
-					<select class="form-control" id="sport" name="sport" required [(ngModel)]="selSport" (change)="selectionSport()">
-						<option *ngFor="let s of sports" [ngValue]="s">{{s.nom}}</option>
+					<label for="bareme">Faute&nbsp;:</label>
+					<select class="form-control" id="bareme" name="bareme" required [(ngModel)]="sanction.bareme">
+						<optgroup *ngFor="let c of bareme" [label]="c.libelle">
+							<option *ngFor="let b of c.baremes" [ngValue]="b">{{b.libelle}}</option>
+						</optgroup>
 					</select>
 				</div>
 
@@ -34,22 +36,6 @@
 				<div class="form-group">
 					<label for="joueur">Joueur&nbsp;:</label>
 					<input type="text" class="form-control" id="joueur" name="joueur" [(ngModel)]="sanction.joueur">
-				</div>
-
-				<!-- Catégorie -->
-				<div class="form-group">
-					<label for="categorie">Catégorie de faute&nbsp;:</label>
-					<select class="form-control" id="categorie" name="categorie" required [(ngModel)]="selCategorie">
-						<option *ngFor="let c of bareme" [ngValue]="c">{{c.libelle}}</option>
-					</select>
-				</div>
-
-				<!-- Barème  -->
-				<div class="form-group">
-					<label for="bareme">Faute&nbsp;:</label>
-					<select class="form-control" id="bareme" name="bareme" required [(ngModel)]="sanction.bareme">
-						<option *ngFor="let b of selCategorie?.baremes" [ngValue]="b">{{b.libelle}}</option>
-					</select>
 				</div>
 			</div>
 			

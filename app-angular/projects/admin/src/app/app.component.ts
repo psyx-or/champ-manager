@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { AuthentService } from './services/authent.service';
+import { AuthentService, User } from './services/authent.service';
 import { RequeteService } from 'projects/commun/src/app/services/requete.service';
 import { LoginComponent } from '@commun/src/app/components/login/login.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -22,36 +23,42 @@ export class AppComponent implements OnInit {
 	constructor(
 		public requeteService: RequeteService,
 		private modalService: NgbModal,
-		private authentService: AuthentService
+		private authentService: AuthentService,
+		private router: Router,
 	) { }
 
 	/**
 	 * Initialisation
 	 */
 	ngOnInit(): void {
-		this.checkConnexion(true);
+		this.authentService.getUser().subscribe(
+			this.authentification.bind(this)
+		);
 	}
 
 	/**
-	 * Vérifie si l'utilisateur est connecté
-	 * @param first Vrai si c'est le premier appel
-	 * @param creds Identifiants de l'utilisateur
+	 * Affichage de la popup de login si nécessaire
+	 * @param user Utilisateur connecté
 	 */
-	checkConnexion(first: boolean, creds?: Object): void {
-		// Appel au serveur
-		this.requeteService.requete(
-			this.authentService.authentifie(creds),
-			connected => {
-				this.authentifie = connected;
+	authentification(user: User): void {
 
-				// Si on est connecté, c'est bon
-				if (connected) return;
+		// Si on est connecté, c'est bon
+		if (user.isAdmin || user.champId) {
+			this.authentifie = true;
 
-				// Sinon, affichage de la pop-up de connexion pour récupérer les identifiants et recommencer
-				const modal = this.modalService.open(LoginComponent, { centered: true, backdrop: 'static', keyboard: false });
-				modal.componentInstance.error = !first;
-				modal.componentInstance.dismissable = false;
-				modal.result.then(creds => this.checkConnexion(false, creds));
-			});
+			if (!user.isAdmin)
+				this.router.navigate(["matches", "avalider"]);
+			return;
+		}
+
+		// Sinon, affichage de la pop-up de connexion pour récupérer les identifiants et recommencer
+		const modal = this.modalService.open(LoginComponent, { centered: true, backdrop: 'static', keyboard: false });
+		modal.componentInstance.error = user.isError;
+		modal.componentInstance.dismissable = false;
+		modal.result.then(creds => {
+			this.requeteService.requete(
+				this.authentService.authentifie(creds),
+			);
+		});
 	}
 }

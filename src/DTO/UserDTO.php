@@ -20,6 +20,11 @@ class UserDTO
 			$this->id = $user->getId();
 			$this->nom = $user->getNom();
 		}
+		else if (is_a($user, 'App\\Entity\\Championnat'))
+		{
+			$this->champId = $user->getId();
+			$this->champNom = $user->getNom();
+		}
 
 		$this->roles = $user->getRoles();
 	}

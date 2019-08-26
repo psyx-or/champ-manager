@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -15,7 +16,7 @@ use Doctrine\ORM\Mapping as ORM;
  * 		}
  * )
  */
-class Championnat
+class Championnat implements UserInterface, \Serializable
 {
     /**
      * @ORM\Id()
@@ -77,6 +78,11 @@ class Championnat
      */
     private $fpForm;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $password;
+
     public function __construct()
     {
         $this->classements = new ArrayCollection();
@@ -92,11 +98,11 @@ class Championnat
     }
 
 	public function setId($id) : self
-	{
-		$this->id = $id;
-
-		return $this;
-	}
+         	{
+         		$this->id = $id;
+         
+         		return $this;
+         	}
 
 	/**
 	 * @Groups({"simple"})
@@ -280,14 +286,70 @@ class Championnat
 	 * @Groups({"feuilles"})
 	 */
 	public function getFpFeuilles(): array
-	{
-		$res = array();
+         	{
+         		$res = array();
+         
+         		foreach ($this->getJournees() as $journee)
+         			foreach ($journee->getMatches() as $match)
+         				foreach ($match->getFpFeuilles() as $feuille)
+         					array_push($res, $feuille);
+         
+         		return $res;
+         	}
 
-		foreach ($this->getJournees() as $journee)
-			foreach ($journee->getMatches() as $match)
-				foreach ($match->getFpFeuilles() as $feuille)
-					array_push($res, $feuille);
+	
+	// ------------------------------------------------------
+	//    Authentification
+	// ------------------------------------------------------
 
-		return $res;
-	}
+	public function getUsername()
+                        	{
+                        		return $this->id;
+                        	}
+
+	public function getSalt()
+                        	{
+                        		return null;
+                        	}
+
+	public function getRoles()
+                        	{
+                        		return array('ROLE_CHAMP');
+                        	}
+
+	public function eraseCredentials()
+                        	{
+                        	}
+
+	/** @see \Serializable::serialize() */
+	public function serialize()
+                        	{
+                        		return serialize(array(
+                        			$this->id,
+                        			$this->password,
+                        			$this->nom,
+                        		));
+                        	}
+
+	/** @see \Serializable::unserialize() */
+	public function unserialize($serialized)
+                        	{
+                        		list(
+                        			$this->id,
+                        			$this->password,
+                        			$this->nom,
+                        		) = unserialize($serialized, ['allowed_classes' => false]);
+                        	}
+
+    public function getPassword(): ?string
+    {
+        return $this->password;
+    }
+
+    public function setPassword(?string $password): self
+    {
+        $this->password = $password;
+
+        return $this;
+    }
 }

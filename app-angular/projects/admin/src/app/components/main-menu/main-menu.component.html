@@ -15,12 +15,13 @@
 
 			<!-- Menu -->
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item"><a class="nav-link" routerLink="/championnats"><i class="icon ion-md-trophy"></i> Championnats</a></li>
+                <li class="nav-item"><a class="nav-link" routerLink="/championnats" *ngIf="user?.isAdmin"><i class="icon ion-md-trophy"></i> Championnats</a></li>
+                <li class="nav-item"><a class="nav-link" [routerLink]="['classement', user.champId]" *ngIf="user?.champId"><i class="icon ion-md-trophy"></i> {{user.champNom}}</a></li>
                 <li class="nav-item"><a class="nav-link" routerLink="/matches/avalider"><i class="icon ion-md-checkbox-outline"></i> Matches à valider</a></li>
-                <li class="nav-item"><a class="nav-link" routerLink="/equipes"><i class="icon ion-md-contacts"></i> Equipes</a></li>
-                <li class="nav-item"><a class="nav-link" routerLink="/calendrier"><i class="icon ion-md-calendar"></i> Calendrier</a></li>
-                <li class="nav-item"><a class="nav-link" routerLink="/sanction-liste"><i class="icon ion-md-rainy"></i> Sanctions</a></li>
-				<li class="nav-item" ngbDropdown #mnuparams="ngbDropdown" (mouseleave)="mnuparams.close()">
+                <li class="nav-item"><a class="nav-link" routerLink="/equipes" *ngIf="user?.isAdmin"><i class="icon ion-md-contacts"></i> Equipes</a></li>
+                <li class="nav-item"><a class="nav-link" routerLink="/calendrier" *ngIf="user?.isAdmin"><i class="icon ion-md-calendar"></i> Calendrier</a></li>
+                <li class="nav-item"><a class="nav-link" routerLink="/sanction-liste" *ngIf="user?.isAdmin"><i class="icon ion-md-rainy"></i> Sanctions</a></li>
+				<li class="nav-item" ngbDropdown #mnuparams="ngbDropdown" (mouseleave)="mnuparams.close()" *ngIf="user?.isAdmin">
 					<button class="btn btn-link nav-link" ngbDropdownAnchor (mouseenter)="mnuparams.open()"><i class="icon ion-md-settings"></i> Paramètres</button>
 					<div ngbDropdownMenu>
 						<a class="dropdown-item" routerLink="/parametres">Paramètres</a>
@@ -31,8 +32,13 @@
             </ul>
 
 			<!-- Zone de recherche -->
-			<div>
+			<div *ngIf="user?.isAdmin">
 				<app-recherche-equipe (select)="selectEquipe($event)"></app-recherche-equipe>
+			</div>
+
+			<!-- Bouton de déconnexion-->
+			<div class="ml-1">
+				<button *ngIf="user" class="btn btn-secondary" (click)="deconnexion()"><i class="icon ion-md-walk"></i></button>
 			</div>
         </div>
     </div>

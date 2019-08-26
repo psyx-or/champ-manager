@@ -3,7 +3,7 @@ security:
     providers:
         chain_provider:
             chain:
-                providers: [in_memory, user_db]
+                providers: [in_memory, user_db, championnat_db]
 
         in_memory:
             memory:
@@ -15,6 +15,10 @@ security:
             entity:
                 class: App\Entity\Equipe
                 property: login
+        championnat_db:
+            entity:
+                class: App\Entity\Championnat
+                property: id
 
     encoders:
         Symfony\Component\Security\Core\User\User:
@@ -23,9 +27,13 @@ security:
         App\Entity\Equipe:
             algorithm: bcrypt
             cost: 12
+        App\Entity\Championnat:
+            algorithm: bcrypt
+            cost: 12
 
     role_hierarchy:
-        ROLE_ADMIN: ROLE_USER
+        ROLE_ADMIN: ROLE_CHAMP
+        ROLE_CHAMP: ROLE_USER
 
     firewalls:
         dev:

@@ -12,6 +12,8 @@ class UserDTO
 	public $id;
 	public $nom;
 	public $roles;
+	public $champId;
+	public $champNom;
 
 	public function __construct(UserInterface $user)
 	{

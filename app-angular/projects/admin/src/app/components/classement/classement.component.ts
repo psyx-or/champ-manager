@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { RequeteService } from 'projects/commun/src/app/services/requete.service';
 import { ClassementService } from 'projects/commun/src/app/services/classement.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Championnat } from 'projects/commun/src/app/model/Championnat';
 import { Classement } from 'projects/commun/src/app/model/Classement';
 import { sort, openModal } from 'projects/commun/src/app/utils/utils';
@@ -10,6 +10,7 @@ import { EquipeService } from 'projects/commun/src/app/services/equipe.service';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ChampionnatService } from 'projects/commun/src/app/services/championnat.service';
 import { menus } from '../../utils/menus';
+import { AuthentService } from '../../services/authent.service';
 
 @Component({
   selector: 'app-classement',
@@ -33,6 +34,7 @@ export class ClassementComponent implements OnInit {
 		equipes?: Equipe[];
 	};
 	forfait = {	score: <number>null };
+	isAdmin: boolean = false;
 
 	/**
 	 * Constructeur
@@ -43,10 +45,12 @@ export class ClassementComponent implements OnInit {
 	constructor(
 		public modalService: NgbModal,
 		private route: ActivatedRoute,
+		private router: Router,
 		private requeteService: RequeteService,
 		private equipeService: EquipeService,
 		private classementService: ClassementService,
-		private championnatService: ChampionnatService
+		private championnatService: ChampionnatService,
+		private authentService: AuthentService,
 	) { }
 
 	/**
@@ -60,6 +64,7 @@ export class ClassementComponent implements OnInit {
 				this.classements = sort(data.champ.classements, 'position');
 			}
 		);
+		this.authentService.getUser().subscribe(user => this.isAdmin = user.isAdmin);
 	}
 
 	/**
@@ -163,5 +168,13 @@ export class ClassementComponent implements OnInit {
 			null,
 			true
 		);
+	}
+
+	/**
+	 * Affichage de la fiche d'une équipe
+	 * @param equipe 
+	 */
+	afficheEquipe(equipe: Equipe) {
+		this.router.navigate(["equipe", equipe.id]);
 	}
 }

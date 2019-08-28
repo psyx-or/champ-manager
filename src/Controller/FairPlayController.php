@@ -38,10 +38,17 @@ class FairPlayController extends CMController
 
 	/**
 	 * @Route("/fairplay/classement/{id}", methods={"GET"})
-	 * @IsGranted("ROLE_ADMIN")
+	 * @IsGranted("ROLE_CHAMP")
 	 */
-    public function classement(Championnat $champ, EntityManagerInterface $entityManager)
+    public function classement(Championnat $champ, EntityManagerInterface $entityManager, AuthorizationCheckerInterface $authChecker)
     {
+		// Petits contrôles pour les petits malins
+		if (false === $authChecker->isGranted('ROLE_ADMIN')) {
+			if ($champ->getId() != $this->getUser()->getId())
+				throw $this->createAccessDeniedException();
+		}
+
+		// C'est bon
 		$query = $entityManager->createQuery(
 			"SELECT e AS equipe, AVG(f.ratio) AS ratio, COUNT(f) AS nb
 			 FROM App\Entity\Equipe e
@@ -120,10 +127,17 @@ class FairPlayController extends CMController
 
 	/**
 	 * @Route("/fairplay/feuille/{id}", methods={"GET"})
-	 * @IsGranted("ROLE_ADMIN")
+	 * @IsGranted("ROLE_CHAMP")
 	 */
-	public function getFeuilleById(FPFeuille $feuille)
+	public function getFeuilleById(FPFeuille $feuille, AuthorizationCheckerInterface $authChecker)
 	{
+		// Petits contrôles pour les petits malins
+		if (false === $authChecker->isGranted('ROLE_ADMIN')) {
+			if ($feuille->getFpMatch()->getJournee()->getChampionnat()->getId() != $this->getUser()->getId())
+				throw $this->createAccessDeniedException();
+		}
+
+		// C'est bon
 		$fpForm = $feuille->getFpMatch()->getJournee()->getChampionnat()->getFpForm();
 		
 		$res = new FPFeuilleAfficheDTO();
@@ -140,15 +154,27 @@ class FairPlayController extends CMController
 
 	/**
 	 * @Route("/fairplay/feuille/{id}/{equipe}", methods={"GET"})
-	 * @IsGranted("ROLE_USER")
+	 * @IsGranted({"ROLE_USER", "ROLE_CHAMP"})
 	 */
 	public function getFeuille(Match $match, $equipe, AuthorizationCheckerInterface $authChecker)
 	{
 		if (false === $authChecker->isGranted('ROLE_ADMIN')) 
 		{
-			$redacteur = ($equipe == 1 ? $match->getEquipe1() : $match->getEquipe2());
-			if ($redacteur->getId() != $this->getUser()->getId())
+			if (true === $authChecker->isGranted('ROLE_USER')) 
+			{
+				$redacteur = ($equipe == 1 ? $match->getEquipe1() : $match->getEquipe2());
+				if ($redacteur->getId() != $this->getUser()->getId())
+					throw $this->createAccessDeniedException();
+			}
+			else if (true === $authChecker->isGranted('ROLE_CHAMP')) 
+			{
+				if ($match->getJournee()->getChampionnat()->getId() != $this->getUser()->getId())
+					throw $this->createAccessDeniedException();
+			}
+			else
+			{
 				throw $this->createAccessDeniedException();
+			}
 		}
 
 		$fpForm = $match->getJournee()->getChampionnat()->getFpForm();
@@ -184,7 +210,7 @@ class FairPlayController extends CMController
 
 	/**
 	 * @Route("/fairplay/feuille/{id}", methods={"POST"})
-	 * @IsGranted("ROLE_USER")
+	 * @IsGranted({"ROLE_USER", "ROLE_CHAMP"})
 	 * @ParamConverter("match", converter="doctrine.orm")
 	 * @ParamConverter("dto", converter="cm_converter")
 	 */
@@ -192,18 +218,30 @@ class FairPlayController extends CMController
 	{
 		if (false === $authChecker->isGranted('ROLE_ADMIN'))
 		{
-			// Vérification du rédacteur
-			if ($dto->getFpFeuille()->getEquipeRedactrice()->getId() != $this->getUser()->getId())
-				throw $this->createAccessDeniedException();
-
-			// Vérification de la date
-			if ($match->getJournee()->getFin() != null) 
+			if (true === $authChecker->isGranted('ROLE_USER')) 
 			{
-				$repository = $this->getDoctrine()->getRepository(Parametre::class);
-				$dureeSaisie = $repository->find(Parametre::DUREE_SAISIE)->getValeur();
-				$interval = date_diff(new \DateTime(), $match->getJournee()->getFin());
-				if ($interval->invert == 1 && $interval->days > $dureeSaisie)
+				// Vérification du rédacteur
+				if ($dto->getFpFeuille()->getEquipeRedactrice()->getId() != $this->getUser()->getId())
 					throw $this->createAccessDeniedException();
+
+				// Vérification de la date
+				if ($match->getJournee()->getFin() != null) 
+				{
+					$repository = $this->getDoctrine()->getRepository(Parametre::class);
+					$dureeSaisie = $repository->find(Parametre::DUREE_SAISIE)->getValeur();
+					$interval = date_diff(new \DateTime(), $match->getJournee()->getFin());
+					if ($interval->invert == 1 && $interval->days > $dureeSaisie)
+						throw $this->createAccessDeniedException();
+				}
+			}
+			else if (true === $authChecker->isGranted('ROLE_CHAMP')) 
+			{
+				if ($match->getJournee()->getChampionnat()->getId() != $this->getUser()->getId())
+					throw $this->createAccessDeniedException();
+			}
+			else
+			{
+				throw $this->createAccessDeniedException();
 			}
 		}
 
@@ -261,10 +299,15 @@ class FairPlayController extends CMController
 
 	/**
 	 * @Route("/fairplay/{id}/evaluation", methods={"GET"})
-	 * @IsGranted("ROLE_ADMIN")
+	 * @IsGranted("ROLE_CHAMP")
 	 */
-	public function getEvaluation(Equipe $equipe, Request $request, EntityManagerInterface $entityManager)
+	public function getEvaluation(Equipe $equipe, Request $request, EntityManagerInterface $entityManager, AuthorizationCheckerInterface $authChecker)
 	{
+		$champId = null;
+		if (false === $authChecker->isGranted('ROLE_ADMIN')) {
+			$champId = $this->getUser()->getId();
+		}
+
 		$saison = $request->query->get('saison');
 
 		$query = $entityManager->createQuery(
@@ -275,21 +318,28 @@ class FairPlayController extends CMController
 			 JOIN m.fpFeuilles f
 			 WHERE f.equipeEvaluee = :equipe
 			   AND c.saison = :saison
+			   AND (:champId IS NULL OR c.id = :champId)
 			 ORDER BY c.id DESC, f.ratio DESC"
 		);
 
 		$query->setParameter("equipe", $equipe);
 		$query->setParameter("saison", $saison);
+		$query->setParameter("champId", $champId);
 
 		return $this->groupJson($query->getResult(), "complet", "simple", "feuilles");
 	}
 
 	/**
 	 * @Route("/fairplay/{id}/redaction", methods={"GET"})
-	 * @IsGranted("ROLE_ADMIN")
+	 * @IsGranted("ROLE_CHAMP")
 	 */
-	public function getRedaction(Equipe $equipe, Request $request, EntityManagerInterface $entityManager)
+	public function getRedaction(Equipe $equipe, Request $request, EntityManagerInterface $entityManager, AuthorizationCheckerInterface $authChecker)
 	{
+		$champId = null;
+		if (false === $authChecker->isGranted('ROLE_ADMIN')) {
+			$champId = $this->getUser()->getId();
+		}
+
 		$saison = $request->query->get('saison');
 
 		$query = $entityManager->createQuery(
@@ -300,11 +350,13 @@ class FairPlayController extends CMController
 			 JOIN m.fpFeuilles f
 			 WHERE f.equipeRedactrice = :equipe
 			   AND c.saison = :saison
+			   AND (:champId IS NULL OR c.id = :champId)
 			 ORDER BY c.id DESC, f.ratio DESC"
 		);
 
 		$query->setParameter("equipe", $equipe);
 		$query->setParameter("saison", $saison);
+		$query->setParameter("champId", $champId);
 
 		return $this->groupJson($query->getResult(), "complet", "simple", "feuilles");
 	}

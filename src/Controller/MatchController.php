@@ -109,7 +109,9 @@ class MatchController extends CMController
     public function liste(Championnat $championnat, AuthorizationCheckerInterface $authChecker)
     {
 		$groupes = array('simple', 'matches');
-		if (true === $authChecker->isGranted('ROLE_ADMIN')) {
+		if (true === $authChecker->isGranted('ROLE_ADMIN') || 
+			true === $authChecker->isGranted('ROLE_CHAMP') && $championnat->getId() == $this->getUser()->getId()) 
+		{
 			array_push($groupes, 'fp');
 		}
 
@@ -128,10 +130,16 @@ class MatchController extends CMController
 
 	/**
 	 * @Route("/match/{id}", methods={"PATCH"})
-	 * @IsGranted("ROLE_ADMIN")
+	 * @IsGranted("ROLE_CHAMP")
 	 */
-    public function valide(Match $match, EntityManagerInterface $entityManager)
+    public function valide(Match $match, EntityManagerInterface $entityManager, AuthorizationCheckerInterface $authChecker)
     {
+		if (false === $authChecker->isGranted('ROLE_ADMIN')) 
+		{
+			if ($match->getJournee()->getChampionnat()->getId() != $this->getUser()->getId())
+				throw $this->createAccessDeniedException();
+		}
+
 		if (($match->getScore1() !== null || $match->getForfait1()) && ($match->getScore2() !== null || $match->getForfait2()))
 			$match->setValide(true);
 
@@ -171,7 +179,7 @@ class MatchController extends CMController
 
 	/**
 	 * @Route("/match/", methods={"PUT"})
-	 * @IsGranted("ROLE_ADMIN")
+	 * @IsGranted("ROLE_CHAMP")
 	 * @ParamConverter("matches", converter="cm_converter", options={"classe":"App\Entity\Match[]"})
 	 */
 	public function majListe(array $matches, EntityManagerInterface $entityManager, AuthorizationCheckerInterface $authChecker) 
@@ -190,16 +198,29 @@ class MatchController extends CMController
 			// Petits contrôles pour les petits malins
 			if (false === $authChecker->isGranted('ROLE_ADMIN')) 
 			{
-				if ($entity->getEquipe1()->getId() != $this->getUser()->getId() && $entity->getEquipe2()->getId() != $this->getUser()->getId())
-					throw $this->createAccessDeniedException();
-				if ($entity->getValide())
-					throw $this->createAccessDeniedException();
-				
-				// Vérification de la date
-				if ($entity->getJournee()->getFin() != null) {
-					$interval = date_diff(new \DateTime(), $entity->getJournee()->getFin());
-					if ($interval->invert == 1 && $interval->days > $dureeSaisie)
+				if (true === $authChecker->isGranted('ROLE_USER')) 
+				{
+					if ($entity->getEquipe1()->getId() != $this->getUser()->getId() && $entity->getEquipe2()->getId() != $this->getUser()->getId())
 						throw $this->createAccessDeniedException();
+					if ($entity->getValide())
+						throw $this->createAccessDeniedException();
+					
+					// Vérification de la date
+					if ($entity->getJournee()->getFin() != null)
+					{
+						$interval = date_diff(new \DateTime(), $entity->getJournee()->getFin());
+						if ($interval->invert == 1 && $interval->days > $dureeSaisie)
+							throw $this->createAccessDeniedException();
+					}
+				}
+				else if (true === $authChecker->isGranted('ROLE_CHAMP')) 
+				{
+					if ($entity->getJournee()->getChampionnat()->getId() != $this->getUser()->getId())
+						throw $this->createAccessDeniedException();
+				}
+				else
+				{
+					throw $this->createAccessDeniedException();
 				}
 			}
 
@@ -222,9 +243,9 @@ class MatchController extends CMController
 			$entity->setForfait2($match->getForfait2());
 			if ($match->getScore1() !== null || $match->getScore2() !== null || $match->getForfait1() || $match->getForfait2())
 			{
-				$entity->setValide($authChecker->isGranted('ROLE_ADMIN') === true);
+				$entity->setValide($authChecker->isGranted('ROLE_CHAMP') === true);
 
-				if (false === $authChecker->isGranted('ROLE_ADMIN') && $entity->getDateSaisie() == null)
+				if (false === $authChecker->isGranted('ROLE_CHAMP') && $entity->getDateSaisie() == null)
 				{
 					$entity->setDateSaisie(new \DateTime());
 
@@ -266,7 +287,8 @@ class MatchController extends CMController
 		$entityManager->flush();
 
 		$groupes = array('simple');
-		if (true === $authChecker->isGranted('ROLE_ADMIN')) {
+		if (true === $authChecker->isGranted('ROLE_CHAMP')) 
+		{
 			array_push($groupes, 'fp');
 		}
 

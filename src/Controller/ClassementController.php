@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Doctrine\ORM\EntityManagerInterface;
@@ -10,10 +12,9 @@ use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Championnat;
 use App\Entity\ChampionnatType;
 use App\Entity\Classement;
-use App\Outils\MatchFunctions;
 use App\Entity\Equipe;
-use Symfony\Component\HttpFoundation\Request;
 use App\DTO\ChampionnatEquipeDTO;
+use App\Outils\MatchFunctions;
 use App\Outils\Classements;
 
 /**
@@ -79,12 +80,19 @@ class ClassementController extends CMController
 
 	/**
 	 * @Route("/classement/{id}", methods={"PATCH"})
-	 * @IsGranted("ROLE_ADMIN")
+	 * @IsGranted("ROLE_CHAMP")
 	 * @ParamConverter("championnat", converter="doctrine.orm")
 	 * @ParamConverter("classements", converter="cm_converter", options={"classe":"App\Entity\Classement[]"})
 	 */
-	public function majPenalites(Championnat $championnat, array $classements, EntityManagerInterface $entityManager)
+	public function majPenalites(Championnat $championnat, array $classements, EntityManagerInterface $entityManager, AuthorizationCheckerInterface $authChecker)
 	{
+		// Petits contrôles pour les petits malins
+		if (false === $authChecker->isGranted('ROLE_ADMIN')) {
+			if ($championnat->getId() != $this->getUser()->getId())
+				throw $this->createAccessDeniedException();
+		}
+
+		// C'est bon
 		$repository = $this->getDoctrine()->getRepository(Classement::class);
 
 		foreach ($classements as $class) {

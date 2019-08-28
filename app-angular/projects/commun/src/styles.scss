@@ -7,6 +7,13 @@
 
 /* Divers */
 
+h2.section {
+	margin-top: 1em;
+	margin-bottom: 0px;
+	border-bottom: solid 1px gray;
+	padding-bottom: 10px;
+}
+
 label.btn:not(.active) {
     cursor: pointer;
 }
@@ -26,6 +33,11 @@ label.btn:not(.active) {
 	text-decoration: underline;
 	margin-bottom: 0.5em;
 }
+
+.table-hover tbody tr:hover {
+	cursor: pointer;
+}
+
 
 /* Pour les tableaux de coupe */
 .Treant { position: relative; overflow: hidden; padding: 0 !important; }

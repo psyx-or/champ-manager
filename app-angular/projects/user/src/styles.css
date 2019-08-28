@@ -1,11 +1,4 @@
 /* You can add global styles to this file, and also import other style files */
-h2.section {
-	margin-top: 1em;
-	margin-bottom: 0px;
-	border-bottom: solid 1px gray;
-	padding-bottom: 10px;
-}
-
 .modal-xxl > .modal-dialog {
     max-width: unset;
     min-width: 95%;   

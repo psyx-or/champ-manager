@@ -50,7 +50,7 @@ class EquipeController extends CMController
     {
 		$groupes = array('simple', 'coordonnees');
 		
-		if (true === $authChecker->isGranted('ROLE_USER')) {
+		if (true === $authChecker->isGranted('ROLE_USER') || true === $authChecker->isGranted('ROLE_CHAMP')) {
 			array_push($groupes, 'responsables');
 		}
 

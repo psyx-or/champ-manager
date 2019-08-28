@@ -5,6 +5,7 @@ import { EquipeService } from 'projects/commun/src/app/services/equipe.service';
 import { Equipe } from 'projects/commun/src/app/model/Equipe';
 import { CanComponentDeactivate } from '@commun/src/app/utils/can-deactivate.guard';
 import { menus } from '../../utils/menus';
+import { User, AuthentService } from '../../services/authent.service';
 
 @Component({
   selector: 'app-equipe',
@@ -14,12 +15,14 @@ import { menus } from '../../utils/menus';
 export class EquipeComponent implements OnInit, CanComponentDeactivate {
 
 	menu = menus.equipe;
+	user: User = null;
 	equipe: Equipe;
 	initial: string;
 
 	constructor(
 		private route: ActivatedRoute,
 		private router: Router,
+		private authentService: AuthentService,
 		public requeteService: RequeteService,
 		private equipeService: EquipeService,
 	) { }
@@ -33,6 +36,7 @@ export class EquipeComponent implements OnInit, CanComponentDeactivate {
 				this.equipe = data.equipe;
 				this.initial = JSON.stringify(this.equipe);
 			});
+		this.authentService.getUser().subscribe(user => this.user = user);
 	}
 
 	/**

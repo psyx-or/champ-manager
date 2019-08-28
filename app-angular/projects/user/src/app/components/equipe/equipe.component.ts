@@ -1,8 +1,7 @@
-import { Component, OnInit, ViewChild, AfterViewInit, ElementRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { menus } from '../../utils/menus';
 import { Equipe } from '@commun/src/app/model/Equipe';
 import { ActivatedRoute, Router } from '@angular/router';
-import { jours } from 'projects/commun/src/app/utils/utils';
 import { AuthentService } from '../../services/authent.service';
 import { EquipeService } from '@commun/src/app/services/equipe.service';
 
@@ -11,14 +10,9 @@ import { EquipeService } from '@commun/src/app/services/equipe.service';
   templateUrl: './equipe.component.html',
   styleUrls: ['./equipe.component.css']
 })
-export class EquipeComponent implements OnInit, AfterViewInit {
-
-	@ViewChild('gmap', {static: false}) gmapElement: ElementRef<Element>;
+export class EquipeComponent implements OnInit {
 
 	menu = menus.equipe;
-	jours = jours;
-	map: google.maps.Map;
-	marqueur: google.maps.Marker;
 	equipe: Equipe;
 
 	constructor(
@@ -42,31 +36,6 @@ export class EquipeComponent implements OnInit, AfterViewInit {
 				this.equipeService.clearCache();
 				this.router.navigate([]);
 			}
-		});
-	}
-
-	/**
-	 * Initialisation de la carte
-	 */
-	ngAfterViewInit(): void {
-
-		if(!this.equipe.position) return;
-
-		let pos = this.equipe.position.split(',');
-		let position = new google.maps.LatLng(parseFloat(pos[0]), parseFloat(pos[1]));
-
-		// Création des objets Google Maps
-		this.map = new google.maps.Map(this.gmapElement.nativeElement, {
-			center: position,
-			zoom: 15,
-			mapTypeId: google.maps.MapTypeId.ROADMAP
-		});
-
-		// Création du marqueur
-		this.marqueur = new google.maps.Marker({
-			map: this.map,
-			draggable: false,
-			position: position
 		});
 	}
 }

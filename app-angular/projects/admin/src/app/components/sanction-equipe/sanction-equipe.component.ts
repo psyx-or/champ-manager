@@ -7,6 +7,7 @@ import { RequeteService } from '@commun/src/app/services/requete.service';
 import { SanctionService } from '@commun/src/app/services/sanction.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { SanctionCreationComponent } from '../sanction-creation/sanction-creation.component';
+import { User, AuthentService } from '../../services/authent.service';
 
 @Component({
   selector: 'app-sanction-equipe',
@@ -18,11 +19,13 @@ export class SanctionEquipeComponent implements OnInit {
 	menu = menus.equipe;
 	equipe: Equipe;
 	sanctions: Sanction[];
+	user: User = null;
 
 	constructor(
 		private route: ActivatedRoute,
 		private modalService: NgbModal,
 		public requeteService: RequeteService,
+		private authentService: AuthentService,
 		private sanctionService: SanctionService,
 	) { }
 
@@ -35,6 +38,7 @@ export class SanctionEquipeComponent implements OnInit {
 			this.equipe = data.equipe;
 			this.sanctions = data.sanctions;
 		});
+		this.authentService.getUser().subscribe(user => this.user = user);
 	}
 
 	/**

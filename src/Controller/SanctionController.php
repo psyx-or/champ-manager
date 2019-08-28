@@ -112,7 +112,7 @@ class SanctionController extends CMController
 		$query->setParameter("equipe", $equipe);
 
 		$groupes = array("simple", "equipe", "bareme", "sport", "categorie");
-		if (true === $authChecker->isGranted('ROLE_ADMIN')) {
+		if (true === $authChecker->isGranted('ROLE_CHAMP')) {
 			array_push($groupes, 'sanction_complet');
 		}
 

@@ -37,8 +37,15 @@ class CMParamConverter implements ParamConverterInterface
 		if (isset($configuration->getOptions()['classe']))
 			$classe = $configuration->getOptions()['classe'];
 		
-		$normalizer = new ObjectNormalizer(null, null, null, new ReflectionExtractor());
-		$serializer = new Serializer([new DateTimeNormalizer(), new ArrayDenormalizer(), $normalizer], [new JsonEncoder()]);
-		$request->attributes->set($configuration->getName(), $serializer->deserialize($request->getContent(), $classe, 'json'));
+		if ($classe != "")
+		{
+			$normalizer = new ObjectNormalizer(null, null, null, new ReflectionExtractor());
+			$serializer = new Serializer([new DateTimeNormalizer(), new ArrayDenormalizer(), $normalizer], [new JsonEncoder()]);
+			$request->attributes->set($configuration->getName(), $serializer->deserialize($request->getContent(), $classe, 'json'));
+		}
+		else
+		{
+			$request->attributes->set($configuration->getName(), json_decode($request->getContent()));
+		}
     }
 }

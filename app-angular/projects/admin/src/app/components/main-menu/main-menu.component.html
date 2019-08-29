@@ -2,7 +2,7 @@
     <div class="container">
 
         <!-- Icône -->
-        <a class="navbar-brand" routerLink="/">
+        <a class="navbar-brand" [routerLink]="user?.champId ? ['classement', user.champId] : '/'">
             <img src="{{DEPLOY_PATH}}assets/brand.png" width="30" height="30" class="d-inline-block align-top">
         </a>
 

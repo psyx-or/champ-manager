@@ -90,7 +90,8 @@ export class MatchService {
 	 * @param sport
 	 */
 	public avalider(sport: Sport): Observable<Championnat[]> {
-		return this.http.get<Championnat[]>("/api/match/avalider/" + sport.nom);
+		let params = sport ? { sport: sport.nom } : null;
+		return this.http.get<Championnat[]>("/api/match/avalider", { params });
 	}
 
 	/**

@@ -12,6 +12,8 @@ class Parametre
 	public const MAIL_EMETTEUR = 'MAIL_EMETTEUR';
 	public const MAIL_MDP_OBJET = 'MAIL_MDP_OBJET';
 	public const MAIL_MDP_VALEUR = 'MAIL_MDP_VALEUR';
+	public const MAIL_MDPCHAMP_OBJET = 'MAIL_MDPCHAMP_OBJET';
+	public const MAIL_MDPCHAMP_VALEUR = 'MAIL_MDPCHAMP_VALEUR';
 	public const DUREE_SAISIE = 'DUREE_SAISIE';
 	public const MAIL_FP_OBJET = 'MAIL_FP_OBJET';
 	public const MAIL_FP_VALEUR = 'MAIL_FP_VALEUR';

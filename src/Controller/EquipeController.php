@@ -16,7 +16,7 @@ use App\Entity\Sport;
 use App\Outils\Annuaire;
 use App\Entity\Parametre;
 use App\Outils\Mail;
-
+use App\Outils\Outils;
 
 /**
  * @Route("/api")
@@ -230,11 +230,7 @@ class EquipeController extends CMController
 	 */
 	private function changeMdp(Equipe $equipe, EntityManagerInterface $entityManager, UserPasswordEncoderInterface $encoder)
 	{
-		$plainPassword = $this->makePassword();
-		$encoded = $encoder->encodePassword($equipe, $plainPassword);
-
-		$equipe->setPassword($encoded);
-		$entityManager->flush();
+		$plainPassword = Outils::changeMdp($equipe, $entityManager, $encoder);
 
 		$repository = $this->getDoctrine()->getRepository(Parametre::class);
 
@@ -262,18 +258,5 @@ class EquipeController extends CMController
 	private function estVide($str)
 	{
 		return $str == null || trim($str) == "";
-	}
-
-	/**
-	 * Création de mot de passe
-	 */
-	private function makePassword()
-	{
-		$caracteres = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-		$password = "";
-		for ($i = 0; $i < 8; $i++)
-			$password .= $caracteres[rand(0, strlen($caracteres) - 1)];
-
-		return $password;
 	}
 }

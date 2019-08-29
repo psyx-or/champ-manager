@@ -19,6 +19,7 @@ export class ChampionnatsComponent implements OnInit {
 
 	@ViewChild('supprChamp', {static:true}) supprChampTpl: TemplateRef<any>;
 	@ViewChild('renommage', {static:true}) renommageTpl: TemplateRef<any>;
+	@ViewChild('mdp', {static:true}) mdpTpl: TemplateRef<any>;
 
 	saisons: string[] = [];
 	sports: Sport[];
@@ -26,6 +27,7 @@ export class ChampionnatsComponent implements OnInit {
 	modal: NgbModalRef;
 	nouveauNom: string;
 	lienExport: string;
+	adresses: string;
 
 
 	/**
@@ -139,5 +141,27 @@ export class ChampionnatsComponent implements OnInit {
 	 */
 	private creeLienExport(saison: string) {
 		this.lienExport = this.classementService.lienExport(saison);
+	}
+
+	/**
+	 * Réinitialise le mot de passe d'un championnat
+	 * @param champ 
+	 */
+	initMdp(champ: Championnat) {
+		this.adresses = "";
+		this.modal = openModal(
+			this,
+			`Réinitialiser le mot de passe pour ${champ.nom}`,
+			this.mdpTpl,
+			champ,
+			() => {
+				this.requeteService.requete(
+					this.championnatService.initMdp(champ, this.adresses.trim().split(/[,\s]+/)),
+					() => alert("Message envoyé")
+				);
+			},
+			'lg',
+			true
+		);
 	}
 }

@@ -62,6 +62,8 @@
 						&nbsp;
 						<button class="btn btn-sm btn-outline-secondary" (click)="renommer(champ)" ngbTooltip="Renommer le championnat"><i class="icon ion-md-create"></i></button>
 						&nbsp;
+						<button class="btn btn-sm btn-outline-warning" (click)="initMdp(champ)" ngbTooltip="Envoyer un nouveau mot de passe aux responsables"><i class="icon ion-md-mail"></i></button>
+						&nbsp;
 						<button class="btn btn-sm btn-outline-danger" (click)="supprimer(champ)" ngbTooltip="Supprimer le championnat"><i class="icon ion-md-trash"></i></button>
 					</td>
 				</tr>
@@ -90,6 +92,24 @@
 			<label for="nom">Nouveau nom &nbsp;:</label>
 			<input class="form-control" type="text"
 			       id="nom" name="nom" required [(ngModel)]="nouveauNom"/>
+		</div>
+	</form>
+</ng-template>
+
+
+<!----------------------
+	Fenêtre d'envoi de mot de passe
+  ------------------- -->
+
+<ng-template #mdp let-champ>
+	<ngb-alert [dismissible]="false" type="warning">
+		Cette action va réinitialiser le mot de passe du championnat et envoyer le nouveau mot de passe aux responsables ci-dessous.
+	</ngb-alert>
+	<form class="form" id="formulaire" ngNativeValidate (ngSubmit)="modal.close()">
+		<div class="form-group">
+			<label for="adresses">Adresses mails des responsables&nbsp;:</label>
+			<textarea class="form-control" type="text" rows="4"
+			       id="adresses" name="adresses" required [(ngModel)]="adresses"></textarea>
 		</div>
 	</form>
 </ng-template>

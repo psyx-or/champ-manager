@@ -110,6 +110,13 @@ export class ChampionnatService {
 	}
 
 	/**
+	 * Rénitialise le mot de passe du championnat
+	 */
+	public initMdp(championnat: Championnat, mails: string[]): Observable<any> {
+		return this.http.patch("/api/championnat/" + championnat.id + "/mdp", mails);
+	}
+
+	/**
 	 * Importe les résultats existants de championnats dans un nouveau championnat
 	 * @param champDest 
 	 * @param champSources 

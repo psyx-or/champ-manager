@@ -33,6 +33,30 @@ final class VersionParametres4 extends AbstractMigration implements ContainerAwa
 			  ->setValeur("4");
 		$em->persist($param);
 
+		$param = new Parametre();
+		$param->setNom("MAIL_MDPCHAMP_OBJET")
+			->setDescription("Objet du mail de changement de mot de passe pour les championnats")
+			->setType(ParametreType::STR)
+			->setValeur('Identifiants pour valider les résultats des rencontres de $champ');
+		$em->persist($param);
+
+		$param = new Parametre();
+		$param->setNom("MAIL_MDPCHAMP_VALEUR")
+			->setDescription("Contenu du mail de changement de mot de passe pour les championnats")
+			->setType(ParametreType::TEXTE)
+			->setValeur('Bonjour,
+
+Vous pouvez désormais valider les résultats du championnat $champ sur le site de la FSGT38:
+
+Site: https://clubs.fsgt38.org/admin
+Identifiant: $login
+Mot de passe: $password
+
+Cordialement,
+Le comité de la FSGT38
+');
+		$em->persist($param);
+
 		$em->flush();
     }
 

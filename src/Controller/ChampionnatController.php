@@ -5,6 +5,7 @@ namespace App\Controller;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Doctrine\ORM\EntityManagerInterface;
@@ -21,6 +22,9 @@ use App\Outils\MatchFunctions;
 use App\Outils\Calendrier;
 use App\Entity\FPForm;
 use App\Entity\ChampModele;
+use App\Entity\Parametre;
+use App\Outils\Mail;
+use App\Outils\Outils;
 
 /**
  * @Route("/api")
@@ -576,5 +580,34 @@ class ChampionnatController extends CMController
 
 			return $match;
 		}
+	}
+
+	/**
+	 * @Route("/championnat/{id}/mdp", methods={"PATCH"})
+	 * @ParamConverter("championnat", converter="doctrine.orm")
+	 * @ParamConverter("destinataires", converter="cm_converter", options={"classe":""})
+	 * @IsGranted("ROLE_ADMIN")
+	 */
+	public function initMdp(Championnat $championnat, array $destinataires, EntityManagerInterface $entityManager, UserPasswordEncoderInterface $encoder)
+	{
+		$plainPassword = Outils::changeMdp($championnat, $entityManager, $encoder);
+
+		$repository = $this->getDoctrine()->getRepository(Parametre::class);
+
+		$message = array(
+			"destinataires" => implode(",", $destinataires),
+			"objet" => str_replace(
+				'$champ',
+				$championnat->getNom(),
+				$repository->find(Parametre::MAIL_MDPCHAMP_OBJET)->getValeur()),
+			"corps" => str_replace(
+				array('$champ', '$login', '$password'),
+				array($championnat->getNom(), $championnat->getId(), $plainPassword),
+				$repository->find(Parametre::MAIL_MDPCHAMP_VALEUR)->getValeur())
+		);
+
+		Mail::envoie($message, $this->getDoctrine());
+
+		return $this->groupJson("ok");
 	}
 }

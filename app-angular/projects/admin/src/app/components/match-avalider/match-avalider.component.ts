@@ -4,6 +4,7 @@ import { RequeteService } from 'projects/commun/src/app/services/requete.service
 import { MatchService } from 'projects/commun/src/app/services/match.service';
 import { Sport } from 'projects/commun/src/app/model/Sport';
 import { Championnat } from 'projects/commun/src/app/model/Championnat';
+import { User, AuthentService } from '../../services/authent.service';
 
 @Component({
   selector: 'app-match-avalider',
@@ -12,12 +13,14 @@ import { Championnat } from 'projects/commun/src/app/model/Championnat';
 })
 export class MatchAvaliderComponent implements OnInit {
 
+	user: User = null;
 	sports: Sport[];
 	selSport: Sport;
 	championnats: Championnat[];
 
 	constructor(
 		private route: ActivatedRoute,
+		private authentService: AuthentService,
 		private requeteService: RequeteService,
 		private matchService: MatchService
 	) { }
@@ -28,6 +31,13 @@ export class MatchAvaliderComponent implements OnInit {
 	ngOnInit() {
 		this.route.data
 			.subscribe((data: { sports: Sport[] }) => this.sports = data.sports);
+		this.authentService.getUser().subscribe(user => {
+			this.user = user;
+			this.championnats = null;
+			this.selSport = null;
+			if (user.isAdmin === false)
+				this.selectionSport();
+		});
 	}
 
 	/**

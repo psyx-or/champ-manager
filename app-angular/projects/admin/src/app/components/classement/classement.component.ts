@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { RequeteService } from 'projects/commun/src/app/services/requete.service';
 import { ClassementService } from 'projects/commun/src/app/services/classement.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Championnat } from 'projects/commun/src/app/model/Championnat';
 import { Classement } from 'projects/commun/src/app/model/Classement';
 import { sort, openModal } from 'projects/commun/src/app/utils/utils';
@@ -45,7 +45,6 @@ export class ClassementComponent implements OnInit {
 	constructor(
 		public modalService: NgbModal,
 		private route: ActivatedRoute,
-		private router: Router,
 		private requeteService: RequeteService,
 		private equipeService: EquipeService,
 		private classementService: ClassementService,
@@ -168,13 +167,5 @@ export class ClassementComponent implements OnInit {
 			null,
 			true
 		);
-	}
-
-	/**
-	 * Affichage de la fiche d'une équipe
-	 * @param equipe 
-	 */
-	afficheEquipe(equipe: Equipe) {
-		this.router.navigate(["equipe", equipe.id]);
 	}
 }

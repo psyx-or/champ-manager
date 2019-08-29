@@ -7,7 +7,7 @@
 	Sport
   ------------------- -->
 
-<div class="form-group form-row">
+<div class="form-group form-row" *ngIf="user?.isAdmin">
 	<label for="sport" class="col-sm-2 col-form-label">Sport</label>
 	<div class="col-sm-2">
 		<select class="form-control" id="sport" name="sport"
@@ -17,6 +17,7 @@
 	</div>
 </div>
 
+<div class="form-group form-row" *ngIf="!user?.isAdmin"></div>
 
 <!----------------------
 	Matches à valider
@@ -30,7 +31,7 @@
 
 	<!-- Description de la journée -->
 	<div class="card-header">
-		{{ champ.nom }}
+		<a [routerLink]="['/classement', champ.id]">{{ champ.nom }}</a>
 	</div>
 
 	<div class="card-body">

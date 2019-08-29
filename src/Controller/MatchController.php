@@ -63,20 +63,31 @@ class MatchController extends CMController
 	}
 
 	/**
-	 * @Route("/match/avalider/{nom}", methods={"GET"})
-	 * @IsGranted("ROLE_ADMIN")
+	 * @Route("/match/avalider", methods={"GET"})
+	 * @IsGranted("ROLE_CHAMP")
 	 */
-	public function aValider(Sport $sport, EntityManagerInterface $entityManager)
+	public function aValider(Request $request, EntityManagerInterface $entityManager, AuthorizationCheckerInterface $authChecker)
 	{
+		$champId = null;
+		if (false === $authChecker->isGranted('ROLE_ADMIN')) {
+			$champId = $this->getUser()->getId();
+		}
+
+		$sport = $request->query->get('sport');
+
 		$query = $entityManager->createQuery(
 			"SELECT c, j, m, e1, e2 
 			 FROM App\Entity\Championnat c
 			 JOIN c.journees j 
 			 JOIN j.matches m 
 			 JOIN m.equipe1 e1 JOIN m.equipe2 e2
-			 WHERE m.valide = 0 AND c.sport = :sport");
+			 WHERE m.valide = 0
+			   AND (:sport IS NULL OR c.sport = :sport)
+			   AND (:champId IS NULL OR c.id = :champId)
+		");
 		
 		$query->setParameter("sport", $sport);
+		$query->setParameter("champId", $champId);
 
 		return $this->groupJson($query->getResult(), 'simple', 'matches', 'fp', 'alerte');
 	}

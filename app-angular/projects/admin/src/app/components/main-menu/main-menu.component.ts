@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
 import { Equipe } from 'projects/commun/src/app/model/Equipe';
 import { AuthentService, User } from '../../services/authent.service';
-import { RequeteService } from '@commun/src/app/services/requete.service';
 
 @Component({
   selector: 'app-main-menu',
@@ -20,7 +19,6 @@ export class MainMenuComponent implements OnInit {
 	constructor(
 		private router: Router,
 		private authentService: AuthentService,
-		private requeteService: RequeteService,
 	) { }
 
 	/**
@@ -49,8 +47,6 @@ export class MainMenuComponent implements OnInit {
 	 * Déconnexion
 	 */
 	deconnexion(): void {
-		this.requeteService.requete(
-			this.authentService.deconnecte()
-		);
+		this.authentService.deconnecte().subscribe();
 	}
 }

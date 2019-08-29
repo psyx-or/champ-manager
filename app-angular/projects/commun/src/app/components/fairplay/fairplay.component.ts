@@ -2,7 +2,6 @@ import { Component, OnInit, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FairplayService } from '../../services/fairplay.service';
 import { Match } from '../../model/Match';
-import { RequeteService } from '../../services/requete.service';
 import { FPFeuilleAfficheDTO, FPFeuille } from '../../model/FPFeuille';
 
 @Component({
@@ -15,12 +14,12 @@ export class FairplayComponent implements OnInit {
 	@Input() match: Match;
 	@Input() equipe: 1 | 2;
 	@Input() feuille: FPFeuille;
+
 	dto: FPFeuilleAfficheDTO;
 	forfait: boolean;
 
 	constructor(
 		public activeModal: NgbActiveModal,
-		public requeteService: RequeteService,
 		private fairplayService: FairplayService
 	) { }
 
@@ -28,11 +27,11 @@ export class FairplayComponent implements OnInit {
 	 * Initialisation du composant
 	 */
 	ngOnInit() {
-		this.requeteService.requete(
-			(this.feuille ?
-				this.fairplayService.getFeuilleById(this.feuille) :
-				this.fairplayService.getFeuille(this.match, this.equipe)
-			),
+		(this.feuille ?
+			this.fairplayService.getFeuilleById(this.feuille) :
+			this.fairplayService.getFeuille(this.match, this.equipe)
+		)
+		.subscribe(
 			dto => {
 				this.dto = dto;
 				this.forfait = dto.fpFeuille.id == null && (this.match.forfait1 || this.match.forfait2);
@@ -55,8 +54,7 @@ export class FairplayComponent implements OnInit {
 			this.activeModal.close(null);
 		}
 		else {
-			this.requeteService.requete(
-				this.fairplayService.majFeuille(this.dto),
+			this.fairplayService.majFeuille(this.dto).subscribe(
 				res => this.activeModal.close(res)
 			);
 		}

@@ -8,7 +8,6 @@ import { Equipe } from 'projects/commun/src/app/model/Equipe';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Router, ActivatedRoute } from '@angular/router';
 import { openModal, getSaisonCourante } from 'projects/commun/src/app/utils/utils';
-import { RequeteService } from 'projects/commun/src/app/services/requete.service';
 import { ChampCaracteristiquesComponent } from '../champ-caracteristiques/champ-caracteristiques.component';
 
 @Component({
@@ -37,7 +36,6 @@ export class ChampCreationComponent implements OnInit {
     constructor(
 		private route: ActivatedRoute,
 		public modalService: NgbModal,
-		public requeteService: RequeteService,
         private championnatService: ChampionnatService,
 		private equipeService: EquipeService,
 		private router: Router
@@ -85,8 +83,7 @@ export class ChampCreationComponent implements OnInit {
 	 * Lancement de la création du championnat
 	 */
 	creation(): void {
-		this.requeteService.requete(
-			this.championnatService.cree(this.championnat, this.equipes.filter(e=>e)),
+		this.championnatService.cree(this.championnat, this.equipes.filter(e=>e)).subscribe(
 			champ => {
 				this.router.navigate(['journees', champ.id])
 			}
@@ -133,8 +130,7 @@ export class ChampCreationComponent implements OnInit {
 		}
 		else {
 			this.equipesSport = null;
-			this.requeteService.requete(
-				this.equipeService.getEquipes($sport),
+			this.equipeService.getEquipes($sport).subscribe(
 				equipes => this.equipesSport = equipes
 			);
 		}

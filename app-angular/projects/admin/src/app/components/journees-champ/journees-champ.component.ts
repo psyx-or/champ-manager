@@ -3,7 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { JourneeService } from '../../services/journee.service';
 import { NgbDatepickerI18n, NgbDateStruct, NgbDatepickerConfig, NgbDatepicker } from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'moment';
-import { RequeteService } from 'projects/commun/src/app/services/requete.service';
 import { CanComponentDeactivate } from '@commun/src/app/utils/can-deactivate.guard';
 import { Championnat } from 'projects/commun/src/app/model/Championnat';
 import { Journee } from 'projects/commun/src/app/model/Journee';
@@ -98,7 +97,6 @@ export class JourneesChampComponent implements OnInit, AfterViewInit, CanCompone
 		private route: ActivatedRoute,
 		private router: Router,
 		private journeeService: JourneeService,
-		public requeteService: RequeteService,
 		config: NgbDatepickerConfig
 	) { 
 		config.displayMonths = nbMois;
@@ -162,9 +160,8 @@ export class JourneesChampComponent implements OnInit, AfterViewInit, CanCompone
 	 * Enregistre le calendrier
 	 */
 	enregistrer(): void {
-		this.requeteService.requete(
-			this.journeeService.majJournees(this.champ, this.journees),
-			res => {
+		this.journeeService.majJournees(this.champ, this.journees).subscribe(
+			() => {
 				this.initial = JSON.stringify(this.journees);
 				if (this.retour)
 					this.router.navigate(['calendrier', { sport: this.retour }]);

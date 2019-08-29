@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { RequeteService } from 'projects/commun/src/app/services/requete.service';
-import { FairplayService } from 'projects/commun/src/app/services/fairplay.service';
 import { FPClassement, FPResultat } from 'projects/commun/src/app/model/FPClassement';
 import { Championnat } from '@commun/src/app/model/Championnat';
 import { menus } from '../../utils/menus';

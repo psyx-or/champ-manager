@@ -70,6 +70,6 @@
 		------------------- -->
 	<div class="modal-footer">
 		<button type="button" class="btn btn-secondary" (click)="activeModal.dismiss()">Annuler</button>
-		<button type="submit" class="btn btn-primary" [disabled]="requeteService.chargement || isIncomplet()">Enregistrer</button>
+		<button type="submit" class="btn btn-primary" [appLoadDisable]="isIncomplet()">Enregistrer</button>
 	</div>
 </form>

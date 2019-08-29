@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Sport } from 'projects/commun/src/app/model/Sport';
 import { ActivatedRoute } from '@angular/router';
-import { RequeteService } from 'projects/commun/src/app/services/requete.service';
 import { MatchService } from 'projects/commun/src/app/services/match.service';
 import { DoublonDTO } from 'projects/commun/src/app/model/DoublonDTO';
 import { Match } from 'projects/commun/src/app/model/Match';
@@ -21,7 +20,6 @@ export class CalendrierDoublonsComponent implements OnInit {
 
 	constructor(
 		private route: ActivatedRoute,
-		private requeteService: RequeteService,
 		private matchService: MatchService
 	) { }
 
@@ -39,8 +37,7 @@ export class CalendrierDoublonsComponent implements OnInit {
 	 * Sélection d'un sport
 	 */
 	selectionSport(): void {
-		this.requeteService.requete(
-			this.matchService.getDoublons(this.selSport),
+		this.matchService.getDoublons(this.selSport).subscribe(
 			doublons => this.doublons = doublons
 		);
 	}
@@ -50,9 +47,8 @@ export class CalendrierDoublonsComponent implements OnInit {
 	 * @param match 
 	 */
 	inverse(match: Match): void {
-		this.requeteService.requete(
-			this.matchService.inverse(match),
-			res => this.selectionSport()
+		this.matchService.inverse(match).subscribe(
+			() => this.selectionSport()
 		);
 	}
 }

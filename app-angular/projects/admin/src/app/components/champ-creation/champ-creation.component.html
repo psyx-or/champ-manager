@@ -66,7 +66,7 @@
 
 	<br>
 	
-	<button class="btn btn-primary" type="submit" [disabled]="requeteService.chargement || getNbEquipes()<2">Créer</button>
+	<button class="btn btn-primary" type="submit" [appLoadDisable]="getNbEquipes()<2">Créer</button>
 </form>
 
 

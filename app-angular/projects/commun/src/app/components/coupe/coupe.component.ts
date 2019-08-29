@@ -66,9 +66,6 @@ export class CoupeComponent implements OnChanges, AfterViewInit {
 
 	/**
 	 * Constructeur
-	 * @param route 
-	 * @param requeteService 
-	 * @param matchService 
 	 */
 	constructor(
 		private router: Router,

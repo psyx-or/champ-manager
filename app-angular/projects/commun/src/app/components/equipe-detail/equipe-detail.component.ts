@@ -3,7 +3,6 @@ import { Equipe } from '../../model/Equipe';
 import { Creneau } from '../../model/Creneau';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CartePositionnementComponent } from '../carte-positionnement/carte-positionnement.component';
-import { RequeteService } from '../../services/requete.service';
 import { openModal, jours } from '../../utils/utils';
 import { EquipeService } from '../../services/equipe.service';
 
@@ -22,7 +21,6 @@ export class EquipeDetailComponent {
 	jours = jours;
 
 	constructor(
-		public requeteService: RequeteService,
 		private equipeService: EquipeService,
 		public modalService: NgbModal
 	) { }
@@ -77,8 +75,7 @@ export class EquipeDetailComponent {
 	 * @param equipe 
 	 */
 	changeMdp(equipe: Equipe): void {
-		this.requeteService.requete(
-			this.equipeService.changeMdp(equipe),
+		this.equipeService.changeMdp(equipe).subscribe(
 			mail => openModal(
 				this,
 				"Envoi manuel de mail",

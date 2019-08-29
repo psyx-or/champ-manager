@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { RequeteService } from 'projects/commun/src/app/services/requete.service';
 import { MatchService } from 'projects/commun/src/app/services/match.service';
 import { fromDisp, toDisp } from 'projects/commun/src/app/utils/utils';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -20,7 +19,6 @@ export class MatchJourneeComponent implements OnInit {
 	@Input() fpForm: FPForm;
 
 	constructor(
-		public requeteService: RequeteService,
 		private matchService: MatchService,
 		private modalService: NgbModal
 	) { }
@@ -34,8 +32,7 @@ export class MatchJourneeComponent implements OnInit {
 	 * @param match 
 	 */
 	valide(match: Match): void {
-		this.requeteService.requete(
-			this.matchService.valide(match),
+		this.matchService.valide(match).subscribe(
 			match2 => match.valide = match2.valide
 		);
 	}
@@ -46,8 +43,7 @@ export class MatchJourneeComponent implements OnInit {
 	 */
 	submit(journee: Journee): void {
 		journee.matches.forEach(fromDisp);
-		this.requeteService.requete(
-			this.matchService.maj(journee),
+		this.matchService.maj(journee).subscribe(
 			matches => {
 				matches.forEach(toDisp);
 				journee.matches = matches;

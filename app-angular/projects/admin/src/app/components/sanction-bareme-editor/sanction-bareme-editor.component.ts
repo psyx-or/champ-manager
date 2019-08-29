@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { menus } from '../../utils/menus';
 import { SanctionService } from '@commun/src/app/services/sanction.service';
 import { ActivatedRoute } from '@angular/router';
-import { RequeteService } from '@commun/src/app/services/requete.service';
 import { SanctionCategorie, SanctionBareme } from '@commun/src/app/model/Sanction';
 import { CanComponentDeactivate } from '@commun/src/app/utils/can-deactivate.guard';
 
@@ -23,7 +22,6 @@ export class SanctionBaremeEditorComponent implements OnInit, CanComponentDeacti
 
 	constructor(
 		private route: ActivatedRoute,
-		public requeteService: RequeteService,
 		private sanctionService: SanctionService,
 	) { }
 
@@ -110,8 +108,7 @@ export class SanctionBaremeEditorComponent implements OnInit, CanComponentDeacti
 	 * Envoie les modifications sur le serveur
 	 */
 	submit() {
-		this.requeteService.requete(
-			this.sanctionService.majBareme(this.bareme),
+		this.sanctionService.majBareme(this.bareme).subscribe(
 			res => { this.init(res); }
 		);
 	}

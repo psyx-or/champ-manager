@@ -6,7 +6,6 @@ import { NgbModalRef, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Equipe } from '@commun/src/app/model/Equipe';
 import { Match } from '@commun/src/app/model/Match';
 import { sort, openModal } from '@commun/src/app/utils/utils';
-import { RequeteService } from '@commun/src/app/services/requete.service';
 import { EquipeService } from '@commun/src/app/services/equipe.service';
 import { ChampionnatService } from '@commun/src/app/services/championnat.service';
 import { MatchService } from '@commun/src/app/services/match.service';
@@ -33,7 +32,6 @@ export class CoupeAdminComponent implements OnInit {
 	constructor(
 		public modalService: NgbModal,
 		private route: ActivatedRoute,
-		private requeteService: RequeteService,
 		private equipeService: EquipeService,
 		private championnatService: ChampionnatService,
 		private matchService: MatchService,
@@ -75,8 +73,7 @@ export class CoupeAdminComponent implements OnInit {
 	 */
 	change(equipe: Equipe): void {
 
-		this.requeteService.requete(
-			this.equipeService.getEquipes(this.journee.championnat.sport),
+		this.equipeService.getEquipes(this.journee.championnat.sport).subscribe(
 			equipes => {
 				this.remplacement = { 
 					equipes: equipes.filter(e => !this.equipesActuelles.find(ea => ea.id == e.id)) 
@@ -104,11 +101,9 @@ export class CoupeAdminComponent implements OnInit {
 	 * Effectue le remplacement
 	 */
 	changeAction(): void {
-		this.requeteService.requete(
-			this.championnatService.remplace(this.journee.championnat, this.remplacement.oldEquipe, this.remplacement.newEquipe),
+		this.championnatService.remplace(this.journee.championnat, this.remplacement.oldEquipe, this.remplacement.newEquipe).subscribe(
 			() => {
-				this.requeteService.requete(
-					this.matchService.getHierarchie(this.journee.championnat.id),
+				this.matchService.getHierarchie(this.journee.championnat.id).subscribe(
 					journee => this.journee = journee
 				)
 			}

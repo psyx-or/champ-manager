@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AuthentService, User } from './services/authent.service';
-import { RequeteService } from 'projects/commun/src/app/services/requete.service';
 import { LoginComponent } from '@commun/src/app/components/login/login.component';
 import { Router } from '@angular/router';
+import { LoadingInterceptor } from '@commun/src/app/utils/loading.interceptor';
 
 @Component({
   selector: 'app-root',
@@ -14,6 +14,8 @@ export class AppComponent implements OnInit {
 
 	/** Indique si l'utilisateur est authentifié */
 	authentifie: boolean = false;
+	/** Indique si un chargement est en cours */
+	chargement: boolean = false;
 
 	/**
 	 * Constructor
@@ -21,7 +23,6 @@ export class AppComponent implements OnInit {
 	 * @param authentService 
 	 */
 	constructor(
-		public requeteService: RequeteService,
 		private modalService: NgbModal,
 		private authentService: AuthentService,
 		private router: Router,
@@ -34,6 +35,9 @@ export class AppComponent implements OnInit {
 		this.authentService.getUser().subscribe(
 			this.authentification.bind(this)
 		);
+		LoadingInterceptor.getChargement().subscribe(
+			val => this.chargement = val
+		)
 	}
 
 	/**
@@ -55,10 +59,6 @@ export class AppComponent implements OnInit {
 		const modal = this.modalService.open(LoginComponent, { centered: true, backdrop: 'static', keyboard: false });
 		modal.componentInstance.error = user.isError;
 		modal.componentInstance.dismissable = false;
-		modal.result.then(creds => {
-			this.requeteService.requete(
-				this.authentService.authentifie(creds),
-			);
-		});
+		modal.result.then(creds => this.authentService.authentifie(creds).subscribe());
 	}
 }

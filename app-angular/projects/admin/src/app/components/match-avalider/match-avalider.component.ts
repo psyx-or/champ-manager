@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { RequeteService } from 'projects/commun/src/app/services/requete.service';
 import { MatchService } from 'projects/commun/src/app/services/match.service';
 import { Sport } from 'projects/commun/src/app/model/Sport';
 import { Championnat } from 'projects/commun/src/app/model/Championnat';
@@ -21,7 +20,6 @@ export class MatchAvaliderComponent implements OnInit {
 	constructor(
 		private route: ActivatedRoute,
 		private authentService: AuthentService,
-		private requeteService: RequeteService,
 		private matchService: MatchService
 	) { }
 
@@ -44,8 +42,7 @@ export class MatchAvaliderComponent implements OnInit {
 	 * Sélection d'un sport
 	 */
 	selectionSport(): void {
-		this.requeteService.requete(
-			this.matchService.avalider(this.selSport),
+		this.matchService.avalider(this.selSport).subscribe(
 			championnats => this.championnats = championnats
 		);
 	}

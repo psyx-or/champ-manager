@@ -3,7 +3,6 @@ import { menus } from '../../utils/menus';
 import { Sport } from '@commun/src/app/model/Sport';
 import { Sanction } from '@commun/src/app/model/Sanction';
 import { ActivatedRoute } from '@angular/router';
-import { RequeteService } from '@commun/src/app/services/requete.service';
 import { SanctionService } from '@commun/src/app/services/sanction.service';
 
 @Component({
@@ -20,7 +19,6 @@ export class SanctionsComponent implements OnInit {
 
 	constructor(
 		private route: ActivatedRoute,
-		public requeteService: RequeteService,
 		private sanctionService: SanctionService,
 	) { }
 
@@ -36,8 +34,7 @@ export class SanctionsComponent implements OnInit {
 	 * Sélection d'un sport
 	 */
 	selectionSport(): void {
-		this.requeteService.requete(
-			this.sanctionService.get(this.selSport),
+		this.sanctionService.get(this.selSport).subscribe(
 			sanctions => this.sanctions = sanctions
 		);
 	}

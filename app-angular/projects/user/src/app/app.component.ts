@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RequeteService } from 'projects/commun/src/app/services/requete.service';
+import { LoadingInterceptor } from '@commun/src/app/utils/loading.interceptor';
 
 @Component({
   selector: 'app-root',
@@ -8,7 +8,13 @@ import { RequeteService } from 'projects/commun/src/app/services/requete.service
 })
 export class AppComponent {
   
+	/** Indique si un chargement est en cours */
+	chargement: boolean = false;
+
 	constructor(
-		public requeteService: RequeteService,
-	){}
+	) {
+		LoadingInterceptor.getChargement().subscribe(
+			val => this.chargement = val
+		)
+	}
 }

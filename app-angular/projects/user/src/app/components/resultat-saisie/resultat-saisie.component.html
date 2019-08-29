@@ -51,8 +51,8 @@
 		------------------- -->
 	<div class="modal-footer">
 		<button type="button" class="btn btn-secondary" (click)="activeModal.dismiss()">Annuler</button>
-		<button type="button" class="btn btn-danger" [disabled]="requeteService.chargement" (click)="annulerSaisie()" *ngIf="match.valide === false">Effacer la saisie</button>
-		<button type="submit" class="btn btn-primary" [disabled]="requeteService.chargement">Enregistrer</button>
+		<button type="button" class="btn btn-danger" appLoadDisable (click)="annulerSaisie()" *ngIf="match.valide === false">Effacer la saisie</button>
+		<button type="submit" class="btn btn-primary" appLoadDisable>Enregistrer</button>
 	</div>
 
 </form>

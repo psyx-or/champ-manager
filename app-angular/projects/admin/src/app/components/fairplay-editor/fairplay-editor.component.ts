@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { RequeteService } from 'projects/commun/src/app/services/requete.service';
 import { FairplayService } from 'projects/commun/src/app/services/fairplay.service';
 import { openModal } from 'projects/commun/src/app/utils/utils';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -28,16 +27,11 @@ export class FairplayEditorComponent implements OnInit, CanComponentDeactivate {
 
 	/**
 	 * Constructeur
-	 * @param route 
-	 * @param modalService 
-	 * @param requeteService 
-	 * @param fairplayService 
 	 */
 	constructor(
 		private route: ActivatedRoute,
 		private router: Router,
 		public modalService: NgbModal,
-		public requeteService: RequeteService,
 		private fairplayService: FairplayService
 	) {}
 
@@ -80,9 +74,8 @@ export class FairplayEditorComponent implements OnInit, CanComponentDeactivate {
 				this.supprFeuilleTpl,
 				form,
 				() => {
-					this.requeteService.requete(
-						this.fairplayService.supprime(form),
-						res => { this.initial = null; this.router.navigate(["/fairplay-editor"]) }
+					this.fairplayService.supprime(form).subscribe(
+						() => { this.initial = null; this.router.navigate(["/fairplay-editor"]) }
 					);
 				}
 			);
@@ -138,9 +131,8 @@ export class FairplayEditorComponent implements OnInit, CanComponentDeactivate {
 	 * Mise à jour / création de la feuille de fair-play
 	 */
 	submit(): void {
-		this.requeteService.requete(
-			this.fairplayService.maj(this.selfpform),
-			res => { this.initial = null; this.router.navigate(["/fairplay-editor"]); }
+		this.fairplayService.maj(this.selfpform).subscribe(
+			() => { this.initial = null; this.router.navigate(["/fairplay-editor"]); }
 		);
 	}
 }

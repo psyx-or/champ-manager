@@ -3,7 +3,6 @@ import { Sport } from '@commun/src/app/model/Sport';
 import { ActivatedRoute } from '@angular/router';
 import { Equipe } from '@commun/src/app/model/Equipe';
 import { EquipeService } from '@commun/src/app/services/equipe.service';
-import { RequeteService } from '@commun/src/app/services/requete.service';
 
 @Component({
   selector: 'app-carte-clubs',
@@ -29,7 +28,6 @@ export class CarteClubsComponent implements OnInit {
 	constructor(
 		private route: ActivatedRoute,
 		private equipeService: EquipeService,
-		private requeteService: RequeteService,
 		private changeDetector: ChangeDetectorRef
 	) { }
 
@@ -48,8 +46,7 @@ export class CarteClubsComponent implements OnInit {
 	 * @param sport 
 	 */
 	chargeEquipes(sport: Sport) {
-		this.requeteService.requete(
-			this.equipeService.getEquipesCourantes(sport),
+		this.equipeService.getEquipesCourantes(sport).subscribe(
 			equipes => this.afficheCarte(equipes)
 		);
 	}

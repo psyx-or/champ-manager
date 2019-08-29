@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { menus } from '../../utils/menus';
 import { Sanction } from '@commun/src/app/model/Sanction';
 import { ActivatedRoute } from '@angular/router';
-import { RequeteService } from '@commun/src/app/services/requete.service';
 import { SanctionService } from '@commun/src/app/services/sanction.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { SanctionCreationComponent } from '../sanction-creation/sanction-creation.component';
@@ -25,7 +24,6 @@ export class SanctionsComponent implements OnInit {
 	constructor(
 		private route: ActivatedRoute,
 		private modalService: NgbModal,
-		public requeteService: RequeteService,
 		private sanctionService: SanctionService,
 		private equipeService: EquipeService,
 	) { }
@@ -42,8 +40,7 @@ export class SanctionsComponent implements OnInit {
 	 * Sélection d'un sport
 	 */
 	selectionSport(): void {
-		this.requeteService.requete(
-			this.sanctionService.get(this.selSport),
+		this.sanctionService.get(this.selSport).subscribe(
 			sanctions => this.sanctions = sanctions
 		);
 	}
@@ -52,11 +49,11 @@ export class SanctionsComponent implements OnInit {
 	 * Ouvre la fenêtre d'ajout de sanction
 	 */
 	ajouterSanction() {
-		this.requeteService.requete(
-			forkJoin(
-				this.equipeService.getEquipesCourantes(this.selSport),
-				this.sanctionService.getBareme(),
-			),
+		forkJoin(
+			this.equipeService.getEquipesCourantes(this.selSport),
+			this.sanctionService.getBareme(),
+		)
+		.subscribe(
 			([equipes, bareme]) => {
 				const modal = this.modalService.open(SanctionCreationComponent, { centered: true, size: 'lg' });
 				modal.componentInstance.equipes = equipes;

@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
-import { RequeteService } from 'projects/commun/src/app/services/requete.service';
 import { ClassementService } from 'projects/commun/src/app/services/classement.service';
 import { ActivatedRoute } from '@angular/router';
 import { Championnat } from 'projects/commun/src/app/model/Championnat';
@@ -38,14 +37,10 @@ export class ClassementComponent implements OnInit {
 
 	/**
 	 * Constructeur
-	 * @param route 
-	 * @param requeteService 
-	 * @param classementService 
 	 */
 	constructor(
 		public modalService: NgbModal,
 		private route: ActivatedRoute,
-		private requeteService: RequeteService,
 		private equipeService: EquipeService,
 		private classementService: ClassementService,
 		private championnatService: ChampionnatService,
@@ -70,8 +65,7 @@ export class ClassementComponent implements OnInit {
 	 * Modification des points de pénalité
 	 */
 	submit() {
-		this.requeteService.requete(
-			this.classementService.maj(this.champ, this.classements),
+		this.classementService.maj(this.champ, this.classements).subscribe(
 			champ => {
 				this.champ = champ;
 				this.classements = sort(champ.classements, 'position');
@@ -87,8 +81,7 @@ export class ClassementComponent implements OnInit {
 		this.remplacement = { oldEquipe: equipe };
 		let equipesActuelles = this.classements.map(c => c.equipe.nom);
 
-		this.requeteService.requete(
-			this.equipeService.getEquipes(this.champ.sport),
+		this.equipeService.getEquipes(this.champ.sport).subscribe(
 			equipes => {
 				this.remplacement.equipes = equipes.filter(e => equipesActuelles.indexOf(e.nom)==-1);
 				if (this.remplacement.equipes.length == 0) {
@@ -113,8 +106,7 @@ export class ClassementComponent implements OnInit {
 	 * Effectue le remplacement
 	 */
 	changeAction(): void {
-		this.requeteService.requete(
-			this.championnatService.remplace(this.champ, this.remplacement.oldEquipe, this.remplacement.newEquipe),
+		this.championnatService.remplace(this.champ, this.remplacement.oldEquipe, this.remplacement.newEquipe).subscribe(
 			classements => {
 				if (classements) this.classements = sort(classements, 'position');
 				else alert("Ajout impossible: pas d'équipe exempte");
@@ -140,8 +132,7 @@ export class ClassementComponent implements OnInit {
 			this.supprEquipeTpl,
 			equipe,
 			() => {
-				this.requeteService.requete(
-					this.championnatService.retire(this.champ, equipe),
+				this.championnatService.retire(this.champ, equipe).subscribe(
 					classements => this.classements = sort(classements, 'position')
 				);
 			}
@@ -159,8 +150,7 @@ export class ClassementComponent implements OnInit {
 			this.forfaitEquipeTpl,
 			equipe,
 			() => {
-				this.requeteService.requete(
-					this.championnatService.forfaitGeneral(this.champ, equipe, this.forfait.score),
+				this.championnatService.forfaitGeneral(this.champ, equipe, this.forfait.score).subscribe(
 					classements => this.classements = sort(classements, 'position')
 				);
 			},

@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, of, ReplaySubject } from 'rxjs';
 import { tap, map, catchError } from 'rxjs/operators';
 import { UserDTO } from '@commun/src/app/model/UserDTO';
-import { RequeteService } from '@commun/src/app/services/requete.service';
 
 /**
  * Informations sur l'utilisateur courant
@@ -24,11 +23,8 @@ export class AuthentService {
 
 	constructor(
 		private http: HttpClient,
-		private requeteService: RequeteService,
 	) { 
-		this.requeteService.requete(
-			this.authentifie()
-		);
+		this.authentifie().subscribe();
 	}
 
 	/**

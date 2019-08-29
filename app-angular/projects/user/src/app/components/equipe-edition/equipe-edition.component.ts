@@ -2,7 +2,6 @@ import { menus } from "../../utils/menus";
 import { Equipe } from "@commun/src/app/model/Equipe";
 import { OnInit, Component } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { RequeteService } from "@commun/src/app/services/requete.service";
 import { EquipeService } from "@commun/src/app/services/equipe.service";
 import { CanComponentDeactivate } from "@commun/src/app/utils/can-deactivate.guard";
 
@@ -22,7 +21,6 @@ export class EquipeEditionComponent implements OnInit, CanComponentDeactivate {
 	constructor(
 		private route: ActivatedRoute,
 		private router: Router,
-		public requeteService: RequeteService,
 		private equipeService: EquipeService,
 	) { }
 
@@ -48,8 +46,7 @@ export class EquipeEditionComponent implements OnInit, CanComponentDeactivate {
 	 * Change le mot de passe de l'équipe
 	 */
 	changeMdp() {
-		this.requeteService.requete(
-			this.equipeService.setMdp(this.equipe, this.mdp1),
+		this.equipeService.setMdp(this.equipe, this.mdp1).subscribe(
 			() => { alert("Mot de passe changé"); this.mdp1 = this.mdp2 = ''; }
 		);
 	}
@@ -59,9 +56,8 @@ export class EquipeEditionComponent implements OnInit, CanComponentDeactivate {
 	 */
 	submit() {
 		// On pousse
-		this.requeteService.requete(
-			this.equipeService.majEquipes([this.equipe]),
-			n => {
+		this.equipeService.majEquipes([this.equipe]).subscribe(
+			() => {
 				alert("Equipe mise à jour");
 				this.initial = JSON.stringify(this.equipe);
 				this.router.navigate([]);

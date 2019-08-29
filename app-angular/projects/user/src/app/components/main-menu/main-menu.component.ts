@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { environment } from '../../../environments/environment';
-import { RequeteService } from '@commun/src/app/services/requete.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AuthentService } from '../../services/authent.service';
 import { LoginComponent } from '@commun/src/app/components/login/login.component';
@@ -19,7 +18,6 @@ export class MainMenuComponent implements OnInit {
 	navbarOpen: boolean = false;
 	
 	constructor(
-		public requeteService: RequeteService,
 		private modalService: NgbModal,
 		private authentService: AuthentService
 	) { }
@@ -46,8 +44,7 @@ export class MainMenuComponent implements OnInit {
 		modal.componentInstance.error = erreur;
 		modal.componentInstance.dismissable = true;
 		modal.result.then(creds => {
-			this.requeteService.requete(
-				this.authentService.authentifie(creds),
+			this.authentService.authentifie(creds).subscribe(
 				ok => {
 					if (!ok) this.connexion(true);
 				}
@@ -59,8 +56,6 @@ export class MainMenuComponent implements OnInit {
 	 * Déconnexion
 	 */
 	deconnexion(): void {
-		this.requeteService.requete(
-			this.authentService.deconnecte()
-		);
+		this.authentService.deconnecte().subscribe();
 	}
 }

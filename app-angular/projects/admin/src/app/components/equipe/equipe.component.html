@@ -3,7 +3,7 @@
 <form class="form" (ngSubmit)="submit()" ngNativeValidate *ngIf="user?.isAdmin">
 	<app-equipe-detail [equipe]="equipe" [motdepasse]="true"></app-equipe-detail>
 
-	<button type="submit" class="btn btn-primary mt-3" [disabled]="requeteService.chargement">Valider</button>
+	<button type="submit" class="btn btn-primary mt-3" appLoadDisable>Valider</button>
 </form>
 
 <app-equipe-detail-view [equipe]="equipe" *ngIf="!user?.isAdmin"></app-equipe-detail-view>

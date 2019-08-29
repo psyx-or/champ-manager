@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { RequeteService } from 'projects/commun/src/app/services/requete.service';
 import { EquipeService } from 'projects/commun/src/app/services/equipe.service';
 import { Equipe } from 'projects/commun/src/app/model/Equipe';
 import { CanComponentDeactivate } from '@commun/src/app/utils/can-deactivate.guard';
@@ -23,7 +22,6 @@ export class EquipeComponent implements OnInit, CanComponentDeactivate {
 		private route: ActivatedRoute,
 		private router: Router,
 		private authentService: AuthentService,
-		public requeteService: RequeteService,
 		private equipeService: EquipeService,
 	) { }
 
@@ -52,9 +50,8 @@ export class EquipeComponent implements OnInit, CanComponentDeactivate {
 	 */
 	submit() {
 		// On pousse
-		this.requeteService.requete(
-			this.equipeService.majEquipes([this.equipe]),
-			n => {
+		this.equipeService.majEquipes([this.equipe]).subscribe(
+			() => {
 				alert("Equipe mise à jour");
 				this.initial = JSON.stringify(this.equipe);
 				this.router.navigate(["/equipe", this.equipe.id]);

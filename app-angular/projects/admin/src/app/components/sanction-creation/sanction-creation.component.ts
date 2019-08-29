@@ -1,6 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { RequeteService } from '@commun/src/app/services/requete.service';
 import { SanctionCategorie, Sanction } from '@commun/src/app/model/Sanction';
 import { Sport } from '@commun/src/app/model/Sport';
 import { Equipe } from '@commun/src/app/model/Equipe';
@@ -22,7 +21,6 @@ export class SanctionCreationComponent implements OnInit {
 
 	constructor(
 		public activeModal: NgbActiveModal,
-		public requeteService: RequeteService,
 		private sanctionService: SanctionService,
 	) { }
 
@@ -43,8 +41,7 @@ export class SanctionCreationComponent implements OnInit {
 	 * Ajoute la sanction
 	 */
 	submit() {
-		this.requeteService.requete(
-			this.sanctionService.creer(this.sanction),
+		this.sanctionService.creer(this.sanction).subscribe(
 			() => this.activeModal.close()
 		);
 	}

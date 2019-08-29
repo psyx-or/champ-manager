@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { RequeteService } from 'projects/commun/src/app/services/requete.service';
 import { ParametreService } from 'projects/commun/src/app/services/parametre.service';
 import { sort } from 'projects/commun/src/app/utils/utils';
 import { CanComponentDeactivate } from '@commun/src/app/utils/can-deactivate.guard';
@@ -20,7 +19,6 @@ export class ParametresComponent implements OnInit, CanComponentDeactivate {
 
 	constructor(
 		private route: ActivatedRoute,
-		public requeteService: RequeteService,
 		private parametreService: ParametreService,
 	) { }
 
@@ -48,8 +46,7 @@ export class ParametresComponent implements OnInit, CanComponentDeactivate {
 	 */
 	submit(): void {
 		this.parametres.forEach(p => p.valeur = p.valeur.toString());
-		this.requeteService.requete(
-			this.parametreService.maj(this.parametres),
+		this.parametreService.maj(this.parametres).subscribe(
 			parametres => {
 				alert("Paramètres mis à jour");
 				this.parametres = sort(parametres, 'nom');

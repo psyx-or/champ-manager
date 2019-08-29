@@ -2,7 +2,7 @@ import { ModalComponent } from "./components/modal/modal.component";
 import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { SportResolver } from "./utils/sports.resolver";
 import { RechercheEquipeComponent } from "./components/recherche-equipe/recherche-equipe.component";
 import { ChampionnatResolver } from "./utils/championnats.resolver";
@@ -26,6 +26,13 @@ import { SanctionBaremeResolver } from "./utils/sanction-bareme.resolver";
 import { SanctionListeComponent } from "./components/sanction-liste/sanction-liste.component";
 import { SanctionEquipeParamResolver } from "./utils/sanction-equipe.resolver";
 import { RouterModule } from "@angular/router";
+import { LoadingInterceptor } from "./utils/loading.interceptor";
+import { EquipeDetailViewComponent } from "./components/equipe-detail-view/equipe-detail-view.component";
+import { LoadDisableDirective } from "./utils/loaddisable.directive";
+
+const httpInterceptorProviders = [
+	{ provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },
+]
 
 @NgModule({
 	declarations: [
@@ -36,11 +43,13 @@ import { RouterModule } from "@angular/router";
 		LoginComponent,
 		CartePositionnementComponent,
 		EquipeDetailComponent,
+		EquipeDetailViewComponent,
 		ModalConfirmComponent,
 		FairplayComponent,
 		IsTypePipe,
 		SignePipe,
 		SanctionListeComponent,
+		LoadDisableDirective,
 	],
 	imports: [
 		BrowserModule,
@@ -60,6 +69,7 @@ import { RouterModule } from "@angular/router";
 		SeuilsForfaitParamResolver,
 		SanctionBaremeResolver,
 		SanctionEquipeParamResolver,
+		httpInterceptorProviders,
 	],
 	entryComponents: [
 		ModalComponent,
@@ -74,10 +84,12 @@ import { RouterModule } from "@angular/router";
 		GenericMenuComponent,
 		CoupeComponent,
 		EquipeDetailComponent,
+		EquipeDetailViewComponent,
 		FairplayComponent,
 		IsTypePipe,
 		SignePipe,
 		SanctionListeComponent,
+		LoadDisableDirective,
 	]
 })
 export class CommunModule { }

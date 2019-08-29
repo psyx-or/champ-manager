@@ -1,7 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Match } from '@commun/src/app/model/Match';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { RequeteService } from '@commun/src/app/services/requete.service';
 import { MatchService } from '@commun/src/app/services/match.service';
 
 @Component({
@@ -18,7 +17,6 @@ export class ResultatSaisieComponent {
 
 	constructor(
 		public activeModal: NgbActiveModal,
-		public requeteService: RequeteService,
 		private matchService: MatchService
 	) { }
 
@@ -48,8 +46,7 @@ export class ResultatSaisieComponent {
 	 * Validation du formulaire
 	 */
 	submit() {
-		this.requeteService.requete(
-			this.matchService.majMatch(this.match, this.feuille),
+		this.matchService.majMatch(this.match, this.feuille).subscribe(
 			res => this.activeModal.close(res)
 		);
 	}

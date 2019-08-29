@@ -4,7 +4,6 @@ import { Championnat } from 'projects/commun/src/app/model/Championnat';
 import { Sport } from 'projects/commun/src/app/model/Sport';
 import { sort, openModal, getSaisonCourante, getSaison } from 'projects/commun/src/app/utils/utils';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { RequeteService } from 'projects/commun/src/app/services/requete.service';
 import { ChampImportComponent } from '../champ-import/champ-import.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as moment from 'moment';
@@ -38,7 +37,6 @@ export class ChampionnatsComponent implements OnInit {
 		private route: ActivatedRoute,
 		private router: Router,
 		public modalService: NgbModal,
-		private requeteService: RequeteService,
         private championnatService: ChampionnatService,
 		private classementService: ClassementService,
     ) { }
@@ -94,9 +92,8 @@ export class ChampionnatsComponent implements OnInit {
 			this.supprChampTpl,
 			champ,
 			() => {
-				this.requeteService.requete(
-					this.championnatService.supprime(champ),
-					res => { this.router.navigate(["/championnats"]) }
+				this.championnatService.supprime(champ).subscribe(
+					() => { this.router.navigate(["/championnats"]) }
 				);
 			}
 		);
@@ -107,8 +104,7 @@ export class ChampionnatsComponent implements OnInit {
 	 * @param saison
 	 */
 	changeSaison(saison: string) {
-		this.requeteService.requete(
-			this.championnatService.getChampionnats(saison),
+		this.championnatService.getChampionnats(saison).subscribe(
 			championnats => this.initChamps(championnats)
 		);
 		this.creeLienExport(saison);
@@ -126,8 +122,7 @@ export class ChampionnatsComponent implements OnInit {
 			this.renommageTpl,
 			champ,
 			() => {
-				this.requeteService.requete(
-					this.championnatService.renomme(champ, this.nouveauNom),
+				this.championnatService.renomme(champ, this.nouveauNom).subscribe(
 					() => champ.nom = this.nouveauNom
 				);
 			},
@@ -155,8 +150,7 @@ export class ChampionnatsComponent implements OnInit {
 			this.mdpTpl,
 			champ,
 			() => {
-				this.requeteService.requete(
-					this.championnatService.initMdp(champ, this.adresses.trim().split(/[,\s]+/)),
+				this.championnatService.initMdp(champ, this.adresses.trim().split(/[,\s]+/)).subscribe(
 					() => alert("Message envoyé")
 				);
 			},

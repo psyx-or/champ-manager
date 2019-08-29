@@ -17,7 +17,7 @@
 				<label for="mdp2">Confirmation du mot de passe</label>
 				<input type="password" class="form-control" name="mdp2" id="mdp2" [(ngModel)]="mdp2">
 			</div>
-			<button type="submit" class="btn btn-primary" [disabled]="requeteService.chargement || mdp1 == '' || mdp2 != mdp1">Valider</button>
+			<button type="submit" class="btn btn-primary" [appLoadDisable]="mdp1 == '' || mdp2 != mdp1">Valider</button>
 		</form>
 	</div>
 </div>
@@ -35,7 +35,7 @@
 		<form class="form" (ngSubmit)="submit()" ngNativeValidate>
 			<app-equipe-detail [equipe]="equipe" [motdepasse]="false"></app-equipe-detail>
 
-			<button type="submit" class="btn btn-primary" [disabled]="requeteService.chargement">Valider</button>
+			<button type="submit" class="btn btn-primary" appLoadDisable>Valider</button>
 		</form>
 	</div>
 </div>

@@ -29,11 +29,9 @@
 		<ngb-datepicker [dayTemplate]="t" (select)="onDaySelection($event)"></ngb-datepicker>
 		<ngb-datepicker [dayTemplate]="t" (select)="onDaySelection($event)"></ngb-datepicker>
 		<ngb-datepicker [dayTemplate]="t" (select)="onDaySelection($event)"></ngb-datepicker>
-	</div>
 
-	<!-- Validation -->
-	<div class="text-center col-lg-12">
-		<button class="btn btn-primary" (click)="enregistrer()" [disabled]="requeteService.chargement">
+		<!-- Validation -->
+		<button class="btn btn-primary mt-3" (click)="enregistrer()" appLoadDisable *ngIf="user?.isAdmin">
 			<i class="icon ion-md-save"></i> Enregistrer
 		</button>
 	</div>

@@ -51,7 +51,9 @@ export class LoadingInterceptor implements HttpInterceptor {
 	 * @param n 
 	 */
 	private static updateChargement(n: 1 | -1) {
-		LoadingInterceptor.nbChargements += n;
-		LoadingInterceptor.chargement$.next(this.nbChargements > 0);
+		setTimeout( () => {
+			LoadingInterceptor.nbChargements += n;
+			LoadingInterceptor.chargement$.next(this.nbChargements > 0);
+		});
 	}
 }

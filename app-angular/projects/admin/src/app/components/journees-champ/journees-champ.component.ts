@@ -7,6 +7,7 @@ import { CanComponentDeactivate } from '@commun/src/app/utils/can-deactivate.gua
 import { Championnat } from 'projects/commun/src/app/model/Championnat';
 import { Journee } from 'projects/commun/src/app/model/Journee';
 import { menus } from '../../utils/menus';
+import { User, AuthentService } from '../../services/authent.service';
 
 
 const nbMois = 4;
@@ -69,6 +70,7 @@ export class JourneesChampComponent implements OnInit, AfterViewInit, CanCompone
 	);
 
 	menu = menus.championnat;
+	user: User = null;
 	champ: Championnat = null;
 	journees: Journee[];
 	iJournee: number = null;
@@ -97,6 +99,7 @@ export class JourneesChampComponent implements OnInit, AfterViewInit, CanCompone
 		private route: ActivatedRoute,
 		private router: Router,
 		private journeeService: JourneeService,
+		private authentService: AuthentService,
 		config: NgbDatepickerConfig
 	) { 
 		config.displayMonths = nbMois;
@@ -119,6 +122,8 @@ export class JourneesChampComponent implements OnInit, AfterViewInit, CanCompone
 		);
 		this.route.paramMap
 			.subscribe(params => this.retour = params.get("retour"))
+		this.authentService.getUser()
+			.subscribe(user => this.user = user);
 	}
 
 	/**
@@ -176,6 +181,7 @@ export class JourneesChampComponent implements OnInit, AfterViewInit, CanCompone
 	 * @param date 
 	 */
 	daySel(date: NgbDateStruct): void {
+		if (!this.user.isAdmin) return;
 		this.dateDebutSel = date ? toMoment(date).startOf("isoWeek") : null;
 		this.dateFinSel = date ? toMoment(date).endOf("isoWeek") : null;
 	}
@@ -217,6 +223,7 @@ export class JourneesChampComponent implements OnInit, AfterViewInit, CanCompone
 	 */
 	onDaySelection(date: NgbDateStruct) {
 		if (this.iJournee == null) return;
+		if (!this.user.isAdmin) return;
 		
 		let debut = toMoment(date).startOf("isoWeek");
 		let fin = toMoment(date).endOf("isoWeek");

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Sport } from 'projects/commun/src/app/model/Sport';
 import { ActivatedRoute } from '@angular/router';
-import { RequeteService } from 'projects/commun/src/app/services/requete.service';
 import { ChampionnatService } from 'projects/commun/src/app/services/championnat.service';
 import { CalendrierDTO } from 'projects/commun/src/app/model/CalendrierDTO';
 import * as moment from 'moment';
@@ -25,7 +24,6 @@ export class CalendrierComponent implements OnInit {
 
 	constructor(
 		private route: ActivatedRoute,
-		private requeteService: RequeteService,
 		private championnatService: ChampionnatService
 	) { }
 
@@ -48,8 +46,7 @@ export class CalendrierComponent implements OnInit {
 	 * Sélection d'un sport
 	 */
 	selectionSport(): void {
-		this.requeteService.requete(
-			this.championnatService.getCalendrierCourant(this.selSport),
+		this.championnatService.getCalendrierCourant(this.selSport).subscribe(
 			calendriers => {
 				calendriers.forEach(c => {
 					c.debutStr = c.debut && moment(c.debut).add(1, 'day').format("DD/MM/YYYY")

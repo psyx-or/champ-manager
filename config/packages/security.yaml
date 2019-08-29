@@ -22,14 +22,11 @@ security:
 
     encoders:
         Symfony\Component\Security\Core\User\User:
-            algorithm: bcrypt
-            cost: 12
+            algorithm: native
         App\Entity\Equipe:
-            algorithm: bcrypt
-            cost: 12
+            algorithm: native
         App\Entity\Championnat:
-            algorithm: bcrypt
-            cost: 12
+            algorithm: native
 
     role_hierarchy:
         ROLE_ADMIN: [ROLE_USER, ROLE_CHAMP]

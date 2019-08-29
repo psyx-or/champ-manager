@@ -10,7 +10,7 @@ class Outils
 	/**
 	 * Création de mot de passe
 	 */
-	public function makePassword()
+	public static function makePassword()
 	{
 		$caracteres = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 		$password = "";
@@ -23,7 +23,7 @@ class Outils
 	/**
 	 * Change le mot de passe d'une équipe et renvoie les infos du mail
 	 */
-	public function changeMdp(PasswordEntityInterface $entity, EntityManagerInterface $entityManager, UserPasswordEncoderInterface $encoder): string
+	public static function changeMdp(PasswordEntityInterface $entity, EntityManagerInterface $entityManager, UserPasswordEncoderInterface $encoder): string
 	{
 		$plainPassword = Outils::makePassword();
 		$encoded = $encoder->encodePassword($entity, $plainPassword);

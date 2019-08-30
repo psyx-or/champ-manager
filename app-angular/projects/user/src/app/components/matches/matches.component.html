@@ -17,14 +17,14 @@
 				</td>
 
 				<!-- Score -->
-				<ng-container *ngIf="match.dispScore1 || match.dispScore2">
+				<ng-container *ngIf="match.dispScore1 != null || match.dispScore2 != null">
 					<td class="text-right score">{{match.dispScore1}}</td>
 					<td class="separateur text-center">-</td>
 					<td class="text-left score">{{match.dispScore2}}</td>
 				</ng-container>
 
 				<!-- Pas de score -->
-				<ng-container *ngIf="!match.dispScore1 && !match.dispScore2">
+				<ng-container *ngIf="match.dispScore1 == null && match.dispScore2 == null">
 					<td class="ajouer text-center" colspan="3">A jouer</td>
 				</ng-container>
 

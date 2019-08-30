@@ -339,19 +339,31 @@ class ChampionnatController extends CMController
 
 		foreach ($championnats as $champSource)
 		{
+			// S'agit-il de 2 championnats à poule unique?
+			$champUniques = $champDest->getType() == ChampionnatType::ALLER && $champSource->getType() == ChampionnatType::ALLER;
+
 			foreach ($repMatches->findByChampionnat($champSource) as $matchSource)
 			{
 				foreach ($matchesDest as $matchDest)
 				{
-					if ($matchDest->getEquipe1() != null && $matchDest->getEquipe2() != null &&
-						$matchDest->getEquipe1() == $matchSource->getEquipe1() && $matchDest->getEquipe2() == $matchSource->getEquipe2() &&
-						($matchSource->getScore1() !== null || $matchSource->getScore2() !== null || $matchSource->getForfait1() || $matchSource->getForfait2()))
+					// Pour les coupes
+					if ($matchDest->getEquipe1() === null || $matchDest->getEquipe2() === null)
+						continue;
+
+					// Match non joué
+					if ($matchSource->getScore1() === null && $matchSource->getScore2() === null && !$matchSource->getForfait1() && !$matchSource->getForfait2())
+						continue;
+
+					// Mêmes équipes
+					$memeEquipes = $matchDest->getEquipe1() == $matchSource->getEquipe1() && $matchDest->getEquipe2() == $matchSource->getEquipe2();
+					$inverse = $matchDest->getEquipe1() == $matchSource->getEquipe2() && $matchDest->getEquipe2() == $matchSource->getEquipe1();
+					if ($memeEquipes ||	($champUniques && $inverse))
 					{
 						$i++;
-						$matchDest->setScore1($matchSource->getScore1());
-						$matchDest->setForfait1($matchSource->getForfait1());
-						$matchDest->setScore2($matchSource->getScore2());
-						$matchDest->setForfait2($matchSource->getForfait2());
+						$matchDest->setScore1($memeEquipes ? $matchSource->getScore1() : $matchSource->getScore2());
+						$matchDest->setForfait1($memeEquipes ? $matchSource->getForfait1() : $matchSource->getForfait2());
+						$matchDest->setScore2($memeEquipes ? $matchSource->getScore2() : $matchSource->getScore1());
+						$matchDest->setForfait2($memeEquipes ? $matchSource->getForfait2() : $matchSource->getForfait1());
 						$matchDest->setValide(true);
 					}
 				}

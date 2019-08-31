@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Championnat, ChampModele } from 'projects/commun/src/app/model/Championnat';
 import { ChampionnatService } from 'projects/commun/src/app/services/championnat.service';
 import { Observable } from 'rxjs';
@@ -7,8 +7,9 @@ import { EquipeService } from 'projects/commun/src/app/services/equipe.service';
 import { Equipe } from 'projects/commun/src/app/model/Equipe';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Router, ActivatedRoute } from '@angular/router';
-import { openModal, getSaisonCourante } from 'projects/commun/src/app/utils/utils';
+import { getSaisonCourante } from 'projects/commun/src/app/utils/utils';
 import { ChampCaracteristiquesComponent } from '../champ-caracteristiques/champ-caracteristiques.component';
+import { ChampCreationRenommageComponent } from '../champ-creation-renommage/champ-creation-renommage.component';
 
 @Component({
   selector: 'app-champ-creation',
@@ -17,7 +18,6 @@ import { ChampCaracteristiquesComponent } from '../champ-caracteristiques/champ-
 })
 export class ChampCreationComponent implements OnInit {
 
-	@ViewChild('ajoutEquipes', {static:true}) ajoutEquipesTpl: TemplateRef<any>;
 	@ViewChild('caractComp', {static:true}) caractComp: ChampCaracteristiquesComponent;
 
 	championnat: Championnat;
@@ -66,13 +66,10 @@ export class ChampCreationComponent implements OnInit {
 		let newEquipes = this.equipes.filter((e: Equipe) => e && e.id == null);
 		if (newEquipes.length > 0) {
 			// Si non, affichage de la pop-up de connexion pour récupérer les identifiants et recommencer
-			openModal(
-				this,
-				"Nouvelles équipes détectées",
-				this.ajoutEquipesTpl,
-				newEquipes,
-				this.creation
-			);
+			const modal = this.modalService.open(ChampCreationRenommageComponent, { centered: true, backdrop: 'static' });
+			modal.componentInstance.equipes = this.equipesSport;
+			modal.componentInstance.newEquipes = newEquipes;
+			modal.result.then(this.creation.bind(this));
 		}
 		else {
 			this.creation();

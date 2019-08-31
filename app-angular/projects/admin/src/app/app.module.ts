@@ -37,6 +37,7 @@ import { SanctionBaremeEditorComponent } from './components/sanction-bareme-edit
 import { SanctionsComponent } from './components/sanctions/sanctions.component';
 import { SanctionCreationComponent } from './components/sanction-creation/sanction-creation.component';
 import { SanctionEquipeComponent } from './components/sanction-equipe/sanction-equipe.component';
+import { ChampCreationRenommageComponent } from './components/champ-creation-renommage/champ-creation-renommage.component';
 
 
 @NgModule({
@@ -66,6 +67,7 @@ import { SanctionEquipeComponent } from './components/sanction-equipe/sanction-e
     SanctionsComponent,
     SanctionCreationComponent,
     SanctionEquipeComponent,
+    ChampCreationRenommageComponent,
   ],
   imports: [
     BrowserModule,
@@ -88,6 +90,7 @@ import { SanctionEquipeComponent } from './components/sanction-equipe/sanction-e
   entryComponents: [
 	  ChampImportComponent,
 	  SanctionCreationComponent,
+	  ChampCreationRenommageComponent,
   ]
 })																																																																																																																																																																																														
 export class AppModule { }

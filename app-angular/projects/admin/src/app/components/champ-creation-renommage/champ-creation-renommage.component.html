@@ -1,0 +1,31 @@
+<form (ngSubmit)="submit()" ngNativeValidate>
+	<!----------------------
+			Entête
+		------------------- -->
+	<div class="modal-header">
+		<h4 class="modal-title">Vérification des nouvelles équipes</h4>
+	</div>
+
+	<!----------------------
+			Formulaire
+		------------------- -->
+	<div class="modal-body">
+		<ngb-alert [dismissible]="false" type="info">
+			Si les nouvelles équipes détectées sont en fait des équipes existantes renommées, sélectionner leur ancien nom pour les renommer automatiquement.
+		</ngb-alert>
+			<div class="form-row" [ngClass]="{'bg-warning': r.ex, 'mt-2': i>0 }" *ngFor="let r of renommages; let i = index">
+				<select class="form-control col" id="old{{i}}" name="old{{i}}" [(ngModel)]="r.old" required>
+					<option *ngFor="let e of equipes" [ngValue]="e">{{e.nom}}</option>
+				</select>
+				<label class="col col-form-label" for="old{{i}}"><i class="icon ion-md-arrow-round-forward"></i> {{r.new.nom}}</label>
+			</div>
+	</div>
+
+	<!----------------------
+			Pied
+		------------------- -->
+	<div class="modal-footer">
+		<button type="button" class="btn btn-secondary" (click)="activeModal.dismiss()">Annuler</button>
+		<button type="submit" class="btn btn-primary">Confirmer</button>
+	</div>
+</form>

@@ -446,7 +446,10 @@ class ChampionnatController extends CMController
 		{
 			if (isset($equipe['id'])) 
 			{
-				array_push($entities, $repEquipes->find($equipe['id']));
+				$entity = $repEquipes->find($equipe['id']);
+				if ($entity->getNom() != $equipe['nom'])
+					$entity->setNom($equipe['nom']);
+				array_push($entities, $entity);
 			}
 			else 
 			{

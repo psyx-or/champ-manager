@@ -3,6 +3,13 @@ import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse
 import { Observable, of, throwError, BehaviorSubject } from "rxjs";
 import { finalize, catchError } from "rxjs/operators";
 
+/**
+ * URL non concernées par la barre de chargement
+ */
+const NOLOAD_URL = [
+	"/api/equipe/recherche"
+];
+
 @Injectable()
 export class LoadingInterceptor implements HttpInterceptor {
 
@@ -28,7 +35,7 @@ export class LoadingInterceptor implements HttpInterceptor {
 	 */
 	intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-		LoadingInterceptor.updateChargement(1);
+		LoadingInterceptor.updateChargement(1, req.url);
 
 		return next.handle(req).pipe(
 			catchError((error: HttpErrorResponse) => {
@@ -41,7 +48,7 @@ export class LoadingInterceptor implements HttpInterceptor {
 				}
 			}),
 			finalize(() => {
-				LoadingInterceptor.updateChargement(-1);
+				LoadingInterceptor.updateChargement(-1, req.url);
 			})
 		);
 	}
@@ -50,10 +57,12 @@ export class LoadingInterceptor implements HttpInterceptor {
 	 * Met à jour le nombre de requêtes en cours
 	 * @param n 
 	 */
-	private static updateChargement(n: 1 | -1) {
-		setTimeout( () => {
-			LoadingInterceptor.nbChargements += n;
-			LoadingInterceptor.chargement$.next(this.nbChargements > 0);
-		});
+	private static updateChargement(n: 1 | -1, url: string) {
+		if (!NOLOAD_URL.includes(url)) {
+			setTimeout( () => {
+				LoadingInterceptor.nbChargements += n;
+				LoadingInterceptor.chargement$.next(this.nbChargements > 0);
+			});
+		}
 	}
 }

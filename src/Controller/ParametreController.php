@@ -45,7 +45,6 @@ class ParametreController extends CMController
 
 	/**
 	 * @Route("/parametre/{nom}", methods={"GET"})
-	 * @IsGranted({"ROLE_USER", "ROLE_CHAMP"})
 	 */
 	public function getParam(Parametre $param)
 	{

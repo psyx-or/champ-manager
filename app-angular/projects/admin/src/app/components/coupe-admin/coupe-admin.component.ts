@@ -69,9 +69,8 @@ export class CoupeAdminComponent implements OnInit {
 
 	/**
 	 * Remplace une équipe par une autre
-	 * @param equipe
 	 */
-	change(equipe: Equipe): void {
+	change(): void {
 
 		this.equipeService.getEquipes(this.journee.championnat.sport).subscribe(
 			equipes => {
@@ -87,7 +86,7 @@ export class CoupeAdminComponent implements OnInit {
 						this,
 						"Remplacement d'équipe",
 						this.changeEquipeTpl,
-						equipe,
+						null,
 						this.changeAction,
 						null,
 						true

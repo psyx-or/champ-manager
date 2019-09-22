@@ -13,7 +13,7 @@
 		------------------- -->
 	<div class="modal-body">
 		<!-- Cas du forfait -->
-		<div class="forfait" *ngIf="dto?.fpFeuille.id == null">
+		<div class="section-forfait" *ngIf="dto?.fpFeuille.id == null">
 			<div class="btn-group btn-group-toggle" ngbRadioGroup name="forfait" [(ngModel)]="forfait">
 				<label ngbButtonLabel class="btn-outline-secondary">
 					<input ngbButton type="radio" [value]="false"> Match joué

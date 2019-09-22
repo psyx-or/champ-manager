@@ -96,7 +96,7 @@ class EquipeController extends CMController
 		// On crée l'archive
 		$zip = new \ZipArchive();
 		$fic = "../var/annuaire.zip";
-		if ($zip->open($fic, \ZipArchive::OVERWRITE) !== true) {
+		if ($zip->open($fic, \ZipArchive::OVERWRITE | \ZipArchive::CREATE) !== true) {
 			throw new Exception("Impossible de créer le fichier $fic");
 		}
 

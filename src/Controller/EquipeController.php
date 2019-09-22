@@ -48,15 +48,32 @@ class EquipeController extends CMController
 	/**
 	 * @Route("/equipe/{id}", requirements={"id"="\d+"}, methods={"GET"})
 	 */
-    public function getEquipe(Equipe $equipe, AuthorizationCheckerInterface $authChecker)
+    public function getEquipe(Equipe $equipe, Request $request, EntityManagerInterface $entityManager, AuthorizationCheckerInterface $authChecker)
     {
+		$saison = $request->query->get('saison');
+
 		$groupes = array('simple', 'coordonnees');
 		
 		if (true === $authChecker->isGranted('ROLE_USER') || true === $authChecker->isGranted('ROLE_CHAMP')) {
 			array_push($groupes, 'responsables');
 		}
+		if (true === $authChecker->isGranted('ROLE_ADMIN')) {
+			array_push($groupes, 'championnats');
+		}
 
-        return $this->groupJson($equipe, ...$groupes);
+		$query = $entityManager->createQuery(
+			"SELECT e, classe, champ
+			 FROM App\Entity\Equipe e
+			 JOIN e.classements classe
+			 JOIN classe.championnat champ
+			 WHERE champ.saison = :saison
+			   AND e = :equipe"
+		);
+
+		$query->setParameter("equipe", $equipe);
+		$query->setParameter("saison", $saison);
+
+        return $this->groupJson($query->getResult()[0], ...$groupes);
 	}
 
 	/**

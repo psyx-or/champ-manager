@@ -39,17 +39,9 @@
 
 		<!-- Description -->
 		<div class="card-body">
-			<div class="form-group form-row">
-				<label class="col-sm-2 col-form-label">Championnats</label>
-				<div class="col-sm-10 col-form-label">
-					<span *ngFor="let champ of equipe.championnats" class="liste">{{champ.nom}}</span>
-				</div>
-			</div>
-
 			<app-equipe-detail [equipe]="equipe"></app-equipe-detail>
 		</div>
 	</div>
 
 	<button type="submit" class="btn btn-primary" appLoadDisable>Valider</button>
 </form>
-

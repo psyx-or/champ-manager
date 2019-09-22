@@ -36,7 +36,7 @@ export class EquipeService {
 		if (this.cache && this.cache.id == id)
 			return of(this.cache);
 		else
-			return this.http.get<Equipe>(`/api/equipe/${id}`).pipe(
+			return this.http.get<Equipe>(`/api/equipe/${id}`, { params: { saison: getSaisonCourante() } }).pipe(
 				map(this.fromServer),
 				tap(equipe => this.cache = equipe)
 			);

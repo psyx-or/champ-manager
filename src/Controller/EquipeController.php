@@ -11,12 +11,14 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 
+use App\Entity\Championnat;
 use App\Entity\Equipe;
 use App\Entity\Sport;
 use App\Outils\Annuaire;
 use App\Entity\Parametre;
 use App\Outils\Mail;
 use App\Outils\Outils;
+use Exception;
 
 /**
  * @Route("/api")
@@ -73,8 +75,40 @@ class EquipeController extends CMController
 	public function annuaire(Sport $sport, Request $request, EntityManagerInterface $entityManager)
 	{
 		$saison = $request->query->get('saison');
-		$ftmp = Annuaire::genere($this->getEquipes($sport, $saison, $entityManager));
-		return $this->file($ftmp, "Annuaire ".$sport->getNom()." - ".date('Y-m-d').".xlsx");
+
+		// On crée l'archive
+		$zip = new \ZipArchive();
+		$fic = "../var/annuaire.zip";
+		if ($zip->open($fic, \ZipArchive::OVERWRITE) !== true) {
+			throw new Exception("Impossible de créer le fichier $fic");
+		}
+
+		// On itère sur les championnats
+		$query = array('sport' => $sport, 'saison' => $saison);
+        $repository = $this->getDoctrine()->getRepository(Championnat::class);
+
+		foreach ($repository->findBy($query) as $champ)
+		{
+			$nomFic = $champ->getNom().".xlsx";
+			$query = $entityManager->createQuery(
+				"SELECT e
+				 FROM App\Entity\Equipe e
+				 JOIN e.classements classe
+				 WHERE classe.championnat = :champ
+				 ORDER BY e.nom"
+			);
+
+			$query->setParameter("champ", $champ);
+			
+			$ftmp = Annuaire::genere($query->getResult(), "annu_$nomFic");
+			$zip->addFile($ftmp, $nomFic);
+		}
+
+		$zip->close();
+
+		array_map('unlink', glob("../var/annu_*.*"));
+
+		return $this->file($fic, "Annuaire ".$sport->getNom()." - ".date('Y-m-d').".zip");
 	}
 
 	/**

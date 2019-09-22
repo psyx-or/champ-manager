@@ -13,7 +13,7 @@ use PhpOffice\PhpSpreadsheet\Cell\AdvancedValueBinder;
 
 class Annuaire
 {
-	public static function genere(array $equipes): string
+	public static function genere(array $equipes, string $nomfic): string
 	{
 		Cell::setValueBinder(new AdvancedValueBinder());
 
@@ -93,7 +93,7 @@ class Annuaire
 
 		// Il ne reste plus qu'à enregistrer
 		$writer = new Xlsx($spreadsheet);
-		$ftmp = "../var/Annuaire.xlsx";
+		$ftmp = "../var/$nomfic";
 		$writer->save($ftmp);
 		return $ftmp;
 	}

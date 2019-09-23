@@ -29,8 +29,9 @@ class Annuaire
 		$sheet->setCellValueByColumnAndRow(1, $ligne, "Equipe");
 		$sheet->setCellValueByColumnAndRow(2, $ligne, "Coordonnées");
 		$sheet->mergeCells('B1:D1');
-		$sheet->getStyle('A1:D1')->getFill()->setFillType(Fill::FILL_SOLID)->getStartColor()->setARGB('FFC0C0C0');
-		$sheet->getStyle('A1:D1')->getFont()->setBold(true);
+		$sheet->setCellValueByColumnAndRow(5, $ligne, "Maillot");
+		$sheet->getStyle('A1:E1')->getFill()->setFillType(Fill::FILL_SOLID)->getStartColor()->setARGB('FFC0C0C0');
+		$sheet->getStyle('A1:E1')->getFont()->setBold(true);
 
 		$ligne++;
 		foreach ($equipes as $equipe)
@@ -75,8 +76,15 @@ class Annuaire
 				$sheet->getRowDimension("$ligne")->setRowHeight(15.75 * count($vals));
 			}
 
+			// Maillot
+			if ($equipe->getMaillot() != null)
+			{
+				$sheet->setCellValueByColumnAndRow(5, $debut, $equipe->getMaillot());
+			}
+
 			$sheet->mergeCells("A$debut:A$ligne");
-			$sheet->getStyle("A$debut:D$ligne")->getBorders()->getOutline()->setBorderStyle(Border::BORDER_MEDIUM);
+			$sheet->mergeCells("E$debut:E$ligne");
+			$sheet->getStyle("A$debut:E$ligne")->getBorders()->getOutline()->setBorderStyle(Border::BORDER_MEDIUM);
 			
 			$ligne++;
 		}
@@ -87,9 +95,11 @@ class Annuaire
 		$sheet->getColumnDimension('B')->setAutoSize(true);
 		$sheet->getColumnDimension('C')->setAutoSize(true);
 		$sheet->getColumnDimension('D')->setAutoSize(true);
+		$sheet->getColumnDimension('E')->setAutoSize(true);
 		$sheet->setAutoFilter("A1:A$ligne");
 		$sheet->getStyle("A1:A$ligne")->getBorders()->getOutline()->setBorderStyle(Border::BORDER_MEDIUM);
 		$sheet->getStyle("B1:D$ligne")->getBorders()->getOutline()->setBorderStyle(Border::BORDER_MEDIUM);
+		$sheet->getStyle("E1:E$ligne")->getBorders()->getOutline()->setBorderStyle(Border::BORDER_MEDIUM);
 
 		// Il ne reste plus qu'à enregistrer
 		$writer = new Xlsx($spreadsheet);

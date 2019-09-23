@@ -240,6 +240,11 @@ class EquipeController extends CMController
 			else
 				$entite->setPosition(null);
 
+			if ($equipe->getMaillot() != null && trim($equipe->getMaillot()) != "")
+				$entite->setMaillot(trim($equipe->getMaillot()));
+			else
+				$entite->setMaillot(null);
+
 			if ($changeMdp && true === $authChecker->isGranted('ROLE_ADMIN'))
 				Mail::envoie($this->changeMdp($entite, $entityManager, $encoder), $this->getDoctrine());
 		}

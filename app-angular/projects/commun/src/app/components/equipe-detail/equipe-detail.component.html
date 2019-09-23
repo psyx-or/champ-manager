@@ -65,6 +65,15 @@
 	</div>
 </div>
 
+<!-- Couleur maillot -->
+<div class="form-group form-row">
+	<label for="maillot_{{equipe.id}}" class="col-sm-2 col-form-label">Couleur maillot</label>
+	<div class="col-sm-5">
+		<input type="text" class="form-control" name="maillot_{{equipe.id}}" id="maillot_{{equipe.id}}"
+				[(ngModel)]="equipe.maillot">
+	</div>
+</div>
+
 <!-- Créneaux -->
 <div class="form-group form-row" *ngFor="let creneau of equipe.creneaux; let i = index;">
 	<label for="creneau{{i}}_{{equipe.id}}_jour" class="col-sm-2 col-form-label" [hidden]="i>0">Créneaux</label>

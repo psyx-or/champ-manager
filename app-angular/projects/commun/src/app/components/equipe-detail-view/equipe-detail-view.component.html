@@ -23,6 +23,12 @@
 	</div>
 </ng-container>
 
+<!-- Couleur du maillot -->
+<div *ngIf="equipe.maillot">
+	<br>
+	Maillot: {{equipe.maillot}}
+</div>
+
 <!-- Carte -->
 <div *ngIf="equipe.position">
 	<h2 class="section">Emplacement</h2>

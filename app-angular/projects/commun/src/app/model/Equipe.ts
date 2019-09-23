@@ -15,6 +15,7 @@ export class Equipe {
 	position?: string;
 	sport?: Sport;
 	championnats?: Array<Championnat>;
+	maillot?: string;
 
 	public constructor(init?: Partial<Equipe>) {
 		Object.assign(this, init);

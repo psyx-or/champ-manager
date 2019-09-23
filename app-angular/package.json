@@ -6,7 +6,7 @@
     "start-admin": "ng serve admin --proxy-config proxy.conf.json",
     "admin-local": "ng build admin --configuration=test --base-href /champ-manager/ --deploy-url /champ-manager/admin/",
     "admin-remote": "ng build admin --prod --base-href /admin/ --deploy-url /admin/",
-    "start-user": "ng serve user --proxy-config proxy.conf.json --port 4201 --host 0.0.0.0",
+    "start-user": "ng serve user --proxy-config proxy.conf.json --port 4201",
     "user-local": "ng build user --configuration=test --base-href /champ-manager/ --deploy-url /champ-manager/user/",
     "user-remote": "ng build user --prod --base-href / --deploy-url /user/",
     "build": "ng build",

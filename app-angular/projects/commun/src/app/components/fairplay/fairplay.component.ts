@@ -27,6 +27,8 @@ export class FairplayComponent implements OnInit {
 	 * Initialisation du composant
 	 */
 	ngOnInit() {
+		if (!Object.values) Object.values = o => Object.keys(o).map(k => o[k]);
+		
 		(this.feuille ?
 			this.fairplayService.getFeuilleById(this.feuille) :
 			this.fairplayService.getFeuille(this.match, this.equipe)

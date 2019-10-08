@@ -8,6 +8,16 @@ monolog:
                 # regex: exclude all 404 errors from the logs
                 - ^/
             channels: ["!app"]
+        event:
+            type: fingers_crossed
+            action_level: error
+            handler: nested
+            channels: ["event"]
+        doctrine:
+            type: fingers_crossed
+            action_level: error
+            handler: nested
+            channels: ["doctrine"]
         app:
             type: fingers_crossed
             action_level: debug

@@ -74,6 +74,11 @@ class Classement
      */
     private $contre;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $nomJournee;
+
     public function getChampionnat(): ?Championnat
     {
         return $this->championnat;
@@ -247,6 +252,21 @@ class Classement
     public function setContre(int $contre): self
     {
         $this->contre = $contre;
+
+        return $this;
+    }
+
+	/**
+	 * @Groups({"simple"})
+	 */
+    public function getNomJournee(): ?string
+    {
+        return $this->nomJournee;
+    }
+
+    public function setNomJournee(?string $nomJournee): self
+    {
+        $this->nomJournee = $nomJournee;
 
         return $this;
     }

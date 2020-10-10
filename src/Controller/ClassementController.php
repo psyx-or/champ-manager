@@ -43,11 +43,13 @@ class ClassementController extends CMController
 			 JOIN c.classements class
 			 WHERE class.equipe = :equipe
 			   AND c.saison = :saison
+			   AND c.type <> :coupe
 			 ORDER BY c.id DESC"
 		);
 
 		$query->setParameter("equipe", $equipe);
 		$query->setParameter("saison", $saison);
+		$query->setParameter("coupe", ChampionnatType::COUPE);
 
 		$res = new ChampionnatEquipeDTO();
 		$res->setEquipe($equipe);

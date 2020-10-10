@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { setMenuEquipe } from '../../utils/menus';
 import { Equipe } from '@commun/src/app/model/Equipe';
-import { Championnat } from '@commun/src/app/model/Championnat';
+import { Championnat, ChampType } from '@commun/src/app/model/Championnat';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ChampionnatEquipeDTO } from '@commun/src/app/model/ChampionnatEquipeDTO';
 import { AuthentService } from '../../services/authent.service';
@@ -47,6 +47,9 @@ export class HistoriqueEquipeComponent implements OnInit {
 	 * @param champ 
 	 */
 	afficheClassement(champ: Championnat) {
-		this.router.navigate(["classement", champ.id]);
+		if (champ.type == ChampType.Coupe)
+			this.router.navigate(["coupe", champ.id]);
+		else
+			this.router.navigate(["classement", champ.id]);
 	}
 }

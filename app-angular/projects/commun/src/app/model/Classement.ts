@@ -15,4 +15,5 @@ export class Classement {
 	mNul?: number;
 	mDef: number;
 	mFo: number;
+	nomJournee?: string;
 }

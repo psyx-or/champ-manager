@@ -27,8 +27,13 @@
 			<tr *ngFor="let champ of champs" (click)="afficheClassement(champ)">
 				<td>{{champ.saison}}</td>
 				<td>{{champ.nom}}</td>
-				<td class="font-weight-bold">{{champ.classements[0].position}}</td>
-				<td class="separation">{{champ.classements[0].pts}}</td>
+				<ng-container *ngIf="champ.classements[0].nomJournee == null">
+					<td class="font-weight-bold">{{champ.classements[0].position}}</td>
+					<td class="separation">{{champ.classements[0].pts}}</td>
+				</ng-container>
+				<ng-container *ngIf="champ.classements[0].nomJournee != null">
+					<td class="font-weight-bold" colspan="2">{{champ.classements[0].nomJournee}}</td>
+				</ng-container>
 				<td class="separation">{{champ.classements[0].mTotal}}</td>
 				<td>{{champ.classements[0].mVict}}</td>
 				<td>{{champ.classements[0].mNul == null ? "-" : champ.classements[0].mNul}}</td>

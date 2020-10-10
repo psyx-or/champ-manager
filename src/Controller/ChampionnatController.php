@@ -213,7 +213,7 @@ class ChampionnatController extends CMController
 			return $this->json(null);
 
 		// Mise à jour du classement
-		$this->creeClassements($championnat, array($newEquipe), $entityManager);
+		$this->creeClassements($championnat, array($newEquipe), array(), $entityManager);
 		MatchFunctions::calculeClassement($championnat, $entityManager);
 
 		$entityManager->flush();
@@ -371,8 +371,7 @@ class ChampionnatController extends CMController
 		}
 
 		// Recalcul du classement des championnats
-		if ($champDest->getType() != ChampionnatType::COUPE)
-			MatchFunctions::calculeClassement($champDest, $entityManager);
+		MatchFunctions::calculeClassement($champDest, $entityManager);
 
 		$entityManager->flush();
 
@@ -394,22 +393,24 @@ class ChampionnatController extends CMController
 		$equipes = $this->getEquipes($dto->getEquipes(), $sport, $entityManager);
 
 		// Création des matches
+		$assocJournees = array();
 		switch ($championnat->getType())
 		{
 			case ChampionnatType::ALLER :
-				$this->creeClassements($championnat, $equipes, $entityManager);
 				$this->creeMatchesChampionnat($championnat, $equipes, 1, $entityManager);
 				break;
 
 			case ChampionnatType::ALLER_RETOUR :
-				$this->creeClassements($championnat, $equipes, $entityManager);
 				$this->creeMatchesChampionnat($championnat, $equipes, 2, $entityManager);
 				break;
 				
 			case ChampionnatType::COUPE :
-				$this->creeMatchesCoupe($championnat, $equipes, $entityManager);
+				$this->creeMatchesCoupe($championnat, $equipes, $entityManager, $assocJournees);
 				break;
 		}
+
+		// Création des classements
+		$this->creeClassements($championnat, $equipes, $assocJournees, $entityManager);
 
 		$entityManager->flush();
 
@@ -465,7 +466,7 @@ class ChampionnatController extends CMController
 	/**
 	 * Création des classements
 	 */
-	private function creeClassements(Championnat $championnat, array $equipes, EntityManagerInterface $entityManager)
+	private function creeClassements(Championnat $championnat, array $equipes, array &$assocJournees, EntityManagerInterface $entityManager)
 	{
 		foreach ($equipes as $equipe)
 		{
@@ -475,8 +476,16 @@ class ChampionnatController extends CMController
 			$classement->setPosition(1);
 			$classement->setPenalite(0);
 			MatchFunctions::initClassements($championnat, $classement);
+
+			if ($championnat->getType() === ChampionnatType::COUPE)
+			{
+				$journee = $assocJournees[$equipe->getId()];
+				$classement->setPosition($journee->getNumero());
+				$classement->setNomJournee($journee->getLibelle());
+			}
+
 			$entityManager->persist($classement);
-		}		
+		}
 	}
 
 	/**
@@ -538,7 +547,7 @@ class ChampionnatController extends CMController
 	 * @param $i Numéro de la journée
 	 * @param $journees Liste des journées déjà créées (partagée entre tous les appels)
 	 */
-	private function creeMatchesCoupe(Championnat $championnat, array $equipes, EntityManagerInterface $entityManager, int $i = -1, array &$journees = array())
+	private function creeMatchesCoupe(Championnat $championnat, array $equipes, EntityManagerInterface $entityManager, array &$assocJournees, int $i = -1, array &$journees = array())
 	{
 		// La journée
 		if (isset($journees[$i]))
@@ -557,11 +566,14 @@ class ChampionnatController extends CMController
 		// Une seule équipe => pas de match
 		if (count($equipes) == 1)
 		{
+			$assocJournees[$equipes[0]->getId()] = $journees[$i+1];
 			return $equipes[0];
 		}
 		// Deux équipes => un match
 		else if (count($equipes) == 2)
 		{
+			$assocJournees[$equipes[0]->getId()] = $journee;
+			$assocJournees[$equipes[1]->getId()] = $journee;
 			$match = new Match();
 			$match->setJournee($journee);
 			$match->setForfait1(false);
@@ -576,8 +588,8 @@ class ChampionnatController extends CMController
 		{
 			$i--;
 			
-			$res1 = $this->creeMatchesCoupe($championnat, array_slice($equipes, 0, count($equipes) / 2), $entityManager, $i, $journees);
-			$res2 = $this->creeMatchesCoupe($championnat, array_slice($equipes, count($equipes) / 2), $entityManager, $i, $journees);
+			$res1 = $this->creeMatchesCoupe($championnat, array_slice($equipes, 0, count($equipes) / 2), $entityManager, $assocJournees, $i, $journees);
+			$res2 = $this->creeMatchesCoupe($championnat, array_slice($equipes, count($equipes) / 2), $entityManager, $assocJournees, $i, $journees);
 
 			$match = new Match();
 			$match->setJournee($journee);

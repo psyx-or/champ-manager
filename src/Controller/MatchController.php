@@ -49,7 +49,7 @@ class MatchController extends CMController
 			 JOIN j.championnat c
 			 JOIN c.journees j1
 			 JOIN j1.matches m 
-			 JOIN m.equipe1 e1 JOIN m.equipe2 e2
+			 LEFT JOIN m.equipe1 e1 LEFT JOIN m.equipe2 e2
 			 WHERE c.saison = :saison
 			   AND (m.equipe1 = :equipe OR m.equipe2 = :equipe)
 			   AND j.numero = -1
@@ -292,7 +292,7 @@ class MatchController extends CMController
 		}
 
 		// Recalcul du classement des championnats
-		if ($champ != null && $champ->getType() != ChampionnatType::COUPE)
+		if ($champ != null)
 			MatchFunctions::calculeClassement($champ, $entityManager);
 
 		$entityManager->flush();
@@ -366,7 +366,7 @@ class MatchController extends CMController
 			   AND e.terrain IS NOT NULL
 			   AND j.debut IS NOT NULL
 			 GROUP BY e.terrain, j.debut
-			 HAVING count(m)>2
+			 HAVING count(m)>=2
 			 ORDER BY j.debut, e.terrain"
 		); // TODO: paramètre pour 2?
 

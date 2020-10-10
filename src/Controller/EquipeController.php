@@ -73,7 +73,23 @@ class EquipeController extends CMController
 		$query->setParameter("equipe", $equipe);
 		$query->setParameter("saison", $saison);
 
-        return $this->groupJson($query->getResult()[0], ...$groupes);
+		$res = $query->getResult();
+
+		// Si l'équipe n'est pas engagée pour cette saison, on ne la trouvera pas
+		if (count($res) === 0)
+		{
+			$query = $entityManager->createQuery(
+				"SELECT e
+				 FROM App\Entity\Equipe e
+				 WHERE e = :equipe"
+			);
+	
+			$query->setParameter("equipe", $equipe);
+	
+			$res = $query->getResult();
+		}
+
+        return $this->groupJson($res[0], ...$groupes);
 	}
 
 	/**

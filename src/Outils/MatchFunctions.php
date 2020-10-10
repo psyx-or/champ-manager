@@ -5,8 +5,10 @@ namespace App\Outils;
 use App\Entity\Match;
 use App\Entity\Equipe;
 use App\Entity\Championnat;
+use App\Entity\ChampionnatType;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Classement;
+use App\Entity\Journee;
 
 /**
  * Fonctions outils liées à la gestion des matches
@@ -60,6 +62,7 @@ class MatchFunctions {
 		foreach ($classements as $class) {
 			$mapClass[$class->getEquipe()->getId()] = $class;
 			MatchFunctions::initClassements($champ, $class);
+			$class->setPosition(-1000);
 		}
 
 		// Analyse des matches
@@ -67,6 +70,11 @@ class MatchFunctions {
 
 		foreach ($q->getResult() as $match) 
 		{
+			if ($match->getEquipe1() != null)
+				MatchFunctions::updateCoupeJournee($champ, $mapClass[$match->getEquipe1()->getId()], $match->getJournee());
+			if ($match->getEquipe2() != null)
+				MatchFunctions::updateCoupeJournee($champ, $mapClass[$match->getEquipe2()->getId()], $match->getJournee());
+
 			// Si le match n'a pas été joué, on laisse tomber
 			if ($match->getScore1() === null && $match->getScore2() === null &&
 				!$match->getForfait1() && !$match->getForfait2())
@@ -75,37 +83,48 @@ class MatchFunctions {
 			// S'il a été joué, on met à jour le score total
 			$vainqueur = MatchFunctions::getVainqueur($match);
 			
-			MatchFunctions::majClassement(
-				$mapClass[$match->getEquipe1()->getId()], $champ,
-				$vainqueur,
-				$match->getEquipe1(), $match->getForfait1(), $match->getScore1(), $match->getScore2()
-			);
-			MatchFunctions::majClassement(
-				$mapClass[$match->getEquipe2()->getId()], $champ,
-				$vainqueur,
-				$match->getEquipe2(), $match->getForfait2(), $match->getScore2(), $match->getScore1()
-			);
+			if ($match->getEquipe1() != null)
+			{
+				MatchFunctions::majClassement(
+					$mapClass[$match->getEquipe1()->getId()], $champ,
+					$vainqueur,
+					$match->getEquipe1(), $match->getForfait1(), $match->getScore1(), $match->getScore2(),
+					$match
+				);
+			}
+			if ($match->getEquipe2() != null)
+			{
+				MatchFunctions::majClassement(
+					$mapClass[$match->getEquipe2()->getId()], $champ,
+					$vainqueur,
+					$match->getEquipe2(), $match->getForfait2(), $match->getScore2(), $match->getScore1(),
+					$match
+				);
+			}
 		}
 
-		// On trie les équipes
-		usort($classements, ['App\Outils\MatchFunctions', 'compare']);
+		if ($champ->getType() != ChampionnatType::COUPE)
+		{
+			// On trie les équipes
+			usort($classements, ['App\Outils\MatchFunctions', 'compare']);
 
-		// On met à jour les positions
-		$i = 1;
-		foreach ($classements as $class) {
-			if ($i > 1 && MatchFunctions::compare($class, $classements[$i-2]) == 0)
-				$class->setPosition($classements[$i - 2]->getPosition());
-			else
-				$class->setPosition($i);
-			
-			$i++;
+			// On met à jour les positions
+			$i = 1;
+			foreach ($classements as $class) {
+				if ($i > 1 && MatchFunctions::compare($class, $classements[$i-2]) == 0)
+					$class->setPosition($classements[$i - 2]->getPosition());
+				else
+					$class->setPosition($i);
+				
+				$i++;
+			}
 		}
 	}
 
 	/**
 	 * Calcul des points en fonction du résultat d'un match
 	 */
-	private static function majClassement(Classement $class, Championnat $champ, ?Equipe $vainqueur, Equipe $equipe, $forfait, $scorePour, $scoreContre)
+	private static function majClassement(Classement $class, Championnat $champ, ?Equipe $vainqueur, Equipe $equipe, $forfait, $scorePour, $scoreContre, Match $match)
 	{
 		$class->setMTotal($class->getMTotal() + 1);
 		if ($forfait) 
@@ -116,6 +135,10 @@ class MatchFunctions {
 		{
 			$class->setPts($class->getPts() + $champ->getPtvict());
 			$class->setMVict($class->getMVict() + 1);
+
+			// Gestion du vainqueur final d'une coupe
+			if ($match->getJournee()->getNumero() == -1)
+				MatchFunctions::updateCoupeJournee($champ, $class, null);
 		} 
 		else if ($vainqueur == null && $champ->getPtnul() != null)
 		{
@@ -132,6 +155,26 @@ class MatchFunctions {
 			$class->setPour($class->getPour() + $scorePour);
 		if ($scoreContre !== null)
 			$class->setContre($class->getContre() + $scoreContre);
+	}
+
+	/**
+	 * Mise à jour d'un classement dans le cas d'une coupe
+	 */
+	private static function updateCoupeJournee(Championnat $champ, Classement $class, ?Journee $journee)
+	{
+		if ($champ->getType() != ChampionnatType::COUPE)
+			return;
+
+		if ($journee == null)
+		{
+			$class->setPosition(0);
+			$class->setNomJournee("Vainqueur");
+		}
+		else if ($class->getPosition() < $journee->getNumero())
+		{
+			$class->setPosition($journee->getNumero());
+			$class->setNomJournee($journee->getLibelle());
+		}
 	}
 
 	/**

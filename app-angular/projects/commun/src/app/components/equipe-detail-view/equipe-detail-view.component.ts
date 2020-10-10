@@ -11,7 +11,7 @@ export class EquipeDetailViewComponent implements AfterViewInit {
 
 	@Input() equipe: Equipe;
 
-	@ViewChild('gmap', { static: false }) gmapElement: ElementRef<Element>;
+	@ViewChild('gmap') gmapElement: ElementRef<Element>;
 
 	jours = jours;
 	map: google.maps.Map;

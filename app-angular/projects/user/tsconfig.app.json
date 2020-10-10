@@ -6,8 +6,11 @@
 		"googlemaps"
 	]
 },
-  "exclude": [
-    "src/test.ts",
-    "**/*.spec.ts"
+  "files": [
+    "src/main.ts",
+    "src/polyfills.ts"
+  ],
+  "include": [
+    "projects/user/src/**/*.d.ts"
   ]
 }

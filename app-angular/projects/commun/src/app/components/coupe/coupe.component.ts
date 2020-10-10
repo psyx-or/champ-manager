@@ -29,7 +29,7 @@ interface Node {
 })
 export class CoupeComponent implements OnChanges, AfterViewInit {
 
-	@ViewChild('chartDiv', { static: false }) chartDiv: ElementRef<Element>;
+	@ViewChild('chartDiv') chartDiv: ElementRef<Element>;
 
 	@Input() journee: Journee;
 	@Input() equipe: Equipe;

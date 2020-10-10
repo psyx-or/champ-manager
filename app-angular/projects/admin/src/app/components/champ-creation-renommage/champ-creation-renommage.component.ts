@@ -42,7 +42,7 @@ export class ChampCreationRenommageComponent implements OnInit {
 	 */
 	findMatch(e: Equipe): Remplacement {
 		// Recherche du mot-clef "EX" dans le nouveau nom
-		const match = e.nom.matchAll(/\bex\b(.*)/i).next();
+		const match = e.nom.matchAll(/\bex\b(.*)/ig).next();
 		if (match.done) return { new: e, old: this.newEquipe, ex: false};
 
 		// On l'a trouvé => on recherche l'ancienne équipe

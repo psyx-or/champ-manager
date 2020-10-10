@@ -3,7 +3,7 @@
   "compilerOptions": {
 	"baseUrl": "./",
     "downlevelIteration": true,
-    "module": "esnext",
+    "module": "es2020",
 	"paths": {
 		"@commun/*": [
 			"projects/commun/*"

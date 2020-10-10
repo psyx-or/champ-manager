@@ -22,10 +22,11 @@ doctrine:
             championnatType: App\Entity\ChampionnatType
             questionType: App\Entity\FPQuestionType
             parametreType: App\Entity\ParametreType
+        logging: false
 
     orm:
         auto_generate_proxy_classes: '%kernel.debug%'
-        naming_strategy: doctrine.orm.naming_strategy.underscore
+        naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
         auto_mapping: true
         mappings:
             App:

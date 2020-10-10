@@ -6,7 +6,7 @@ use App\Entity\Match;
 use App\Entity\Equipe;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use App\Entity\Parametre;
-
+use ErrorException;
 
 class Mail
 {
@@ -25,7 +25,12 @@ class Mail
 			"Reply-To: $emetteur\r\n" .
 			'X-Mailer: PHP/' . phpversion();
 
-		$res = mail($mail['destinataires'], $mail['objet'], $mail['corps'], $headers);
+		try
+		{
+			mail($mail['destinataires'], $mail['objet'], $mail['corps'], $headers);
+		}
+		catch (ErrorException $e)
+		{}
 	}
 
 	/**

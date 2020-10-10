@@ -77,23 +77,6 @@
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true
-            },
-            "test": {
-              "fileReplacements": [
-                {
-                  "replace": "projects/user/src/environments/environment.ts",
-                  "with": "projects/user/src/environments/environment.test.ts"
-                }
-              ],
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "extractCss": true,
-              "namedChunks": false,
-              "aot": true,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true
             }
           }
         },
@@ -114,30 +97,12 @@
             "browserTarget": "admin:build"
           }
         },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "projects/admin/src/test.ts",
-            "polyfills": "projects/admin/src/polyfills.ts",
-            "tsConfig": "projects/admin/tsconfig.spec.json",
-            "karmaConfig": "projects/admin/karma.conf.js",
-            "styles": [
-              "projects/admin/src/styles.css"
-            ],
-            "scripts": [],
-            "assets": [
-              "projects/admin/src/favicon.ico",
-              "projects/admin/src/assets"
-            ]
-          }
-        },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
               "projects/admin/tsconfig.app.json",
-              "projects/commun/tsconfig.app.json",
-              "projects/admin/tsconfig.spec.json"
+              "projects/commun/tsconfig.app.json"
             ],
             "exclude": [
               "**/node_modules/**"
@@ -220,24 +185,7 @@
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true
-			},
-            "test": {
-              "fileReplacements": [
-                {
-                  "replace": "projects/user/src/environments/environment.ts",
-                  "with": "projects/user/src/environments/environment.test.ts"
-                }
-              ],
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "extractCss": true,
-              "namedChunks": false,
-              "aot": true,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true
-            }
+			      }
           }
         },
         "serve": {
@@ -257,29 +205,11 @@
             "browserTarget": "user:build"
           }
         },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "projects/user/src/test.ts",
-            "polyfills": "projects/user/src/polyfills.ts",
-            "tsConfig": "projects/user/tsconfig.spec.json",
-            "karmaConfig": "projects/user/karma.conf.js",
-            "styles": [
-              "projects/user/src/styles.css"
-            ],
-            "scripts": [],
-            "assets": [
-              "projects/user/src/favicon.ico",
-              "projects/user/src/assets"
-            ]
-          }
-        },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "projects/user/tsconfig.app.json",
-              "projects/user/tsconfig.spec.json"
+              "projects/user/tsconfig.app.json"
             ],
             "exclude": [
               "**/node_modules/**"

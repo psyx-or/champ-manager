@@ -28,7 +28,7 @@ class DumpCommand extends Command
 		$mysqlUserName = 'dbo746397900';
 		$mysqlPassword = 'Didier38%';
 		$mysqlHostName = 'db746397900.db.1and1.com';
-		$mysqlExportPath = '../dumps/dump.'.date('D').'.sql.gz';
+		$mysqlExportPath = '../dumps/dump.'.date('d').'.sql.gz';
 
 		$worked = -1;
 		$output = array();

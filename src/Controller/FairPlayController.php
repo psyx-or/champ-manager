@@ -246,6 +246,23 @@ class FairPlayController extends CMController
 			}
 		}
 
+		// On recherche si une feuille existe
+		$query = $entityManager->createQuery(
+			"SELECT fp.id
+			 FROM App\Entity\FPFeuille fp
+			 JOIN fp.equipeRedactrice ered
+			 WHERE ered.id = :equipeRedactriceId
+			   AND fp.fpMatch = :match"
+		);
+
+		$query->setParameter("equipeRedactriceId", $dto->getFpFeuille()->getEquipeRedactrice()->getId());
+		$query->setParameter("match", $match);
+
+		$res = $query->getResult();
+		if (count($res) > 0)
+			$dto->getFpFeuille()->setId($res[0]["id"]);
+
+		// Création de la feuille
 		$entity = new FPFeuille();
 		$entity->setCommentaire($dto->getFpFeuille()->getCommentaire());
 		$entity->setFpMatch($match);

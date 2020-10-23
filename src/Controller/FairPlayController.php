@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Doctrine\ORM\EntityManagerInterface;
 
 use App\Entity\FPForm;
@@ -154,7 +155,7 @@ class FairPlayController extends CMController
 
 	/**
 	 * @Route("/fairplay/feuille/{id}/{equipe}", methods={"GET"})
-	 * @IsGranted({"ROLE_USER", "ROLE_CHAMP"})
+	 * @Security("is_granted('ROLE_USER') or is_granted('ROLE_CHAMP')")
 	 */
 	public function getFeuille(Match $match, $equipe, AuthorizationCheckerInterface $authChecker)
 	{
@@ -210,7 +211,7 @@ class FairPlayController extends CMController
 
 	/**
 	 * @Route("/fairplay/feuille/{id}", methods={"POST"})
-	 * @IsGranted({"ROLE_USER", "ROLE_CHAMP"})
+	 * @Security("is_granted('ROLE_USER') or is_granted('ROLE_CHAMP')")
 	 * @ParamConverter("match", converter="doctrine.orm")
 	 * @ParamConverter("dto", converter="cm_converter")
 	 */

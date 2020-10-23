@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Doctrine\ORM\EntityManagerInterface;
 
 use App\Entity\Championnat;
@@ -130,7 +131,7 @@ class MatchController extends CMController
 
 	/**
 	 * @Route("/match/{feuille}", methods={"GET"})
-	 * @IsGranted({"ROLE_USER", "ROLE_CHAMP"})
+	 * @Security("is_granted('ROLE_USER') or is_granted('ROLE_CHAMP')")
 	 */
 	public function getFeuille(string $feuille)
 	{

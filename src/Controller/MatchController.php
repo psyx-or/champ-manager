@@ -131,7 +131,7 @@ class MatchController extends CMController
 
 	/**
 	 * @Route("/match/{feuille}", methods={"GET"})
-	 * @IsGranted("ROLE_USER")
+	 * @IsGranted({"ROLE_USER", "ROLE_CHAMP"})
 	 */
 	public function getFeuille(string $feuille)
 	{

@@ -62,4 +62,15 @@ export class MatchJourneeComponent implements OnInit {
 		modal.componentInstance.equipe = equipe;
 		modal.result.then((res: FPFeuille) => match['fpFeuille'+equipe] = res, () => {});
 	}
+
+	/**
+	 * Téléverse la feuille de match
+	 * @param match 
+	 * @param fichiers 
+	 */
+	upload(match: Match, fichiers: FileList): void {
+		this.matchService.majMatchFeuille(match, fichiers.item(0)).subscribe(
+			feuille => match.feuille = feuille
+		);
+	}
 }

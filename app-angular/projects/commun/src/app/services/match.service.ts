@@ -86,6 +86,18 @@ export class MatchService {
 	}
 
 	/**
+	 * Met à jour une feuille de match
+	 * @param match 
+	 * @param feuille 
+	 */
+	public majMatchFeuille(match: Match, feuille: File): Observable<string> {
+		let body: FormData = new FormData();
+		body.append("feuille", feuille, feuille.name);
+
+		return this.http.post<string>(`/api/match/${match.id}/feuille`, body);
+	}
+
+	/**
 	 * Renvoie la liste des matches à valider
 	 * @param sport
 	 */

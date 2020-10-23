@@ -14,7 +14,6 @@ use App\Entity\Journee;
 use App\Entity\Match;
 use App\Entity\Sport;
 use App\Outils\MatchFunctions;
-use App\Entity\ChampionnatType;
 use App\Entity\Equipe;
 use App\Outils\Mail;
 use App\Entity\Parametre;
@@ -175,6 +174,36 @@ class MatchController extends CMController
 		if (!$match->getForfait2() && $request->request->has('score2'))
 			$match->setScore2($request->request->get('score2'));
 
+		$this->majMatchFeuille($request, $match);
+
+		return $this->majListe(array($match), $entityManager, $authChecker);
+	}
+
+	/**
+	 * @Route("/match/{id}/feuille", methods={"POST"})
+	 * @ParamConverter("match", converter="doctrine.orm")
+	 * @IsGranted("ROLE_CHAMP")
+	 */
+	public function majFeuille(Match $match, Request $request, EntityManagerInterface $entityManager, AuthorizationCheckerInterface $authChecker)
+	{
+		if (false === $authChecker->isGranted('ROLE_ADMIN')) 
+		{
+			if ($match->getJournee()->getChampionnat()->getId() != $this->getUser()->getId())
+			throw $this->createAccessDeniedException();
+		}
+
+		$this->majMatchFeuille($request, $match);
+
+		$entityManager->flush();
+
+		return $this->json($match->getFeuille());
+	}
+
+	/**
+	 * Enregistre la feuille de match sur le disque et met à jour l'entité
+	 */
+	private function majMatchFeuille(Request $request, Match $match)
+	{
 		if ($request->files->has("feuille"))
 		{
 			$fichier = $request->files->get("feuille");
@@ -184,8 +213,6 @@ class MatchController extends CMController
 
 			$match->setFeuille($nom);
 		}
-
-		return $this->majListe(array($match), $entityManager, $authChecker);
 	}
 
 	/**
@@ -255,6 +282,12 @@ class MatchController extends CMController
 			if ($match->getScore1() !== null || $match->getScore2() !== null || $match->getForfait1() || $match->getForfait2())
 			{
 				$entity->setValide($authChecker->isGranted('ROLE_CHAMP') === true);
+
+				// Petites vérifs
+				if ($match->getScore1() === null && !$match->getForfait1())
+					$entity->setScore1(0);
+				if ($match->getScore2() === null && !$match->getForfait2())
+					$entity->setScore2(0);
 
 				if (false === $authChecker->isGranted('ROLE_CHAMP') && $entity->getDateSaisie() == null)
 				{

@@ -23,3 +23,7 @@
 td {
 	vertical-align: middle;
 }
+
+label.btn-sm {
+	line-height: 1;
+}

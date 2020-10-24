@@ -114,6 +114,11 @@ class Match
 	 */
 	private $fpFeuilles;
 
+    /**
+     * @ORM\Column(type="date", nullable=true)
+     */
+    private $date_report;
+
 	
 	public function __construct()
 	{
@@ -417,4 +422,19 @@ class Match
 
 		return $this;
 	}
+
+	/**
+	 * @Groups({"simple"})
+	 */
+    public function getDateReport(): ?\DateTimeInterface
+    {
+        return $this->date_report;
+    }
+
+    public function setDateReport(?\DateTimeInterface $date_report): self
+    {
+        $this->date_report = $date_report;
+
+        return $this;
+    }
 }

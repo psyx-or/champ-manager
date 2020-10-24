@@ -9,6 +9,8 @@ import { FairplayComponent } from '@commun/src/app/components/fairplay/fairplay.
 import { ResultatSaisieComponent } from '../resultat-saisie/resultat-saisie.component';
 import { Router } from '@angular/router';
 import { AuthentService } from '../../services/authent.service';
+import { Creneau } from '@commun/src/app/model/Creneau';
+import { Championnat, ChampType } from '@commun/src/app/model/Championnat';
 
 enum StatutMatch { VALIDE, AJOUER, RETARD, JOUE, JOUE_FP }
 
@@ -36,6 +38,7 @@ export class MatchesComponent implements OnInit {
 	
 	@Input() matches: Match[];
 	@Input() equipe: Equipe;
+	@Input() championnat: Championnat;
 	@Input() saisie: boolean = false;
 	@Input() avecFP: boolean = false;
 	@Input() dureeSaisie: number = 0;
@@ -81,7 +84,21 @@ export class MatchesComponent implements OnInit {
 
 		this.avecDates = !this.saisie;
 
-		if (!match.equipe1) {
+		if (match.dateReport) {
+			const dateReport = moment(match.dateReport);
+			const jour = dateReport.isoWeekday();
+			
+			const creneau = match.equipe1?.creneaux
+				.find(c => c.jour == jour - 1);
+			
+			if (creneau != null)
+				match.date = this.dateCreneau(creneau, dateReport);
+			else
+				match.date = `${jours[jour - 1]} ${moment(match.dateReport).format("DD/MM/YYYY")}`;
+
+			match.terrain = match.equipe1?.terrain ? match.equipe1.terrain : this.PAS_DE_TERRAIN;
+		}
+		else if (!match.equipe1) {
 			match.date = `Du ${moment(match.journee.debut).add(1, 'day').format("DD/MM/YYYY")} au ${moment(match.journee.fin).format("DD/MM/YYYY")}`;
 		}
 		else if (!match.equipe1.terrain) {
@@ -90,10 +107,19 @@ export class MatchesComponent implements OnInit {
 		}
 		else {
 			match.date = match.equipe1.creneaux
-				.map(c => `${jours[c.jour]} ${moment(match.journee.debut).add(c.jour + 1, 'days').format("DD/MM/YYYY")} à ${moment(c.heure).format("HH:mm")}`)
+				.map(c => this.dateCreneau(c, moment(match.journee.debut).add(c.jour + 1, 'days')))
 				.join("\n");
 			match.terrain = match.equipe1.terrain;
 		}
+	}
+
+	/**
+	 * Renvoie la date d'un créneau pour une date
+	 * @param c 
+	 * @param date 
+	 */
+	private dateCreneau(c: Creneau, date: moment.Moment): string {
+		return `${jours[c.jour]} ${date.format("DD/MM/YYYY")} à ${moment(c.heure).format("HH:mm")}`;
 	}
 
 	/**
@@ -104,10 +130,16 @@ export class MatchesComponent implements OnInit {
 		if (!this.equipe || !match.equipe1 || !match.equipe2)
 			return;
 
+		let dateFin: moment.Moment = null;
+		if (match.dateReport != null)
+			dateFin = moment(match.dateReport).endOf('isoWeek');
+		else if (match.journee.fin != null)
+			dateFin = moment(match.journee.fin);
+
 		if (match.valide) {
 			match.statut = StatutMatch.VALIDE;
 		}
-		else if (match.journee.fin != null && moment(match.journee.fin).add(this.dureeSaisie, 'days').isBefore(moment().startOf('day'))) {
+		else if (dateFin != null && dateFin.add(this.dureeSaisie, 'days').isBefore(moment().startOf('day'))) {
 			match.statut = StatutMatch.RETARD;
 		}
 		else if (match.valide === null) {
@@ -153,7 +185,8 @@ export class MatchesComponent implements OnInit {
 		const modal = this.modalService.open(ResultatSaisieComponent, { centered: true, backdrop: 'static' });
 		modal.componentInstance.match = match;
 		modal.result.then(() => {
-			this.router.navigate(["equipe", "classement", this.equipe.id]);
+			const page = this.championnat?.type === ChampType.Coupe ? "coupes" : "classement";
+			this.router.navigate(["equipe", page, this.equipe.id]);
 		}, () => { });
 	}
 }

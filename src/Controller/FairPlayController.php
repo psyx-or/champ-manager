@@ -20,6 +20,7 @@ use App\Entity\Equipe;
 use App\Entity\Parametre;
 use App\Entity\Championnat;
 use App\DTO\FPResultatDTO;
+use App\Outils\MatchFunctions;
 
 /**
  * @Route("/api")
@@ -226,14 +227,10 @@ class FairPlayController extends CMController
 					throw $this->createAccessDeniedException();
 
 				// Vérification de la date
-				if ($match->getJournee()->getFin() != null) 
-				{
-					$repository = $this->getDoctrine()->getRepository(Parametre::class);
-					$dureeSaisie = $repository->find(Parametre::DUREE_SAISIE)->getValeur();
-					$interval = date_diff(new \DateTime(), $match->getJournee()->getFin());
-					if ($interval->invert == 1 && $interval->days > $dureeSaisie)
-						throw $this->createAccessDeniedException();
-				}
+				$repository = $this->getDoctrine()->getRepository(Parametre::class);
+				$dureeSaisie = $repository->find(Parametre::DUREE_SAISIE)->getValeur();
+				if (!MatchFunctions::verifieDateFin($match, $dureeSaisie))
+					throw $this->createAccessDeniedException();
 			}
 			else if (true === $authChecker->isGranted('ROLE_CHAMP')) 
 			{

@@ -9,7 +9,7 @@ import { Equipe } from "../model/Equipe";
 export const STYLE_MEME_EQUIPE = "font-weight-bold";
 
 /** Jours de la semaine */
-export var jours = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi'];
+export var jours = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
 
 /**
  * Renvoie la saison en cours
@@ -165,4 +165,31 @@ export function calculeStyle(match: Match, i: 1|2, equipe: Equipe): string {
 		return style + "text-danger";
 
 	return style + "text-dark";
+}
+
+/**
+ * Convertit un nombre décimal en nombre entier à 2 chiffres
+ * @param num 
+ */
+function pad(num: number): string {
+	const norm = Math.floor(Math.abs(num));
+	return (norm < 10 ? '0' : '') + norm;
+}
+
+/**
+ * Convertit une date au format ISO8601 avec fuseau
+ * @param date 
+ */
+export function toIsoStringTz(date: Date): string {
+	const tzo = -date.getTimezoneOffset();
+    const dif = tzo >= 0 ? '+' : '-';
+	
+	return date.getFullYear() +
+        '-' + pad(date.getMonth() + 1) +
+        '-' + pad(date.getDate()) +
+        'T' + pad(date.getHours()) +
+        ':' + pad(date.getMinutes()) +
+        ':' + pad(date.getSeconds()) +
+        dif + pad(tzo / 60) +
+        ':' + pad(tzo % 60);
 }

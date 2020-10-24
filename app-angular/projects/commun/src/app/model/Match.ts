@@ -23,6 +23,7 @@ export class Match {
 	fpFeuille2?: FPFeuille;
 	hasFpFeuille1?: boolean;
 	hasFpFeuille2?: boolean;
+	dateReport: string;
 
 	dispEquipe1?: string;
 	dispEquipe2?: string;

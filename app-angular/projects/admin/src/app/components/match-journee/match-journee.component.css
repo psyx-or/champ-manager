@@ -3,7 +3,7 @@
 	vertical-align: middle;
 }
 
-.icon {
+.icon-big {
 	font-size: 1.75rem;
 }
 
@@ -22,8 +22,4 @@
 
 td {
 	vertical-align: middle;
-}
-
-label.btn-sm {
-	line-height: 1;
 }

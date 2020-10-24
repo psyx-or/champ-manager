@@ -194,4 +194,25 @@ class MatchFunctions {
 
 		return $class2->getMVict() - $class1->getMVict();
 	}
+
+	/**
+	 * Vérifie si le délai pour renseigner un match n'a pas été dépassé
+	 */
+	public static function verifieDateFin(Match $match, $dureeSaisie): bool
+	{
+		$dateFin = null;
+		if ($match->getDateReport() != null)
+			$dateFin = date_modify(clone $match->getDateReport(), "sunday");
+		else if ($match->getJournee()->getFin() != null)
+			$dateFin = $match->getJournee()->getFin();
+
+		if ($dateFin != null)
+		{
+			$interval = date_diff(new \DateTime(), $dateFin);
+			if ($interval->invert == 1 && $interval->days > $dureeSaisie)
+				return false;
+		}
+
+		return true;
+	}
 }

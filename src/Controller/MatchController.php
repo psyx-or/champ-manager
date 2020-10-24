@@ -160,6 +160,27 @@ class MatchController extends CMController
 	}
 
 	/**
+	 * @Route("/match/{id}/report", methods={"PATCH"})
+	 * @ParamConverter("match", converter="doctrine.orm")
+	 * @ParamConverter("date", converter="cm_converter", options={"classe":""})
+	 * @IsGranted("ROLE_CHAMP")
+	 */
+    public function reporte(Match $match, string $date, EntityManagerInterface $entityManager, AuthorizationCheckerInterface $authChecker)
+    {
+		if (false === $authChecker->isGranted('ROLE_ADMIN')) 
+		{
+			if ($match->getJournee()->getChampionnat()->getId() != $this->getUser()->getId())
+				throw $this->createAccessDeniedException();
+		}
+
+		$match->setDateReport(new \DateTime($date));
+
+		$entityManager->flush();
+
+        return $this->groupJson($match, 'simple');
+	}
+
+	/**
 	 * @Route("/match/", methods={"POST"})
 	 * @IsGranted("ROLE_USER")
 	 */
@@ -245,12 +266,8 @@ class MatchController extends CMController
 						throw $this->createAccessDeniedException();
 					
 					// Vérification de la date
-					if ($entity->getJournee()->getFin() != null)
-					{
-						$interval = date_diff(new \DateTime(), $entity->getJournee()->getFin());
-						if ($interval->invert == 1 && $interval->days > $dureeSaisie)
-							throw $this->createAccessDeniedException();
-					}
+					if (!MatchFunctions::verifieDateFin($entity, $dureeSaisie))
+						throw $this->createAccessDeniedException();
 				}
 				else if (true === $authChecker->isGranted('ROLE_CHAMP')) 
 				{

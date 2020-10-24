@@ -35,22 +35,32 @@
 					<!-- Feuille de match-->
 					<td class="text-center">
 						<a *ngIf="match.feuille" [href]="'/api/match/' + match.feuille" ngbTooltip="Afficher la feuille de match" class="text-dark">
-							<i class="icon ion-md-clipboard"></i>
+							<i class="icon ion-md-clipboard icon-big"></i>
 						</a>
-						<label *ngIf="match.feuille == null" class="btn btn-sm btn-secondary" type="button" ngbTooltip="Téléverser la feuille de match">
+						<label *ngIf="match.feuille == null" class="btn btn-secondary" type="button" ngbTooltip="Téléverser la feuille de match">
 							<i class="icon ion-md-arrow-round-up"></i> <input type="file" hidden (change)="upload(match, $event.target.files)">
 						</label>
 					</td>
-					<!-- Bouton de validation -->
+
+					<!-- Bouton de validation/report -->
 					<td *ngIf="match.valide === false" class="text-center">
 						<button class="btn btn-success" type="button" (click)="valide(match)">Valider</button>
 					</td>
 					<td *ngIf="match.valide === true" class="text-center text-success valide">
 						<div ngbTooltip="Match validé">
-							<i class='icon ion-md-checkbox-outline'></i>
+							<i class='icon ion-md-checkbox-outline icon-big'></i>
 						</div>
 					</td>
-					<td *ngIf="match.valide === null">
+					<td *ngIf="match.valide === null" class="text-center">
+						<div>
+						<button type="button" class="btn" [ngClass]="match.dateReport == null ? 'btn-secondary' : 'btn-warning'"
+							    ngbTooltip="Reporter le match" (click)="reporter(match)">
+							<i class='icon ion-md-calendar'></i>
+						</button>
+						</div>
+						<div *ngIf="match.dateReport != null">
+							{{ match.dateReport | date:'dd MMM yyyy' }}
+						</div>
 					</td>
 				</ng-container>
 
@@ -81,9 +91,32 @@
 <!-- Template pour afficher le ratio d'une feuille de fair-play -->
 <ng-template #fairplaytpl let-match="match" let-equipe="equipe" let-feuille="feuille">
 	<div class="lien" (click)="fairplay(match, equipe)">
-		<i class='icon ion-md-happy text-success' *ngIf="feuille && feuille.ratio > 33" ngbTooltip="Evaluation fair-play positive"></i>
-		<i class='icon ion-md-contact' *ngIf="feuille && feuille.ratio <= 33 && feuille.ratio >= -33" ngbTooltip="Evaluation fair-play neutre"></i>
-		<i class='icon ion-md-sad text-danger' *ngIf="feuille && feuille.ratio < -33" ngbTooltip="Evaluation fair-play négative"></i>
-		<i class='icon ion-md-help-circle-outline' *ngIf="feuille == null" ngbTooltip="Pas d'évaluation fair-play"></i>
+		<i class='icon ion-md-happy text-success icon-big' *ngIf="feuille && feuille.ratio > 33" ngbTooltip="Evaluation fair-play positive"></i>
+		<i class='icon ion-md-contact icon-big' *ngIf="feuille && feuille.ratio <= 33 && feuille.ratio >= -33" ngbTooltip="Evaluation fair-play neutre"></i>
+		<i class='icon ion-md-sad text-danger icon-big' *ngIf="feuille && feuille.ratio < -33" ngbTooltip="Evaluation fair-play négative"></i>
+		<i class='icon ion-md-help-circle-outline icon-big' *ngIf="feuille == null" ngbTooltip="Pas d'évaluation fair-play"></i>
 	</div>
 </ng-template>
+
+
+<!----------------------
+	Fenêtre de report
+  ------------------- -->
+
+<ng-template #report let-match>
+	<form class="form" id="formulaire" ngNativeValidate (ngSubmit)="modal.close()">
+		<div class="form-group">
+			<label for="nom">Nouvelle date &nbsp;:</label>
+			<div class="input-group">
+				<input class="form-control" placeholder="aaaa-mm-jj"
+					   name="dateReport" required [(ngModel)]="dateReport"
+					   ngbDatepicker #d="ngbDatepicker" container='body'>
+				<div class="input-group-append">
+					<button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"><i class='icon ion-md-calendar'></i></button>
+				</div>
+			</div>
+		</div>
+	</form>
+</ng-template>
+
+

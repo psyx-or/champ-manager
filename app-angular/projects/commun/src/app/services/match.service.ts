@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { getSaisonCourante } from '../utils/utils';
+import { getSaisonCourante, toIsoStringTz } from '../utils/utils';
 import { Championnat } from '../model/Championnat';
 import { Journee } from '../model/Journee';
 import { Match } from '../model/Match';
@@ -120,5 +120,14 @@ export class MatchService {
 	 */
 	public inverse(match: Match): Observable<any> {
 		return this.http.patch(`/api/match/${match.id}/inverse`, null);
+	}
+
+	/**
+	 * Reporte un match
+	 * @param match 
+	 * @param date 
+	 */
+	public reporte(match: Match, date: Date): Observable<Match>  {
+		return this.http.patch<Match>(`/api/match/${match.id}/report`, JSON.stringify(toIsoStringTz(date)));
 	}
 }

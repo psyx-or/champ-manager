@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Sport } from 'projects/commun/src/app/model/Sport';
 import { FPForm } from 'projects/commun/src/app/model/FPForm';
-import { Championnat, ChampType, ChampModele } from 'projects/commun/src/app/model/Championnat';
+import { Championnat, ChampType, ChampModele, EgaliteType } from 'projects/commun/src/app/model/Championnat';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -23,6 +23,7 @@ export class ChampCaracteristiquesComponent implements OnInit {
 	sports: Sport[];
 	fpForms: FPForm[];
 	types: [string, string][];
+	egaliteTypes: [string, string][];
 	newSport: Sport = new Sport();
 	avecNuls: boolean = true;
 	private _championnat: Championnat | ChampModele;
@@ -38,6 +39,7 @@ export class ChampCaracteristiquesComponent implements OnInit {
 	ngOnInit() {
 		// Récupération des données
 		this.types = Object.entries(ChampType);
+		this.egaliteTypes = Object.entries(EgaliteType);
 		this.route.data
 			.subscribe((data: { sports: Sport[], fpForms: FPForm[] }) => {
 				this.sports = data.sports;
@@ -71,6 +73,7 @@ export class ChampCaracteristiquesComponent implements OnInit {
 			this.championnat.ptvict = null;
 			this.championnat.ptnul = null;
 			this.championnat.ptdef = null;
+			this.championnat.egaliteType = null;
 		}
 	}
 

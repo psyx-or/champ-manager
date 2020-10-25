@@ -7,7 +7,7 @@
 
 <div class="form-group form-row">
 	<label for="modele" class="col-sm-2 col-form-label">Modèle</label>
-	<div class="col-sm-2">
+	<div class="col-sm-4">
 		<select class="form-control" id="modele" name="modele"
 				[(ngModel)]="selModele" (ngModelChange)="selectModele($event)">
 			<option [ngValue]="newModele">-- Ajouter --</option>
@@ -34,7 +34,7 @@
 	<!-- Nom -->
 	<div class="form-group form-row">
 		<label for="nomModele" class="col-sm-2 col-form-label">Nom du modèle</label>
-		<div class="col-sm-5">
+		<div class="col-sm-4">
 			<input type="text" class="form-control" name="nomModele" id="nomModele" [(ngModel)]="selModele.nomModele" required>
 		</div>
 	</div>

@@ -14,6 +14,14 @@ export enum ChampType {
 }
 
 /**
+ * Types de traitement en cas d'égalité au classement
+ */
+export enum EgaliteType {
+	"Diff. générale" = "DIFF_GENERALE",
+	"Diff. particulière" = "DIFF_PARTICULIERE",
+}
+
+/**
  * Un championnat
  */
 export class Championnat {
@@ -25,6 +33,7 @@ export class Championnat {
     public ptnul?: number;
     public ptdef: number;
 	public type: ChampType;
+	public egaliteType?: EgaliteType;
 	public journees: Journee[];
 	public classements: Classement[];
 	public fpForm?: FPForm;
@@ -47,5 +56,6 @@ export class ChampModele {
 	public ptnul?: number;
 	public ptdef: number;
 	public type: ChampType;
+	public egaliteType: EgaliteType;
 	public fpForm?: FPForm;
 }

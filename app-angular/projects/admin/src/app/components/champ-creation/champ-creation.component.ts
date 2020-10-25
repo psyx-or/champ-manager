@@ -152,6 +152,7 @@ export class ChampCreationComponent implements OnInit {
 		this.championnat.ptvict = modele.ptvict;
 		this.championnat.ptnul = modele.ptnul;
 		this.championnat.ptdef = modele.ptdef;
+		this.championnat.egaliteType = modele.egaliteType;
 		this.championnat.fpForm = modele.fpForm;
 		this.selectionSport(modele.sport);
 	}

@@ -76,6 +76,17 @@
 	<span class="col-sm-1 col-form-label">points</span>
 </div>
 
+<!-- Type d'égalite -->
+<div class="form-group form-row" *ngIf="championnat.type != 'COUPE'">
+	<label for="type" class="col-sm-2 col-form-label">Egalité</label>
+	<div class="col-sm-2">
+		<select class="form-control" id="type" name="egaliteType" required
+				[(ngModel)]="championnat.egaliteType">
+			<option *ngFor="let t of egaliteTypes" [ngValue]="t[1]">{{t[0]}}</option>
+		</select>
+	</div>
+</div>
+
 <!-- Feuille de fair-play -->
 <div class="form-group form-row">
 	<label for="fairplay" class="col-sm-2 col-form-label">Feuille de fair-play</label>

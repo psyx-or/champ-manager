@@ -57,6 +57,7 @@ class MatchFunctions {
 	{
 		$classements = $champ->getClassements()->toArray();
 		$mapClass = array();
+		$comparateur = new ClassementComparateur($champ);
 
 		// Réinitialisation du classement existant
 		foreach ($classements as $class) {
@@ -101,17 +102,19 @@ class MatchFunctions {
 					$match
 				);
 			}
+
+			$comparateur->ajouteMatch($match);
 		}
 
 		if ($champ->getType() != ChampionnatType::COUPE)
 		{
 			// On trie les équipes
-			usort($classements, ['App\Outils\MatchFunctions', 'compare']);
+			usort($classements, [$comparateur, 'compare']);
 
 			// On met à jour les positions
 			$i = 1;
 			foreach ($classements as $class) {
-				if ($i > 1 && MatchFunctions::compare($class, $classements[$i-2]) == 0)
+				if ($i > 1 && $comparateur->compare($class, $classements[$i-2]) == 0)
 					$class->setPosition($classements[$i - 2]->getPosition());
 				else
 					$class->setPosition($i);
@@ -175,24 +178,6 @@ class MatchFunctions {
 			$class->setPosition($journee->getNumero());
 			$class->setNomJournee($journee->getLibelle());
 		}
-	}
-
-	/**
-	 * Compare le classement de deux équipes
-	 */
-	public static function compare(Classement $class1, Classement $class2)
-	{
-		if ($class1->getPts() != $class2->getPts())
-			return $class2->getPts() - $class1->getPts();
-
-		$diff = ($class2->getPour() - $class2->getContre()) - ($class1->getPour() - $class1->getContre());
-		if ($diff != 0)
-			return $diff;
-
-		if ($class1->getPour() != $class2->getPour())
-			return $class2->getPour() - $class1->getPour();
-
-		return $class2->getMVict() - $class1->getMVict();
 	}
 
 	/**

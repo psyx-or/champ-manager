@@ -332,6 +332,7 @@ class ChampionnatController extends CMController
 	 */
 	public function importe(Championnat $champDest, array $championnats, EntityManagerInterface $entityManager)
 	{
+		/** @var App\Repository\MatchRepository $repMatches */
 		$repMatches = $this->getDoctrine()->getRepository(Match::class);
 
 		$i = 0;
@@ -441,6 +442,7 @@ class ChampionnatController extends CMController
 	private function getEquipes(array $equipes, Sport $sport, EntityManagerInterface $entityManager): array
 	{
 		$entities = array();
+		/** @var App\Repository\EquipeRepository $repEquipes */
         $repEquipes = $this->getDoctrine()->getRepository(Equipe::class);
 
 		foreach($equipes as $equipe) 

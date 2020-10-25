@@ -83,6 +83,11 @@ class Championnat implements \Serializable, PasswordEntityInterface
      */
     private $password;
 
+    /**
+     * @ORM\Column(type="egaliteType", nullable=true)
+     */
+    private $egaliteType;
+
     public function __construct()
     {
         $this->classements = new ArrayCollection();
@@ -98,11 +103,11 @@ class Championnat implements \Serializable, PasswordEntityInterface
     }
 
 	public function setId($id) : self
-         	{
-         		$this->id = $id;
-         
-         		return $this;
-         	}
+                  	{
+                  		$this->id = $id;
+                  
+                  		return $this;
+                  	}
 
 	/**
 	 * @Groups({"simple"})
@@ -286,16 +291,16 @@ class Championnat implements \Serializable, PasswordEntityInterface
 	 * @Groups({"feuilles"})
 	 */
 	public function getFpFeuilles(): array
-         	{
-         		$res = array();
-         
-         		foreach ($this->getJournees() as $journee)
-         			foreach ($journee->getMatches() as $match)
-         				foreach ($match->getFpFeuilles() as $feuille)
-         					array_push($res, $feuille);
-         
-         		return $res;
-         	}
+                  	{
+                  		$res = array();
+                  
+                  		foreach ($this->getJournees() as $journee)
+                  			foreach ($journee->getMatches() as $match)
+                  				foreach ($match->getFpFeuilles() as $feuille)
+                  					array_push($res, $feuille);
+                  
+                  		return $res;
+                  	}
 
 	
 	// ------------------------------------------------------
@@ -303,52 +308,64 @@ class Championnat implements \Serializable, PasswordEntityInterface
 	// ------------------------------------------------------
 
 	public function getUsername()
-                        	{
-                        		return $this->id;
-                        	}
+                                 	{
+                                 		return $this->id;
+                                 	}
 
 	public function getSalt()
-                        	{
-                        		return null;
-                        	}
+                                 	{
+                                 		return null;
+                                 	}
 
 	public function getRoles()
-                        	{
-                        		return array('ROLE_CHAMP');
-                        	}
+                                 	{
+                                 		return array('ROLE_CHAMP');
+                                 	}
 
 	public function eraseCredentials()
-                        	{
-                        	}
+                                 	{
+                                 	}
 
 	/** @see \Serializable::serialize() */
 	public function serialize()
-                        	{
-                        		return serialize(array(
-                        			$this->id,
-                        			$this->password,
-                        			$this->nom,
-                        		));
-                        	}
+                                 	{
+                                 		return serialize(array(
+                                 			$this->id,
+                                 			$this->password,
+                                 			$this->nom,
+                                 		));
+                                 	}
 
 	/** @see \Serializable::unserialize() */
 	public function unserialize($serialized)
-                        	{
-                        		list(
-                        			$this->id,
-                        			$this->password,
-                        			$this->nom,
-                        		) = unserialize($serialized, ['allowed_classes' => false]);
-                        	}
+                                 	{
+                                 		list(
+                                 			$this->id,
+                                 			$this->password,
+                                 			$this->nom,
+                                 		) = unserialize($serialized, ['allowed_classes' => false]);
+                                 	}
 
     public function getPassword(): ?string
     {
         return $this->password;
     }
 
-    public function setPassword(?string $password): self
+    public function setPassword(string $password): self
     {
         $this->password = $password;
+
+        return $this;
+    }
+
+    public function getEgaliteType()
+    {
+        return $this->egaliteType;
+    }
+
+    public function setEgaliteType($egaliteType): self
+    {
+        $this->egaliteType = $egaliteType;
 
         return $this;
     }

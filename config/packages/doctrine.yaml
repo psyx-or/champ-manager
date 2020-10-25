@@ -15,6 +15,7 @@ doctrine:
             championnatType: App\Entity\ChampionnatType
             questionType: App\Entity\FPQuestionType
             parametreType: App\Entity\ParametreType
+            egaliteType: App\Entity\EgaliteType
         logging: false
 
         # IMPORTANT: You MUST configure your server version,

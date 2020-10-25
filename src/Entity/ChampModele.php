@@ -58,6 +58,11 @@ class ChampModele
      */
     private $fpForm;
 
+    /**
+     * @ORM\Column(type="egaliteType", nullable=true)
+     */
+    private $egaliteType;
+
 	/**
 	 * @Groups({"simple_modele"})
 	 */
@@ -67,11 +72,11 @@ class ChampModele
     }
 
 	public function setId($id) : self
-	{
-		$this->id = $id;
-
-		return $this;
-	}
+         	{
+         		$this->id = $id;
+         
+         		return $this;
+         	}
 
 	/**
 	 * @Groups({"simple_modele", "simple"})
@@ -189,6 +194,21 @@ class ChampModele
     public function setSport(?Sport $sport): self
     {
         $this->sport = $sport;
+
+        return $this;
+    }
+
+	/**
+	 * @Groups({"simple_modele"})
+	 */
+    public function getEgaliteType()
+    {
+        return $this->egaliteType;
+    }
+
+    public function setEgaliteType($egaliteType): self
+    {
+        $this->egaliteType = $egaliteType;
 
         return $this;
     }

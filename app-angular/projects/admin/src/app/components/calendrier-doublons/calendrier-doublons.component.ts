@@ -16,6 +16,7 @@ export class CalendrierDoublonsComponent implements OnInit {
 	menu = menus.calendrier;
 	sports: Sport[];
 	selSport: Sport;
+	selNb = 2;
 	doublons: DoublonDTO[];
 
 	constructor(
@@ -36,8 +37,8 @@ export class CalendrierDoublonsComponent implements OnInit {
 	/**
 	 * Sélection d'un sport
 	 */
-	selectionSport(): void {
-		this.matchService.getDoublons(this.selSport).subscribe(
+	getDoublons(): void {
+		this.matchService.getDoublons(this.selSport, this.selNb).subscribe(
 			doublons => this.doublons = doublons
 		);
 	}
@@ -48,7 +49,7 @@ export class CalendrierDoublonsComponent implements OnInit {
 	 */
 	inverse(match: Match): void {
 		this.matchService.inverse(match).subscribe(
-			() => this.selectionSport()
+			() => this.getDoublons()
 		);
 	}
 }

@@ -109,9 +109,10 @@ export class MatchService {
 	/**
 	 * Récupère la liste des matches sur le même terrain
 	 * @param sport 
+	 * @param nb 
 	 */
-	public getDoublons(sport: Sport): Observable<DoublonDTO[]> {
-		return this.http.get<DoublonDTO[]>(`/api/match/${sport.nom}/doublons`, { params: { saison: getSaisonCourante() } })
+	public getDoublons(sport: Sport, nb: number): Observable<DoublonDTO[]> {
+		return this.http.get<DoublonDTO[]>(`/api/match/${sport.nom}/doublons`, { params: { saison: getSaisonCourante(), nb: nb.toString() } })
 	}
 
 	/**

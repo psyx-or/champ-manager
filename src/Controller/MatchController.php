@@ -404,6 +404,7 @@ class MatchController extends CMController
 	public function doublons(Sport $sport, Request $request, EntityManagerInterface $entityManager)
 	{
 		$saison = $request->query->get('saison');
+		$nb = $request->query->get('nb');
 
 		$query = $entityManager->createQuery(
 			"SELECT e.terrain, j.debut
@@ -417,12 +418,13 @@ class MatchController extends CMController
 			   AND e.terrain IS NOT NULL
 			   AND j.debut IS NOT NULL
 			 GROUP BY e.terrain, j.debut
-			 HAVING count(m)>=2
+			 HAVING count(m) >= :nb
 			 ORDER BY j.debut, e.terrain"
-		); // TODO: paramètre pour 2?
+		);
 
 		$query->setParameter("sport", $sport);
 		$query->setParameter("saison", $saison);
+		$query->setParameter("nb", $nb);
 
 		$resultat = array();
 		foreach ($query->getResult() as $doublon)

@@ -2,19 +2,22 @@
 
 
 <!----------------------
-	Sport
+	Formulaire
   ------------------- -->
 
-<div class="form-group form-row">
-	<label for="sport" class="col-sm-2 col-form-label">Sport</label>
-	<div class="col-sm-2">
-		<select class="form-control" id="sport" name="sport"
-				[(ngModel)]="selSport" (change)="selectionSport()">
-			<option *ngFor="let s of sports" [ngValue]="s">{{s.nom}}</option>
-		</select>
-	</div>
-</div>
+<form class="form-inline" (ngSubmit)="getDoublons()" ngNativeValidate>
+	<label for="sport" class="my-1 mr-2">Sport</label>
+	<select class="form-control my-1 mr-2" id="sport" name="sport"
+			[(ngModel)]="selSport" required>
+		<option *ngFor="let s of sports" [ngValue]="s">{{s.nom}}</option>
+	</select>
+	<label for="sport" class="my-1 mr-2">Nombre de matches par terrain</label>
+	<input class="form-control my-1 mr-2" id="selNb" name="selNb" type="number"
+		   [(ngModel)]="selNb" required/>
+	<button type="submit" class="btn btn-primary my-1">Rechercher</button>
+</form>
 
+<br>
 
 <!----------------------
 	Championnats

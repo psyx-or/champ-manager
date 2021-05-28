@@ -55,6 +55,15 @@ export class ChampCreationComponent implements OnInit {
 			this.modeles = data.modeles;
 		});
 	}
+
+	/**
+	 * Ajoute des équipes au championnat
+	 */
+	ajouterEquipes(): void {
+		const ajout = Array(8);
+		this.equipes.push(...ajout);
+		this.itequipes.push(...ajout);
+	}
 	
 	/**
 	 * Vérifie les paramètres de création

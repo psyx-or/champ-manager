@@ -213,7 +213,8 @@ class ChampionnatController extends CMController
 			return $this->json(null);
 
 		// Mise à jour du classement
-		$this->creeClassements($championnat, array($newEquipe), array(), $entityManager);
+		$assocJournees = array();
+		$this->creeClassements($championnat, array($newEquipe), $assocJournees, $entityManager);
 		MatchFunctions::calculeClassement($championnat, $entityManager);
 
 		$entityManager->flush();

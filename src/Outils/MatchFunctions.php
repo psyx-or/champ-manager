@@ -163,7 +163,7 @@ class MatchFunctions {
 	/**
 	 * Mise à jour d'un classement dans le cas d'une coupe
 	 */
-	private static function updateCoupeJournee(Championnat $champ, Classement $class, ?Journee $journee)
+	private static function updateCoupeJournee(Championnat $champ, ?Classement $class, ?Journee $journee)
 	{
 		if ($champ->getType() != ChampionnatType::COUPE)
 			return;

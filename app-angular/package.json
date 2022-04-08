@@ -27,7 +27,7 @@
     "bootstrap": "^4.5.3",
     "core-js": "^3.6.5",
     "ionicons": "^4.6.2",
-    "moment": "^2.29.0",
+    "moment": "^2.29.2",
     "raphael": "^2.2.8",
     "rxjs": "^6.6.3",
     "treant-js": "^1.0.1",

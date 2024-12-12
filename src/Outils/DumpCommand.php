@@ -33,7 +33,7 @@ class DumpCommand extends Command
 		$worked = -1;
 		$output = array();
 
-		$command = 'mysqldump --opt -h' . $mysqlHostName . ' -u' . $mysqlUserName . ' -p' . $mysqlPassword . ' ' . $mysqlDatabaseName . ' | gzip > ' . $mysqlExportPath;
+		$command = 'mysqldump --opt --no-tablespaces -h' . $mysqlHostName . ' -u' . $mysqlUserName . ' -p' . $mysqlPassword . ' ' . $mysqlDatabaseName . ' | gzip > ' . $mysqlExportPath;
 		exec($command, $output, $worked);
 		switch ($worked) {
 			case 0:
